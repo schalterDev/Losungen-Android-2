@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Losungen</string>
+    <string name="losungen">Losungen</string>
+    <string name="monthly_verses">Monats-, Wochensprüche</string>
+    <string name="favorite_verses">Markierte Verse</string>
+    <string name="configure_widgets">Widgets konfigurieren</string>
+    <string name="settings">Einstellungen</string>
+    <string name="rate">Bewerten</string>
+    <string name="send_feedback_bug">Feedack / Fehler melden</string>
+    <string name="info_help">Info / Hilfe</string>
+    <string name="privacy_policy">Datenschutzerklärung</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

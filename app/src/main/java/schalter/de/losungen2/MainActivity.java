@@ -26,13 +26,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupNavigationDrawer() {
-        NavigationDrawer navigationDrawer = new NavigationDrawer(this);
-        navigationDrawer.initAndShow(toolbar, new NavigationDrawer.FragmentChangeListener() {
+        NavigationDrawer navigationDrawer = new NavigationDrawer(this, new NavigationDrawer.FragmentChangeListener() {
             @Override
             public void onChangeFragment(Fragment previousFragment, Fragment nextFragment) {
                 MainActivity.this.changeFragment(nextFragment);
             }
         });
+        navigationDrawer.initAndShow(toolbar);
     }
 
     private void changeFragment(Fragment fragment) {

@@ -16,9 +16,11 @@ import androidx.fragment.app.Fragment;
 import schalter.de.losungen2.R;
 import schalter.de.losungen2.fragments.DailyVersesOverviewFragment;
 import schalter.de.losungen2.fragments.FavouriteVersesOverviewFragment;
+import schalter.de.losungen2.fragments.InfoFragment;
 import schalter.de.losungen2.fragments.MonthlyVersesOverviewFragment;
 import schalter.de.losungen2.fragments.WidgetsOverviewFragment;
 import schalter.de.losungen2.settings.SettingsActivity;
+import schalter.de.losungen2.utils.Open;
 
 public class NavigationDrawer {
 
@@ -31,6 +33,7 @@ public class NavigationDrawer {
     private MonthlyVersesOverviewFragment monthlyVersesOverviewFragment;
     private FavouriteVersesOverviewFragment favouriteVersesOverviewFragment;
     private WidgetsOverviewFragment widgetsOverviewFragment;
+    private InfoFragment infoFragment;
 
     public NavigationDrawer(Activity activity) {
         this.activity = activity;
@@ -113,13 +116,16 @@ public class NavigationDrawer {
                         } else if (drawerItem.equals(itemSettings)) {
                             activity.startActivity(new Intent(activity, SettingsActivity.class));
                         } else if (drawerItem.equals(itemRate)) {
-
+                            Open.appInPlayStore(activity);
                         } else if (drawerItem.equals(itemFeedback)) {
-
+                            Open.sendMailToProgrammer(activity);
                         } else if (drawerItem.equals(itemInfo)) {
-
+                            if (infoFragment == null) {
+                                infoFragment = InfoFragment.newInstance();
+                            }
+                            fragmentToShowNext = infoFragment;
                         } else if (drawerItem.equals(itemPrivacy)) {
-
+                            Open.privacyWebsite(activity);
                         }
 
                         if (fragmentToShowNext != null) {

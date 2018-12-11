@@ -12,4 +12,6 @@
 
     <string name="title_activity_settings">Einstellungen</string>
     <string name="pref_general">Allgemein</string>
+    <string name="send_mail">Email verschicken</string>
+
 </resources>

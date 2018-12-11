@@ -13,17 +13,26 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import schalter.de.losungen2.R;
+import schalter.de.losungen2.fragments.DailyVersesOverviewFragment;
+import schalter.de.losungen2.fragments.FavouriteVersesOverviewFragment;
+import schalter.de.losungen2.fragments.MonthlyVersesOverviewFragment;
 
 public class NavigationDrawer {
 
     private Activity activity;
     private Drawer navigationDrawer;
 
+    private Fragment actualFragment;
+
+    private DailyVersesOverviewFragment dailyVersesOverviewFragment;
+    private MonthlyVersesOverviewFragment monthlyVersesOverviewFragment;
+    private FavouriteVersesOverviewFragment favouriteVersesOverviewFragment;
+
     public NavigationDrawer(Activity activity) {
         this.activity = activity;
     }
 
-    public Drawer initAndShow(Toolbar toolbar, @NonNull FragmentChangeListener fragmentChangeListener) {
+    public Drawer initAndShow(Toolbar toolbar, @NonNull final FragmentChangeListener fragmentChangeListener) {
         final PrimaryDrawerItem itemDailyVerses = new PrimaryDrawerItem().withName(R.string.losungen)
                 .withIconTintingEnabled(true)
                 .withIcon(R.drawable.ic_event_note);
@@ -75,28 +84,46 @@ public class NavigationDrawer {
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        Fragment fragmentToShowNext = null;
+
                         if (drawerItem.equals(itemDailyVerses)) {
+                            if (dailyVersesOverviewFragment == null) {
+                                dailyVersesOverviewFragment = DailyVersesOverviewFragment.newInstance();
+                            }
+                            fragmentToShowNext = dailyVersesOverviewFragment;
+                        } else if (drawerItem.equals(itemMonthlyVerses)) {
+                            if (monthlyVersesOverviewFragment == null) {
+                                monthlyVersesOverviewFragment = MonthlyVersesOverviewFragment.newInstance();
+                            }
+                            fragmentToShowNext = monthlyVersesOverviewFragment;
+                        } else if (drawerItem.equals(itemFavourite)) {
+                            if (favouriteVersesOverviewFragment == null) {
+                                favouriteVersesOverviewFragment = FavouriteVersesOverviewFragment.newInstance();
+                            }
+                            fragmentToShowNext = favouriteVersesOverviewFragment;
+                        } else if (drawerItem.equals(itemWidget)) {
 
-                        } else if(drawerItem.equals(itemMonthlyVerses)) {
+                        } else if (drawerItem.equals(itemSettings)) {
 
-                        } else if(drawerItem.equals(itemFavourite)) {
+                        } else if (drawerItem.equals(itemRate)) {
 
-                        } else if(drawerItem.equals(itemWidget)) {
+                        } else if (drawerItem.equals(itemFeedback)) {
 
-                        } else if(drawerItem.equals(itemSettings)) {
+                        } else if (drawerItem.equals(itemInfo)) {
 
-                        } else if(drawerItem.equals(itemRate)) {
-
-                        } else if(drawerItem.equals(itemFeedback)) {
-
-                        } else if(drawerItem.equals(itemInfo)) {
-
-                        } else if(drawerItem.equals(itemPrivacy)) {
+                        } else if (drawerItem.equals(itemPrivacy)) {
 
                         }
 
-                        navigationDrawer.closeDrawer();
-                        return true;
+                        if (fragmentToShowNext != null) {
+                            fragmentChangeListener.onChangeFragment(actualFragment, fragmentToShowNext);
+                            actualFragment = fragmentToShowNext;
+
+                            navigationDrawer.closeDrawer();
+                            return true;
+                        }
+
+                        return false;
                     }
                 })
                 .build();

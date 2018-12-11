@@ -1,6 +1,7 @@
 package schalter.de.losungen2.components;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 
 import com.mikepenz.materialdrawer.Drawer;
@@ -16,6 +17,8 @@ import schalter.de.losungen2.R;
 import schalter.de.losungen2.fragments.DailyVersesOverviewFragment;
 import schalter.de.losungen2.fragments.FavouriteVersesOverviewFragment;
 import schalter.de.losungen2.fragments.MonthlyVersesOverviewFragment;
+import schalter.de.losungen2.fragments.WidgetsOverviewFragment;
+import schalter.de.losungen2.settings.SettingsActivity;
 
 public class NavigationDrawer {
 
@@ -27,6 +30,7 @@ public class NavigationDrawer {
     private DailyVersesOverviewFragment dailyVersesOverviewFragment;
     private MonthlyVersesOverviewFragment monthlyVersesOverviewFragment;
     private FavouriteVersesOverviewFragment favouriteVersesOverviewFragment;
+    private WidgetsOverviewFragment widgetsOverviewFragment;
 
     public NavigationDrawer(Activity activity) {
         this.activity = activity;
@@ -102,9 +106,12 @@ public class NavigationDrawer {
                             }
                             fragmentToShowNext = favouriteVersesOverviewFragment;
                         } else if (drawerItem.equals(itemWidget)) {
-
+                            if (widgetsOverviewFragment == null) {
+                                widgetsOverviewFragment = WidgetsOverviewFragment.newInstance();
+                            }
+                            fragmentToShowNext = widgetsOverviewFragment;
                         } else if (drawerItem.equals(itemSettings)) {
-
+                            activity.startActivity(new Intent(activity, SettingsActivity.class));
                         } else if (drawerItem.equals(itemRate)) {
 
                         } else if (drawerItem.equals(itemFeedback)) {

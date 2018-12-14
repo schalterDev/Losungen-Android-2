@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
 import schalter.de.losungen2.R
+import schalter.de.losungen2.tabs.DailyVersePagerAdapter
 import java.util.*
 
 /**
@@ -25,7 +28,33 @@ class DailyVersesOverviewFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_daily_verses_overview, container, false)
+        val view = inflater.inflate(R.layout.fragment_daily_verses_overview, container, false)
+        val pager = view.findViewById<ViewPager>(R.id.viewPager)
+        val tabs = view.findViewById<TabLayout>(R.id.tabLayout)
+
+        val pagerAdapter = DailyVersePagerAdapter(childFragmentManager, view.context)
+        pager.adapter = pagerAdapter
+        tabs.setupWithViewPager(pager)
+        pager.setCurrentItem(pagerAdapter.count / 2, false)
+
+        pager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {}
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+
+            override fun onPageSelected(position: Int) {
+                if (position < DailyVersePagerAdapter.thresholdLoadNewFragments) {
+                    pagerAdapter.addDatesAtStart()
+                    pager.setCurrentItem(position + DailyVersePagerAdapter.numberOfDaysAfterAndBeforeDate, false)
+                } else if (position > pagerAdapter.count - DailyVersePagerAdapter.thresholdLoadNewFragments) {
+                    pagerAdapter.addDatesAtEnd()
+                    pager.setCurrentItem(position - DailyVersePagerAdapter.numberOfDaysAfterAndBeforeDate, false)
+                }
+            }
+
+        })
+
+        return view
     }
 
     companion object {

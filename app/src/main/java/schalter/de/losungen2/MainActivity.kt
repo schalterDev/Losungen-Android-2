@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupNavigationDrawer() {
         val navigationDrawer = NavigationDrawer(this) { nextFragment -> this@MainActivity.changeFragment(nextFragment) }
         navigationDrawer.initAndShow(toolbar)
+        navigationDrawer.setActiveItem(NavigationDrawer.DrawerItem.DAILY_OVERVIEW)
     }
 
     private fun changeFragment(fragment: Fragment) {

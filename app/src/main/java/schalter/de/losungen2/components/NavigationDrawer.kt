@@ -113,37 +113,27 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
 
         when (drawerItem) {
             itemDailyVerses -> {
-                if (dailyVersesOverviewFragment == null) {
-                    dailyVersesOverviewFragment = DailyVersesOverviewFragment.newInstance()
-                }
-                fragmentToShowNext = dailyVersesOverviewFragment!!
+                dailyVersesOverviewFragment?: DailyVersesOverviewFragment.newInstance()
+                fragmentToShowNext = dailyVersesOverviewFragment
             }
             itemMonthlyVerses -> {
-                if (monthlyVersesOverviewFragment == null) {
-                    monthlyVersesOverviewFragment = MonthlyVersesOverviewFragment.newInstance()
-                }
-                fragmentToShowNext = monthlyVersesOverviewFragment!!
+                monthlyVersesOverviewFragment?: MonthlyVersesOverviewFragment.newInstance()
+                fragmentToShowNext = monthlyVersesOverviewFragment
             }
             itemFavourite -> {
-                if (favouriteVersesOverviewFragment == null) {
-                    favouriteVersesOverviewFragment = FavouriteVersesOverviewFragment.newInstance()
-                }
-                fragmentToShowNext = favouriteVersesOverviewFragment!!
+                favouriteVersesOverviewFragment?: FavouriteVersesOverviewFragment.newInstance()
+                fragmentToShowNext = favouriteVersesOverviewFragment
             }
             itemWidget -> {
-                if (widgetsOverviewFragment == null) {
-                    widgetsOverviewFragment = WidgetsOverviewFragment.newInstance()
-                }
-                fragmentToShowNext = widgetsOverviewFragment!!
+                widgetsOverviewFragment?: WidgetsOverviewFragment.newInstance()
+                fragmentToShowNext = widgetsOverviewFragment
             }
             itemSettings -> activity.startActivity(Intent(activity, SettingsActivity::class.java))
             itemRate -> Open.appInPlayStore(activity)
             itemFeedback -> Open.sendMailToProgrammer(activity)
             itemInfo -> {
-                if (infoFragment == null) {
-                    infoFragment = InfoFragment.newInstance()
-                }
-                fragmentToShowNext = infoFragment!!
+                infoFragment?: InfoFragment.newInstance()
+                fragmentToShowNext = infoFragment
             }
             itemPrivacy -> Open.privacyWebsite(activity)
         }

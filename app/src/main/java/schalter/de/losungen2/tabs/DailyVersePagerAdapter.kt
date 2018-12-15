@@ -1,36 +1,45 @@
 package schalter.de.losungen2.tabs
 
 import android.content.Context
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.viewpager.widget.PagerAdapter
 import schalter.de.losungen2.fragments.DailyVerseFragment
+import schalter.de.losungen2.fragments.DateFragment
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DailyVersePagerAdapter(fm: FragmentManager, context: Context) : FragmentPagerAdapter(fm) {
+private const val dateFormat = "E, dd.MM"
 
-    private val dateFormat = "E, dd.MM"
+class DailyVersePagerAdapter(fm: FragmentManager, context: Context) : FragmentStatePagerAdapter(fm) {
 
-    private lateinit var dateFirstFragment: Date
-    private lateinit var dateLastFragment: Date
+    private val dateList: MutableList<Date> = mutableListOf()
 
     init {
         this.setDate(Calendar.getInstance().time)
     }
 
-    fun setDate(date: Date) {
-        val calendar = Calendar.getInstance()
-        calendar.time = date
-        calendar.add(Calendar.DAY_OF_MONTH, -numberOfDaysAfterAndBeforeDate - 1)
-
-        dateFirstFragment = calendar.time
-
-        for (i in -numberOfDaysAfterAndBeforeDate..numberOfDaysAfterAndBeforeDate) {
-            val fragmentWithTitle = FragmentWithTitle(DailyVerseFragment.newInstance(calendar.time), getTitleByDate(calendar.time))
-            this.addItemAtEnd(fragmentWithTitle)
-            calendar.add(Calendar.DAY_OF_MONTH, 1)
+    override fun getItemPosition(item: Any): Int {
+        return if (item is DateFragment) {
+            dateList.indexOf(item.date)
+        } else {
+            PagerAdapter.POSITION_NONE
         }
+    }
 
-        dateLastFragment = calendar.time
+    override fun getPageTitle(position: Int): CharSequence? = this.getTitleByDate(dateList[position])
+
+    override fun getItem(position: Int): Fragment = DailyVerseFragment.newInstance(dateList[position])
+
+    override fun getCount(): Int = dateList.size
+
+    fun setDate(date: Date) {
+        dateList.clear()
+        dateList.add(date)
+
+        addDatesAtStart()
+        addDatesAtEnd()
     }
 
     /**
@@ -38,15 +47,14 @@ class DailyVersePagerAdapter(fm: FragmentManager, context: Context) : FragmentPa
      */
     fun addDatesAtStart(itemCount: Int = numberOfDaysAfterAndBeforeDate) {
         val calendar = Calendar.getInstance()
-        calendar.time = dateFirstFragment
+        calendar.time = dateList.first()
 
         for (i in 1..itemCount) {
             calendar.add(Calendar.DAY_OF_MONTH, -1)
-            val fragmentWithTitle = FragmentWithTitle(DailyVerseFragment.newInstance(calendar.time), getTitleByDate(calendar.time))
-            this.addItemAtStart(fragmentWithTitle)
+            dateList.add(0, calendar.time)
         }
 
-        dateFirstFragment = calendar.time
+        this.notifyDataSetChanged()
     }
 
     /**
@@ -54,18 +62,18 @@ class DailyVersePagerAdapter(fm: FragmentManager, context: Context) : FragmentPa
      */
     fun addDatesAtEnd(itemCount: Int = numberOfDaysAfterAndBeforeDate) {
         val calendar = Calendar.getInstance()
-        calendar.time = dateLastFragment
+        calendar.time = dateList.last()
 
         for (i in 1..itemCount) {
             calendar.add(Calendar.DAY_OF_MONTH, 1)
-            val fragmentWithTitle = FragmentWithTitle(DailyVerseFragment.newInstance(calendar.time), getTitleByDate(calendar.time))
-            this.addItemAtEnd(fragmentWithTitle)
+            dateList.add(calendar.time)
         }
 
-        dateLastFragment = calendar.time
+        this.notifyDataSetChanged()
     }
 
     private fun getTitleByDate(date: Date): String {
+        // TODO change for multi language
         val df = SimpleDateFormat(dateFormat, Locale.GERMANY)
         return df.format(date)
     }

@@ -17,7 +17,15 @@ private const val ARG_VERSE_DATE = "verse_date"
  * create an instance of this fragment.
  *
  */
-class DailyVerseFragment : DateFragment() {
+class MonthlyVerseFragment : Fragment() {
+    private var verseDate: Date? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            verseDate = Date(it.getLong(ARG_VERSE_DATE))
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -36,7 +44,7 @@ class DailyVerseFragment : DateFragment() {
          */
         @JvmStatic
         fun newInstance(verseDate: Date) =
-                DailyVerseFragment().apply {
+                MonthlyVerseFragment().apply {
                     arguments = Bundle().apply {
                         putLong(ARG_VERSE_DATE, verseDate.time)
                     }

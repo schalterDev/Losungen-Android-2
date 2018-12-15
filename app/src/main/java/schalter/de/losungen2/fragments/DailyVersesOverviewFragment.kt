@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
+import kotlinx.android.synthetic.main.fragment_daily_verses_overview.*
 import schalter.de.losungen2.R
 import schalter.de.losungen2.tabs.DailyVersePagerAdapter
 import java.util.*
@@ -46,9 +47,9 @@ class DailyVersesOverviewFragment : Fragment() {
                 if (position < DailyVersePagerAdapter.thresholdLoadNewFragments) {
                     pagerAdapter.addDatesAtStart()
                     pager.setCurrentItem(position + DailyVersePagerAdapter.numberOfDaysAfterAndBeforeDate, false)
+                    tabLayout.setScrollPosition(position + DailyVersePagerAdapter.numberOfDaysAfterAndBeforeDate, 0f, true)
                 } else if (position > pagerAdapter.count - DailyVersePagerAdapter.thresholdLoadNewFragments) {
                     pagerAdapter.addDatesAtEnd()
-                    pager.setCurrentItem(position - DailyVersePagerAdapter.numberOfDaysAfterAndBeforeDate, false)
                 }
             }
 

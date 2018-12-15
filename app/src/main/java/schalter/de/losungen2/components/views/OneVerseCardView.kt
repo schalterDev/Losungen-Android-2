@@ -1,4 +1,4 @@
-package schalter.de.losungen2.components.layouts
+package schalter.de.losungen2.components.views
 
 import android.content.Context
 import android.util.AttributeSet

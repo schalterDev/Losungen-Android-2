@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import schalter.de.losungen2.R
-import schalter.de.losungen2.components.layouts.OneVerseCardView
+import schalter.de.losungen2.components.views.OneVerseCardView
 import java.util.*
 
 /**

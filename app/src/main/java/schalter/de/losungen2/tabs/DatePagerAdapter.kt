@@ -1,11 +1,14 @@
 package schalter.de.losungen2.tabs
 
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.PagerAdapter
 import schalter.de.losungen2.fragments.DateFragment
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 /**
  * @param dateRange a constant from calendar. For example Calendar.DAY_OF_MONTH
@@ -18,13 +21,7 @@ abstract class DatePagerAdapter(fm: FragmentManager, private var dateFormat: Str
         this.setDate(Calendar.getInstance().time)
     }
 
-    override fun getItemPosition(item: Any): Int {
-        return if (item is DateFragment) {
-            dateList.indexOf(item.date)
-        } else {
-            PagerAdapter.POSITION_NONE
-        }
-    }
+    override fun getItemPosition(item: Any) = PagerAdapter.POSITION_NONE
 
     override fun getPageTitle(position: Int): CharSequence? = this.getTitleByDate(dateList[position])
 

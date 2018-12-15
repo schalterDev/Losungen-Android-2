@@ -8,6 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/colorText</item>
         <item name="android:textColorPrimaryInverse">@color/colorTextInverted</item>
+        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
 
         <!-- MaterialDrawer specific values -->
         <item name="material_drawer_background">@color/colorBackground</item>

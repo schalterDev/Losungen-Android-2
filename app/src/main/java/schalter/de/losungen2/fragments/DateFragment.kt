@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import java.util.*
 
-private const val ARG_DATE = "arg_date"
+const val ARG_DATE = "arg_date"
 
 open class DateFragment: Fragment() {
     var date: Date? = null

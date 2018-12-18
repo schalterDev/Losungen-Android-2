@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.fragment_daily_verses_overview.*
+import kotlinx.android.synthetic.main.fragment_tabs.*
 import schalter.de.losungen2.R
 import schalter.de.losungen2.tabs.DailyVersePagerAdapter
 import schalter.de.losungen2.tabs.DatePagerAdapter
@@ -20,21 +20,23 @@ import java.util.*
  */
 class DailyVersesOverviewFragment : Fragment() {
 
+    private lateinit var pagerAdapter: DailyVersePagerAdapter
+
     /**
      * Updates the verses showed to the given date
      * @param date show the verses for this date
      */
     fun setDateToShow(date: Date) {
-
+        pagerAdapter.setDate(date)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_daily_verses_overview, container, false)
+        val view = inflater.inflate(R.layout.fragment_tabs, container, false)
         val pager = view.findViewById<ViewPager>(R.id.viewPager)
         val tabs = view.findViewById<TabLayout>(R.id.tabLayout)
 
-        val pagerAdapter = DailyVersePagerAdapter(childFragmentManager, view.context)
+        pagerAdapter = DailyVersePagerAdapter(childFragmentManager)
         pager.adapter = pagerAdapter
         tabs.setupWithViewPager(pager)
         pager.setCurrentItem(pagerAdapter.count / 2, false)

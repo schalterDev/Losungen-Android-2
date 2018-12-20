@@ -1,0 +1,28 @@
+<FreeXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.brueder-unitaet.de/losung/losungen.xsd">
+    <Losungen>
+        <Datum>2019-01-01T00:00:00</Datum>
+        <Wtag>Dienstag</Wtag>
+        <Sonntag>Neujahr</Sonntag>
+        <Losungstext>oldText1</Losungstext>
+        <Lehrtext>newText1</Lehrtext>
+        <Lehrtextvers>newBible1</Lehrtextvers>
+    </Losungen>
+    <Losungen>
+        <Datum>2019-01-02T00:00:00</Datum>
+        <Wtag>Dienstag</Wtag>
+        <Sonntag>Neujahr</Sonntag>
+        <Losungstext>oldText2</Losungstext>
+        <Losungsvers>oldBible2</Losungsvers>
+        <Lehrtext>newText2</Lehrtext>
+        <Lehrtextvers>newBible2</Lehrtextvers>
+    </Losungen>
+    <Losungen>
+        <Datum>2019-01-03T00:00:00</Datum>
+        <Wtag>Dienstag</Wtag>
+        <Sonntag>Neujahr</Sonntag>
+        <Losungstext>oldText3</Losungstext>
+        <Losungsvers>oldBible3</Losungsvers>
+        <Lehrtext>newText3</Lehrtext>
+        <Lehrtextvers>newBible3</Lehrtextvers>
+    </Losungen>
+</FreeXml>

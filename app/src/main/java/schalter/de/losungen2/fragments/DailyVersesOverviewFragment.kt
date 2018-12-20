@@ -41,7 +41,7 @@ class DailyVersesOverviewFragment : Fragment() {
         tabs.setupWithViewPager(pager)
         pager.setCurrentItem(pagerAdapter.count / 2, false)
 
-        pager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener {
+        pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {}
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}

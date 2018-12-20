@@ -18,8 +18,11 @@ class MonthlyVerse(
 ) {
 
     // Date is automatic onverted to 1.Month 12 am 0m 0s 0ms
-    @ColumnInfo(name = "date") var date: Date = date
-        set(value) { field = getDateForMonth(value) }
+    @ColumnInfo(name = "date")
+    var date: Date = date
+        set(value) {
+            field = getDateForMonth(value)
+        }
 
     init {
         this.date = getDateForMonth(date)

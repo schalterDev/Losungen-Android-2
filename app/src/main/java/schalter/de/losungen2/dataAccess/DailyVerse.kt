@@ -2,7 +2,6 @@ package schalter.de.losungen2.dataAccess
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import java.util.*
 
@@ -21,8 +20,11 @@ class DailyVerse(
 ) {
 
     // Date is automatic converted to 12am 0 minutes 0 seconds 0 milliseconds
-    @ColumnInfo(name = "date") var date: Date = date
-        set(value) { field = getDateForDay(value) }
+    @ColumnInfo(name = "date")
+    var date: Date = date
+        set(value) {
+            field = getDateForDay(value)
+        }
 
     init {
         this.date = getDateForDay(date)

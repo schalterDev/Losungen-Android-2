@@ -1,4 +1,4 @@
-package schalter.de.losungen2.dataAccess
+package schalter.de.losungen2
 
 import java.util.*
 

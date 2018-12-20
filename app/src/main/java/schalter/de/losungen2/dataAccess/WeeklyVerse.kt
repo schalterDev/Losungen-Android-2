@@ -18,8 +18,11 @@ class WeeklyVerse(
 ) {
 
     // Date is automatic onverted to Monday 12 am 0m 0s 0ms
-    @ColumnInfo(name = "date") var date: Date = date
-        set(value) { field = getDateForWeek(value) }
+    @ColumnInfo(name = "date")
+    var date: Date = date
+        set(value) {
+            field = getDateForWeek(value)
+        }
 
     init {
         this.date = getDateForWeek(date)

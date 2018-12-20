@@ -1,7 +1,9 @@
 package schalter.de.losungen2.dataAccess
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
+import androidx.room.Query
 import java.util.*
 
 @Dao
@@ -44,5 +46,5 @@ abstract class DailyVersesDao {
     protected abstract fun updateNotesExactDate(date: Date, notes: String)
 
     @Query("UPDATE DailyVerse SET is_favourite = :isFavourite WHERE date = :date")
-    protected abstract fun updateIsFavouriteExactDate(date:Date, isFavourite: Boolean)
+    protected abstract fun updateIsFavouriteExactDate(date: Date, isFavourite: Boolean)
 }

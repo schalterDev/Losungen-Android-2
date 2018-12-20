@@ -112,14 +112,14 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
         var fragmentToShowNext: Fragment? = null
 
         when (drawerItem) {
-            itemDailyVerses -> fragmentToShowNext = dailyVersesOverviewFragment?: DailyVersesOverviewFragment.newInstance()
-            itemMonthlyVerses -> fragmentToShowNext = monthlyVersesOverviewFragment?: MonthlyVersesOverviewFragment.newInstance()
-            itemFavourite -> fragmentToShowNext = favouriteVersesOverviewFragment?: FavouriteVersesOverviewFragment.newInstance()
-            itemWidget -> fragmentToShowNext = widgetsOverviewFragment?: WidgetsOverviewFragment.newInstance()
+            itemDailyVerses -> fragmentToShowNext = dailyVersesOverviewFragment ?: DailyVersesOverviewFragment.newInstance()
+            itemMonthlyVerses -> fragmentToShowNext = monthlyVersesOverviewFragment ?: MonthlyVersesOverviewFragment.newInstance()
+            itemFavourite -> fragmentToShowNext = favouriteVersesOverviewFragment ?: FavouriteVersesOverviewFragment.newInstance()
+            itemWidget -> fragmentToShowNext = widgetsOverviewFragment ?: WidgetsOverviewFragment.newInstance()
             itemSettings -> activity.startActivity(Intent(activity, SettingsActivity::class.java))
             itemRate -> Open.appInPlayStore(activity)
             itemFeedback -> Open.sendMailToProgrammer(activity)
-            itemInfo -> fragmentToShowNext = infoFragment?: InfoFragment.newInstance()
+            itemInfo -> fragmentToShowNext = infoFragment ?: InfoFragment.newInstance()
             itemPrivacy -> Open.privacyWebsite(activity)
         }
 

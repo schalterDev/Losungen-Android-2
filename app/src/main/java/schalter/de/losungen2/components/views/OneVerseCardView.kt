@@ -27,7 +27,15 @@ class OneVerseCardView : FrameLayout {
         verseInBibleView = view.findViewById(R.id.oneVerseInBible)
     }
 
-    fun setTitle(titleRes: Int) { titleView.text = context.getString(titleRes) }
-    fun setVerse(verse: String) { verseTextView.text = verse }
-    fun setVerseInBible(verseInBible: String) { verseInBibleView.text = verseInBible }
+    fun setTitle(titleRes: Int) {
+        titleView.text = context.getString(titleRes)
+    }
+
+    fun setVerse(verse: String) {
+        verseTextView.text = verse
+    }
+
+    fun setVerseInBible(verseInBible: String) {
+        verseInBibleView.text = verseInBible
+    }
 }

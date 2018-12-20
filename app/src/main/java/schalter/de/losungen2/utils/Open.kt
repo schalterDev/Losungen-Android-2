@@ -9,8 +9,8 @@ import schalter.de.losungen2.R
 
 object Open {
 
-    private val urlPrivacyWebsite = "https://losungen.webdesign-schalter.de/privacy"
-    private val programmerMail = "schalter.dev@gmail.com"
+    private const val urlPrivacyWebsite = "https://losungen.webdesign-schalter.de/privacy"
+    private const val programmerMail = "schalter.dev@gmail.com"
 
     fun appInPlayStore(context: Context) {
         val uri = Uri.parse("market://details?id=" + context.packageName)

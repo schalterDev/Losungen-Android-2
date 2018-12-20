@@ -6,7 +6,7 @@ import java.util.*
 
 const val ARG_DATE = "arg_date"
 
-open class DateFragment: Fragment() {
+open class DateFragment : Fragment() {
     var date: Date? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

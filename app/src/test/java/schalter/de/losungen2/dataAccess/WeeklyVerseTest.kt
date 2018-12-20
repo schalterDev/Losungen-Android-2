@@ -1,7 +1,7 @@
 package schalter.de.losungen2.dataAccess
 
 import org.hamcrest.Matchers
-import org.junit.Assert.*
+import org.junit.Assert.assertThat
 import org.junit.Test
 import java.util.*
 

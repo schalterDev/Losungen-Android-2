@@ -1,11 +1,10 @@
 package schalter.de.losungen2.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.fragment.app.Fragment
 import schalter.de.losungen2.R
 import java.util.*
 

@@ -1,5 +1,6 @@
 package schalter.de.losungen2.dataAccess
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
@@ -9,7 +10,7 @@ import java.util.*
 @Dao
 abstract class DailyVersesDao {
 
-    fun findDailyVerseByDate(date: Date): DailyVerse = findDailyVerseByExactDate(DailyVerse.getDateForDay(date))
+    fun findDailyVerseByDate(date: Date): LiveData<DailyVerse> = findDailyVerseByExactDate(DailyVerse.getDateForDay(date))
 
     fun updateLanguage(dailyVerse: DailyVerse) =
             this.updateLanguage(
@@ -25,13 +26,13 @@ abstract class DailyVersesDao {
     fun updateIsFavourite(date: Date, isFavourite: Boolean) = this.updateIsFavouriteExactDate(DailyVerse.getDateForDay(date), isFavourite)
 
     @Query("SELECT * FROM DailyVerse WHERE is_favourite IS :isFavourite")
-    abstract fun findDailyVersesByFavourite(isFavourite: Boolean = true): Array<DailyVerse>
+    abstract fun findDailyVersesByFavourite(isFavourite: Boolean = true): LiveData<Array<DailyVerse>>
 
     @Insert(onConflict = REPLACE)
     abstract fun insertDailyVerse(dailyVerse: DailyVerse)
 
     @Query("SELECT * FROM DailyVerse WHERE date IS :date")
-    protected abstract fun findDailyVerseByExactDate(date: Date): DailyVerse
+    protected abstract fun findDailyVerseByExactDate(date: Date): LiveData<DailyVerse>
 
     @Query("UPDATE DailyVerse SET " +
             "old_testament_verse_text = :oldTestamentVerseText, " +

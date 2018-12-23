@@ -1,6 +1,8 @@
 package schalter.de.losungen2.dataAccess
 
 import android.content.Context
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.LiveData
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
@@ -8,14 +10,34 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.hamcrest.Matchers.equalTo
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import schalter.de.losungen2.TestUtils
 import java.io.IOException
 import java.util.*
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
+
+private fun <T> LiveData<T>.blockingObserve(): T? {
+    var value: T? = null
+    val latch = CountDownLatch(1)
+
+    observeForever { t ->
+        value = t
+        latch.countDown()
+    }
+
+    latch.await(2, TimeUnit.SECONDS)
+    return value
+}
 
 @RunWith(AndroidJUnit4::class)
 class MonthlyVersesUnitTest {
+
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
+
     private lateinit var monthlyVersesDao: MonthlyVersesDao
     private lateinit var db: VersesDatabase
 
@@ -45,7 +67,7 @@ class MonthlyVersesUnitTest {
     @Throws(Exception::class)
     fun writeVerseAndRead() {
         monthlyVersesDao.insertMonthlyVerse(monthlyVerse)
-        val verseFromDatabase: MonthlyVerse = monthlyVersesDao.findMonthlyVerseByDate(monthlyVerse.date)
+        val verseFromDatabase: MonthlyVerse = monthlyVersesDao.findMonthlyVerseByDate(monthlyVerse.date).blockingObserve()!!
         assertThat(verseFromDatabase.verseBible, equalTo(monthlyVerse.verseBible))
         assertThat(verseFromDatabase.verseText, equalTo(monthlyVerse.verseText))
         assertThat(verseFromDatabase.date, equalTo(monthlyVerse.date))
@@ -61,7 +83,7 @@ class MonthlyVersesUnitTest {
         monthlyVerseNextMonth.date = TestUtils.addMonthsToDate(monthlyVerse.date, 1)
         monthlyVersesDao.insertMonthlyVerse(monthlyVerseNextMonth)
 
-        var verseFromDatabase: MonthlyVerse = monthlyVersesDao.findMonthlyVerseByDate(monthlyVerse.date)
+        var verseFromDatabase: MonthlyVerse = monthlyVersesDao.findMonthlyVerseByDate(monthlyVerse.date).blockingObserve()!!
         assertThat(verseFromDatabase.verseText, equalTo(monthlyVerse.verseText))
         assertThat(verseFromDatabase.verseBible, equalTo(monthlyVerse.verseBible))
         assertThat(verseFromDatabase.date, equalTo(monthlyVerse.date))
@@ -69,7 +91,7 @@ class MonthlyVersesUnitTest {
         assertThat(verseFromDatabase.language, equalTo(monthlyVerse.language))
         assertThat(verseFromDatabase.notes, equalTo(monthlyVerse.notes))
 
-        verseFromDatabase = monthlyVersesDao.findMonthlyVerseByDate(monthlyVerseNextMonth.date)
+        verseFromDatabase = monthlyVersesDao.findMonthlyVerseByDate(monthlyVerseNextMonth.date).blockingObserve()!!
         assertThat(verseFromDatabase.verseText, equalTo(monthlyVerseNextMonth.verseText))
         assertThat(verseFromDatabase.date, equalTo(monthlyVerseNextMonth.date))
     }
@@ -88,7 +110,7 @@ class MonthlyVersesUnitTest {
 
         monthlyVersesDao.updateLanguage(monthlyVerseEnglish)
 
-        val verseFromDatabase: MonthlyVerse = monthlyVersesDao.findMonthlyVerseByDate(monthlyVerseEnglish.date)
+        val verseFromDatabase: MonthlyVerse = monthlyVersesDao.findMonthlyVerseByDate(monthlyVerseEnglish.date).blockingObserve()!!
         assertThat(verseFromDatabase.verseBible, equalTo(monthlyVerseEnglish.verseBible))
         assertThat(verseFromDatabase.verseText, equalTo(monthlyVerseEnglish.verseText))
         assertThat(verseFromDatabase.language, equalTo(monthlyVerseEnglish.language))
@@ -108,7 +130,7 @@ class MonthlyVersesUnitTest {
         }
 
         // find verse
-        var verseFromDatabase: MonthlyVerse = monthlyVersesDao.findMonthlyVerseByDate(calendar.time)
+        var verseFromDatabase: MonthlyVerse = monthlyVersesDao.findMonthlyVerseByDate(calendar.time).blockingObserve()!!
         assertThat(verseFromDatabase.date, equalTo(monthlyVerse.date))
 
         // update language
@@ -116,7 +138,7 @@ class MonthlyVersesUnitTest {
         monthlyVerseOtherDate.date = calendar.time
         monthlyVerseOtherDate.verseBible = "other date"
         monthlyVersesDao.updateLanguage(monthlyVerseOtherDate)
-        verseFromDatabase = monthlyVersesDao.findMonthlyVerseByDate(monthlyVerse.date)
+        verseFromDatabase = monthlyVersesDao.findMonthlyVerseByDate(monthlyVerse.date).blockingObserve()!!
         assertThat(verseFromDatabase.date, equalTo(monthlyVerse.date))
         assertThat(verseFromDatabase.verseBible, equalTo(monthlyVerseOtherDate.verseBible))
     }

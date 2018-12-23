@@ -18,5 +18,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="oldTestamentCardTitle">Old Testament</string>
     <string name="newTestamentCardtitle">New Testament</string>
+    <string name="import_language">Import language</string>
+    <string name="no_verse_found">No verse found</string>
 
 </resources>

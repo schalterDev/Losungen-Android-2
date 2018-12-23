@@ -1,5 +1,6 @@
 package schalter.de.losungen2.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import schalter.de.losungen2.R
 import schalter.de.losungen2.components.views.OneVerseCardView
+import schalter.de.losungen2.dataAccess.DailyVerse
+import schalter.de.losungen2.dataAccess.VersesDatabase
 import java.util.*
 
 /**
@@ -17,26 +20,47 @@ import java.util.*
  */
 class DailyVerseFragment : DateFragment() {
 
+    private var mContext: Context? = null
+
+    private var oldTestamentCard: OneVerseCardView? = null
+    private var newTestamentCard: OneVerseCardView? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_daily_verse, container, false)
+        mContext = view.context
 
-        val oldTestamentCard: OneVerseCardView = view.findViewById(R.id.oldTestamentCard)
-        val newTestamentCard: OneVerseCardView = view.findViewById(R.id.newTestamentCard)
+        oldTestamentCard = view.findViewById(R.id.oldTestamentCard)
+        newTestamentCard = view.findViewById(R.id.newTestamentCard)
 
-        oldTestamentCard.setTitle(R.string.oldTestamentCardTitle)
-        newTestamentCard.setTitle(R.string.newTestamentCardtitle)
+        oldTestamentCard?.setTitle(R.string.oldTestamentCardTitle)
+        newTestamentCard?.setTitle(R.string.newTestamentCardtitle)
 
-        oldTestamentCard.setVerse("Verse")
-        oldTestamentCard.setVerseInBible("Verse in bible")
+        if (date != null) {
+            loadDate(date!!)
+        }
 
-        newTestamentCard.setVerse("Verse")
-        newTestamentCard.setVerseInBible("Verse in bible")
+        updateData(null)
 
         return view
     }
 
+    private fun loadDate(date: Date) {
+        val dailyVersesDatabase = VersesDatabase.provideVerseDatabase(mContext!!)
+        dailyVersesDatabase.dailyVerseDao().findDailyVerseByDate(date).observe(
+                this,
+                androidx.lifecycle.Observer<DailyVerse> { dailyVerse: DailyVerse? -> updateData(dailyVerse) })
+    }
+
+    private fun updateData(dailyVerse: DailyVerse?) {
+        val errorVerseNotFound = mContext!!.getString(R.string.no_verse_found)
+
+        oldTestamentCard?.setVerse(dailyVerse?.oldTestamentVerseText ?: errorVerseNotFound)
+        oldTestamentCard?.setVerseInBible(dailyVerse?.oldTestamentVerseBible ?: errorVerseNotFound)
+        newTestamentCard?.setVerse(dailyVerse?.newTestamentVerseText ?: errorVerseNotFound)
+        newTestamentCard?.setVerseInBible(dailyVerse?.newTestamentVerseBible ?: errorVerseNotFound)
+    }
 
     companion object {
         /**

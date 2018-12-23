@@ -1,6 +1,8 @@
 package schalter.de.losungen2.dataAccess
 
+import android.content.Context
 import androidx.room.Database
+import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
@@ -10,4 +12,11 @@ abstract class VersesDatabase : RoomDatabase() {
     abstract fun dailyVerseDao(): DailyVersesDao
     abstract fun weeklyVerseDao(): WeeklyVersesDao
     abstract fun monthlyVerseDao(): MonthlyVersesDao
+
+    companion object {
+        @JvmStatic
+        internal fun provideVerseDatabase(context: Context): VersesDatabase {
+            return Room.databaseBuilder(context, VersesDatabase::class.java, "VersesDatabase").build()
+        }
+    }
 }

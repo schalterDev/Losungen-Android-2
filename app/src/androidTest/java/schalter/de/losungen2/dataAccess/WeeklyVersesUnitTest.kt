@@ -1,6 +1,8 @@
 package schalter.de.losungen2.dataAccess
 
 import android.content.Context
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.LiveData
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
@@ -8,14 +10,34 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.hamcrest.Matchers.equalTo
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import schalter.de.losungen2.TestUtils
 import java.io.IOException
 import java.util.*
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
+
+private fun <T> LiveData<T>.blockingObserve(): T? {
+    var value: T? = null
+    val latch = CountDownLatch(1)
+
+    observeForever { t ->
+        value = t
+        latch.countDown()
+    }
+
+    latch.await(2, TimeUnit.SECONDS)
+    return value
+}
 
 @RunWith(AndroidJUnit4::class)
 class WeeklyVersesUnitTest {
+
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
+
     private lateinit var weeklyVerseDao: WeeklyVersesDao
     private lateinit var db: VersesDatabase
 
@@ -45,7 +67,7 @@ class WeeklyVersesUnitTest {
     @Throws(Exception::class)
     fun writeVerseAndRead() {
         weeklyVerseDao.insertWeeklyVerse(weeklyVerse)
-        val verseFromDatabase: WeeklyVerse = weeklyVerseDao.findWeeklyVerseByDate(weeklyVerse.date)
+        val verseFromDatabase: WeeklyVerse = weeklyVerseDao.findWeeklyVerseByDate(weeklyVerse.date).blockingObserve()!!
         assertThat(verseFromDatabase.verseBible, equalTo(weeklyVerse.verseBible))
         assertThat(verseFromDatabase.verseText, equalTo(weeklyVerse.verseText))
         assertThat(verseFromDatabase.date, equalTo(weeklyVerse.date))
@@ -61,7 +83,7 @@ class WeeklyVersesUnitTest {
         weeklyVerseNextWeek.date = TestUtils.addDaysToDate(weeklyVerse.date, 7)
         weeklyVerseDao.insertWeeklyVerse(weeklyVerseNextWeek)
 
-        var verseFromDatabase: WeeklyVerse = weeklyVerseDao.findWeeklyVerseByDate(weeklyVerse.date)
+        var verseFromDatabase: WeeklyVerse = weeklyVerseDao.findWeeklyVerseByDate(weeklyVerse.date).blockingObserve()!!
         assertThat(verseFromDatabase.verseText, equalTo(weeklyVerse.verseText))
         assertThat(verseFromDatabase.verseBible, equalTo(weeklyVerse.verseBible))
         assertThat(verseFromDatabase.date, equalTo(weeklyVerse.date))
@@ -69,7 +91,7 @@ class WeeklyVersesUnitTest {
         assertThat(verseFromDatabase.language, equalTo(weeklyVerse.language))
         assertThat(verseFromDatabase.notes, equalTo(weeklyVerse.notes))
 
-        verseFromDatabase = weeklyVerseDao.findWeeklyVerseByDate(weeklyVerseNextWeek.date)
+        verseFromDatabase = weeklyVerseDao.findWeeklyVerseByDate(weeklyVerseNextWeek.date).blockingObserve()!!
         assertThat(verseFromDatabase.verseText, equalTo(weeklyVerseNextWeek.verseText))
         assertThat(verseFromDatabase.date, equalTo(weeklyVerseNextWeek.date))
     }
@@ -88,7 +110,7 @@ class WeeklyVersesUnitTest {
 
         weeklyVerseDao.updateLanguage(weeklyVerseEnglish)
 
-        val verseFromDatabase: WeeklyVerse = weeklyVerseDao.findWeeklyVerseByDate(weeklyVerseEnglish.date)
+        val verseFromDatabase: WeeklyVerse = weeklyVerseDao.findWeeklyVerseByDate(weeklyVerseEnglish.date).blockingObserve()!!
         assertThat(verseFromDatabase.verseBible, equalTo(weeklyVerseEnglish.verseBible))
         assertThat(verseFromDatabase.verseText, equalTo(weeklyVerseEnglish.verseText))
         assertThat(verseFromDatabase.language, equalTo(weeklyVerseEnglish.language))
@@ -108,7 +130,7 @@ class WeeklyVersesUnitTest {
         }
 
         // find verse
-        var verseFromDatabase: WeeklyVerse = weeklyVerseDao.findWeeklyVerseByDate(calendar.time)
+        var verseFromDatabase: WeeklyVerse = weeklyVerseDao.findWeeklyVerseByDate(calendar.time).blockingObserve()!!
         assertThat(verseFromDatabase.date, equalTo(weeklyVerse.date))
 
         // update language
@@ -116,7 +138,7 @@ class WeeklyVersesUnitTest {
         weeklyVerseOtherDate.date = calendar.time
         weeklyVerseOtherDate.verseBible = "other date"
         weeklyVerseDao.updateLanguage(weeklyVerseOtherDate)
-        verseFromDatabase = weeklyVerseDao.findWeeklyVerseByDate(weeklyVerse.date)
+        verseFromDatabase = weeklyVerseDao.findWeeklyVerseByDate(weeklyVerse.date).blockingObserve()!!
         assertThat(verseFromDatabase.date, equalTo(weeklyVerse.date))
         assertThat(verseFromDatabase.verseBible, equalTo(weeklyVerseOtherDate.verseBible))
     }

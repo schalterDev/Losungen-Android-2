@@ -34,8 +34,8 @@ class DailyVerseFragment : DateFragment() {
         oldTestamentCard = view.findViewById(R.id.oldTestamentCard)
         newTestamentCard = view.findViewById(R.id.newTestamentCard)
 
-        oldTestamentCard?.setTitle(R.string.oldTestamentCardTitle)
-        newTestamentCard?.setTitle(R.string.newTestamentCardtitle)
+        oldTestamentCard?.setTitle(R.string.old_testament_card_title)
+        newTestamentCard?.setTitle(R.string.new_testament_card_title)
 
         if (date != null) {
             loadDate(date!!)

@@ -9,9 +9,6 @@ import schalter.de.losungen2.R
 
 object Open {
 
-    private const val urlPrivacyWebsite = "https://losungen.webdesign-schalter.de/privacy"
-    private const val programmerMail = "schalter.dev@gmail.com"
-
     fun appInPlayStore(context: Context) {
         val uri = Uri.parse("market://details?id=" + context.packageName)
         val goToMarket = Intent(Intent.ACTION_VIEW, uri)
@@ -20,12 +17,11 @@ object Open {
         } catch (e: ActivityNotFoundException) {
             Open.website(context, "http://play.google.com/store/apps/details?id=" + context.packageName)
         }
-
     }
 
     fun sendMailToProgrammer(context: Context) {
         val intent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                "mailto", programmerMail, null))
+                "mailto", Constants.programmerMail, null))
         intent.putExtra(Intent.EXTRA_SUBJECT, "Losungen - APP Feedback")
         //intent.putExtra(Intent.EXTRA_TEXT, message);
         // TODO send relevant system info
@@ -33,7 +29,7 @@ object Open {
     }
 
     fun privacyWebsite(context: Context) {
-        Open.website(context, urlPrivacyWebsite)
+        Open.website(context, Constants.urlPrivacyWebsite)
     }
 
     fun website(context: Context, website: String) {

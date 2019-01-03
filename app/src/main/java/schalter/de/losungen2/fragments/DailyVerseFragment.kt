@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import schalter.de.losungen2.R
-import schalter.de.losungen2.components.views.OneVerseCardView
+import schalter.de.losungen2.components.views.VerseCardView
 import schalter.de.losungen2.dataAccess.DailyVerse
 import schalter.de.losungen2.dataAccess.VersesDatabase
 import java.util.*
@@ -22,8 +22,8 @@ class DailyVerseFragment : DateFragment() {
 
     private var mContext: Context? = null
 
-    private var oldTestamentCard: OneVerseCardView? = null
-    private var newTestamentCard: OneVerseCardView? = null
+    private var oldTestamentCard: VerseCardView? = null
+    private var newTestamentCard: VerseCardView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

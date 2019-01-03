@@ -16,7 +16,6 @@ abstract class VersesDatabase : RoomDatabase() {
 
     companion object {
         fun provideVerseDatabase(context: Context): VersesDatabase {
-        internal fun provideVerseDatabase(context: Context): VersesDatabase {
             return Room.databaseBuilder(context, VersesDatabase::class.java, "VersesDatabase").build()
         }
     }

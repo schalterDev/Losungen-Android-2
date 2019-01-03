@@ -13,13 +13,15 @@ import io.mockk.every
 import io.mockk.mockkClass
 import io.mockk.mockkObject
 import org.hamcrest.Matchers
+import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import schalter.de.losungen2.R
 import schalter.de.losungen2.UnitTestUtils
-import schalter.de.losungen2.components.views.OneVerseCardView
+import schalter.de.losungen2.VerseCardTestUtils
+import schalter.de.losungen2.components.views.VerseCardView
 import schalter.de.losungen2.dataAccess.DailyVerse
 import schalter.de.losungen2.dataAccess.DailyVersesDao
 import schalter.de.losungen2.dataAccess.Language
@@ -79,45 +81,58 @@ class DailyVerseFragmentTest {
     fun shouldShowData() {
         dailyVerseLiveData.postValue(dailyVerse)
 
-        var oldTestamentData: UnitTestUtils.OneVerseCardData? = null
-        var newTestamentData: UnitTestUtils.OneVerseCardData? = null
+        val oldTestamentData: VerseCardTestUtils.VerseCardData?
+        val newTestamentData: VerseCardTestUtils.VerseCardData?
+
+        var oldTestamentCard: VerseCardView? = null
+        var newTestamentCard: VerseCardView? = null
 
         fragmentScenario.onFragment {
-            val oldTestamentCard = it.view?.findViewById<OneVerseCardView>(R.id.oldTestamentCard)
-            val newTestamentCard = it.view?.findViewById<OneVerseCardView>(R.id.newTestamentCard)
-            oldTestamentData = UnitTestUtils.getDataFromOneVerseCard(oldTestamentCard!!)
-            newTestamentData = UnitTestUtils.getDataFromOneVerseCard(newTestamentCard!!)
+            oldTestamentCard = it.view?.findViewById(R.id.oldTestamentCard)
+            newTestamentCard = it.view?.findViewById(R.id.newTestamentCard)
         }
 
-        assertThat(oldTestamentData!!.title, Matchers.equalTo(context.getString(R.string.old_testament_card_title)))
-        assertThat(oldTestamentData!!.text, Matchers.equalTo(dailyVerse.oldTestamentVerseText))
-        assertThat(oldTestamentData!!.verse, Matchers.equalTo(dailyVerse.oldTestamentVerseBible))
+        assertThat(VerseCardTestUtils.isFirstVerseVisible(oldTestamentCard!!), equalTo(true))
+        assertThat(VerseCardTestUtils.isFirstVerseVisible(newTestamentCard!!), equalTo(true))
+        assertThat(VerseCardTestUtils.isSecondVerseVisible(oldTestamentCard!!), equalTo(false))
+        assertThat(VerseCardTestUtils.isSecondVerseVisible(newTestamentCard!!), equalTo(false))
 
-        assertThat(newTestamentData!!.title, Matchers.equalTo(context.getString(R.string.new_testament_card_title)))
-        assertThat(newTestamentData!!.text, Matchers.equalTo(dailyVerse.newTestamentVerseText))
-        assertThat(newTestamentData!!.verse, Matchers.equalTo(dailyVerse.newTestamentVerseBible))
+        oldTestamentData = VerseCardTestUtils.getDataFromVerseCard(oldTestamentCard!!)
+        newTestamentData = VerseCardTestUtils.getDataFromVerseCard(newTestamentCard!!)
+
+        assertThat(oldTestamentData.title, equalTo(context.getString(R.string.old_testament_card_title)))
+        assertThat(oldTestamentData.text, equalTo(dailyVerse.oldTestamentVerseText))
+        assertThat(oldTestamentData.verse, equalTo(dailyVerse.oldTestamentVerseBible))
+
+        assertThat(newTestamentData.title, Matchers.equalTo(context.getString(R.string.new_testament_card_title)))
+        assertThat(newTestamentData.text, Matchers.equalTo(dailyVerse.newTestamentVerseText))
+        assertThat(newTestamentData.verse, Matchers.equalTo(dailyVerse.newTestamentVerseBible))
     }
 
     @Test
     fun shouldShowErrorMessage() {
         dailyVerseLiveData.postValue(null)
 
-        var oldTestamentData: UnitTestUtils.OneVerseCardData? = null
-        var newTestamentData: UnitTestUtils.OneVerseCardData? = null
+        val oldTestamentData: VerseCardTestUtils.VerseCardData?
+        val newTestamentData: VerseCardTestUtils.VerseCardData?
+
+        var oldTestamentCard: VerseCardView? = null
+        var newTestamentCard: VerseCardView? = null
 
         fragmentScenario.onFragment {
-            val oldTestamentCard = it.view?.findViewById<OneVerseCardView>(R.id.oldTestamentCard)
-            val newTestamentCard = it.view?.findViewById<OneVerseCardView>(R.id.newTestamentCard)
-            oldTestamentData = UnitTestUtils.getDataFromOneVerseCard(oldTestamentCard!!)
-            newTestamentData = UnitTestUtils.getDataFromOneVerseCard(newTestamentCard!!)
+            oldTestamentCard = it.view?.findViewById(R.id.oldTestamentCard)
+            newTestamentCard = it.view?.findViewById(R.id.newTestamentCard)
         }
 
-        assertThat(oldTestamentData!!.title, Matchers.equalTo(context.getString(R.string.old_testament_card_title)))
-        assertThat(oldTestamentData!!.text, Matchers.equalTo(context.getString(R.string.no_verse_found)))
-        assertThat(oldTestamentData!!.verse, Matchers.equalTo(context.getString(R.string.no_verse_found)))
+        oldTestamentData = VerseCardTestUtils.getDataFromVerseCard(oldTestamentCard!!)
+        newTestamentData = VerseCardTestUtils.getDataFromVerseCard(newTestamentCard!!)
 
-        assertThat(newTestamentData!!.title, Matchers.equalTo(context.getString(R.string.new_testament_card_title)))
-        assertThat(newTestamentData!!.text, Matchers.equalTo(context.getString(R.string.no_verse_found)))
-        assertThat(newTestamentData!!.verse, Matchers.equalTo(context.getString(R.string.no_verse_found)))
+        assertThat(oldTestamentData.title, Matchers.equalTo(context.getString(R.string.old_testament_card_title)))
+        assertThat(oldTestamentData.text, Matchers.equalTo(context.getString(R.string.no_verse_found)))
+        assertThat(oldTestamentData.verse, Matchers.equalTo(context.getString(R.string.no_verse_found)))
+
+        assertThat(newTestamentData.title, Matchers.equalTo(context.getString(R.string.new_testament_card_title)))
+        assertThat(newTestamentData.text, Matchers.equalTo(context.getString(R.string.no_verse_found)))
+        assertThat(newTestamentData.verse, Matchers.equalTo(context.getString(R.string.no_verse_found)))
     }
 }

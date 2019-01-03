@@ -17,21 +17,43 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/oneVerseTitle"
+                android:id="@+id/verseTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/oneVerseText"
+                android:id="@+id/verseText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/oneVerseInBible"
+                android:id="@+id/verseInBible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textAlignment="textEnd"
+                android:textColor="?attr/colorPrimary" />
+
+            <TextView
+                android:id="@+id/verseTitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/verseText2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/verseInBible2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"

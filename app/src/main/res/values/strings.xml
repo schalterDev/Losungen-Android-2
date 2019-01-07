@@ -1,24 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Losungen</string>
-    <string name="losungen">Losungen</string>
-    <string name="monthly_verses">Monats-, Wochensprüche</string>
-    <string name="favorite_verses">Markierte Verse</string>
-    <string name="configure_widgets">Widgets konfigurieren</string>
-    <string name="settings">Einstellungen</string>
-    <string name="rate">Bewerten</string>
-    <string name="send_feedback_bug">Feedack / Fehler melden</string>
-    <string name="info_help">Info / Hilfe</string>
-    <string name="privacy_policy">Datenschutzerklärung</string>
-
-    <string name="title_activity_settings">Einstellungen</string>
-    <string name="pref_general">Allgemein</string>
-    <string name="send_mail">Email verschicken</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Daily Words</string>
+    <string name="losungen">Daily Words</string>
+    <string name="monthly_verses">Weekly Verses</string>
+    <string name="favorite_verses">Favorite Verses</string>
+    <string name="configure_widgets">Configure Widgets</string>
+    <string name="settings">Settings</string>
+    <string name="rate">Rate App</string>
+    <string name="send_feedback_bug">Send feedback / bug</string>
+    <string name="info_help">Info / Help</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="pref_general">General</string>
+    <string name="send_mail">Send E-Mail</string>
     <string name="old_testament_card_title">Old Testament</string>
     <string name="new_testament_card_title">New Testament</string>
-    <string name="import_language">Import language</string>
-    <string name="no_verse_found">No verse found</string>
-
+    <string name="import_language">Import Language</string>
+    <string name="no_verses_found">No data available for this date</string>
+    <string name="import_new_data">Add new verses</string>
+    <string name="monthly_verse_title">Monthly verse</string>
 </resources>

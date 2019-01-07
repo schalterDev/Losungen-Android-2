@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Losungen</string>
+    <string name="losungen">Losungen</string>
+    <string name="monthly_verses">Monats-, Wochensprüche</string>
+    <string name="favorite_verses">Markierte Verse</string>
+    <string name="configure_widgets">Widgets konfigurieren</string>
+    <string name="settings">Einstellungen</string>
+    <string name="rate">Bewerten</string>
+    <string name="send_feedback_bug">Feedack / Fehler melden</string>
+    <string name="info_help">Info / Hilfe</string>
+    <string name="privacy_policy">Datenschutzerklärung</string>
+
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="pref_general">Allgemein</string>
+    <string name="send_mail">Email verschicken</string>
+
+    <string name="old_testament_card_title">Losung</string>
+    <string name="new_testament_card_title">Lehrtext</string>
+    <string name="import_language">Sprache importieren</string>
+    <string name="no_verses_found">Für dieses Datum sind keine Verse vorhanden</string>
+    <string name="import_new_data">Neue Verse hinzufügen</string>
+
+</resources>

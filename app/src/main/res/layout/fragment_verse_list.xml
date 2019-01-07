@@ -6,14 +6,15 @@
     tools:context=".fragments.DailyVerseFragment"
     android:orientation="vertical">
 
-    <schalter.de.losungen2.components.verseCard.VerseCardView
-        android:id="@+id/oldTestamentCard"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/versesList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 
-    <schalter.de.losungen2.components.verseCard.VerseCardView
-        android:id="@+id/newTestamentCard"
+    <schalter.de.losungen2.components.emptyState.EmptyStateView
+        android:id="@+id/emptyState"
+        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

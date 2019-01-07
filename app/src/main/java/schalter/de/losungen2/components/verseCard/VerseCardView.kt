@@ -1,4 +1,4 @@
-package schalter.de.losungen2.components.views
+package schalter.de.losungen2.components.verseCard
 
 import android.content.Context
 import android.util.AttributeSet
@@ -40,6 +40,10 @@ class VerseCardView : FrameLayout {
         titleView.text = context.getString(titleRes)
     }
 
+    fun setTitle(title: String) {
+        titleView.text = title
+    }
+
     fun setVerse(verse: String) {
         verseTextView.text = verse
     }
@@ -48,18 +52,50 @@ class VerseCardView : FrameLayout {
         verseInBibleView.text = verseInBible
     }
 
+    fun setTitle2(titleRes: Int) {
+        titleView2.text = context.getString(titleRes)
+        titleView2.visibility = View.VISIBLE
+    }
+
+    fun setTitle2(title: String) {
+        titleView2.text = title;
+        titleView2.visibility = View.VISIBLE
+    }
+
+    fun setVerse2(verse: String) {
+        verseTextView2.text = verse
+        verseTextView2.visibility = View.VISIBLE
+    }
+
+    fun setVerseInBible2(verseInBible: String) {
+        verseInBibleView2.text = verseInBible
+        verseInBibleView2.visibility = View.VISIBLE
+    }
+
+    fun setData(verseCardData: VerseCardData) {
+        setTitle(verseCardData.title)
+        setVerse(verseCardData.text)
+        setVerseInBible(verseCardData.verse)
+
+        verseCardData.title2?.let { setTitle2(it) }
+        verseCardData.text2?.let { setVerse2(it) }
+        verseCardData.verse2?.let { setVerseInBible2(it) }
+    }
+
+    fun getData(): VerseCardData {
+        return VerseCardData(
+                titleView.text as String,
+                verseTextView.text as String,
+                verseInBibleView.text as String,
+                titleView2.text as String,
+                verseTextView2.text as String,
+                verseInBibleView2.text as String
+        )
+    }
+
     private fun hideSecondVerse() {
         titleView2.visibility = View.GONE
         verseTextView2.visibility = View.GONE
         verseInBibleView2.visibility = View.GONE
     }
-
-    data class VerseCardData(
-            var title: String,
-            var verse: String,
-            var verseInBible: String,
-            var title2: String,
-            var verse2: String,
-            var verseInBible2: String
-    )
 }

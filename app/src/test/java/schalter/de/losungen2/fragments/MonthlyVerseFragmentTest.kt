@@ -21,28 +21,26 @@ import schalter.de.losungen2.R
 import schalter.de.losungen2.components.emptyState.EmptyStateView
 import schalter.de.losungen2.components.verseCard.VerseCardData
 import schalter.de.losungen2.components.verseCard.VerseCardGridAdapter
-import schalter.de.losungen2.dataAccess.DailyVerse
-import schalter.de.losungen2.dataAccess.DailyVersesDao
 import schalter.de.losungen2.dataAccess.Language
+import schalter.de.losungen2.dataAccess.MonthlyVerse
+import schalter.de.losungen2.dataAccess.MonthlyVersesDao
 import schalter.de.losungen2.dataAccess.VersesDatabase
 import java.util.*
 
 @RunWith(RobolectricTestRunner::class)
-class DailyVerseFragmentTest {
+class MonthlyVerseFragmentTest {
 
-    private lateinit var fragmentScenario: FragmentScenario<DailyVerseFragment>
+    private lateinit var fragmentScenario: FragmentScenario<MonthlyVerseFragment>
     private lateinit var date: Date
     private lateinit var context: Context
     private lateinit var database: VersesDatabase
 
     // Mock data
-    private var dailyVerseLiveData = MutableLiveData<DailyVerse>()
-    private val dailyVerse = DailyVerse(
+    private var monthlyVerseLiveData = MutableLiveData<MonthlyVerse>()
+    private val monthlyVerse = MonthlyVerse(
             date = Date(),
-            oldTestamentVerseText = "oh yeah",
-            oldTestamentVerseBible = "oh yeah2",
-            newTestamentVerseText = "oh yeah3",
-            newTestamentVerseBible = "oh yeah4",
+            verseText = "oh yeah",
+            verseBible = "oh yeah2",
             language = Language.DE
     )
 
@@ -57,14 +55,14 @@ class DailyVerseFragmentTest {
             putLong(ARG_DATE, Calendar.getInstance().time.time)
         }
 
-        fragmentScenario = launchFragmentInContainer<DailyVerseFragment>(fragmentArgs)
+        fragmentScenario = launchFragmentInContainer<MonthlyVerseFragment>(fragmentArgs)
     }
 
     private fun mockDatabase() {
         database = mockkClass(VersesDatabase::class)
-        val dailyVersesDao = mockkClass(DailyVersesDao::class)
-        every { database.dailyVerseDao() } returns dailyVersesDao
-        every { dailyVersesDao.findDailyVerseByDate(any()) } returns dailyVerseLiveData
+        val monthlyVersesDao = mockkClass(MonthlyVersesDao::class)
+        every { database.monthlyVerseDao() } returns monthlyVersesDao
+        every { monthlyVersesDao.findMonthlyVerseByDate(any()) } returns monthlyVerseLiveData
 
         mockkObject(VersesDatabase)
         every { VersesDatabase.provideVerseDatabase(any()) } returns database
@@ -72,7 +70,7 @@ class DailyVerseFragmentTest {
 
     @Test
     fun shouldShowData() {
-        dailyVerseLiveData.postValue(dailyVerse)
+        monthlyVerseLiveData.postValue(monthlyVerse)
 
         var verseListView: RecyclerView? = null
         var emptyStateView: EmptyStateView? = null
@@ -85,35 +83,25 @@ class DailyVerseFragmentTest {
         assertThat(emptyStateView!!.visibility, equalTo(View.GONE))
         assertThat(verseListView!!.visibility, equalTo(View.VISIBLE))
 
-        assertThat(verseListView!!.adapter!!.itemCount, equalTo(2))
+        assertThat(verseListView!!.adapter!!.itemCount, equalTo(1))
 
-        val oldTestamentViewHolder: VerseCardGridAdapter.VerseCardViewHolder = verseListView!!.findViewHolderForAdapterPosition(0) as VerseCardGridAdapter.VerseCardViewHolder
-        val newTestamentViewHolder: VerseCardGridAdapter.VerseCardViewHolder = verseListView!!.findViewHolderForAdapterPosition(1) as VerseCardGridAdapter.VerseCardViewHolder
+        val monthlyVerseViewHolder: VerseCardGridAdapter.VerseCardViewHolder = verseListView!!.findViewHolderForAdapterPosition(0) as VerseCardGridAdapter.VerseCardViewHolder
 
-        val expectedDataOldTestament = VerseCardData(
-                context.getString(R.string.old_testament_card_title),
-                dailyVerse.oldTestamentVerseText,
-                dailyVerse.oldTestamentVerseBible,
-                "",
-                "",
-                ""
-        )
-        val expectedDataNewTestament = VerseCardData(
-                context.getString(R.string.new_testament_card_title),
-                dailyVerse.newTestamentVerseText,
-                dailyVerse.newTestamentVerseBible,
+        val expectedDataMonth = VerseCardData(
+                context.getString(R.string.monthly_verse_title),
+                monthlyVerse.verseText,
+                monthlyVerse.verseBible,
                 "",
                 "",
                 ""
         )
 
-        assertThat(oldTestamentViewHolder.getData(), equalTo(expectedDataOldTestament))
-        assertThat(newTestamentViewHolder.getData(), equalTo(expectedDataNewTestament))
+        assertThat(monthlyVerseViewHolder.getData(), equalTo(expectedDataMonth))
     }
 
     @Test
     fun shouldShowErrorMessage() {
-        dailyVerseLiveData.postValue(null)
+        monthlyVerseLiveData.postValue(null)
 
         var emptyStateView: EmptyStateView? = null
 

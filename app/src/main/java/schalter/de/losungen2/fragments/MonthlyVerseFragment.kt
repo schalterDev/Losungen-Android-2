@@ -1,37 +1,51 @@
 package schalter.de.losungen2.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import schalter.de.losungen2.R
+import schalter.de.losungen2.components.verseCard.VerseCardData
+import schalter.de.losungen2.dataAccess.MonthlyVerse
+import schalter.de.losungen2.dataAccess.VersesDatabase
 import java.util.*
 
-private const val ARG_VERSE_DATE = "verse_date"
-
 /**
- * A simple [Fragment] subclass.
+ * A [Fragment] subclass.
  * Use the [DailyVerseFragment.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
-class MonthlyVerseFragment : Fragment() {
-    private var verseDate: Date? = null
+class MonthlyVerseFragment : VerseListDateFragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            verseDate = Date(it.getLong(ARG_VERSE_DATE))
-        }
-    }
+    private lateinit var mContext: Context
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_daily_verse, container, false)
+        val view = super.onCreateView(inflater, container, savedInstanceState)
+        mContext = view!!.context
+
+        this.updateData(listOf())
+        date?.let { loadDate(it) }
+
+        return view
     }
 
+    private fun loadDate(date: Date) {
+        val dailyVersesDatabase = VersesDatabase.provideVerseDatabase(mContext)
+        dailyVersesDatabase.monthlyVerseDao().findMonthlyVerseByDate(date).observe(
+                this,
+                androidx.lifecycle.Observer<MonthlyVerse> { monthlyVerse: MonthlyVerse? -> updateDataByMonthlyVerse(monthlyVerse) })
+    }
+
+    private fun updateDataByMonthlyVerse(monthlyVerse: MonthlyVerse?) {
+        if (monthlyVerse != null) {
+            this.updateData(listOf(VerseCardData.fromMonthlyVerse(mContext, monthlyVerse)))
+        } else {
+            this.updateData(listOf())
+        }
+    }
 
     companion object {
         /**

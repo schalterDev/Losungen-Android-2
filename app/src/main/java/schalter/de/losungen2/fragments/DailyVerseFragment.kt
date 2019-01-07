@@ -6,11 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import schalter.de.losungen2.R
-import schalter.de.losungen2.components.views.VerseCardView
+import schalter.de.losungen2.components.verseCard.VerseCardData
 import schalter.de.losungen2.dataAccess.DailyVerse
 import schalter.de.losungen2.dataAccess.VersesDatabase
 import java.util.*
+
+const val ARG_DATE = "arg_date"
 
 /**
  * A simple [Fragment] subclass.
@@ -18,48 +19,33 @@ import java.util.*
  * create an instance of this fragment.
  *
  */
-class DailyVerseFragment : DateFragment() {
+class DailyVerseFragment : VerseListDateFragment() {
 
-    private var mContext: Context? = null
-
-    private var oldTestamentCard: VerseCardView? = null
-    private var newTestamentCard: VerseCardView? = null
+    private lateinit var mContext: Context
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_daily_verse, container, false)
-        mContext = view.context
+        val view = super.onCreateView(inflater, container, savedInstanceState)
+        mContext = view!!.context
 
-        oldTestamentCard = view.findViewById(R.id.oldTestamentCard)
-        newTestamentCard = view.findViewById(R.id.newTestamentCard)
-
-        oldTestamentCard?.setTitle(R.string.old_testament_card_title)
-        newTestamentCard?.setTitle(R.string.new_testament_card_title)
-
-        if (date != null) {
-            loadDate(date!!)
-        }
-
-        updateData(null)
+        date?.let { loadDate(it) }
 
         return view
     }
 
     private fun loadDate(date: Date) {
-        val dailyVersesDatabase = VersesDatabase.provideVerseDatabase(mContext!!)
+        val dailyVersesDatabase = VersesDatabase.provideVerseDatabase(mContext)
         dailyVersesDatabase.dailyVerseDao().findDailyVerseByDate(date).observe(
                 this,
-                androidx.lifecycle.Observer<DailyVerse> { dailyVerse: DailyVerse? -> updateData(dailyVerse) })
+                androidx.lifecycle.Observer<DailyVerse> { dailyVerse: DailyVerse? -> updateDataByDailyVerse(dailyVerse) })
     }
 
-    private fun updateData(dailyVerse: DailyVerse?) {
-        val errorVerseNotFound = mContext!!.getString(R.string.no_verse_found)
-
-        oldTestamentCard?.setVerse(dailyVerse?.oldTestamentVerseText ?: errorVerseNotFound)
-        oldTestamentCard?.setVerseInBible(dailyVerse?.oldTestamentVerseBible ?: errorVerseNotFound)
-        newTestamentCard?.setVerse(dailyVerse?.newTestamentVerseText ?: errorVerseNotFound)
-        newTestamentCard?.setVerseInBible(dailyVerse?.newTestamentVerseBible ?: errorVerseNotFound)
+    private fun updateDataByDailyVerse(dailyVerse: DailyVerse?) {
+        if (dailyVerse != null) {
+            this.updateData(VerseCardData.fromDailyVerse(mContext, dailyVerse))
+        } else {
+            this.updateData(listOf())
+        }
     }
 
     companion object {

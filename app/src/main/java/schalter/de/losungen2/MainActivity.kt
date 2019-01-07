@@ -1,7 +1,6 @@
 package schalter.de.losungen2
 
 import android.os.Bundle
-
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -21,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupToolbar() {
         toolbar = findViewById(R.id.toolbar)
-        toolbar.setTitle(R.string.losungen)
+        toolbar.setTitle(R.string.app_name)
     }
 
     private fun setupNavigationDrawer() {

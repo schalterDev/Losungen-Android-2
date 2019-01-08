@@ -97,6 +97,37 @@ class WeeklyVersesUnitTest {
     }
 
     @Test
+    fun readRange() {
+        weeklyVerseDao.insertWeeklyVerse(weeklyVerse)
+
+        val weeklyVerseNextWeek = weeklyVerse.copy()
+        weeklyVerseNextWeek.verseText = "2"
+        weeklyVerseNextWeek.date = TestUtils.addDaysToDate(weeklyVerse.date, 7)
+        weeklyVerseDao.insertWeeklyVerse(weeklyVerseNextWeek)
+
+        // date should be automatic convert to right date
+        val calendar = Calendar.getInstance()
+        calendar.time = weeklyVerse.date
+        calendar.set(Calendar.HOUR_OF_DAY, 23)
+        val startDate = calendar.time
+        calendar.time = weeklyVerseNextWeek.date
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        val endDate = calendar.time
+
+        val versesFromDatabase: List<WeeklyVerse> = weeklyVerseDao.findWeeklyVerseInDateRange(startDate, endDate).blockingObserve()!!
+        assertThat(versesFromDatabase.size, equalTo(2))
+        assertThat(versesFromDatabase[0].verseText, equalTo(weeklyVerse.verseText))
+        assertThat(versesFromDatabase[0].verseBible, equalTo(weeklyVerse.verseBible))
+        assertThat(versesFromDatabase[0].date, equalTo(weeklyVerse.date))
+        assertThat(versesFromDatabase[0].isFavourite, equalTo(weeklyVerse.isFavourite))
+        assertThat(versesFromDatabase[0].language, equalTo(weeklyVerse.language))
+        assertThat(versesFromDatabase[0].notes, equalTo(weeklyVerse.notes))
+
+        assertThat(versesFromDatabase[1].verseText, equalTo(weeklyVerseNextWeek.verseText))
+        assertThat(versesFromDatabase[1].date, equalTo(weeklyVerseNextWeek.date))
+    }
+
+    @Test
     @Throws(Exception::class)
     fun updateLanguage() {
         weeklyVerse.notes = "notes"

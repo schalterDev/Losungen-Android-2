@@ -4,6 +4,7 @@ import android.content.Context
 import schalter.de.losungen2.R
 import schalter.de.losungen2.dataAccess.DailyVerse
 import schalter.de.losungen2.dataAccess.MonthlyVerse
+import schalter.de.losungen2.dataAccess.WeeklyVerse
 
 data class VerseCardData(
         var title: String,
@@ -37,6 +38,20 @@ data class VerseCardData(
                     monthlyVerse.verseText,
                     monthlyVerse.verseBible
             )
+        }
+
+        fun fromWeeklyVerse(weeklyVerse: WeeklyVerse): VerseCardData {
+            val title = "TODO generate title from date"
+
+            return VerseCardData(
+                    title,
+                    weeklyVerse.verseText,
+                    weeklyVerse.verseBible
+            )
+        }
+
+        fun fromWeeklyVerses(weeklyVerses: List<WeeklyVerse>): List<VerseCardData> {
+            return weeklyVerses.map { fromWeeklyVerse(it) }
         }
     }
 }

@@ -6,8 +6,8 @@ import org.junit.Assert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import schalter.de.losungen2.dataAccess.DailyVerse
 import schalter.de.losungen2.dataAccess.Language
+import schalter.de.losungen2.dataAccess.entities.DailyVerse
 import java.io.InputStream
 import java.text.ParseException
 import java.util.*
@@ -36,7 +36,7 @@ class LosungenXmlParserTest {
             calendar.set(Calendar.DAY_OF_YEAR, 1)
             calendar.time = DailyVerse.getDateForDay(calendar.time)
 
-            for(i in 1..3) {
+            for (i in 1..3) {
                 val dailyVerse = dailyVerses[i - 1]
                 assertThat(dailyVerse.date, equalTo(calendar.time))
                 assertThat(dailyVerse.notes, isEmptyOrNullString())

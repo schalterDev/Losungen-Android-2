@@ -1,8 +1,9 @@
-package schalter.de.losungen2.dataAccess
+package schalter.de.losungen2.dataAccess.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import schalter.de.losungen2.dataAccess.Language
 import java.util.*
 
 @Entity

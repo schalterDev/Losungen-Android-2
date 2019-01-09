@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".settings.SettingsActivity"
+            android:name="schalter.de.losungen2.screens.settings.SettingsActivity"
             android:label="@string/title_activity_settings"></activity>
     </application>
 

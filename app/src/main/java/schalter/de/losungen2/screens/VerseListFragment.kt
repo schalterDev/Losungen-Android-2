@@ -1,4 +1,4 @@
-package schalter.de.losungen2.fragments
+package schalter.de.losungen2.screens
 
 import android.os.Bundle
 import android.view.LayoutInflater

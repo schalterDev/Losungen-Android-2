@@ -1,4 +1,4 @@
-package schalter.de.losungen2.fragments
+package schalter.de.losungen2.screens.monthly
 
 import android.content.Context
 import android.os.Bundle
@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import schalter.de.losungen2.components.verseCard.VerseCardData
-import schalter.de.losungen2.dataAccess.MonthlyVerse
 import schalter.de.losungen2.dataAccess.VersesDatabase
-import schalter.de.losungen2.dataAccess.WeeklyVerse
+import schalter.de.losungen2.dataAccess.entities.MonthlyVerse
+import schalter.de.losungen2.dataAccess.entities.WeeklyVerse
+import schalter.de.losungen2.screens.ARG_VERSE_DATE
+import schalter.de.losungen2.screens.VerseListDateFragment
 import java.util.*
 
 /**

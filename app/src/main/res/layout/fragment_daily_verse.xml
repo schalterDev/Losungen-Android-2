@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.DailyVerseFragment"
+    tools:context=".screens.daily.DailyVerseFragment"
     android:orientation="vertical">
 
     <schalter.de.losungen2.components.verseCard.VerseCardView

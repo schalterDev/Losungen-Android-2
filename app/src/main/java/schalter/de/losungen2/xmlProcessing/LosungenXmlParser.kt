@@ -3,8 +3,8 @@ package schalter.de.losungen2.xmlProcessing
 import android.util.Xml
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
-import schalter.de.losungen2.dataAccess.DailyVerse
 import schalter.de.losungen2.dataAccess.Language
+import schalter.de.losungen2.dataAccess.entities.DailyVerse
 import java.io.IOException
 import java.io.InputStream
 import java.text.ParseException

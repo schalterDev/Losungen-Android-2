@@ -1,4 +1,4 @@
-package schalter.de.losungen2.settings
+package schalter.de.losungen2.screens.settings
 
 import android.annotation.TargetApi
 import android.content.Context

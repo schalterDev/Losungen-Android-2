@@ -1,4 +1,4 @@
-package schalter.de.losungen2.fragments
+package schalter.de.losungen2.screens.favourite
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,15 +9,14 @@ import schalter.de.losungen2.R
 
 /**
  * A simple [Fragment] subclass.
- * Use the [InfoFragment.newInstance] factory method to
- * create an instance of this fragment.
  */
-class InfoFragment : Fragment() {
+class FavouriteVersesOverviewFragment : Fragment() {
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_info, container, false)
+        return inflater.inflate(R.layout.fragment_favourite_verses_overview, container, false)
     }
 
     companion object {
@@ -25,11 +24,10 @@ class InfoFragment : Fragment() {
         /**
          * Use this factory method to create a new instance of
          * this fragment
-         *
-         * @return A new instance of fragment InfoFragment.
+         * @return A new instance of fragment FavouriteVersesOverviewFragment.
          */
-        fun newInstance(): InfoFragment {
-            return InfoFragment()
+        fun newInstance(): FavouriteVersesOverviewFragment {
+            return FavouriteVersesOverviewFragment()
         }
     }
 

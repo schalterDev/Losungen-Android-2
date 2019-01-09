@@ -14,6 +14,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import schalter.de.losungen2.TestUtils
+import schalter.de.losungen2.dataAccess.daos.WeeklyVersesDao
+import schalter.de.losungen2.dataAccess.entities.WeeklyVerse
 import java.io.IOException
 import java.util.*
 import java.util.concurrent.CountDownLatch

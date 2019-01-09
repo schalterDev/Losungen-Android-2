@@ -1,4 +1,4 @@
-package schalter.de.losungen2.dataAccess
+package schalter.de.losungen2.dataAccess.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

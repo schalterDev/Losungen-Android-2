@@ -1,4 +1,4 @@
-package schalter.de.losungen2.components
+package schalter.de.losungen2.components.navigationDrawer
 
 import android.app.Activity
 import android.content.Intent
@@ -10,8 +10,12 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import schalter.de.losungen2.R
-import schalter.de.losungen2.fragments.*
-import schalter.de.losungen2.settings.SettingsActivity
+import schalter.de.losungen2.screens.daily.DailyVersesOverviewFragment
+import schalter.de.losungen2.screens.favourite.FavouriteVersesOverviewFragment
+import schalter.de.losungen2.screens.info.InfoFragment
+import schalter.de.losungen2.screens.monthly.MonthlyVersesOverviewFragment
+import schalter.de.losungen2.screens.settings.SettingsActivity
+import schalter.de.losungen2.screens.widget.WidgetsOverviewFragment
 import schalter.de.losungen2.utils.Open
 
 class NavigationDrawer(private val activity: Activity, private val fragmentChangeListener: (Fragment) -> Unit) {

@@ -1,4 +1,4 @@
-package schalter.de.losungen2.fragments
+package schalter.de.losungen2.screens.daily
 
 import android.content.Context
 import android.os.Bundle
@@ -7,8 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import schalter.de.losungen2.components.verseCard.VerseCardData
-import schalter.de.losungen2.dataAccess.DailyVerse
 import schalter.de.losungen2.dataAccess.VersesDatabase
+import schalter.de.losungen2.dataAccess.entities.DailyVerse
+import schalter.de.losungen2.screens.VerseListDateFragment
 import java.util.*
 
 const val ARG_DATE = "arg_date"

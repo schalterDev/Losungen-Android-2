@@ -1,10 +1,12 @@
-package schalter.de.losungen2.dataAccess
+package schalter.de.losungen2.dataAccess.daos
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
+import schalter.de.losungen2.dataAccess.Language
+import schalter.de.losungen2.dataAccess.entities.AvailableData
 
 @Dao
 interface AvailableDataDao {

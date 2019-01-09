@@ -5,6 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import schalter.de.losungen2.dataAccess.daos.AvailableDataDao
+import schalter.de.losungen2.dataAccess.daos.DailyVersesDao
+import schalter.de.losungen2.dataAccess.daos.MonthlyVersesDao
+import schalter.de.losungen2.dataAccess.daos.WeeklyVersesDao
+import schalter.de.losungen2.dataAccess.entities.*
 
 @Database(entities = [DailyVerse::class, WeeklyVerse::class, MonthlyVerse::class, Sermon::class, AvailableData::class], version = 1)
 @TypeConverters(Converters::class)

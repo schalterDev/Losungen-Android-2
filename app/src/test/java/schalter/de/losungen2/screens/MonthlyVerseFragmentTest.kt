@@ -1,4 +1,4 @@
-package schalter.de.losungen2.fragments
+package schalter.de.losungen2.screens
 
 import android.content.Context
 import android.os.Bundle
@@ -21,7 +21,14 @@ import schalter.de.losungen2.R
 import schalter.de.losungen2.components.emptyState.EmptyStateView
 import schalter.de.losungen2.components.verseCard.VerseCardData
 import schalter.de.losungen2.components.verseCard.VerseCardGridAdapter
-import schalter.de.losungen2.dataAccess.*
+import schalter.de.losungen2.dataAccess.Language
+import schalter.de.losungen2.dataAccess.VersesDatabase
+import schalter.de.losungen2.dataAccess.daos.MonthlyVersesDao
+import schalter.de.losungen2.dataAccess.daos.WeeklyVersesDao
+import schalter.de.losungen2.dataAccess.entities.MonthlyVerse
+import schalter.de.losungen2.dataAccess.entities.WeeklyVerse
+import schalter.de.losungen2.screens.daily.ARG_DATE
+import schalter.de.losungen2.screens.monthly.MonthlyVerseFragment
 import java.util.*
 
 @RunWith(RobolectricTestRunner::class)

@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import schalter.de.losungen2.components.NavigationDrawer
+import schalter.de.losungen2.components.navigationDrawer.NavigationDrawer
 
 class MainActivity : AppCompatActivity() {
 

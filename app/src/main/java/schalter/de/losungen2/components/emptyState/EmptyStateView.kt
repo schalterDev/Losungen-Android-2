@@ -3,10 +3,13 @@ package schalter.de.losungen2.components.emptyState
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.widget.Button
 import android.widget.FrameLayout
 import schalter.de.losungen2.R
 
 class EmptyStateView : FrameLayout {
+
+    var button: Button
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet)
@@ -14,6 +17,11 @@ class EmptyStateView : FrameLayout {
 
     init {
         val view = View.inflate(context, R.layout.empty_words, null)
+
+        button = view.findViewById(R.id.emptyStateImport)
+
+        // TODO start dialog
+
         addView(view)
     }
 }

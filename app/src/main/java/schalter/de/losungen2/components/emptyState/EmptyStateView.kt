@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
 import schalter.de.losungen2.R
+import schalter.de.losungen2.components.dialogs.ImportVersesDialog
 
 class EmptyStateView : FrameLayout {
 
@@ -20,7 +21,10 @@ class EmptyStateView : FrameLayout {
 
         button = view.findViewById(R.id.emptyStateImport)
 
-        // TODO start dialog
+        button.setOnClickListener {
+            val importDialog = ImportVersesDialog(it.context)
+            importDialog.show()
+        }
 
         addView(view)
     }

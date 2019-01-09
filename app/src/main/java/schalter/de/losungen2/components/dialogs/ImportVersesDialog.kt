@@ -1,33 +1,41 @@
 package schalter.de.losungen2.components.dialogs
 
-import android.app.Dialog
-import android.os.Bundle
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Spinner
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
 import schalter.de.losungen2.R
 
-class ImportVersesDialog : DialogFragment() {
+class ImportVersesDialog(val context: Context) {
 
     //    private lateinit var dataManagement: DataManagement
     private lateinit var spinner: Spinner
+    private lateinit var dialog: AlertDialog
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return activity?.let {
-            val li = LayoutInflater.from(context)
-            val dialogView = li.inflate(R.layout.dialog_import, null)
+    init {
+        this.load()
+    }
 
-            val builder = AlertDialog.Builder(it)
-            builder.setView(dialogView)
-            val alertDialog = builder.create()
+    fun show() {
+        dialog.show()
+    }
 
-//            dataManagement = DataManagement(alertDialog.context)
+    fun close() {
+        dialog.cancel()
+    }
 
-            initDialog(dialogView)
-            return alertDialog
-        } ?: throw IllegalStateException("Activity cannot be null")
+    private fun load() {
+        val li = LayoutInflater.from(context)
+        val dialogView = li.inflate(R.layout.dialog_import, null)
+
+        val builder = AlertDialog.Builder(context)
+        builder.setView(dialogView)
+        dialog = builder.create()
+
+//        dataManagement = DataManagement(alertDialog.context)
+
+        initDialog(dialogView)
     }
 
     private fun initDialog(dialog: View) {

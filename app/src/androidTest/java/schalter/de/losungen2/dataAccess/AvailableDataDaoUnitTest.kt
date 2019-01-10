@@ -13,8 +13,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import schalter.de.losungen2.dataAccess.daos.AvailableDataDao
-import schalter.de.losungen2.dataAccess.entities.AvailableData
+import schalter.de.losungen2.dataAccess.availableData.AvailableData
+import schalter.de.losungen2.dataAccess.availableData.AvailableDataDao
 import java.io.IOException
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit

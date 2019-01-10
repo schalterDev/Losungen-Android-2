@@ -23,10 +23,10 @@ import schalter.de.losungen2.components.verseCard.VerseCardData
 import schalter.de.losungen2.components.verseCard.VerseCardGridAdapter
 import schalter.de.losungen2.dataAccess.Language
 import schalter.de.losungen2.dataAccess.VersesDatabase
-import schalter.de.losungen2.dataAccess.daos.MonthlyVersesDao
-import schalter.de.losungen2.dataAccess.daos.WeeklyVersesDao
-import schalter.de.losungen2.dataAccess.entities.MonthlyVerse
-import schalter.de.losungen2.dataAccess.entities.WeeklyVerse
+import schalter.de.losungen2.dataAccess.monthly.MonthlyVerse
+import schalter.de.losungen2.dataAccess.monthly.MonthlyVersesDao
+import schalter.de.losungen2.dataAccess.weekly.WeeklyVerse
+import schalter.de.losungen2.dataAccess.weekly.WeeklyVersesDao
 import schalter.de.losungen2.screens.daily.ARG_DATE
 import schalter.de.losungen2.screens.monthly.MonthlyVerseFragment
 import java.util.*

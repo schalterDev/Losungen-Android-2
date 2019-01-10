@@ -9,8 +9,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_tabs.*
 import schalter.de.losungen2.R
-import schalter.de.losungen2.tabs.DatePagerAdapter
-import schalter.de.losungen2.tabs.MonthlyVersePagerAdapter
+import schalter.de.losungen2.components.tabs.DatePagerAdapter
 import java.util.*
 
 /**

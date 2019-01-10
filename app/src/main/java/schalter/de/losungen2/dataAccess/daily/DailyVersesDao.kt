@@ -1,4 +1,4 @@
-package schalter.de.losungen2.dataAccess.daos
+package schalter.de.losungen2.dataAccess.daily
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -6,7 +6,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import schalter.de.losungen2.dataAccess.Language
-import schalter.de.losungen2.dataAccess.entities.DailyVerse
 import java.util.*
 
 @Dao

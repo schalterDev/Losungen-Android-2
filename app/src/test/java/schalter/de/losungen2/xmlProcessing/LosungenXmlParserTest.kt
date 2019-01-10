@@ -7,7 +7,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import schalter.de.losungen2.dataAccess.Language
-import schalter.de.losungen2.dataAccess.entities.DailyVerse
+import schalter.de.losungen2.dataAccess.daily.DailyVerse
 import java.io.InputStream
 import java.text.ParseException
 import java.util.*

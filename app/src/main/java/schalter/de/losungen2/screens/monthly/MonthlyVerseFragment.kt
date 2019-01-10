@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import schalter.de.losungen2.components.verseCard.VerseCardData
 import schalter.de.losungen2.dataAccess.VersesDatabase
-import schalter.de.losungen2.dataAccess.entities.MonthlyVerse
-import schalter.de.losungen2.dataAccess.entities.WeeklyVerse
+import schalter.de.losungen2.dataAccess.monthly.MonthlyVerse
+import schalter.de.losungen2.dataAccess.weekly.WeeklyVerse
 import schalter.de.losungen2.screens.ARG_VERSE_DATE
 import schalter.de.losungen2.screens.VerseListDateFragment
 import java.util.*

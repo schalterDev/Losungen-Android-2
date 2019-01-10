@@ -1,4 +1,4 @@
-package schalter.de.losungen2.tabs
+package schalter.de.losungen2.components.tabs
 
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter

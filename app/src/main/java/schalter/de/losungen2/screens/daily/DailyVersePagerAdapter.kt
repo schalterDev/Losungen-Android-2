@@ -1,8 +1,8 @@
-package schalter.de.losungen2.tabs
+package schalter.de.losungen2.screens.daily
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import schalter.de.losungen2.screens.daily.DailyVerseFragment
+import schalter.de.losungen2.components.tabs.DatePagerAdapter
 import java.util.*
 
 private const val dateFormat = "E, dd.MM"

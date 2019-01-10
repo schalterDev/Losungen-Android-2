@@ -2,9 +2,9 @@ package schalter.de.losungen2.components.verseCard
 
 import android.content.Context
 import schalter.de.losungen2.R
-import schalter.de.losungen2.dataAccess.entities.DailyVerse
-import schalter.de.losungen2.dataAccess.entities.MonthlyVerse
-import schalter.de.losungen2.dataAccess.entities.WeeklyVerse
+import schalter.de.losungen2.dataAccess.daily.DailyVerse
+import schalter.de.losungen2.dataAccess.monthly.MonthlyVerse
+import schalter.de.losungen2.dataAccess.weekly.WeeklyVerse
 
 data class VerseCardData(
         var title: String,

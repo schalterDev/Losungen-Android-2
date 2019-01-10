@@ -1,9 +1,10 @@
-package schalter.de.losungen2.dataAccess.entities
+package schalter.de.losungen2.dataAccess.sermon
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import schalter.de.losungen2.dataAccess.daily.DailyVerse
 
 @Entity(foreignKeys = arrayOf(ForeignKey(
         entity = DailyVerse::class,

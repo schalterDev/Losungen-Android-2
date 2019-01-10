@@ -3,7 +3,7 @@ package schalter.de.losungen2.dataAccess
 import org.hamcrest.Matchers
 import org.junit.Assert.assertThat
 import org.junit.Test
-import schalter.de.losungen2.dataAccess.entities.WeeklyVerse
+import schalter.de.losungen2.dataAccess.weekly.WeeklyVerse
 import java.util.*
 
 class WeeklyVerseTest {

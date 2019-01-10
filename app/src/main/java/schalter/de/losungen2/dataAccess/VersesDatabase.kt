@@ -5,11 +5,15 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import schalter.de.losungen2.dataAccess.daos.AvailableDataDao
-import schalter.de.losungen2.dataAccess.daos.DailyVersesDao
-import schalter.de.losungen2.dataAccess.daos.MonthlyVersesDao
-import schalter.de.losungen2.dataAccess.daos.WeeklyVersesDao
-import schalter.de.losungen2.dataAccess.entities.*
+import schalter.de.losungen2.dataAccess.availableData.AvailableData
+import schalter.de.losungen2.dataAccess.availableData.AvailableDataDao
+import schalter.de.losungen2.dataAccess.daily.DailyVerse
+import schalter.de.losungen2.dataAccess.daily.DailyVersesDao
+import schalter.de.losungen2.dataAccess.monthly.MonthlyVerse
+import schalter.de.losungen2.dataAccess.monthly.MonthlyVersesDao
+import schalter.de.losungen2.dataAccess.sermon.Sermon
+import schalter.de.losungen2.dataAccess.weekly.WeeklyVerse
+import schalter.de.losungen2.dataAccess.weekly.WeeklyVersesDao
 
 @Database(entities = [DailyVerse::class, WeeklyVerse::class, MonthlyVerse::class, Sermon::class, AvailableData::class], version = 1)
 @TypeConverters(Converters::class)

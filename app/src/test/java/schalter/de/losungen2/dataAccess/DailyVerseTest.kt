@@ -3,7 +3,7 @@ package schalter.de.losungen2.dataAccess
 import org.hamcrest.Matchers.equalTo
 import org.junit.Assert.assertThat
 import org.junit.Test
-import schalter.de.losungen2.dataAccess.entities.DailyVerse
+import schalter.de.losungen2.dataAccess.daily.DailyVerse
 import java.util.*
 
 class DailyVerseTest {

@@ -21,8 +21,8 @@ import schalter.de.losungen2.utils.TestApplication
 @Config(application = TestApplication::class)
 class EmptyStateViewTest {
 
-    lateinit var context: Context
-    lateinit var emptyStateView: EmptyStateView
+    private lateinit var context: Context
+    private lateinit var emptyStateView: EmptyStateView
 
     @Before
     fun loadView() {

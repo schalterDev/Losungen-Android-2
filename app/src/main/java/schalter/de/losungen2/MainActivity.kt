@@ -24,15 +24,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNavigationDrawer() {
-        val navigationDrawer = NavigationDrawer(this) { nextFragment -> this@MainActivity.changeFragment(nextFragment) }
+        val navigationDrawer = NavigationDrawer(this) { nextFragment, tag -> this@MainActivity.changeFragment(nextFragment, tag) }
         navigationDrawer.initAndShow(toolbar)
         navigationDrawer.setActiveItem(NavigationDrawer.DrawerItem.DAILY_OVERVIEW)
     }
 
-    private fun changeFragment(fragment: Fragment) {
+    private fun changeFragment(fragment: Fragment, tag: String) {
         supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.main_activity_fragment, fragment)
+                .replace(R.id.main_activity_fragment, fragment, tag)
                 .commit()
     }
 }

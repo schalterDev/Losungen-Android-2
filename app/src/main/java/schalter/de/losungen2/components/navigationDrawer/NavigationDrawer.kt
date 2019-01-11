@@ -18,7 +18,7 @@ import schalter.de.losungen2.screens.settings.SettingsActivity
 import schalter.de.losungen2.screens.widget.WidgetsOverviewFragment
 import schalter.de.losungen2.utils.Open
 
-class NavigationDrawer(private val activity: Activity, private val fragmentChangeListener: (Fragment) -> Unit) {
+class NavigationDrawer(private val activity: Activity, private val fragmentChangeListener: (Fragment, String) -> Unit) {
     private lateinit var navigationDrawer: Drawer
 
     // Fragments
@@ -128,12 +128,24 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
         }
 
         if (fragmentToShowNext != null) {
-            fragmentChangeListener.invoke(fragmentToShowNext)
+            fragmentChangeListener.invoke(fragmentToShowNext, getTagForFragment(fragmentToShowNext)!!)
             navigationDrawer.closeDrawer()
             return true
         }
 
         return false
+    }
+
+    fun getTagForFragment(fragment: Fragment): String? {
+        when (fragment) {
+            is DailyVersesOverviewFragment -> return DrawerItem.DAILY_OVERVIEW.toString()
+            is MonthlyVersesOverviewFragment -> return DrawerItem.MONTHLY_OVERVIEW.toString()
+            is FavouriteVersesOverviewFragment -> return DrawerItem.FAVOURITE_OVERVIEW.toString()
+            is WidgetsOverviewFragment -> return DrawerItem.WIDGET_OVERVIEW.toString()
+            is InfoFragment -> return DrawerItem.INFO.toString()
+        }
+
+        return null
     }
 
     enum class DrawerItem {

@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Daily Words</string>
     <string name="losungen">Daily Words</string>
-    <string name="monthly_verses">Weekly Verses</string>
+    <string name="monthly_verses">Weekly / Monthly Verses</string>
     <string name="favorite_verses">Favorite Verses</string>
     <string name="configure_widgets">Configure Widgets</string>
     <string name="settings">Settings</string>

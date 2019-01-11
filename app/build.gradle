@@ -27,6 +27,16 @@ android {
     }
 }
 
+android.sourceSets {
+    test {
+        java.srcDirs += "$projectDir/src/testShared"
+    }
+
+    androidTest {
+        java.srcDirs += "$projectDir/src/testShared"
+    }
+}
+
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
@@ -56,23 +66,28 @@ dependencies {
     testImplementation "androidx.test:runner:1.1.1"
     testImplementation "androidx.test:rules:1.1.1"
     testImplementation "androidx.arch.core:core-testing:2.0.0"
-    testImplementation "org.robolectric:robolectric:4.1"
-    testImplementation "org.mockito:mockito-core:2.19.0"
-    testImplementation "io.mockk:mockk:1.8.13"
-    debugImplementation "androidx.fragment:fragment-testing:1.1.0-alpha03"
     testImplementation "androidx.test.espresso:espresso-core:3.1.1"
+    testImplementation "com.android.support.test.espresso:espresso-contrib:3.0.2"
+    testImplementation "org.robolectric:robolectric:4.1"
+    testImplementation "io.mockk:mockk:1.8.13"
 
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
-    androidTestImplementation("androidx.test:core:1.1.0-alpha01") {
-        // remove alpha when updating debugImplementation androidx.fragment:fragment-testing
+    debugImplementation "androidx.fragment:fragment-testing:1.1.0-alpha03"
+    debugImplementation("androidx.test:core:1.1.0") {
+        // remove when updating debugImplementation androidx.fragment:fragment-testing
         force = true
     }
-    androidTestImplementation("androidx.test:monitor:1.1.1-alpha01") {
-        // remove dependecie when updating debugImplementation androidx.fragment:fragment-testing
+    debugImplementation("androidx.test:monitor:1.1.1") {
+        // remove when updating debugImplementation androidx.fragment:fragment-testing
         force = true
     }
-    androidTestImplementation "androidx.test.ext:junit:1.1.0"
+
+    androidTestImplementation "io.mockk:mockk-android:1.8.13"
     androidTestImplementation "androidx.arch.core:core-testing:2.0.0"
+    androidTestImplementation "androidx.test:rules:1.1.1"
+    androidTestImplementation "androidx.test.ext:junit:1.1.0"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
+    androidTestImplementation "com.android.support.test.espresso:espresso-contrib:3.0.2"
+    androidTestImplementation "com.android.support.test.espresso:espresso-intents:3.0.2"
 }
 repositories {
     mavenCentral()

@@ -1,8 +1,8 @@
-package schalter.de.losungen2
+package schalter.de.losungen2.utils
 
 import java.util.*
 
-class TestUtils {
+class DateUtils {
     companion object {
         fun addDaysToDate(date: Date, days: Int = 1): Date {
             val calendar = Calendar.getInstance()

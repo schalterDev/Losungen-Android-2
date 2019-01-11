@@ -1,10 +1,6 @@
 package schalter.de.losungen2.dataAccess
 
-import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.hamcrest.Matchers.equalTo
@@ -13,26 +9,13 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import schalter.de.losungen2.TestUtils
 import schalter.de.losungen2.dataAccess.weekly.WeeklyVerse
 import schalter.de.losungen2.dataAccess.weekly.WeeklyVersesDao
+import schalter.de.losungen2.utils.DatabaseUtils
+import schalter.de.losungen2.utils.DateUtils
+import schalter.de.losungen2.utils.blockingObserve
 import java.io.IOException
 import java.util.*
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
-
-private fun <T> LiveData<T>.blockingObserve(): T? {
-    var value: T? = null
-    val latch = CountDownLatch(1)
-
-    observeForever { t ->
-        value = t
-        latch.countDown()
-    }
-
-    latch.await(2, TimeUnit.SECONDS)
-    return value
-}
 
 @RunWith(AndroidJUnit4::class)
 class WeeklyVersesUnitTest {
@@ -53,9 +36,7 @@ class WeeklyVersesUnitTest {
 
     @Before
     fun createDb() {
-        val context: Context = ApplicationProvider.getApplicationContext<Context>()
-        db = Room.inMemoryDatabaseBuilder(
-                context, VersesDatabase::class.java).build()
+        db = DatabaseUtils.getInMemoryDatabase()
         weeklyVerseDao = db.weeklyVerseDao()
     }
 
@@ -82,7 +63,7 @@ class WeeklyVersesUnitTest {
 
         val weeklyVerseNextWeek = weeklyVerse.copy()
         weeklyVerseNextWeek.verseText = "2"
-        weeklyVerseNextWeek.date = TestUtils.addDaysToDate(weeklyVerse.date, 7)
+        weeklyVerseNextWeek.date = DateUtils.addDaysToDate(weeklyVerse.date, 7)
         weeklyVerseDao.insertWeeklyVerse(weeklyVerseNextWeek)
 
         var verseFromDatabase: WeeklyVerse = weeklyVerseDao.findWeeklyVerseByDate(weeklyVerse.date).blockingObserve()!!
@@ -104,7 +85,7 @@ class WeeklyVersesUnitTest {
 
         val weeklyVerseNextWeek = weeklyVerse.copy()
         weeklyVerseNextWeek.verseText = "2"
-        weeklyVerseNextWeek.date = TestUtils.addDaysToDate(weeklyVerse.date, 7)
+        weeklyVerseNextWeek.date = DateUtils.addDaysToDate(weeklyVerse.date, 7)
         weeklyVerseDao.insertWeeklyVerse(weeklyVerseNextWeek)
 
         // date should be automatic convert to right date

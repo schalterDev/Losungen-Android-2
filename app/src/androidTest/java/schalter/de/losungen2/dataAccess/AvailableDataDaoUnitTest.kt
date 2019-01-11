@@ -1,10 +1,6 @@
 package schalter.de.losungen2.dataAccess
 
-import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.hamcrest.Matchers.equalTo
@@ -15,22 +11,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import schalter.de.losungen2.dataAccess.availableData.AvailableData
 import schalter.de.losungen2.dataAccess.availableData.AvailableDataDao
+import schalter.de.losungen2.utils.DatabaseUtils
+import schalter.de.losungen2.utils.blockingObserve
 import java.io.IOException
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
-
-private fun <T> LiveData<T>.blockingObserve(): T? {
-    var value: T? = null
-    val latch = CountDownLatch(1)
-
-    observeForever { t ->
-        value = t
-        latch.countDown()
-    }
-
-    latch.await(2, TimeUnit.SECONDS)
-    return value
-}
 
 @RunWith(AndroidJUnit4::class)
 class AvailableDataDaoUnitTest {
@@ -48,9 +31,7 @@ class AvailableDataDaoUnitTest {
 
     @Before
     fun createDb() {
-        val context: Context = ApplicationProvider.getApplicationContext<Context>()
-        db = Room.inMemoryDatabaseBuilder(
-                context, VersesDatabase::class.java).build()
+        db = DatabaseUtils.getInMemoryDatabase()
         availableDataDao = db.availableDataDao()
     }
 

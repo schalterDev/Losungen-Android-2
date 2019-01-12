@@ -1,21 +1,24 @@
 package schalter.de.losungen2
 
+import android.app.Activity
+import android.app.Instrumentation.ActivityResult
+import android.content.Intent
 import androidx.fragment.app.Fragment
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.contrib.DrawerActions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.espresso.intent.Intents.intending
+import androidx.test.espresso.intent.matcher.IntentMatchers.*
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
-import org.junit.Assert
+import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.not
+import org.junit.*
 import org.junit.Assert.assertTrue
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
 import org.junit.runner.RunWith
 import schalter.de.losungen2.components.navigationDrawer.NavigationDrawer
 import schalter.de.losungen2.screens.daily.DailyVersesOverviewFragment
@@ -24,6 +27,8 @@ import schalter.de.losungen2.screens.info.InfoFragment
 import schalter.de.losungen2.screens.monthly.MonthlyVersesOverviewFragment
 import schalter.de.losungen2.screens.settings.SettingsActivity
 import schalter.de.losungen2.screens.widget.WidgetsOverviewFragment
+import schalter.de.losungen2.utils.Constants
+
 
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
@@ -36,6 +41,14 @@ class MainActivityTest {
     fun loadActivity() {
         rule.launchActivity(null)
         activity = rule.activity
+
+        Intents.init()
+        intending(not(isInternal())).respondWith(ActivityResult(Activity.RESULT_OK, null))
+    }
+
+    @After
+    fun cleanUp() {
+        Intents.release()
     }
 
     @Test
@@ -72,12 +85,34 @@ class MainActivityTest {
         onView(withText(R.string.info_help)).perform(click())
         fragment = activity.supportFragmentManager.findFragmentByTag(NavigationDrawer.DrawerItem.INFO.toString()) as InfoFragment
         assertTrue(fragment.isVisible)
+    }
 
-        //Settings
-        Intents.init()
+    @Test
+    fun openSettingsActivity() {
         openNavigationDrawer()
         onView(withText(R.string.settings)).perform(click())
         intended(hasComponent(SettingsActivity::class.java.name))
+    }
+
+    @Test
+    fun rateClick() {
+        openNavigationDrawer()
+        onView(withText(R.string.rate)).perform(click())
+        intended(hasAction(Intent.ACTION_VIEW))
+    }
+
+    @Test
+    fun feedbackClick() {
+        openNavigationDrawer()
+        onView(withText(R.string.send_feedback_bug)).perform(click())
+        intending(allOf(hasAction(Intent.ACTION_CHOOSER), hasExtra("act", Intent.ACTION_SENDTO)))
+    }
+
+    @Test
+    fun privacyClick() {
+        openNavigationDrawer()
+        onView(withText(R.string.privacy_policy)).perform(click())
+        intended(allOf(hasAction(Intent.ACTION_VIEW), hasData(Constants.urlPrivacyWebsite)))
     }
 
     private fun openNavigationDrawer() {

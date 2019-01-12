@@ -11,7 +11,6 @@ import schalter.de.losungen2.R
 class VerseCardGridAdapter(private val verseCards: MutableList<VerseCardData> = mutableListOf()) : RecyclerView.Adapter<VerseCardGridAdapter.VerseCardViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VerseCardViewHolder {
-        // TODO wrap verse card in other layout and inflate this layout
         val view = LayoutInflater.from(parent.context).inflate(R.layout.verse_card_wrapper, parent, false)
         return VerseCardViewHolder(view)
     }

@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
 import schalter.de.losungen2.R
-import schalter.de.losungen2.components.dialogs.ImportVersesDialog
+import schalter.de.losungen2.components.dialogs.importDialog.ImportVersesDialog
 
 class EmptyStateView : FrameLayout {
 

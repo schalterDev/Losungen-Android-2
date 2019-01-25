@@ -41,6 +41,13 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.0"
+
+    // http
+    implementation "com.github.kittinunf.fuel:fuel:$fuel_version"
+    implementation "com.github.kittinunf.fuel:fuel-android:$fuel_version"
+    implementation "com.github.kittinunf.fuel:fuel-gson:$fuel_version"
 
     implementation "androidx.appcompat:appcompat:1.0.2"
     implementation "androidx.legacy:legacy-support-v4:1.0.0"

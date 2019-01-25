@@ -16,8 +16,14 @@
 
     <string name="old_testament_card_title">Losung</string>
     <string name="new_testament_card_title">Lehrtext</string>
-    <string name="import_language">Sprache importieren</string>
     <string name="no_verses_found">Für dieses Datum sind keine Verse vorhanden</string>
     <string name="import_new_data">Neue Verse hinzufügen</string>
+    <string name="monthly_verse_title">Monatsspruch</string>
+    <string name="choose_language">Sprache wählen</string>
+    <string name="copyright_import">Beim Klick auf \'%1$s\' akzeptierst du die Nutzungsbedingungen unter: %2$s</string>
+    <string name="accept_terms_and_conditions">Nutzungsbedingungen aktepieren</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="accept">Akzeptieren</string>
+    <string name="import_">Importieren</string>
 
 </resources>

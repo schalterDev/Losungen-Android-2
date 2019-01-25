@@ -15,8 +15,13 @@
     <string name="send_mail">Send E-Mail</string>
     <string name="old_testament_card_title">Old Testament</string>
     <string name="new_testament_card_title">New Testament</string>
-    <string name="import_language">Import Language</string>
     <string name="no_verses_found">No data available for this date</string>
     <string name="import_new_data">Add new verses</string>
     <string name="monthly_verse_title">Monthly verse</string>
+    <string name="choose_language">Choose language</string>
+    <string name="copyright_import">By clicking \'%1$s\' you accept the terms and conditions under: %2$s</string>
+    <string name="accept_terms_and_conditions">Accept Terms and Conditions</string>
+    <string name="cancel">Cancel</string>
+    <string name="accept">Accept</string>
+    <string name="import_">Import</string>
 </resources>

@@ -5,6 +5,8 @@ import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 import schalter.de.losungen2.dataAccess.Language
 import schalter.de.losungen2.dataAccess.daily.DailyVerse
+import schalter.de.losungen2.dataAccess.monthly.MonthlyVerse
+import schalter.de.losungen2.dataAccess.weekly.WeeklyVerse
 import java.io.IOException
 import java.io.InputStream
 import java.text.ParseException
@@ -20,11 +22,49 @@ private const val DAILY_VERSE_NEW_TESTAMENT_BIBLE = "Lehrtextvers"
 private const val DAILY_VERSE_DATE = "Datum"
 private const val DAILY_VERSE_DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ss"
 
+data class VerseFromXml(
+        var date: Date,
+        var oldTestamentVerseText: String,
+        var oldTestamentVerseBible: String,
+        var newTestamentVerseText: String? = null,
+        var newTestamentVerseBible: String? = null,
+        var language: Language
+) {
+    fun toDailyVerse(): DailyVerse {
+        return DailyVerse(
+                date = date,
+                oldTestamentVerseText = oldTestamentVerseText,
+                oldTestamentVerseBible = oldTestamentVerseBible,
+                newTestamentVerseText = newTestamentVerseText!!,
+                newTestamentVerseBible = newTestamentVerseBible!!,
+                language = language
+        )
+    }
+
+    fun toWeeklyVerse(): WeeklyVerse {
+        return WeeklyVerse(
+                date = date,
+                language = language,
+                verseBible = oldTestamentVerseBible,
+                verseText = oldTestamentVerseText
+        )
+    }
+
+    fun toMonthlyVerse(): MonthlyVerse {
+        return MonthlyVerse(
+                date = date,
+                verseText = oldTestamentVerseText,
+                verseBible = oldTestamentVerseBible,
+                language = language
+        )
+    }
+}
+
 class LosungenXmlParser(private val language: Language) {
 
     @Throws(ParseException::class, IOException::class, XmlPullParserException::class)
-    fun parseDailyVerseXml(input: InputStream): List<DailyVerse> {
-        val dailyVerseList: MutableList<DailyVerse> = mutableListOf()
+    fun parseVerseXml(input: InputStream): List<VerseFromXml> {
+        val verseList: MutableList<VerseFromXml> = mutableListOf()
 
         val xmlParser: XmlPullParser = Xml.newPullParser()
         xmlParser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false)
@@ -38,15 +78,15 @@ class LosungenXmlParser(private val language: Language) {
 
             val tagName = xmlParser.name
             if (tagName == DAILY_VERSE_START_TAG) {
-                dailyVerseList.add(readDailyVerseEntry(xmlParser))
+                verseList.add(readVerseEntry(xmlParser))
             }
         }
 
-        return dailyVerseList
+        return verseList
     }
 
     @Throws(ParseException::class)
-    private fun readDailyVerseEntry(xmlParser: XmlPullParser): DailyVerse {
+    private fun readVerseEntry(xmlParser: XmlPullParser): VerseFromXml {
         xmlParser.require(XmlPullParser.START_TAG, namespace, DAILY_VERSE_START_TAG)
 
         var oldTestamentText: String? = null
@@ -71,11 +111,11 @@ class LosungenXmlParser(private val language: Language) {
             }
         }
 
-        if (dateString == null || oldTestamentText == null || oldTestamentBible == null || newTestamentText == null || newTestamentBible == null) {
-            throw ParseException("could not parse daily verse", 0)
+        if (dateString == null || oldTestamentText == null || oldTestamentBible == null) {
+            throw ParseException("could not parse verse", 0)
         }
 
-        return DailyVerse(
+        return VerseFromXml(
                 oldTestamentVerseText = oldTestamentText,
                 oldTestamentVerseBible = oldTestamentBible,
                 newTestamentVerseText = newTestamentText,

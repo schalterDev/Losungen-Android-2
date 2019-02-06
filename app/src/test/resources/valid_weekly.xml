@@ -1,0 +1,17 @@
+<FreeXml>
+    <Losungen>
+        <Datum>2019-01-01T00:00:00</Datum>
+        <Losungstext>text1</Losungstext>
+        <Losungsvers>bible1</Losungsvers>
+    </Losungen>
+    <Losungen>
+        <Datum>2019-01-08T00:00:00</Datum>
+        <Losungstext>text2</Losungstext>
+        <Losungsvers>bible2</Losungsvers>
+    </Losungen>
+    <Losungen>
+        <Datum>2019-01-15T00:00:00</Datum>
+        <Losungstext>text3</Losungstext>
+        <Losungsvers>bible3</Losungsvers>
+    </Losungen>
+</FreeXml>

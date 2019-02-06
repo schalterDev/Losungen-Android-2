@@ -29,7 +29,7 @@ class EmptyStateViewTest {
         context = getApplicationContext()
         emptyStateView = LayoutInflater
                 .from(context)
-                .inflate(R.layout.empty_words, EmptyStateView(context), true)
+                .inflate(R.layout.empty_state, EmptyStateView(context), true)
                 as EmptyStateView
     }
 

@@ -9,10 +9,9 @@ import androidx.fragment.app.Fragment
 import schalter.de.losungen2.components.verseCard.VerseCardData
 import schalter.de.losungen2.dataAccess.VersesDatabase
 import schalter.de.losungen2.dataAccess.daily.DailyVerse
+import schalter.de.losungen2.screens.ARG_DATE
 import schalter.de.losungen2.screens.VerseListDateFragment
 import java.util.*
-
-const val ARG_DATE = "arg_date"
 
 /**
  * A simple [Fragment] subclass.

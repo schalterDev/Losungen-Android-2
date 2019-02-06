@@ -43,15 +43,18 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.0"
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.0"
+    implementation "io.reactivex.rxjava2:rxkotlin:2.3.0"
 
     // http
     implementation "com.github.kittinunf.fuel:fuel:$fuel_version"
     implementation "com.github.kittinunf.fuel:fuel-android:$fuel_version"
     implementation "com.github.kittinunf.fuel:fuel-gson:$fuel_version"
+    implementation "com.github.kittinunf.fuel:fuel-rxjava:$fuel_version"
 
     implementation "androidx.appcompat:appcompat:1.0.2"
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
-    implementation "android.arch.lifecycle:livedata:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
 
     // room
     implementation "androidx.room:room-runtime:$room_version"
@@ -77,6 +80,7 @@ dependencies {
     testImplementation "com.android.support.test.espresso:espresso-contrib:3.0.2"
     testImplementation "org.robolectric:robolectric:4.1"
     testImplementation "io.mockk:mockk:1.8.13"
+    testImplementation 'org.awaitility:awaitility:3.1.6'
 
     debugImplementation "androidx.fragment:fragment-testing:1.1.0-alpha03"
     debugImplementation("androidx.test:core:1.1.0") {
@@ -95,6 +99,7 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
     androidTestImplementation "com.android.support.test.espresso:espresso-contrib:3.0.2"
     androidTestImplementation "com.android.support.test.espresso:espresso-intents:3.0.2"
+    androidTestImplementation 'org.awaitility:awaitility:3.1.6'
 }
 repositories {
     mavenCentral()

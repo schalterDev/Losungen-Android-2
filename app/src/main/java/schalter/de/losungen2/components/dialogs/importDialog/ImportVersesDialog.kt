@@ -1,6 +1,8 @@
 package schalter.de.losungen2.components.dialogs.importDialog
 
+import android.app.Dialog
 import android.content.Context
+import android.os.Bundle
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
@@ -8,77 +10,99 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import schalter.de.losungen2.R
+import schalter.de.losungen2.backgroundTasks.ImportVersesTask
+import schalter.de.losungen2.components.emptyState.EmptyStateView
 import schalter.de.losungen2.dataAccess.Language
+import kotlin.collections.set
+import kotlin.coroutines.CoroutineContext
 
+class ImportVersesDialog : DialogFragment(), CoroutineScope {
 
-class ImportVersesDialog(val context: Context) {
+    private var job: Job = Job()
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Default + job
 
     private lateinit var dataManagement: DataManagement
 
-    private lateinit var spinner: Spinner
-    private lateinit var linearLayout: LinearLayout
-    private val spinnerAdapter: ArrayAdapter<String> = ArrayAdapter(context, android.R.layout.simple_spinner_item)
-
     private lateinit var dialog: AlertDialog
+    private lateinit var spinner: Spinner
+    private lateinit var spinnerContainer: LinearLayout
+    private lateinit var linearLayout: LinearLayout
+    private lateinit var dialogButton: Button
 
     private var availableData: List<DataManagement.YearLanguageUrl>? = null
     private var selectedLanguage: Language? = null
     private var checkboxesValues: MutableMap<String, Boolean> = mutableMapOf()
+    private var spinnerAdapter: ArrayAdapter<String>? = null
 
-    init {
-        this.load()
+    private lateinit var mContext: Context
+
+    override fun onPause() {
+        super.onPause()
+        job.cancel()
     }
 
-    fun show() {
-        dialog.show()
+    override fun onResume() {
+        super.onResume()
+        job = Job()
     }
 
-    fun close() {
-        dialog.cancel()
-    }
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        dataManagement = ViewModelProviders.of(this).get(DataManagement::class.java)
 
-    private fun load() {
         val li = LayoutInflater.from(context)
         val dialogView = li.inflate(R.layout.dialog_import, null)
 
-        val builder = AlertDialog.Builder(context)
-        builder.setView(dialogView)
-        builder.setPositiveButton(R.string.import_) { _, _ ->
-            if (availableData != null) {
-                showTermsAndConditionsWhenNecessary(availableData!!.filter {
-                    it.language == selectedLanguage &&
-                            checkboxesValues[it.year.toString()] == true
-                })
-            }
-        }
-        dialog = builder.create()
+        dialog = AlertDialog.Builder(context!!)
+                .setView(dialogView)
+                .setPositiveButton(R.string.import_) { _, _ ->
+                    if (availableData != null) {
+                        showTermsAndConditionsWhenNecessary(availableData!!.filter {
+                            it.language == selectedLanguage &&
+                                    checkboxesValues[it.year.toString()] == true
+                        })
+                    }
+                }.create()
+
+        mContext = dialog.context
 
         initDialog(dialogView)
+        loadData()
 
-        dataManagement = DataManagement(dialog.context)
+        dialog.setOnDismissListener { close() }
 
-        GlobalScope.launch {
-            availableData = dataManagement.getAvailableData()
-            if (availableData!!.isNotEmpty()) {
-                val availableLanguages: List<String> = DataManagement.getLanguagesFromData(availableData!!)
-                launch(Dispatchers.Main) {
-                    spinnerAdapter.addAll(availableLanguages)
-                    spinner.setSelection(0)
-                    // TODO change to select own language
-                }
-            }
+        return dialog
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        dialogButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        dialogButton.isEnabled = false
+    }
+
+    private fun close() {
+        job.cancel()
+        if (dialog.isShowing) {
+            dialog.cancel()
         }
     }
 
     private fun initDialog(dialog: View) {
         spinner = dialog.findViewById(R.id.spinner_language)
         linearLayout = dialog.findViewById(R.id.linear_layout_import)
+        spinnerContainer = dialog.findViewById(R.id.import_spinner_container)
 
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerAdapter = ArrayAdapter(mContext, android.R.layout.simple_spinner_item)
+        spinnerAdapter!!.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         spinner.adapter = spinnerAdapter
 
@@ -89,7 +113,41 @@ class ImportVersesDialog(val context: Context) {
                 val selectedLanguage = spinner.selectedItem as String
                 updateDataForLanguage(selectedLanguage)
             }
+        }
 
+        val emptyState = dialog.findViewById<EmptyStateView>(R.id.emptyStateImportDialog)
+        emptyState.onButtonClick {
+            loadData()
+        }
+    }
+
+    private fun onError() {
+        // hide loading spinner and show empty state
+        launch(Dispatchers.Main) {
+            dialog.findViewById<EmptyStateView?>(R.id.emptyStateImportDialog)?.visibility = View.VISIBLE
+            dialog.findViewById<ProgressBar?>(R.id.importLoadingSpinner)?.visibility = View.GONE
+        }
+    }
+
+    private fun loadData() {
+        launch(Dispatchers.Main) {
+            dialog.findViewById<EmptyStateView?>(R.id.emptyStateImportDialog)?.visibility = View.GONE
+            dialog.findViewById<ProgressBar?>(R.id.importLoadingSpinner)?.visibility = View.VISIBLE
+
+            dataManagement.getAvailableData().observe(this@ImportVersesDialog, Observer<List<DataManagement.YearLanguageUrl>> {
+                availableData = it
+
+                if (availableData!!.isNotEmpty()) {
+                    val availableLanguages: List<String> = DataManagement.getLanguagesFromData(availableData!!)
+                    spinnerContainer.visibility = View.VISIBLE
+
+                    spinnerAdapter!!.addAll(availableLanguages)
+                    spinner.setSelection(0)
+                    // TODO change to select own language
+                } else {
+                    onError()
+                }
+            })
         }
     }
 
@@ -108,6 +166,11 @@ class ImportVersesDialog(val context: Context) {
 
             checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
                 checkboxesValues[buttonView.text.toString()] = isChecked
+                val atLeastOneCheckboxChecked = checkboxesValues.any { checkbox -> checkbox.value }
+
+                launch(Dispatchers.Main) {
+                    dialogButton.isEnabled = atLeastOneCheckboxChecked
+                }
             }
 
             linearLayout.addView(checkBox)
@@ -129,8 +192,8 @@ class ImportVersesDialog(val context: Context) {
                     }
 
                     copyrightTextBuilder.append(
-                            context.getString(R.string.copyright_import,
-                                    context.getString(R.string.accept),
+                            context!!.getString(R.string.copyright_import,
+                                    context!!.getString(R.string.accept),
                                     yearLanguageUrl.copyrightUrl))
 
                     termsAndConditionsUrlsInserted.add(yearLanguageUrl.copyrightUrl!!)
@@ -141,7 +204,7 @@ class ImportVersesDialog(val context: Context) {
             val spannedString = SpannableString(copyrightTextBuilder.toString())
             Linkify.addLinks(spannedString, Linkify.WEB_URLS)
 
-            val dialogBuilder = AlertDialog.Builder(context)
+            val dialogBuilder = AlertDialog.Builder(context!!)
             dialogBuilder.setTitle(R.string.accept_terms_and_conditions)
             dialogBuilder.setMessage(spannedString)
             dialogBuilder.setCancelable(false)
@@ -159,6 +222,7 @@ class ImportVersesDialog(val context: Context) {
     }
 
     private fun downloadAndImport(toImport: List<DataManagement.YearLanguageUrl>) {
-        // TODO implement
+        val importTask = ImportVersesTask(mContext)
+        importTask.execute(toImport)
     }
 }

@@ -24,8 +24,11 @@ abstract class VersesDatabase : RoomDatabase() {
     abstract fun availableDataDao(): AvailableDataDao
 
     companion object {
+        private var database: VersesDatabase? = null
+
         fun provideVerseDatabase(context: Context): VersesDatabase {
-            return Room.databaseBuilder(context, VersesDatabase::class.java, "VersesDatabase").build()
+            database = database ?: Room.databaseBuilder(context, VersesDatabase::class.java, "VersesDatabase").build()
+            return database!!
         }
     }
 }

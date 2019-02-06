@@ -6,6 +6,7 @@ object Constants {
      * Use this url to get the download path for all available year and language
      */
     val urlsOverviewAvailableData: List<String> = listOf(
+//            "http://10.0.2.2/available-data.json",
             "https://losungen.webdesign-schalter.de/available-data.json",
             "https://drive.google.com/uc?export=download&id=1gYnMAEzlQbV-tOnMSZpenuli4WkvRhoE")
 

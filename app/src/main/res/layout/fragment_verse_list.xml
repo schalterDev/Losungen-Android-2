@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.daily.DailyVerseFragment"
-    android:orientation="vertical">
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".screens.daily.DailyVerseFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/versesList"
@@ -13,8 +15,12 @@
 
     <schalter.de.losungen2.components.emptyState.EmptyStateView
         android:id="@+id/emptyState"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        custom:emptyStateButtonText="@string/import_new_data"
+        custom:emptyStateIcon="@drawable/ic_file_hidden"
+        custom:emptyStateTitle="@string/no_verses_found" />
 
 </LinearLayout>

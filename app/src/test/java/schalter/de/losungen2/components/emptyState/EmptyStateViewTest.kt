@@ -35,6 +35,8 @@ class EmptyStateViewTest {
 
     @Test
     fun buttonShouldShowAndInteract() {
+        emptyStateView.setButtonText(R.string.import_new_data)
+
         val button: Button = emptyStateView.findViewById(R.id.emptyStateImport)
         assertThat(button.text as String, equalTo(context.getString(R.string.import_new_data)))
 

@@ -36,7 +36,7 @@ class ImportVersesDialog : DialogFragment(), CoroutineScope {
     private lateinit var spinner: Spinner
     private lateinit var spinnerContainer: LinearLayout
     private lateinit var linearLayout: LinearLayout
-    private lateinit var dialogButton: Button
+    private var dialogButton: Button? = null
 
     private var availableData: List<DataManagement.YearLanguageUrl>? = null
     private var selectedLanguage: Language? = null
@@ -82,13 +82,6 @@ class ImportVersesDialog : DialogFragment(), CoroutineScope {
         return dialog
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        dialogButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-        dialogButton.isEnabled = false
-    }
-
     private fun close() {
         job.cancel()
         if (dialog.isShowing) {
@@ -131,6 +124,9 @@ class ImportVersesDialog : DialogFragment(), CoroutineScope {
 
     private fun loadData() {
         launch(Dispatchers.Main) {
+            dialogButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            dialogButton?.isEnabled = false
+
             dialog.findViewById<EmptyStateView?>(R.id.emptyStateImportDialog)?.visibility = View.GONE
             dialog.findViewById<ProgressBar?>(R.id.importLoadingSpinner)?.visibility = View.VISIBLE
 
@@ -169,7 +165,7 @@ class ImportVersesDialog : DialogFragment(), CoroutineScope {
                 val atLeastOneCheckboxChecked = checkboxesValues.any { checkbox -> checkbox.value }
 
                 launch(Dispatchers.Main) {
-                    dialogButton.isEnabled = atLeastOneCheckboxChecked
+                    dialogButton?.isEnabled = atLeastOneCheckboxChecked
                 }
             }
 

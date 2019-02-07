@@ -10,7 +10,7 @@ import schalter.de.losungen2.components.verseCard.VerseCardData
 import schalter.de.losungen2.dataAccess.VersesDatabase
 import schalter.de.losungen2.dataAccess.monthly.MonthlyVerse
 import schalter.de.losungen2.dataAccess.weekly.WeeklyVerse
-import schalter.de.losungen2.screens.ARG_VERSE_DATE
+import schalter.de.losungen2.screens.ARG_DATE
 import schalter.de.losungen2.screens.VerseListDateFragment
 import java.util.*
 
@@ -88,7 +88,7 @@ class MonthlyVerseFragment : VerseListDateFragment() {
         fun newInstance(verseDate: Date) =
                 MonthlyVerseFragment().apply {
                     arguments = Bundle().apply {
-                        putLong(ARG_VERSE_DATE, verseDate.time)
+                        putLong(ARG_DATE, verseDate.time)
                     }
                 }
     }

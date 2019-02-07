@@ -1,28 +1,35 @@
 package schalter.de.losungen2.components.dialogs.importDialog
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.Request
 import com.github.kittinunf.fuel.core.Response
 import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import schalter.de.losungen2.dataAccess.Language
-import schalter.de.losungen2.dataAccess.VersesDatabase
-import schalter.de.losungen2.dataAccess.availableData.AvailableData
 import schalter.de.losungen2.utils.Constants
 import java.util.*
+import kotlin.coroutines.CoroutineContext
 
 const val DEBUG_TAG = "DataManagement"
 
-class DataManagement(val context: Context) {
+class DataManagement : ViewModel(), CoroutineScope {
 
     data class YearLanguageUrl(
             var year: Int,
             var language: Language,
             var url: String,
-            var copyrightUrl: String?
+            var copyrightUrl: String?,
+            var fileNameDailyVerses: String?,
+            var fileNameMonthlyVerses: String?,
+            var fileNameWeeklyVerses: String?
     ) {
         object Deserializer : ResponseDeserializable<Array<YearLanguageUrl>> {
             override fun deserialize(content: String): Array<YearLanguageUrl>? =
@@ -30,40 +37,40 @@ class DataManagement(val context: Context) {
         }
     }
 
-    private val versesDatabase = VersesDatabase.provideVerseDatabase(context)
+    private var job: Job = Job()
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Default + job
 
-    fun getAvailableData(): List<YearLanguageUrl> {
-        val countUrls = Constants.urlsOverviewAvailableData.size
-        var indexUrl = 0
+    fun getAvailableData(): LiveData<List<YearLanguageUrl>> {
+        val liveData = MutableLiveData<List<YearLanguageUrl>>()
 
-        var yearLanguageUrlList: List<YearLanguageUrl>? = null
+        launch {
+            val countUrls = Constants.urlsOverviewAvailableData.size
+            var indexUrl = 0
 
-        // try all urls when the one before fails
-        do {
-            val url = Constants.urlsOverviewAvailableData[indexUrl]
-            indexUrl++
+            var yearLanguageUrlList: List<YearLanguageUrl>? = null
 
-            val (_: Request, response: Response, result) = Fuel.get(url).responseObject(YearLanguageUrl.Deserializer)
-            val (yearLanguageUrlArray: Array<YearLanguageUrl>?, error) = result
+            // try all urls when the one before fails
+            do {
+                val url = Constants.urlsOverviewAvailableData[indexUrl]
+                indexUrl++
 
-            if (yearLanguageUrlArray != null && response.statusCode == 200 && error == null) {
-                yearLanguageUrlList = Arrays.asList(*yearLanguageUrlArray)
-            } else {
-                Log.e(DEBUG_TAG, "Error while trying to load available data")
-                Log.e(DEBUG_TAG, "Response: $response")
-                Log.e(DEBUG_TAG, "Error: $error")
-            }
-        } while (indexUrl < countUrls && yearLanguageUrlList == null)
+                val (_: Request, response: Response, result) = Fuel.get(url).responseObject(YearLanguageUrl.Deserializer)
+                val (yearLanguageUrlArray: Array<YearLanguageUrl>?, error) = result
 
-        return yearLanguageUrlList ?: listOf()
-    }
+                if (yearLanguageUrlArray != null && response.statusCode == 200 && error == null) {
+                    yearLanguageUrlList = Arrays.asList(*yearLanguageUrlArray)
+                } else {
+                    Log.e(DEBUG_TAG, "Error while trying to load available data")
+                    Log.e(DEBUG_TAG, "Response: $response")
+                    Log.e(DEBUG_TAG, "Error: $error")
+                }
+            } while (indexUrl < countUrls && yearLanguageUrlList == null)
 
-    fun getImportedYears(language: Language): LiveData<List<AvailableData>> {
-        return versesDatabase.availableDataDao().getAvailableDataForLanguage(language)
-    }
+            liveData.postValue(yearLanguageUrlList ?: listOf())
+        }
 
-    fun yearImported(year: Int, language: Language) {
-        versesDatabase.availableDataDao().insertAvailableData(AvailableData(year, language))
+        return liveData
     }
 
     companion object {
@@ -75,13 +82,6 @@ class DataManagement(val context: Context) {
             return data.filter { dataElement -> dataElement.language == language }
                     .map { dataElement -> dataElement.year }
                     .distinct()
-        }
-
-        fun getUrlForYearAndLanguageFromData(
-                data: List<YearLanguageUrl>,
-                language: Language,
-                year: Int): String? {
-            return data.filter { dataElement -> dataElement.language == language && dataElement.year == year }.firstOrNull()?.url
         }
     }
 }

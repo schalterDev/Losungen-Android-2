@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:id="@+id/import_dialog_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,38 +9,34 @@
     android:paddingTop="8dp"
     android:paddingRight="8dp">
 
-    <TextView
-        android:id="@+id/text_before_spinner"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/import_spinner_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/choose_language"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:orientation="horizontal"
+        android:visibility="gone">
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner_language"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/text_before_spinner"
-        android:spinnerMode="dropdown" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_language"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Spinner
+            android:id="@+id/spinner_language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linear_layout_import"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_before_spinner"
+        android:layout_below="@+id/import_spinner_container"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView_import_notes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <ProgressBar
             android:id="@+id/importLoadingSpinner"
@@ -48,5 +45,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="50dp" />
+
+        <schalter.de.losungen2.components.emptyState.EmptyStateView
+            android:id="@+id/emptyStateImportDialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            custom:emptyStateTitle="@string/error_loading_data_check_connection"
+            custom:emptyStateButtonText="@string/try_again"
+            custom:emptyStateIcon="@drawable/ic_cloud_off" />
+
     </LinearLayout>
 </RelativeLayout>

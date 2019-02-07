@@ -25,7 +25,6 @@ import schalter.de.losungen2.dataAccess.Language
 import schalter.de.losungen2.dataAccess.VersesDatabase
 import schalter.de.losungen2.dataAccess.daily.DailyVerse
 import schalter.de.losungen2.dataAccess.daily.DailyVersesDao
-import schalter.de.losungen2.screens.daily.ARG_DATE
 import schalter.de.losungen2.screens.daily.DailyVerseFragment
 import java.util.*
 

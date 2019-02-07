@@ -27,7 +27,6 @@ import schalter.de.losungen2.dataAccess.monthly.MonthlyVerse
 import schalter.de.losungen2.dataAccess.monthly.MonthlyVersesDao
 import schalter.de.losungen2.dataAccess.weekly.WeeklyVerse
 import schalter.de.losungen2.dataAccess.weekly.WeeklyVersesDao
-import schalter.de.losungen2.screens.daily.ARG_DATE
 import schalter.de.losungen2.screens.monthly.MonthlyVerseFragment
 import java.util.*
 

@@ -61,7 +61,6 @@ class DailyVersesOverviewFragmentTest {
         assertEquals(datePicker.datePicker.month, today.get(Calendar.MONTH))
         assertEquals(datePicker.datePicker.dayOfMonth, today.get(Calendar.DAY_OF_MONTH))
 
-
         datePicker.updateDate(2017, 0, 1)
         datePicker.getButton(DatePickerDialog.BUTTON_POSITIVE).performClick()
 

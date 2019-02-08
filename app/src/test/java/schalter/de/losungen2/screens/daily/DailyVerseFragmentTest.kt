@@ -1,4 +1,4 @@
-package schalter.de.losungen2.screens
+package schalter.de.losungen2.screens.daily
 
 import android.content.Context
 import android.os.Bundle
@@ -9,9 +9,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
-import io.mockk.every
-import io.mockk.mockkClass
-import io.mockk.mockkObject
 import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Test
@@ -22,10 +19,9 @@ import schalter.de.losungen2.components.emptyState.EmptyStateView
 import schalter.de.losungen2.components.verseCard.VerseCardData
 import schalter.de.losungen2.components.verseCard.VerseCardGridAdapter
 import schalter.de.losungen2.dataAccess.Language
-import schalter.de.losungen2.dataAccess.VersesDatabase
 import schalter.de.losungen2.dataAccess.daily.DailyVerse
-import schalter.de.losungen2.dataAccess.daily.DailyVersesDao
-import schalter.de.losungen2.screens.daily.DailyVerseFragment
+import schalter.de.losungen2.screens.ARG_DATE
+import schalter.de.losungen2.utils.DatabaseUtils.mockDailyVerseDaoFindDailyVerseByDate
 import java.util.*
 
 @RunWith(RobolectricTestRunner::class)
@@ -34,10 +30,9 @@ class DailyVerseFragmentTest {
     private lateinit var fragmentScenario: FragmentScenario<DailyVerseFragment>
     private lateinit var date: Date
     private lateinit var context: Context
-    private lateinit var database: VersesDatabase
 
     // Mock data
-    private var dailyVerseLiveData = MutableLiveData<DailyVerse>()
+    private lateinit var dailyVerseLiveData: MutableLiveData<DailyVerse>
     private val dailyVerse = DailyVerse(
             date = Date(),
             oldTestamentVerseText = "oh yeah",
@@ -51,7 +46,7 @@ class DailyVerseFragmentTest {
     fun initFragment() {
         context = getApplicationContext()
 
-        mockDatabase()
+        dailyVerseLiveData = mockDailyVerseDaoFindDailyVerseByDate()
 
         date = Calendar.getInstance().time
         val fragmentArgs = Bundle().apply {
@@ -59,16 +54,6 @@ class DailyVerseFragmentTest {
         }
 
         fragmentScenario = launchFragmentInContainer<DailyVerseFragment>(fragmentArgs)
-    }
-
-    private fun mockDatabase() {
-        database = mockkClass(VersesDatabase::class)
-        val dailyVersesDao = mockkClass(DailyVersesDao::class)
-        every { database.dailyVerseDao() } returns dailyVersesDao
-        every { dailyVersesDao.findDailyVerseByDate(any()) } returns dailyVerseLiveData
-
-        mockkObject(VersesDatabase)
-        every { VersesDatabase.provideVerseDatabase(any()) } returns database
     }
 
     @Test

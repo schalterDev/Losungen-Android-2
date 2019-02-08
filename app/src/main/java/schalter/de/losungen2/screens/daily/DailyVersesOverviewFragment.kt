@@ -1,14 +1,13 @@
 package schalter.de.losungen2.screens.daily
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_tabs.*
 import schalter.de.losungen2.R
+import schalter.de.losungen2.components.dialogs.dateChooser.DateChooserDialog
 import schalter.de.losungen2.components.tabs.DatePagerAdapter
 import java.util.*
 
@@ -19,6 +18,7 @@ import java.util.*
  */
 class DailyVersesOverviewFragment : Fragment() {
 
+    private var actualDate: Date = Calendar.getInstance().time
     private lateinit var pagerAdapter: DailyVersePagerAdapter
 
     /**
@@ -27,6 +27,12 @@ class DailyVersesOverviewFragment : Fragment() {
      */
     fun setDateToShow(date: Date) {
         pagerAdapter.setDate(date)
+        actualDate = date
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -46,18 +52,46 @@ class DailyVersesOverviewFragment : Fragment() {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
             override fun onPageSelected(position: Int) {
-                if (position < DatePagerAdapter.thresholdLoadNewFragments) {
-                    pagerAdapter.addDatesAtStart()
-                    pager.setCurrentItem(position + DatePagerAdapter.numberOfDaysAfterAndBeforeDate, false)
-                    tabLayout.setScrollPosition(position + DatePagerAdapter.numberOfDaysAfterAndBeforeDate, 0f, true)
-                } else if (position > pagerAdapter.count - DatePagerAdapter.thresholdLoadNewFragments) {
-                    pagerAdapter.addDatesAtEnd()
+                actualDate = when {
+                    position < DatePagerAdapter.thresholdLoadNewFragments -> {
+                        pagerAdapter.addDatesAtStart()
+                        val itemPosition = position + DatePagerAdapter.numberOfDaysAfterAndBeforeDate
+                        pager.setCurrentItem(itemPosition, false)
+                        tabLayout.setScrollPosition(itemPosition, 0f, true)
+
+                        pagerAdapter.getDateByPosition(itemPosition)
+                    }
+                    position > pagerAdapter.count - DatePagerAdapter.thresholdLoadNewFragments -> {
+                        pagerAdapter.addDatesAtEnd()
+                        pagerAdapter.getDateByPosition(position)
+                    }
+                    else -> pagerAdapter.getDateByPosition(position)
                 }
             }
-
         })
 
         return view
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_daily_verse, menu)
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_date -> {
+                val calendar = Calendar.getInstance()
+                calendar.timeInMillis = actualDate.time
+
+                DateChooserDialog(context!!, calendar) { date -> setDateToShow(date) }
+
+                return true
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {

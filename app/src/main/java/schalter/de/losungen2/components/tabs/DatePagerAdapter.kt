@@ -32,6 +32,10 @@ abstract class DatePagerAdapter(fm: FragmentManager, private var dateFormat: Str
         addDatesAtEnd()
     }
 
+    fun getDateByPosition(position: Int): Date {
+        return dateList[position]
+    }
+
     /**
      * @param itemCount how many items should be added at the beginning
      */

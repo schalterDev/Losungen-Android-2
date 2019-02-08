@@ -14,13 +14,13 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import schalter.de.losungen2.R
 import schalter.de.losungen2.backgroundTasks.ImportVersesTask
 import schalter.de.losungen2.components.emptyState.EmptyStateView
 import schalter.de.losungen2.dataAccess.Language
+import schalter.de.losungen2.utils.CoroutineDispatchers
 import kotlin.collections.set
 import kotlin.coroutines.CoroutineContext
 
@@ -28,7 +28,7 @@ class ImportVersesDialog : DialogFragment(), CoroutineScope {
 
     private var job: Job = Job()
     override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Default + job
+        get() = CoroutineDispatchers.Background + job
 
     private lateinit var dataManagement: DataManagement
 
@@ -116,14 +116,14 @@ class ImportVersesDialog : DialogFragment(), CoroutineScope {
 
     private fun onError() {
         // hide loading spinner and show empty state
-        launch(Dispatchers.Main) {
+        launch(CoroutineDispatchers.Ui) {
             dialog.findViewById<EmptyStateView?>(R.id.emptyStateImportDialog)?.visibility = View.VISIBLE
             dialog.findViewById<ProgressBar?>(R.id.importLoadingSpinner)?.visibility = View.GONE
         }
     }
 
     private fun loadData() {
-        launch(Dispatchers.Main) {
+        launch(CoroutineDispatchers.Ui) {
             dialogButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
             dialogButton?.isEnabled = false
 
@@ -164,7 +164,7 @@ class ImportVersesDialog : DialogFragment(), CoroutineScope {
                 checkboxesValues[buttonView.text.toString()] = isChecked
                 val atLeastOneCheckboxChecked = checkboxesValues.any { checkbox -> checkbox.value }
 
-                launch(Dispatchers.Main) {
+                launch(CoroutineDispatchers.Ui) {
                     dialogButton?.isEnabled = atLeastOneCheckboxChecked
                 }
             }

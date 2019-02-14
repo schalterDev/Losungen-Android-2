@@ -56,30 +56,36 @@ class ImportVersesDialog : DialogFragment(), CoroutineScope {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        dataManagement = ViewModelProviders.of(this).get(DataManagement::class.java)
+        return activity?.let {
+            dataManagement = ViewModelProviders.of(this).get(DataManagement::class.java)
 
-        val li = LayoutInflater.from(context)
-        val dialogView = li.inflate(R.layout.dialog_import, null)
+            val li = LayoutInflater.from(context)
+            val dialogView = li.inflate(R.layout.dialog_import, null)
 
-        dialog = AlertDialog.Builder(context!!)
-                .setView(dialogView)
-                .setPositiveButton(R.string.import_) { _, _ ->
-                    if (availableData != null) {
-                        showTermsAndConditionsWhenNecessary(availableData!!.filter {
-                            it.language == selectedLanguage &&
-                                    checkboxesValues[it.year.toString()] == true
-                        })
-                    }
-                }.create()
+            dialog = AlertDialog.Builder(context!!)
+                    .setView(dialogView)
+                    .setPositiveButton(R.string.import_) { _, _ ->
+                        if (availableData != null) {
+                            showTermsAndConditionsWhenNecessary(availableData!!.filter {
+                                it.language == selectedLanguage &&
+                                        checkboxesValues[it.year.toString()] == true
+                            })
+                        }
+                    }.create()
 
-        mContext = dialog.context
+            mContext = dialog.context
 
-        initDialog(dialogView)
-        loadData()
+            initDialog(dialogView)
+            loadData()
 
-        dialog.setOnDismissListener { close() }
+            dialog.setOnShowListener {
+                dialogButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                dialogButton?.isEnabled = false
+            }
+            dialog.setOnDismissListener { close() }
 
-        return dialog
+            return dialog
+        } ?: throw IllegalStateException("Activity cannot be null")
     }
 
     private fun close() {
@@ -155,10 +161,10 @@ class ImportVersesDialog : DialogFragment(), CoroutineScope {
         linearLayout.removeAllViews()
         checkboxesValues.clear()
 
-        availableYears.forEach {
+        availableYears.forEachIndexed { index, element ->
             val checkboxValue = false
             val checkBox = CheckBox(context)
-            checkBox.text = it.toString()
+            checkBox.text = element.toString()
 
             checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
                 checkboxesValues[buttonView.text.toString()] = isChecked
@@ -169,8 +175,12 @@ class ImportVersesDialog : DialogFragment(), CoroutineScope {
                 }
             }
 
+            // When running tests the linear layout has already some child. I dont know why
+            if (linearLayout.getChildAt(index) != null) {
+                linearLayout.removeViewAt(index)
+            }
             linearLayout.addView(checkBox)
-            checkboxesValues[it.toString()] = checkboxValue
+            checkboxesValues[element.toString()] = checkboxValue
         }
     }
 

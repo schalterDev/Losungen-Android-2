@@ -26,10 +26,10 @@ class DataManagement : ViewModel(), CoroutineScope {
             var year: Int,
             var language: Language,
             var url: String,
-            var copyrightUrl: String?,
-            var fileNameDailyVerses: String?,
-            var fileNameMonthlyVerses: String?,
-            var fileNameWeeklyVerses: String?
+            var copyrightUrl: String? = null,
+            var fileNameDailyVerses: String? = null,
+            var fileNameMonthlyVerses: String? = null,
+            var fileNameWeeklyVerses: String? = null
     ) {
         object Deserializer : ResponseDeserializable<Array<YearLanguageUrl>> {
             override fun deserialize(content: String): Array<YearLanguageUrl>? =

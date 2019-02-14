@@ -14,13 +14,13 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import schalter.de.losungen2.R
 import schalter.de.losungen2.backgroundTasks.ImportVersesTask
 import schalter.de.losungen2.components.emptyState.EmptyStateView
 import schalter.de.losungen2.dataAccess.Language
+import schalter.de.losungen2.utils.CoroutineDispatchers
 import kotlin.collections.set
 import kotlin.coroutines.CoroutineContext
 
@@ -28,7 +28,7 @@ class ImportVersesDialog : DialogFragment(), CoroutineScope {
 
     private var job: Job = Job()
     override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Default + job
+        get() = CoroutineDispatchers.Background + job
 
     private lateinit var dataManagement: DataManagement
 
@@ -56,30 +56,36 @@ class ImportVersesDialog : DialogFragment(), CoroutineScope {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        dataManagement = ViewModelProviders.of(this).get(DataManagement::class.java)
+        return activity?.let {
+            dataManagement = ViewModelProviders.of(this).get(DataManagement::class.java)
 
-        val li = LayoutInflater.from(context)
-        val dialogView = li.inflate(R.layout.dialog_import, null)
+            val li = LayoutInflater.from(context)
+            val dialogView = li.inflate(R.layout.dialog_import, null)
 
-        dialog = AlertDialog.Builder(context!!)
-                .setView(dialogView)
-                .setPositiveButton(R.string.import_) { _, _ ->
-                    if (availableData != null) {
-                        showTermsAndConditionsWhenNecessary(availableData!!.filter {
-                            it.language == selectedLanguage &&
-                                    checkboxesValues[it.year.toString()] == true
-                        })
-                    }
-                }.create()
+            dialog = AlertDialog.Builder(context!!)
+                    .setView(dialogView)
+                    .setPositiveButton(R.string.import_) { _, _ ->
+                        if (availableData != null) {
+                            showTermsAndConditionsWhenNecessary(availableData!!.filter {
+                                it.language == selectedLanguage &&
+                                        checkboxesValues[it.year.toString()] == true
+                            })
+                        }
+                    }.create()
 
-        mContext = dialog.context
+            mContext = dialog.context
 
-        initDialog(dialogView)
-        loadData()
+            initDialog(dialogView)
+            loadData()
 
-        dialog.setOnDismissListener { close() }
+            dialog.setOnShowListener {
+                dialogButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                dialogButton?.isEnabled = false
+            }
+            dialog.setOnDismissListener { close() }
 
-        return dialog
+            return dialog
+        } ?: throw IllegalStateException("Activity cannot be null")
     }
 
     private fun close() {
@@ -116,14 +122,14 @@ class ImportVersesDialog : DialogFragment(), CoroutineScope {
 
     private fun onError() {
         // hide loading spinner and show empty state
-        launch(Dispatchers.Main) {
+        launch(CoroutineDispatchers.Ui) {
             dialog.findViewById<EmptyStateView?>(R.id.emptyStateImportDialog)?.visibility = View.VISIBLE
             dialog.findViewById<ProgressBar?>(R.id.importLoadingSpinner)?.visibility = View.GONE
         }
     }
 
     private fun loadData() {
-        launch(Dispatchers.Main) {
+        launch(CoroutineDispatchers.Ui) {
             dialogButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
             dialogButton?.isEnabled = false
 
@@ -155,22 +161,26 @@ class ImportVersesDialog : DialogFragment(), CoroutineScope {
         linearLayout.removeAllViews()
         checkboxesValues.clear()
 
-        availableYears.forEach {
+        availableYears.forEachIndexed { index, element ->
             val checkboxValue = false
             val checkBox = CheckBox(context)
-            checkBox.text = it.toString()
+            checkBox.text = element.toString()
 
             checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
                 checkboxesValues[buttonView.text.toString()] = isChecked
                 val atLeastOneCheckboxChecked = checkboxesValues.any { checkbox -> checkbox.value }
 
-                launch(Dispatchers.Main) {
+                launch(CoroutineDispatchers.Ui) {
                     dialogButton?.isEnabled = atLeastOneCheckboxChecked
                 }
             }
 
+            // When running tests the linear layout has already some child. I dont know why
+            if (linearLayout.getChildAt(index) != null) {
+                linearLayout.removeViewAt(index)
+            }
             linearLayout.addView(checkBox)
-            checkboxesValues[it.toString()] = checkboxValue
+            checkboxesValues[element.toString()] = checkboxValue
         }
     }
 

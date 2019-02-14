@@ -21,6 +21,8 @@ class MainActivity : AppCompatActivity() {
     private fun setupToolbar() {
         toolbar = findViewById(R.id.toolbar)
         toolbar.setTitle(R.string.app_name)
+
+        setSupportActionBar(toolbar)
     }
 
     private fun setupNavigationDrawer() {

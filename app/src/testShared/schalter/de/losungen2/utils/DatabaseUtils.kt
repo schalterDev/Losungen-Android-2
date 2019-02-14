@@ -1,28 +1,47 @@
 package schalter.de.losungen2.utils
 
 import android.content.Context
+import androidx.lifecycle.MutableLiveData
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import io.mockk.every
+import io.mockk.mockkClass
 import io.mockk.mockkObject
 import schalter.de.losungen2.dataAccess.VersesDatabase
+import schalter.de.losungen2.dataAccess.daily.DailyVerse
+import schalter.de.losungen2.dataAccess.daily.DailyVersesDao
 
 object DatabaseUtils {
 
-    /**
-     * You this method only for android >= p in instrumentation tests. For unit test
-     * the android version does not matter
-     */
-    fun mockDatabase() {
-        val db: VersesDatabase = getInMemoryDatabase()
-
-        mockkObject(VersesDatabase)
-        every { VersesDatabase.provideVerseDatabase(any()) } returns db
-    }
+    private var database: VersesDatabase? = null
+    private var dailyVersesDao: DailyVersesDao? = null
+    private var dailyVerseLiveData = MutableLiveData<DailyVerse>()
 
     fun getInMemoryDatabase(): VersesDatabase {
         return Room.inMemoryDatabaseBuilder(
                 getApplicationContext<Context>(), VersesDatabase::class.java).build()
+    }
+
+    fun mockDailyVersesDao(): DailyVersesDao {
+        if (database == null) {
+            database = mockkClass(VersesDatabase::class)
+        }
+        if (dailyVersesDao == null) {
+            dailyVersesDao = mockkClass(DailyVersesDao::class)
+        }
+        every { database!!.dailyVerseDao() } returns dailyVersesDao!!
+
+        mockkObject(VersesDatabase)
+        every { VersesDatabase.provideVerseDatabase(any()) } returns database!!
+
+        return dailyVersesDao!!
+    }
+
+    fun mockDailyVerseDaoFindDailyVerseByDate(): MutableLiveData<DailyVerse> {
+        val dao = mockDailyVersesDao()
+        every { dao.findDailyVerseByDate(any()) } returns dailyVerseLiveData
+
+        return dailyVerseLiveData
     }
 
 }

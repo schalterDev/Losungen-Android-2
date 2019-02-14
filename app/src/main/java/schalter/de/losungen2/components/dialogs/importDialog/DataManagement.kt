@@ -10,11 +10,11 @@ import com.github.kittinunf.fuel.core.Response
 import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import schalter.de.losungen2.dataAccess.Language
 import schalter.de.losungen2.utils.Constants
+import schalter.de.losungen2.utils.CoroutineDispatchers
 import java.util.*
 import kotlin.coroutines.CoroutineContext
 
@@ -26,10 +26,10 @@ class DataManagement : ViewModel(), CoroutineScope {
             var year: Int,
             var language: Language,
             var url: String,
-            var copyrightUrl: String?,
-            var fileNameDailyVerses: String?,
-            var fileNameMonthlyVerses: String?,
-            var fileNameWeeklyVerses: String?
+            var copyrightUrl: String? = null,
+            var fileNameDailyVerses: String? = null,
+            var fileNameMonthlyVerses: String? = null,
+            var fileNameWeeklyVerses: String? = null
     ) {
         object Deserializer : ResponseDeserializable<Array<YearLanguageUrl>> {
             override fun deserialize(content: String): Array<YearLanguageUrl>? =
@@ -39,7 +39,7 @@ class DataManagement : ViewModel(), CoroutineScope {
 
     private var job: Job = Job()
     override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Default + job
+        get() = CoroutineDispatchers.Background + job
 
     fun getAvailableData(): LiveData<List<YearLanguageUrl>> {
         val liveData = MutableLiveData<List<YearLanguageUrl>>()

@@ -45,13 +45,13 @@ class ImportVersesTask(val context: Context) : RxAsyncTask<List<DataManagement.Y
                 }
 
                 if (yearLanguageUrl.fileNameWeeklyVerses != null && yearLanguageUrl.fileNameWeeklyVerses != "") {
-                    val fileInputStream = FileInputStream(File(directory, yearLanguageUrl.fileNameDailyVerses))
+                    val fileInputStream = FileInputStream(File(directory, yearLanguageUrl.fileNameWeeklyVerses))
                     val parsedVerses = LosungenXmlParser(yearLanguageUrl.language).parseVerseXml(fileInputStream).map { verse -> verse.toWeeklyVerse() }
                     databaseHelper.importWeeklyVerses(parsedVerses)
                 }
 
                 if (yearLanguageUrl.fileNameMonthlyVerses != null && yearLanguageUrl.fileNameMonthlyVerses != "") {
-                    val fileInputStream = FileInputStream(File(directory, yearLanguageUrl.fileNameDailyVerses))
+                    val fileInputStream = FileInputStream(File(directory, yearLanguageUrl.fileNameMonthlyVerses))
                     val parsedVerses = LosungenXmlParser(yearLanguageUrl.language).parseVerseXml(fileInputStream).map { verse -> verse.toMonthlyVerse() }
                     databaseHelper.importMonthlyVerses(parsedVerses)
                 }

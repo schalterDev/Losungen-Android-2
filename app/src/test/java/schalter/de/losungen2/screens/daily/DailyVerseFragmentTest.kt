@@ -9,11 +9,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
+import io.mockk.*
 import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.fakes.RoboMenuItem
 import schalter.de.losungen2.R
 import schalter.de.losungen2.components.emptyState.EmptyStateView
 import schalter.de.losungen2.components.verseCard.VerseCardData
@@ -22,6 +24,7 @@ import schalter.de.losungen2.dataAccess.Language
 import schalter.de.losungen2.dataAccess.daily.DailyVerse
 import schalter.de.losungen2.screens.ARG_DATE
 import schalter.de.losungen2.utils.DatabaseUtils.mockDailyVerseDaoFindDailyVerseByDate
+import schalter.de.losungen2.utils.Share
 import java.util.*
 
 @RunWith(RobolectricTestRunner::class)
@@ -108,5 +111,20 @@ class DailyVerseFragmentTest {
         }
 
         assertThat(emptyStateView!!.visibility, equalTo(View.VISIBLE))
+    }
+
+    @Test
+    fun shouldShareOnItemClick() {
+        dailyVerseLiveData.postValue(dailyVerse)
+
+        mockkObject(Share)
+        every { Share.dailyVerse(any(), any()) } just Runs
+
+        val item = RoboMenuItem(R.id.action_share)
+        fragmentScenario.onFragment {
+            it.onOptionsItemSelected(item)
+        }
+
+        verify { Share.dailyVerse(any(), any()) }
     }
 }

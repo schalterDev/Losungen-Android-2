@@ -20,7 +20,8 @@ class WeeklyVerseTest {
                 verseBible = ""
         )
 
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
+        calendar.firstDayOfWeek = Calendar.SUNDAY
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
         calendar.set(Calendar.HOUR_OF_DAY, 12)
         calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.SECOND, 0)

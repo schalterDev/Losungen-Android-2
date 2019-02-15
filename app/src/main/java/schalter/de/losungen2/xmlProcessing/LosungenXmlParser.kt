@@ -21,6 +21,7 @@ private const val DAILY_VERSE_NEW_TESTAMENT_TEXT = "Lehrtext"
 private const val DAILY_VERSE_NEW_TESTAMENT_BIBLE = "Lehrtextvers"
 private const val DAILY_VERSE_DATE = "Datum"
 private const val DAILY_VERSE_DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ss"
+private const val DAILY_VERSE_DATE_PATTERN_ALTERNATIVE = "yyyy-MM-ddHH:mm:ss"
 
 data class VerseFromXml(
         var date: Date,
@@ -115,12 +116,18 @@ class LosungenXmlParser(private val language: Language) {
             throw ParseException("could not parse verse", 0)
         }
 
+        val date = try {
+            parseDate(DAILY_VERSE_DATE_PATTERN, dateString)
+        } catch (_: ParseException) {
+            parseDate(DAILY_VERSE_DATE_PATTERN_ALTERNATIVE, dateString)
+        }
+
         return VerseFromXml(
                 oldTestamentVerseText = oldTestamentText,
                 oldTestamentVerseBible = oldTestamentBible,
                 newTestamentVerseText = newTestamentText,
                 newTestamentVerseBible = newTestamentBible,
-                date = parseDate(DAILY_VERSE_DATE_PATTERN, dateString),
+                date = date,
                 language = language)
     }
 

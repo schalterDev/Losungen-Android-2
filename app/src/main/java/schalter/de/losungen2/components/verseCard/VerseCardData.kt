@@ -5,6 +5,10 @@ import schalter.de.losungen2.R
 import schalter.de.losungen2.dataAccess.daily.DailyVerse
 import schalter.de.losungen2.dataAccess.monthly.MonthlyVerse
 import schalter.de.losungen2.dataAccess.weekly.WeeklyVerse
+import java.text.SimpleDateFormat
+import java.util.*
+
+const val datePattern: String = "dd.MM.yyyy"
 
 data class VerseCardData(
         var title: String,
@@ -41,7 +45,9 @@ data class VerseCardData(
         }
 
         fun fromWeeklyVerse(weeklyVerse: WeeklyVerse): VerseCardData {
-            val title = "TODO generate title from date"
+            // TODO change for multi language
+            val dateFormat = SimpleDateFormat(datePattern, Locale.GERMANY)
+            val title = dateFormat.format(weeklyVerse.date)
 
             return VerseCardData(
                     title,

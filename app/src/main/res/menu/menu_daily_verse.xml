@@ -7,4 +7,11 @@
         android:title="@string/share"
         android:icon="@drawable/ic_action_share"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_favourite"
+        android:orderInCategory="100"
+        android:title="@string/share"
+        android:icon="@drawable/ic_action_favorite_border"
+        app:showAsAction="always" />
 </menu>

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_date"
-        android:orderInCategory="100"
+        android:orderInCategory="200"
         android:title="@string/choose_date"
         android:icon="@drawable/ic_action_calendar"
         app:showAsAction="ifRoom" />

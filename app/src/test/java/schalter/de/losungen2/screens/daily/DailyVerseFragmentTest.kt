@@ -11,10 +11,12 @@ import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import io.mockk.*
 import org.hamcrest.Matchers.equalTo
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows
 import org.robolectric.fakes.RoboMenuItem
 import schalter.de.losungen2.R
 import schalter.de.losungen2.components.emptyState.EmptyStateView
@@ -24,6 +26,7 @@ import schalter.de.losungen2.dataAccess.Language
 import schalter.de.losungen2.dataAccess.daily.DailyVerse
 import schalter.de.losungen2.screens.ARG_DATE
 import schalter.de.losungen2.utils.DatabaseUtils.mockDailyVerseDaoFindDailyVerseByDate
+import schalter.de.losungen2.utils.DatabaseUtils.mockDailyVersesDao
 import schalter.de.losungen2.utils.Share
 import java.util.*
 
@@ -126,5 +129,32 @@ class DailyVerseFragmentTest {
         }
 
         verify { Share.dailyVerse(any(), any()) }
+    }
+
+    @Test
+    fun shouldMarkWhenItemClicked() {
+        dailyVerseLiveData.postValue(dailyVerse)
+
+        val dailyVerseDao = mockDailyVersesDao()
+        every { dailyVerseDao.updateIsFavourite(any(), any()) } just Runs
+
+        val item = RoboMenuItem(R.id.action_favourite)
+        fragmentScenario.onFragment {
+            val favouriteMenu = Shadows.shadowOf(it.activity).optionsMenu.findItem(R.id.action_favourite)
+            assertEquals(R.drawable.ic_action_favorite_border, Shadows.shadowOf(favouriteMenu.icon).createdFromResId)
+
+            it.onOptionsItemSelected(item)
+        }
+
+        verify { dailyVerseDao.updateIsFavourite(dailyVerse.date, true) }
+
+        val dailyVerseFavourite = dailyVerse.copy()
+        dailyVerseFavourite.isFavourite = true
+        dailyVerseLiveData.postValue(dailyVerseFavourite)
+
+        fragmentScenario.onFragment {
+            val favouriteMenu = Shadows.shadowOf(it.activity).optionsMenu.findItem(R.id.action_favourite)
+            assertEquals(R.drawable.ic_action_favorite, Shadows.shadowOf(favouriteMenu.icon).createdFromResId)
+        }
     }
 }

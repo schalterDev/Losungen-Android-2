@@ -34,12 +34,13 @@ class WeeklyVerse(
     companion object {
         fun getDateForWeek(date: Date): Date {
             val calendar = Calendar.getInstance()
+            calendar.firstDayOfWeek = Calendar.SUNDAY
             calendar.time = date
-            calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
             calendar.set(Calendar.HOUR_OF_DAY, 12)
             calendar.set(Calendar.MINUTE, 0)
             calendar.set(Calendar.SECOND, 0)
             calendar.set(Calendar.MILLISECOND, 0)
+            calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
 
             return calendar.time
         }

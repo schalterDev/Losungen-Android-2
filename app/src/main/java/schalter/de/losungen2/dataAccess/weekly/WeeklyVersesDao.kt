@@ -14,7 +14,22 @@ abstract class WeeklyVersesDao {
     fun findWeeklyVerseByDate(date: Date): LiveData<WeeklyVerse> = findWeeklyVerseByExactDate(WeeklyVerse.getDateForWeek(date))
 
     fun findWeeklyVerseInDateRange(start: Date, end: Date): LiveData<List<WeeklyVerse>> {
-        return this.findWeeklyVersesInExactDateRange(WeeklyVerse.getDateForWeek(start), WeeklyVerse.getDateForWeek(end))
+        val calendar = Calendar.getInstance()
+        calendar.time = start
+        calendar.set(Calendar.MILLISECOND, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.HOUR, 0)
+        val startConverted = calendar.time
+
+        calendar.time = end
+        calendar.set(Calendar.MILLISECOND, 999)
+        calendar.set(Calendar.SECOND, 59)
+        calendar.set(Calendar.MINUTE, 59)
+        calendar.set(Calendar.HOUR, 23)
+        val endConverted = calendar.time
+
+        return this.findWeeklyVersesInExactDateRange(startConverted, endConverted)
     }
 
     fun updateLanguage(weeklyVerse: WeeklyVerse) =

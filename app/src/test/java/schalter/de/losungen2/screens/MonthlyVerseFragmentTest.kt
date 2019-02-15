@@ -21,6 +21,7 @@ import schalter.de.losungen2.R
 import schalter.de.losungen2.components.emptyState.EmptyStateView
 import schalter.de.losungen2.components.verseCard.VerseCardData
 import schalter.de.losungen2.components.verseCard.VerseCardGridAdapter
+import schalter.de.losungen2.components.verseCard.datePattern
 import schalter.de.losungen2.dataAccess.Language
 import schalter.de.losungen2.dataAccess.VersesDatabase
 import schalter.de.losungen2.dataAccess.monthly.MonthlyVerse
@@ -28,6 +29,7 @@ import schalter.de.losungen2.dataAccess.monthly.MonthlyVersesDao
 import schalter.de.losungen2.dataAccess.weekly.WeeklyVerse
 import schalter.de.losungen2.dataAccess.weekly.WeeklyVersesDao
 import schalter.de.losungen2.screens.monthly.MonthlyVerseFragment
+import java.text.SimpleDateFormat
 import java.util.*
 
 @RunWith(RobolectricTestRunner::class)
@@ -112,8 +114,11 @@ class MonthlyVerseFragmentTest {
                 "",
                 ""
         )
+
+        val simpleDateFormat = SimpleDateFormat(datePattern)
+
         val expectedDataWeek = VerseCardData(
-                "TODO generate title from date",
+                simpleDateFormat.format(weeklyVerse.date),
                 weeklyVerse.verseText,
                 weeklyVerse.verseBible,
                 "",

@@ -25,5 +25,13 @@
     <string name="cancel">Abbrechen</string>
     <string name="accept">Akzeptieren</string>
     <string name="import_">Importieren</string>
+    <string name="try_again">Erneut versuchen</string>
+    <string name="error_loading_data_check_connection">Fehler beim Laden der Daten. Überprüfe deine Internetverbindung</string>
+    <string name="downloading_file">Lade Datei %1$d von %2$d herunter</string>
+    <string name="uncompressing_file">Entpacke Datei %1$d von %2$d</string>
+    <string name="importing_file">Importier Datei %1$d von %2$d</string>
+    <string name="choose_date">Datum wählen</string>
+    <string name="share">Teilen</string>
+    <string name="old_new_testament_title">Losung und Lehrtext</string>
 
 </resources>

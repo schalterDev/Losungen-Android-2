@@ -27,7 +27,9 @@
     <string name="try_again">Try Again</string>
     <string name="error_loading_data_check_connection">Error loading data. Please check your internet connection</string>
     <string name="downloading_file">Downloading file %1$d of %2$d</string>
-    <string name="uncompressing_file">Uncompressing file %1$d of %2$d</string>
+    <string name="uncompressing_file">Extracting file %1$d of %2$d</string>
     <string name="importing_file">Importing file %1$d of %2$d</string>
     <string name="choose_date">Choose date</string>
+    <string name="share">Share</string>
+    <string name="old_new_testament_title">Old and new testament</string>
 </resources>

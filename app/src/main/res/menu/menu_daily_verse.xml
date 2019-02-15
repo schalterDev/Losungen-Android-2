@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_date"
-        android:orderInCategory="100"
-        android:title="@string/choose_date"
-        android:icon="@drawable/ic_action_calendar"
-        app:showAsAction="ifRoom" />
+        android:id="@+id/action_share"
+        android:orderInCategory="50"
+        android:title="@string/share"
+        android:icon="@drawable/ic_action_share"
+        app:showAsAction="always" />
 </menu>

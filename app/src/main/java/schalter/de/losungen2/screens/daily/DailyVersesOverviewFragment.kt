@@ -74,7 +74,7 @@ class DailyVersesOverviewFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_daily_verse, menu)
+        inflater.inflate(R.menu.menu_daily_verse_overview, menu)
 
         super.onCreateOptionsMenu(menu, inflater)
     }

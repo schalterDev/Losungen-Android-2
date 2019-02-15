@@ -2,15 +2,15 @@ package schalter.de.losungen2.screens.daily
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
+import schalter.de.losungen2.R
 import schalter.de.losungen2.components.verseCard.VerseCardData
 import schalter.de.losungen2.dataAccess.VersesDatabase
 import schalter.de.losungen2.dataAccess.daily.DailyVerse
 import schalter.de.losungen2.screens.ARG_DATE
 import schalter.de.losungen2.screens.VerseListDateFragment
+import schalter.de.losungen2.utils.Share
 import java.util.*
 
 /**
@@ -22,6 +22,31 @@ import java.util.*
 class DailyVerseFragment : VerseListDateFragment() {
 
     private lateinit var mContext: Context
+    private var dailyVerse: DailyVerse? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_daily_verse, menu)
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_share -> {
+                if (dailyVerse != null) {
+                    Share.dailyVerse(mContext, dailyVerse!!)
+                }
+                return true
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -42,6 +67,7 @@ class DailyVerseFragment : VerseListDateFragment() {
 
     private fun updateDataByDailyVerse(dailyVerse: DailyVerse?) {
         if (dailyVerse != null) {
+            this.dailyVerse = dailyVerse
             this.updateData(VerseCardData.fromDailyVerse(mContext, dailyVerse))
         } else {
             this.updateData(listOf())

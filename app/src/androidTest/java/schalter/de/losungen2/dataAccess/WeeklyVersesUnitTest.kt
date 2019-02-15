@@ -26,7 +26,7 @@ class WeeklyVersesUnitTest {
     private lateinit var weeklyVerseDao: WeeklyVersesDao
     private lateinit var db: VersesDatabase
 
-    private var date = Calendar.getInstance().time
+    private var date = Date(1550245926000) // 15.02.2019, 16:52:06, Friday
     private var weeklyVerse = WeeklyVerse(
             date = date,
             verseBible = "verse bible",
@@ -87,6 +87,10 @@ class WeeklyVersesUnitTest {
         weeklyVerseNextWeek.verseText = "2"
         weeklyVerseNextWeek.date = DateUtils.addDaysToDate(weeklyVerse.date, 7)
         weeklyVerseDao.insertWeeklyVerse(weeklyVerseNextWeek)
+        // should not show
+        val weeklyVerseInTwoWeeks = weeklyVerse.copy()
+        weeklyVerseInTwoWeeks.date = DateUtils.addDaysToDate(weeklyVerse.date, 14)
+        weeklyVerseDao.insertWeeklyVerse(weeklyVerseInTwoWeeks)
 
         // date should be automatic convert to right date
         val calendar = Calendar.getInstance()

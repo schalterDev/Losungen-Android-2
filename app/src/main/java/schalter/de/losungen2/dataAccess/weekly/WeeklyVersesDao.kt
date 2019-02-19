@@ -50,4 +50,11 @@ abstract class WeeklyVersesDao {
 
     @Query("UPDATE WeeklyVerse SET verse_text = :verseText, verse_bible = :verseBible, language = :language WHERE date = :date")
     protected abstract fun updateLanguage(date: Date, verseText: String, verseBible: String, language: Language)
+
+    fun updateIsFavourite(date: Date, favourite: Boolean) {
+        updateIsFavouriteByExactDate(WeeklyVerse.getDateForWeek(date), favourite)
+    }
+
+    @Query("UPDATE WeeklyVerse SET is_favourite = :favourite WHERE date = :date")
+    protected abstract fun updateIsFavouriteByExactDate(date: Date, favourite: Boolean)
 }

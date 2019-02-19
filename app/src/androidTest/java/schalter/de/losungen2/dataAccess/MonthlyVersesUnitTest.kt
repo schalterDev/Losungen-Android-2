@@ -3,6 +3,8 @@ package schalter.de.losungen2.dataAccess
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import junit.framework.Assert.assertFalse
+import junit.framework.Assert.assertTrue
 import org.hamcrest.Matchers.equalTo
 import org.junit.After
 import org.junit.Before
@@ -121,8 +123,25 @@ class MonthlyVersesUnitTest {
         monthlyVerseOtherDate.date = calendar.time
         monthlyVerseOtherDate.verseBible = "other date"
         monthlyVersesDao.updateLanguage(monthlyVerseOtherDate)
+        monthlyVersesDao.updateIsFavourite(calendar.time, true)
         verseFromDatabase = monthlyVersesDao.findMonthlyVerseByDate(monthlyVerse.date).blockingObserve()!!
         assertThat(verseFromDatabase.date, equalTo(monthlyVerse.date))
         assertThat(verseFromDatabase.verseBible, equalTo(monthlyVerseOtherDate.verseBible))
+        assertTrue(verseFromDatabase.isFavourite)
+    }
+
+    @Test
+    fun updateIsFavourite() {
+        monthlyVersesDao.insertMonthlyVerse(monthlyVerse)
+        var verseFromDatabase: MonthlyVerse = monthlyVersesDao.findMonthlyVerseByDate(monthlyVerse.date).blockingObserve()!!
+        assertFalse(verseFromDatabase.isFavourite)
+
+        monthlyVersesDao.updateIsFavourite(monthlyVerse.date, true)
+        verseFromDatabase = monthlyVersesDao.findMonthlyVerseByDate(monthlyVerse.date).blockingObserve()!!
+        assertTrue(verseFromDatabase.isFavourite)
+
+        monthlyVersesDao.updateIsFavourite(monthlyVerse.date, false)
+        verseFromDatabase = monthlyVersesDao.findMonthlyVerseByDate(monthlyVerse.date).blockingObserve()!!
+        assertFalse(verseFromDatabase.isFavourite)
     }
 }

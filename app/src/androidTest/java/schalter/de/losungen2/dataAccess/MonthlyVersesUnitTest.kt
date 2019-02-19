@@ -3,10 +3,10 @@ package schalter.de.losungen2.dataAccess
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import junit.framework.Assert.assertFalse
-import junit.framework.Assert.assertTrue
 import org.hamcrest.Matchers.equalTo
 import org.junit.After
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

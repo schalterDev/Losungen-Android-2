@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
 import schalter.de.losungen2.R
 
@@ -15,6 +16,7 @@ class VerseCardView : FrameLayout {
     private var titleView2: TextView
     private var verseTextView2: TextView
     private var verseInBibleView2: TextView
+    private var imageFavourite: ImageView
 
     constructor(context: Context) : super(context)
 
@@ -32,6 +34,8 @@ class VerseCardView : FrameLayout {
         titleView2 = view.findViewById(R.id.verseTitle2)
         verseTextView2 = view.findViewById(R.id.verseText2)
         verseInBibleView2 = view.findViewById(R.id.verseInBible2)
+
+        imageFavourite = view.findViewById(R.id.verseCardFavoriteImage)
 
         hideSecondVerse()
     }
@@ -72,14 +76,36 @@ class VerseCardView : FrameLayout {
         verseInBibleView2.visibility = View.VISIBLE
     }
 
+    fun setIsFavourite(isFavourite: Boolean) {
+        val imageResource = if (isFavourite) {
+            R.drawable.ic_action_favorite
+        } else {
+            R.drawable.ic_action_favorite_border
+        }
+
+        imageFavourite.setImageResource(imageResource)
+    }
+
     fun setData(verseCardData: VerseCardData) {
+        setVisibilityFavouriteIcon(verseCardData.showFavouriteIcon)
+        imageFavourite.setOnClickListener { verseCardData.updateIsFavourite?.invoke(!verseCardData.isFavourite) }
+
         setTitle(verseCardData.title)
         setVerse(verseCardData.text)
         setVerseInBible(verseCardData.verse)
+        setIsFavourite(verseCardData.isFavourite)
 
         verseCardData.title2?.let { setTitle2(it) }
         verseCardData.text2?.let { setVerse2(it) }
         verseCardData.verse2?.let { setVerseInBible2(it) }
+    }
+
+    fun setVisibilityFavouriteIcon(visible: Boolean) {
+        if (visible) {
+            imageFavourite.visibility = View.VISIBLE
+        } else {
+            imageFavourite.visibility = View.GONE
+        }
     }
 
     fun getData(): VerseCardData {

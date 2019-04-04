@@ -71,7 +71,7 @@ class MonthlyVerseFragment : VerseListDateFragment() {
         if (monthlyVerse != null) {
             verses.add(VerseCardData.fromMonthlyVerse(mContext, monthlyVerse!!))
         }
-        verses.addAll(VerseCardData.fromWeeklyVerses(weeklyVerses))
+        verses.addAll(VerseCardData.fromWeeklyVerses(mContext, weeklyVerses))
 
         this.updateData(verses)
     }

@@ -87,7 +87,7 @@ class DailyVerseFragment : VerseListDateFragment() {
     private fun updateDataByDailyVerse(dailyVerse: DailyVerse?) {
         if (dailyVerse != null) {
             this.dailyVerse = dailyVerse
-            this.updateData(VerseCardData.fromDailyVerse(mContext, dailyVerse))
+            this.updateData(VerseCardData.fromDailyVerseTwoCards(mContext, dailyVerse))
             this.updateFavouriteMenuItem(dailyVerse.isFavourite)
         } else {
             this.updateData(listOf())

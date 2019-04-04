@@ -33,5 +33,6 @@
     <string name="choose_date">Datum wählen</string>
     <string name="share">Teilen</string>
     <string name="old_new_testament_title">Losung und Lehrtext</string>
+    <string name="mark_as_favorite">Als Favorit markieren</string>
 
 </resources>

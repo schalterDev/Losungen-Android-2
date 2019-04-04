@@ -38,8 +38,8 @@ class VerseCardGridAdapter(private val verseCards: MutableList<VerseCardData> = 
         this.notifyDataSetChanged()
     }
 
-    class VerseCardViewHolder(private var view: View) : RecyclerView.ViewHolder(view) {
-        private val cardView: VerseCardView = view.findViewById<VerseCardView>(R.id.verseCard)
+    class VerseCardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val cardView: VerseCardView = view.findViewById(R.id.verseCard)
 
         fun setData(verseCardData: VerseCardData) {
             cardView.setData(verseCardData)

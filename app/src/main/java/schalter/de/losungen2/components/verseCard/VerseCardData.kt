@@ -53,8 +53,10 @@ data class VerseCardData(
         }
 
         fun fromDailyVerse(context: Context, dailyVerse: DailyVerse): VerseCardData {
-            val titleNewTestament = context.getString(R.string.new_testament_card_title) + " " + formatDate(dailyVerse.date)
-            val titleOldTestament = context.getString(R.string.old_testament_card_title)
+            val date = formatDate(dailyVerse.date)
+
+            val titleNewTestament = context.getString(R.string.new_testament_card_title) + " " + date
+            val titleOldTestament = context.getString(R.string.old_testament_card_title) + " " + date
 
             val data = VerseCardData(
                     titleOldTestament,

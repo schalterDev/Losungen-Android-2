@@ -7,8 +7,8 @@ object Constants {
      */
     val urlsOverviewAvailableData: List<String> = listOf(
 //            "http://10.0.2.2/available-data.json",
-            "https://losungen.webdesign-schalter.de/available-data.json",
-            "https://drive.google.com/uc?export=download&id=1gYnMAEzlQbV-tOnMSZpenuli4WkvRhoE")
+            "https://raw.githubusercontent.com/schalterDev/Losungen-Android-2/master/data-for-webserver/available-data.json",
+            "https://losungen.webdesign-schalter.de/available-data.json")
 
     const val urlPrivacyWebsite = "https://losungen.webdesign-schalter.de/privacy"
     const val programmerMail = "schalter.dev@gmail.com"

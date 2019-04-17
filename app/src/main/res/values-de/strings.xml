@@ -38,5 +38,8 @@
     <string name="open_verse_external">Mit externem Programm öffnen</string>
     <string name="could_not_parse_verse">Konnte den Vers nicht verstehen</string>
     <string name="remember_my_decision">Merke meine Wahl</string>
+    <string name="open_external_default_value">Standartwert zum Öffnen von Versen mit externen App</string>
+    <string name="delete_open_external_default_value">Klicke um den Standartwert für das Öffnen von Versen in externen APPs zu löschen</string>
+    <string name="successful">Erfolgreich</string>
 
 </resources>

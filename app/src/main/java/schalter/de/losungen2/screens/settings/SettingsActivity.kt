@@ -1,79 +1,74 @@
 package schalter.de.losungen2.screens.settings
 
-import android.annotation.TargetApi
-import android.content.Context
-import android.content.res.Configuration
-import android.os.Build
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceActivity
-import android.preference.PreferenceFragment
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
 import schalter.de.losungen2.R
+import schalter.de.losungen2.components.dialogs.openVerseExternal.TAG_DEFAULT_OPEN
 
-/**
- * A [PreferenceActivity] that presents a set of application settings. On
- * handset devices, settings are presented as a single list. On tablets,
- * settings are split by category, with category headers shown to the left of
- * the list of settings.
- *
- *
- * See [
- * Android Design: Settings](http://developer.android.com/design/patterns/settings.html) for design guidelines and the [Settings
- * API Guide](http://developer.android.com/guide/topics/ui/settings.html) for more information on developing a Settings UI.
- */
-class SettingsActivity : AppCompatPreferenceActivity() {
-
-    /**
-     * Helper method to determine if the device has an extra-large screen. For
-     * example, 10" tablets are extra-large.
-     */
-    private fun isXLargeTablet(context: Context): Boolean {
-        return context.resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK >= Configuration.SCREENLAYOUT_SIZE_XLARGE
-    }
+// TODO add everything in this class
+class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupActionBar()
+        setContentView(R.layout.activity_main)
+
+        setupToolbar()
+
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.main_activity_fragment, SettingsFragment())
+                .commit()
     }
 
-    /**
-     * Set up the [android.app.ActionBar], if the API is available.
-     */
-    private fun setupActionBar() {
-        val actionBar = supportActionBar
-        actionBar?.setDisplayHomeAsUpEnabled(true)
+    private fun setupToolbar() {
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        toolbar.setTitle(R.string.settings)
+
+        setSupportActionBar(toolbar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    override fun onIsMultiPane(): Boolean {
-        return isXLargeTablet(this)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // handle arrow click in toolbar
+        if (item.itemId == android.R.id.home) {
+            finish()
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+}
+
+class SettingsFragment : PreferenceFragmentCompat() {
+
+    private lateinit var preferences: SharedPreferences
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(context!!)
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    override fun onBuildHeaders(target: List<PreferenceActivity.Header>) {
-        loadHeadersFromResource(R.xml.pref_headers, target)
-    }
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        setPreferencesFromResource(R.xml.preferences, rootKey)
 
-    /**
-     * This method stops fragment injection in malicious applications.
-     * Make sure to deny any unknown fragments here.
-     */
-    override fun isValidFragment(fragmentName: String): Boolean {
-        return GeneralPreferenceFragment::class.java.name == fragmentName
-    }
+        val button = findPreference<Preference>(TAG_DEFAULT_OPEN)
+        button!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            val editor = preferences.edit()
+            editor.putString(TAG_DEFAULT_OPEN, null)
+            editor.apply()
 
-    /**
-     * This fragment shows general preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-    class GeneralPreferenceFragment : PreferenceFragment() {
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
-            addPreferencesFromResource(R.xml.pref_general)
+            Toast.makeText(context!!, R.string.successful, Toast.LENGTH_SHORT).show()
+            true
         }
     }
 }
+

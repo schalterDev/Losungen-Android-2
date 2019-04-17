@@ -1,7 +1,5 @@
 package schalter.de.losungen2.components.openExternal
 
-//TODO test this class, very important
-
 /**
  * Parses a string.
  * Possible formats for a string:
@@ -13,7 +11,7 @@ package schalter.de.losungen2.components.openExternal
  * Judas 3.4
  * Song of Salomon 3,4
  */
-class BibleVerse(val verseAsString: String) {
+class BibleVerse(verseAsString: String) {
 
     var bookInBible: BookInBible
     var chapter: Int? = null //the book judas only has one chapter

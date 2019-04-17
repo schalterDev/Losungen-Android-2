@@ -17,7 +17,7 @@ class BibleVerseTest {
 
     @Test
     fun convertBookWithNumbersAndVerseRange() {
-        val verse = "2. Mose 3,4-6"
+        val verse = "2 Mose 3,4-6"
         val result = BibleVerse(verse)
 
         assertEquals(result.bookInBible, BookInBible.fromInt(2))

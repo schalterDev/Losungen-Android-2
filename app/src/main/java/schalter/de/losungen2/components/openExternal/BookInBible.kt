@@ -69,7 +69,7 @@ enum class BookInBible(val bookNumber: Int) {
     REVELATION(66);
 
     companion object {
-        private val map = BookInBible.values().associateBy(BookInBible::bookNumber)
+        private val map = values().associateBy(BookInBible::bookNumber)
         fun fromInt(type: Int) = map[type]
 
         private val BOOK_NAMES = arrayOf(
@@ -147,7 +147,7 @@ enum class BookInBible(val bookNumber: Int) {
             return if (indexFoundBook == -1)
                 null
             else
-                BookInBible.fromInt(indexFoundBook + 1)
+                fromInt(indexFoundBook + 1)
         }
     }
 }

@@ -1,4 +1,4 @@
-package schalter.de.losungen2.components.openExternal
+package schalter.de.losungen2.utils.openExternal
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull

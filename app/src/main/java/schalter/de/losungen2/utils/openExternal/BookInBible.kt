@@ -1,4 +1,4 @@
-package schalter.de.losungen2.components.openExternal
+package schalter.de.losungen2.utils.openExternal
 
 enum class BookInBible(val bookNumber: Int) {
     GENESIS(1),

@@ -36,4 +36,5 @@
     <string name="markes_verses_will_be_here">Marked verses will be displayed here</string>
     <string name="open_verse_external">Open verse external</string>
     <string name="could_not_parse_verse">Could not parse verse</string>
+    <string name="remember_my_decision">remember my decision</string>
 </resources>

@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import kotlinx.android.synthetic.main.verse_card.view.*
 import schalter.de.losungen2.R
 import schalter.de.losungen2.components.dialogs.openVerseExternal.OpenExternalDialog
@@ -43,18 +44,33 @@ class VerseCardView : FrameLayout {
 
         hideSecondVerse()
 
+        // TODO (test this click listener)
         this.setOnClickListener {
-            // only one verse is shown
-            if (verseInBibleView2.visibility == View.GONE) {
-                try {
+            try {
+                // only one verse is shown
+                if (verseInBibleView2.visibility == View.GONE) {
                     val bibleVerse = BibleVerse(verseInBible.text as String)
                     OpenExternalDialog(context).open(bibleVerse)
-                } catch (e: BibleVerseParseException) {
-                    // TODO add error message
+                } else {
+                    val items = listOf(
+                            context.getString(R.string.old_testament_card_title),
+                            context.getString(R.string.new_testament_card_title))
+
+                    val builder = androidx.appcompat.app.AlertDialog.Builder(context)
+                    builder.setTitle(R.string.open_verse_external)
+                    builder.setCancelable(true)
+                    builder.setItems(items.toTypedArray()) { _, which ->
+                        val bibleVerse: BibleVerse = if (which == 0) {
+                            BibleVerse(verseInBible.text as String)
+                        } else {
+                            BibleVerse(verseInBible2.text as String)
+                        }
+                        OpenExternalDialog(context).open(bibleVerse)
+                    }
+                    builder.show()
                 }
-                // TODO
-            } else {
-                // TODO: Two verses are shown. User has to choose one of them
+            } catch (e: BibleVerseParseException) {
+                Toast.makeText(context, R.string.could_not_parse_verse, Toast.LENGTH_LONG).show()
             }
         }
     }

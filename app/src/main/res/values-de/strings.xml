@@ -36,5 +36,6 @@
     <string name="mark_as_favorite">Als Favorit markieren</string>
     <string name="markes_verses_will_be_here">Markierte Verse sind hier zu sehen</string>
     <string name="open_verse_external">Mit externem Programm öffnen</string>
+    <string name="could_not_parse_verse">Konnte den Vers nicht verstehen</string>
 
 </resources>

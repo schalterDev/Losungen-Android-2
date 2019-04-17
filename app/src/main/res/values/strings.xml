@@ -34,4 +34,5 @@
     <string name="old_new_testament_title">Old and new testament</string>
     <string name="mark_as_favorite">Mark as favorite</string>
     <string name="markes_verses_will_be_here">Marked verses will be displayed here</string>
+    <string name="open_verse_external">Open verse external</string>
 </resources>

@@ -6,7 +6,11 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import kotlinx.android.synthetic.main.verse_card.view.*
 import schalter.de.losungen2.R
+import schalter.de.losungen2.components.dialogs.openVerseExternal.OpenExternalDialog
+import schalter.de.losungen2.utils.openExternal.BibleVerse
+import schalter.de.losungen2.utils.openExternal.BibleVerseParseException
 
 class VerseCardView : FrameLayout {
 
@@ -38,6 +42,21 @@ class VerseCardView : FrameLayout {
         imageFavourite = view.findViewById(R.id.verseCardFavoriteImage)
 
         hideSecondVerse()
+
+        this.setOnClickListener {
+            // only one verse is shown
+            if (verseInBibleView2.visibility == View.GONE) {
+                try {
+                    val bibleVerse = BibleVerse(verseInBible.text as String)
+                    OpenExternalDialog(context).open(bibleVerse)
+                } catch (e: BibleVerseParseException) {
+                    // TODO add error message
+                }
+                // TODO
+            } else {
+                // TODO: Two verses are shown. User has to choose one of them
+            }
+        }
     }
 
     fun setTitle(titleRes: Int) {
@@ -76,7 +95,7 @@ class VerseCardView : FrameLayout {
         verseInBibleView2.visibility = View.VISIBLE
     }
 
-    fun setIsFavourite(isFavourite: Boolean) {
+    private fun setIsFavourite(isFavourite: Boolean) {
         val imageResource = if (isFavourite) {
             R.drawable.ic_action_favorite
         } else {
@@ -100,7 +119,7 @@ class VerseCardView : FrameLayout {
         verseCardData.verse2?.let { setVerseInBible2(it) }
     }
 
-    fun setVisibilityFavouriteIcon(visible: Boolean) {
+    private fun setVisibilityFavouriteIcon(visible: Boolean) {
         if (visible) {
             imageFavourite.visibility = View.VISIBLE
         } else {

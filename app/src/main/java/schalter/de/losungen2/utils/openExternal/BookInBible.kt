@@ -68,11 +68,19 @@ enum class BookInBible(val bookNumber: Int) {
     JUDE(65),
     REVELATION(66);
 
+    fun toLocaleString(language: String): String {
+        when (language) {
+            "de" -> return GERMAN_BOOK_NAMES[bookNumber - 1][0]
+        }
+
+        return GERMAN_BOOK_NAMES[bookNumber - 1][0]
+    }
+
     companion object {
         private val map = values().associateBy(BookInBible::bookNumber)
         fun fromInt(type: Int) = map[type]
 
-        private val BOOK_NAMES = arrayOf(
+        private val GERMAN_BOOK_NAMES = arrayOf(
                 arrayOf("1mose", "genesis"),
                 arrayOf("2mose", "exodus"),
                 arrayOf("3mose", "levitikus"),
@@ -140,6 +148,8 @@ enum class BookInBible(val bookNumber: Int) {
                 arrayOf("judas"),
                 arrayOf("offenbarung")
         )
+
+        private val BOOK_NAMES = GERMAN_BOOK_NAMES
 
         fun fromString(string: String): BookInBible? {
             val indexFoundBook = BOOK_NAMES.indexOfFirst { names -> names.contains(string) }

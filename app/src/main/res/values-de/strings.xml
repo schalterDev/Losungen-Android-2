@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Losungen</string>
+    <string name="losungen">Losungen</string>
+    <string name="monthly_verses">Monats-, Wochensprüche</string>
+    <string name="favorite_verses">Markierte Verse</string>
+    <string name="configure_widgets">Widgets konfigurieren</string>
+    <string name="settings">Einstellungen</string>
+    <string name="rate">Bewerten</string>
+    <string name="send_feedback_bug">Feedack / Fehler melden</string>
+    <string name="info_help">Info / Hilfe</string>
+    <string name="privacy_policy">Datenschutzerklärung</string>
+
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="pref_general">Allgemein</string>
+    <string name="send_mail">Email verschicken</string>
+
+    <string name="old_testament_card_title">Losung</string>
+    <string name="new_testament_card_title">Lehrtext</string>
+    <string name="no_verses_found">Für dieses Datum sind keine Verse vorhanden</string>
+    <string name="import_new_data">Neue Verse hinzufügen</string>
+    <string name="monthly_verse_title">Monatsspruch</string>
+    <string name="choose_language">Sprache wählen</string>
+    <string name="copyright_import">Beim Klick auf \'%1$s\' akzeptierst du die Nutzungsbedingungen unter: %2$s</string>
+    <string name="accept_terms_and_conditions">Nutzungsbedingungen aktepieren</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="accept">Akzeptieren</string>
+    <string name="import_">Importieren</string>
+    <string name="try_again">Erneut versuchen</string>
+    <string name="error_loading_data_check_connection">Fehler beim Laden der Daten. Überprüfe deine Internetverbindung</string>
+    <string name="downloading_file">Lade Datei %1$d von %2$d herunter</string>
+    <string name="uncompressing_file">Entpacke Datei %1$d von %2$d</string>
+    <string name="importing_file">Importier Datei %1$d von %2$d</string>
+    <string name="choose_date">Datum wählen</string>
+    <string name="share">Teilen</string>
+    <string name="old_new_testament_title">Losung und Lehrtext</string>
+    <string name="mark_as_favorite">Als Favorit markieren</string>
+    <string name="markes_verses_will_be_here">Markierte Verse sind hier zu sehen</string>
+    <string name="open_verse_external">Mit externem Programm öffnen</string>
+    <string name="could_not_parse_verse">Konnte den Vers nicht verstehen</string>
+    <string name="remember_my_decision">Merke meine Wahl</string>
+    <string name="open_external_default_value">Standartwert zum Öffnen von Versen mit externen App</string>
+    <string name="delete_open_external_default_value">Klicke um den Standartwert für das Öffnen von Versen in externen APPs zu löschen</string>
+    <string name="successful">Erfolgreich</string>
+
+</resources>

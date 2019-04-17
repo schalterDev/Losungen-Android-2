@@ -1,0 +1,8 @@
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        app:key="openExternalDefault"
+        app:title="@string/open_external_default_value"
+        app:summary="@string/delete_open_external_default_value" />
+
+</androidx.preference.PreferenceScreen>

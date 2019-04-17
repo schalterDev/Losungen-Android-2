@@ -86,4 +86,10 @@ class BibleVerseTest {
         val verse = "Unknown 4,5"
         BibleVerse(verse)
     }
+
+    @Test(expected = BibleVerseParseException::class)
+    fun onlyBook() {
+        val verse = "Matthäus"
+        BibleVerse(verse)
+    }
 }

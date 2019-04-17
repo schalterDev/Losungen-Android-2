@@ -76,4 +76,26 @@ class VerseCardViewTest {
         assertThat(bible2TextView.text as String, equalTo(bible2))
     }
 
+    @Test
+    fun shouldShowDataWithDataObject() {
+        val verseCardData = VerseCardData(
+                "title",
+                "text",
+                "verse",
+                "title2",
+                "text2",
+                "verse2",
+                true
+        )
+
+        verseCardView.setData(verseCardData)
+
+        assertThat(title1TextView.text as String, equalTo(verseCardData.title))
+        assertThat(verse1TextView.text as String, equalTo(verseCardData.text))
+        assertThat(bible1TextView.text as String, equalTo(verseCardData.verse))
+        assertThat(title2TextView.text as String, equalTo(verseCardData.title2))
+        assertThat(verse2TextView.text as String, equalTo(verseCardData.text2))
+        assertThat(bible2TextView.text as String, equalTo(verseCardData.verse2))
+    }
+
 }

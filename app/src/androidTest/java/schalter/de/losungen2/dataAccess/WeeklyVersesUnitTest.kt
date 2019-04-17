@@ -5,6 +5,8 @@ import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.hamcrest.Matchers.equalTo
 import org.junit.After
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -156,8 +158,25 @@ class WeeklyVersesUnitTest {
         weeklyVerseOtherDate.date = calendar.time
         weeklyVerseOtherDate.verseBible = "other date"
         weeklyVerseDao.updateLanguage(weeklyVerseOtherDate)
+        weeklyVerseDao.updateIsFavourite(calendar.time, true)
         verseFromDatabase = weeklyVerseDao.findWeeklyVerseByDate(weeklyVerse.date).blockingObserve()!!
         assertThat(verseFromDatabase.date, equalTo(weeklyVerse.date))
         assertThat(verseFromDatabase.verseBible, equalTo(weeklyVerseOtherDate.verseBible))
+        assertTrue(verseFromDatabase.isFavourite)
+    }
+
+    @Test
+    fun updateIsFavourite() {
+        weeklyVerseDao.insertWeeklyVerse(weeklyVerse)
+        var verseFromDatabase: WeeklyVerse = weeklyVerseDao.findWeeklyVerseByDate(weeklyVerse.date).blockingObserve()!!
+        assertFalse(verseFromDatabase.isFavourite)
+
+        weeklyVerseDao.updateIsFavourite(weeklyVerse.date, true)
+        verseFromDatabase = weeklyVerseDao.findWeeklyVerseByDate(weeklyVerse.date).blockingObserve()!!
+        assertTrue(verseFromDatabase.isFavourite)
+
+        weeklyVerseDao.updateIsFavourite(weeklyVerse.date, false)
+        verseFromDatabase = weeklyVerseDao.findWeeklyVerseByDate(weeklyVerse.date).blockingObserve()!!
+        assertFalse(verseFromDatabase.isFavourite)
     }
 }

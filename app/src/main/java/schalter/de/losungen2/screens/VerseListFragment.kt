@@ -14,7 +14,7 @@ import schalter.de.losungen2.components.verseCard.VerseCardGridAdapter
 
 abstract class VerseListFragment : Fragment() {
 
-    private lateinit var emptyStateView: EmptyStateView
+    protected lateinit var emptyStateView: EmptyStateView
     private lateinit var recyclerView: RecyclerView
     private lateinit var gridAdapter: VerseCardGridAdapter
 

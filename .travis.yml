@@ -7,6 +7,7 @@ env:
   - EMULATOR_VERSION=25
   - TARGET_VERSION=28
   - ANDROID_ABI=armeabi-v7a
+  - ANDROID_TAG=google_apis
   - ANDROID_BUILD_TOOLS_VERSION=28.0.3
 
 android:
@@ -28,7 +29,8 @@ android:
 # Emulator Management: Create, Start and Wait
 before_install:
 - android list target
-- echo no | android create avd --force -n test -t android-$EMULATOR_VERSION --abi $ANDROID_ABI
+- android list targets
+- echo no | android create avd --force -n test -t android-$EMULATOR_VERSION --abi $ANDROID_ABI --tag $ANDROID_TAG
 - emulator -avd test -no-audio -no-window &
 - android-wait-for-emulator
 - adb shell input keyevent 82 &

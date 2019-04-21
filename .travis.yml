@@ -4,7 +4,7 @@ sudo: false
 env:
   global:
   - ANDROID_API_LEVEL=28
-  - EMULATOR_VERSION=25
+  - EMULATOR_VERSION=24
   - TARGET_VERSION=28
   - ANDROID_ABI=armeabi-v7a
   - ANDROID_TAG=google_apis
@@ -47,4 +47,5 @@ cache:
   - $HOME/.android/build-cache
 
 script:
+- "echo 'started script'"
 - " ./gradlew testDebug connectedCheck --stacktrace"

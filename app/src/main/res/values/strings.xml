@@ -40,4 +40,5 @@
     <string name="open_external_default_value">Default value opening verse in external program</string>
     <string name="delete_open_external_default_value">Click to delete default value for opening verse in external program</string>
     <string name="successful">successful</string>
+    <string name="weekly_verse">Weekly verse</string>
 </resources>

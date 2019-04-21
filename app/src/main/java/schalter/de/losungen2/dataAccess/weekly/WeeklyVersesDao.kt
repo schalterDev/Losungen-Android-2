@@ -55,6 +55,9 @@ abstract class WeeklyVersesDao {
         updateIsFavouriteByExactDate(WeeklyVerse.getDateForWeek(date), favourite)
     }
 
+    @Query("SELECT * FROM WeeklyVerse WHERE is_favourite IS :isFavourite")
+    abstract fun findWeeklyVersesByFavourite(isFavourite: Boolean = true): LiveData<Array<WeeklyVerse>>
+
     @Query("UPDATE WeeklyVerse SET is_favourite = :favourite WHERE date = :date")
     protected abstract fun updateIsFavouriteByExactDate(date: Date, favourite: Boolean)
 }

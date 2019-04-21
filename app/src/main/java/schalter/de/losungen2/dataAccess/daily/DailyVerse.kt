@@ -2,11 +2,15 @@ package schalter.de.losungen2.dataAccess.daily
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import schalter.de.losungen2.dataAccess.Language
 import java.util.*
 
-@Entity
+@Entity(indices = [
+    Index(value = ["date", "language"], unique = true),
+    Index(value = ["daily_verse_id"])
+])
 class DailyVerse(
         @ColumnInfo(name = "daily_verse_id")
         @PrimaryKey(autoGenerate = true) var dailyVerseId: Int? = null,

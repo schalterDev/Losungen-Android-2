@@ -34,12 +34,9 @@ before_install:
 
 before_script:
 - android list target
-- echo no | android create avd --force -n test -t android-$EMULATOR_VERSION --abi $ANDROID_ABI --tag $ANDROID_TAG
-- emulator -avd test -no-window &
-- android-wait-for-emulator
-
-script:
 - $ANDROID_HOME/emulator/emulator -avd test -no-window &
 - bash android-wait-for-emulator
 - adb shell input keyevent 82
+
+script:
 - ./gradlew testDebug connectedCheck --stacktrace

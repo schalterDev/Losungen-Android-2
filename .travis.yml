@@ -10,6 +10,7 @@ env:
   - ANDROID_TAG=google_apis
   - ANDROID_BUILD_TOOLS_VERSION=28.0.3
   - QEMU_AUDIO_DRV=none
+  - ADB_INSTALL_TIMEOUT=20
 
 android:
   components:
@@ -28,7 +29,7 @@ android:
   - sys-img-$ANDROID_ABI-google_apis-$EMULATOR_VERSION
 
 # Emulator Management: Create, Start and Wait
-before_install:
+before_script:
 - android list target
 - echo no | android create avd --force -n test -t android-$EMULATOR_VERSION --abi $ANDROID_ABI --tag $ANDROID_TAG
 - emulator -avd test -no-window &
@@ -38,6 +39,7 @@ before_install:
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
 - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
 cache:
   directories:
   - $HOME/.gradle/caches/

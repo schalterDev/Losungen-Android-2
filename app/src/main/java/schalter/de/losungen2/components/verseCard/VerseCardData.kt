@@ -20,7 +20,8 @@ data class VerseCardData(
         var title2: String? = null,
         var text2: String? = null,
         var verse2: String? = null,
-        var isFavourite: Boolean = false) {
+        var isFavourite: Boolean = false,
+        var date: Date? = null) {
 
     var showFavouriteIcon = false
         private set
@@ -43,13 +44,15 @@ data class VerseCardData(
                             titleOldTestament,
                             dailyVerse.oldTestamentVerseText,
                             dailyVerse.oldTestamentVerseBible,
-                            isFavourite = dailyVerse.isFavourite
+                            isFavourite = dailyVerse.isFavourite,
+                            date = dailyVerse.date
                     ),
                     VerseCardData(
                             titleNewTestament,
                             dailyVerse.newTestamentVerseText,
                             dailyVerse.newTestamentVerseBible,
-                            isFavourite = dailyVerse.isFavourite))
+                            isFavourite = dailyVerse.isFavourite,
+                            date = dailyVerse.date))
         }
 
         fun fromDailyVerse(context: Context, dailyVerse: DailyVerse): VerseCardData {
@@ -65,7 +68,8 @@ data class VerseCardData(
                     titleNewTestament,
                     dailyVerse.newTestamentVerseText,
                     dailyVerse.newTestamentVerseBible,
-                    isFavourite = dailyVerse.isFavourite)
+                    isFavourite = dailyVerse.isFavourite,
+                    date = dailyVerse.date)
 
             data.showFavouriteIcon = true
             data.updateIsFavourite = { isFavourite ->
@@ -84,7 +88,8 @@ data class VerseCardData(
                     titleMonthlyVerse,
                     monthlyVerse.verseText,
                     monthlyVerse.verseBible,
-                    isFavourite = monthlyVerse.isFavourite
+                    isFavourite = monthlyVerse.isFavourite,
+                    date = monthlyVerse.date
             )
 
             data.showFavouriteIcon = true
@@ -105,7 +110,8 @@ data class VerseCardData(
                     title,
                     weeklyVerse.verseText,
                     weeklyVerse.verseBible,
-                    isFavourite = weeklyVerse.isFavourite
+                    isFavourite = weeklyVerse.isFavourite,
+                    date = weeklyVerse.date
             )
 
             data.showFavouriteIcon = true

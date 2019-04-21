@@ -4,17 +4,7 @@ os: linux
 language: generic
 
 env:
-- EMULATOR_VERSION=25 TARGET_VERSION=28 ABI="google_apis;armeabi-v7a" ANDROID_BUILD_TOOLS_VERSION=28.0.3 ADB_INSTALL_TIMEOUT=20 QEMU_AUDIO_DRV=none
-
-#before_cache:
-#- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-#- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-#
-#cache:
-#  directories:
-#  - $HOME/.gradle/caches/
-#  - $HOME/.gradle/wrapper/
-#  - $HOME/.android/build-cache
+- EMULATOR_VERSION=18 TARGET_VERSION=28 ABI="google_apis;armeabi-v7a" ANDROID_BUILD_TOOLS_VERSION=28.0.3 ADB_INSTALL_TIMEOUT=20 QEMU_AUDIO_DRV=none
 
 before_install:
 - export ANDROID_HOME=~/android-sdk-linux
@@ -31,11 +21,21 @@ before_install:
 - sdkmanager "system-images;android-$EMULATOR_VERSION;$ABI" > /dev/null
 - sdkmanager --list | head -15
 - echo no | avdmanager create avd --force -n test -k "system-images;android-$EMULATOR_VERSION;$ABI"
-- $ANDROID_HOME/emulator/emulator -avd test -no-window &
 
 script:
-- ./gradlew clean testDebugUnitTest --stacktrace
-- ./gradlew assembleDebugAndroidTest --stacktrace
+- ./gradlew clean testDebugUnitTest
+- ./gradlew assembleDebugAndroidTest -PdisablePreDex --continue --stacktrace
+- $ANDROID_HOME/emulator/emulator -avd test -no-window &
 - bash android-wait-for-emulator
 - adb shell input keyevent 82
-- ./gradlew testDebug connectedCheck --stacktrace
+- ./gradlew connectedDebugAndroidTest -PdisablePreDex --continue --stacktrace
+
+#before_cache:
+#- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+#- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+#
+#cache:
+#  directories:
+#  - $HOME/.gradle/caches/
+#  - $HOME/.gradle/wrapper/
+#  - $HOME/.android/build-cache

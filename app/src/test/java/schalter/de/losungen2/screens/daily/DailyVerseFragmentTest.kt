@@ -15,6 +15,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Robolectric.flushBackgroundThreadScheduler
+import org.robolectric.Robolectric.flushForegroundThreadScheduler
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 import org.robolectric.fakes.RoboMenuItem
@@ -148,6 +150,9 @@ class DailyVerseFragmentTest {
             it.onOptionsItemSelected(item)
         }
 
+        flushForegroundThreadScheduler()
+        flushBackgroundThreadScheduler()
+        Thread.sleep(50)
         verify { dailyVerseDao.updateIsFavourite(dailyVerse.date, true) }
 
         val dailyVerseFavourite = dailyVerse.copy()

@@ -25,6 +25,10 @@ allprojects {
     }
 }
 
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions.freeCompilerArgs += ["-Xuse-experimental=io.ktor.locations.KtorExperimentalLocationsAPI"]
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

@@ -33,7 +33,7 @@ before_script:
 - android list target
 - echo no | android create avd --force -n test -t android-$EMULATOR_VERSION --abi $ANDROID_ABI --tag $ANDROID_TAG
 - emulator -avd test -no-window &
-#- android-wait-for-emulator
+- android-wait-for-emulator
 
 #before_cache:
 #- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -46,4 +46,5 @@ before_script:
 #  - $HOME/.android/build-cache
 
 script:
+- adb shell input keyevent 82 &
 - ./gradlew testDebug connectedCheck --stacktrace

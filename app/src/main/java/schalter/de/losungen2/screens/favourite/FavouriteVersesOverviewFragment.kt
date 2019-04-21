@@ -56,6 +56,9 @@ class FavouriteVersesOverviewFragment : VerseListFragment() {
                 this,
                 Observer { verses ->
                     val verseCardDataList = VerseCardData.fromWeeklyVerses(mContext, verses.toList())
+                    verseCardDataList.forEach { verse ->
+                        verse.title = requireContext().getString(R.string.weekly_verse) + " " + verse.title
+                    }
                     updateData(verseCardDataList, weekly = true)
                 }
         )
@@ -65,7 +68,11 @@ class FavouriteVersesOverviewFragment : VerseListFragment() {
                 this,
                 Observer { verses ->
                     val verseCardDataList = mutableListOf<VerseCardData>()
-                    verses.forEach { verse -> verseCardDataList.add(VerseCardData.fromMonthlyVerse(mContext, verse)) }
+                    verses.forEach { verse ->
+                        val verseToAdd = VerseCardData.fromMonthlyVerse(mContext, verse)
+                        verseToAdd.title += " " + VerseCardData.formateDateOnlyMonthAndYear(verseToAdd.date!!)
+                        verseCardDataList.add(verseToAdd)
+                    }
                     updateData(verseCardDataList, monthly = true)
                 }
         )

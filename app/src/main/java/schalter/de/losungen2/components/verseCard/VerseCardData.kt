@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 const val datePattern: String = "dd.MM.yyyy"
+const val datePatternMonthYear: String = "MMM yy"
 
 data class VerseCardData(
         var title: String,
@@ -29,9 +30,16 @@ data class VerseCardData(
     var updateIsFavourite: ((isFavourite: Boolean) -> Unit)? = null
 
     companion object {
+        // TODO change for multi language
+        val locale = Locale.GERMANY
+
         private fun formatDate(date: Date): String {
-            // TODO change for multi language
-            val dateFormat = SimpleDateFormat(datePattern, Locale.GERMANY)
+            val dateFormat = SimpleDateFormat(datePattern, locale)
+            return dateFormat.format(date)
+        }
+
+        fun formateDateOnlyMonthAndYear(date: Date): String {
+            val dateFormat = SimpleDateFormat(datePatternMonthYear, locale)
             return dateFormat.format(date)
         }
 

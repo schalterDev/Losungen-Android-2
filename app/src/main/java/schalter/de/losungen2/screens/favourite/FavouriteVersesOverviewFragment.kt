@@ -18,6 +18,9 @@ import schalter.de.losungen2.screens.VerseListFragment
 class FavouriteVersesOverviewFragment : VerseListFragment() {
 
     private lateinit var mContext: Context
+    private var dailyVerses: List<VerseCardData> = listOf()
+    private var weeklyVerses: List<VerseCardData> = listOf()
+    private var monthlyVerses: List<VerseCardData> = listOf()
 
     // TODO test if button of empty state is hidden
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -35,17 +38,67 @@ class FavouriteVersesOverviewFragment : VerseListFragment() {
         return view
     }
 
-    // TODO test
     private fun loadData() {
-        val dailyVerseDao = VersesDatabase.provideVerseDatabase(mContext).dailyVerseDao()
+        val versesDatabase = VersesDatabase.provideVerseDatabase(mContext)
+
+        val dailyVerseDao = versesDatabase.dailyVerseDao()
         dailyVerseDao.findDailyVersesByFavourite().observe(
                 this,
                 Observer { verses ->
                     val verseCardDataList = mutableListOf<VerseCardData>()
                     verses.forEach { verse -> verseCardDataList.add(VerseCardData.fromDailyVerse(mContext, verse)) }
-                    updateData(verseCardDataList)
+                    updateData(verseCardDataList, daily = true)
                 }
         )
+
+        val weeklyVersesDao = versesDatabase.weeklyVerseDao()
+        weeklyVersesDao.findWeeklyVersesByFavourite().observe(
+                this,
+                Observer { verses ->
+                    val verseCardDataList = VerseCardData.fromWeeklyVerses(mContext, verses.toList())
+                    verseCardDataList.forEach { verse ->
+                        verse.title = requireContext().getString(R.string.weekly_verse) + " " + verse.title
+                    }
+                    updateData(verseCardDataList, weekly = true)
+                }
+        )
+
+        val monthlyVersesDao = versesDatabase.monthlyVerseDao()
+        monthlyVersesDao.findMonthlyVersesByFavourite().observe(
+                this,
+                Observer { verses ->
+                    val verseCardDataList = mutableListOf<VerseCardData>()
+                    verses.forEach { verse ->
+                        val verseToAdd = VerseCardData.fromMonthlyVerse(mContext, verse)
+                        verseToAdd.title += " " + VerseCardData.formateDateOnlyMonthAndYear(verseToAdd.date!!)
+                        verseCardDataList.add(verseToAdd)
+                    }
+                    updateData(verseCardDataList, monthly = true)
+                }
+        )
+    }
+
+    private fun updateData(data: List<VerseCardData>, daily: Boolean = false, weekly: Boolean = false, monthly: Boolean = false) {
+        val listToSort = mutableListOf<VerseCardData>()
+        when {
+            daily -> {
+                dailyVerses = data
+            }
+            weekly -> {
+                weeklyVerses = data
+            }
+            monthly -> {
+                monthlyVerses = data
+            }
+        }
+        listToSort.addAll(dailyVerses)
+        listToSort.addAll(weeklyVerses)
+        listToSort.addAll(monthlyVerses)
+        super.updateData(sortData(listToSort))
+    }
+
+    private fun sortData(data: List<VerseCardData>): List<VerseCardData> {
+        return data.sortedBy { verse -> verse.date }
     }
 
     companion object {

@@ -2,11 +2,15 @@ package schalter.de.losungen2.dataAccess.weekly
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import schalter.de.losungen2.dataAccess.Language
 import java.util.*
 
-@Entity
+@Entity(indices = [
+    Index(value = ["date", "language"], unique = true),
+    Index(value = ["weekly_verse_id"])
+])
 class WeeklyVerse(
         @ColumnInfo(name = "weekly_verse_id")
         @PrimaryKey(autoGenerate = true) var weeklyVerseId: Int? = null,

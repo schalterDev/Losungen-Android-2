@@ -2,11 +2,15 @@ package schalter.de.losungen2.dataAccess.monthly
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import schalter.de.losungen2.dataAccess.Language
 import java.util.*
 
-@Entity
+@Entity(indices = [
+    Index(value = ["date", "language"], unique = true),
+    Index(value = ["monthly_verse_id"])
+])
 class MonthlyVerse(
         @ColumnInfo(name = "monthly_verse_id")
         @PrimaryKey(autoGenerate = true) var monthlyVerseId: Int? = null,

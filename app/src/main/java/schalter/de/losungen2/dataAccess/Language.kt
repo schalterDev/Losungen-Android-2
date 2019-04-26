@@ -1,27 +1,49 @@
 package schalter.de.losungen2.dataAccess
 
+import java.util.*
+
 enum class Language(val languageCode: String) {
-    DE("DE") {
+    DE("de") {
         override val longString = "Deutsch"
-        override fun toLongString() = longString
+        override val locale: Locale = Locale.GERMAN
     },
-    EN("EN") {
+    EN("en") {
         override val longString = "English"
-        override fun toLongString() = longString
+        override val locale: Locale = Locale.ENGLISH
+    },
+    IS("is") {
+        override val longString = "Íslenska"
+        override val locale: Locale = Locale.ENGLISH
+    },
+    SP("sp") {
+        override val longString = "Español"
+        override val locale: Locale = Locale.ENGLISH
+    },
+    AR("ar") {
+        override val longString = "العربية"
+        override val locale: Locale = Locale.ENGLISH
+    },
+    PT("pt") {
+        override val longString = "Português"
+        override val locale: Locale = Locale.ENGLISH
+    },
+    FR("fr") {
+        override val longString = "Française"
+        override val locale: Locale = Locale.FRENCH
     };
 
     abstract val longString: String
-    abstract fun toLongString(): String
+    abstract val locale: Locale
 
     companion object {
         fun fromString(value: String): Language? {
-            return when (value) {
-                DE.toString() -> DE
-                DE.longString -> DE
-                EN.toString() -> EN
-                EN.longString -> EN
-                else -> null
+            for (language in values()) {
+                if (language.toString() == value.toLowerCase() || language.longString == value) {
+                    return language
+                }
             }
+
+            return null
         }
     }
 }

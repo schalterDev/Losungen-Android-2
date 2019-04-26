@@ -41,5 +41,6 @@
     <string name="open_external_default_value">Standartwert zum Öffnen von Versen mit externen App</string>
     <string name="delete_open_external_default_value">Klicke um den Standartwert für das Öffnen von Versen in externen APPs zu löschen</string>
     <string name="successful">Erfolgreich</string>
+    <string name="weekly_verse">Wochenspruch</string>
 
 </resources>

@@ -12,7 +12,6 @@ import schalter.de.losungen2.utils.openExternal.OpenQuickBible
 
 const val TAG_DEFAULT_OPEN = "openExternalDefault"
 
-// TODO add test for this class
 class OpenExternalDialog(val context: Context) {
 
     private val externalTools = listOf(

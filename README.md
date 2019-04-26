@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/schalterDev/Losungen-Android-2.svg?branch=develop)](https://travis-ci.org/schalterDev/Losungen-Android-2)
+
 In this project emojis are used in the commit messages
 
 |   Commit type              | Emoji                                         |

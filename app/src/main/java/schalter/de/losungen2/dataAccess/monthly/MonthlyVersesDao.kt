@@ -33,6 +33,9 @@ abstract class MonthlyVersesDao {
         updateIsFavouriteByExactDate(MonthlyVerse.getDateForMonth(date), favourite)
     }
 
+    @Query("SELECT * FROM MonthlyVerse WHERE is_favourite IS :isFavourite")
+    abstract fun findMonthlyVersesByFavourite(isFavourite: Boolean = true): LiveData<Array<MonthlyVerse>>
+
     @Query("UPDATE MonthlyVerse SET is_favourite = :favourite WHERE date = :date")
     protected abstract fun updateIsFavouriteByExactDate(date: Date, favourite: Boolean)
 }

@@ -6,10 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import schalter.de.losungen2.R
-import schalter.de.losungen2.components.verseCard.VerseCardData
-import schalter.de.losungen2.dataAccess.VersesDatabase
 import schalter.de.losungen2.screens.VerseListFragment
 
 /**
@@ -19,7 +17,6 @@ class FavouriteVersesOverviewFragment : VerseListFragment() {
 
     private lateinit var mContext: Context
 
-    // TODO test if button of empty state is hidden
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
@@ -35,17 +32,13 @@ class FavouriteVersesOverviewFragment : VerseListFragment() {
         return view
     }
 
-    // TODO test
     private fun loadData() {
-        val dailyVerseDao = VersesDatabase.provideVerseDatabase(mContext).dailyVerseDao()
-        dailyVerseDao.findDailyVersesByFavourite().observe(
-                this,
-                Observer { verses ->
-                    val verseCardDataList = mutableListOf<VerseCardData>()
-                    verses.forEach { verse -> verseCardDataList.add(VerseCardData.fromDailyVerse(mContext, verse)) }
-                    updateData(verseCardDataList)
-                }
-        )
+        val mViewModel = ViewModelProviders.of(this,
+                FavouriteVersesModelFactory(activity!!.application, mContext)).get(FavouriteVersesModel::class.java)
+
+        mViewModel.getVerses().observe(this, androidx.lifecycle.Observer { favouriteVerses ->
+            updateData(favouriteVerses)
+        })
     }
 
     companion object {

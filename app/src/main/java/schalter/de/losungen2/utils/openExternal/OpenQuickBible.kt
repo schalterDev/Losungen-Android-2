@@ -12,8 +12,6 @@ const val MULTIPLIER_CHAPTER = 256
 /**
  * See https://docs.google.com/document/d/16DCCf49QUgwZD7cKw34ixPFhD-yy30SvWLARp2bjbmk/edit
  * for more info
- *
- * TODO (add tests)
  */
 class OpenQuickBible(val context: Context) : OpenExternal {
     override fun getTitle(): String {

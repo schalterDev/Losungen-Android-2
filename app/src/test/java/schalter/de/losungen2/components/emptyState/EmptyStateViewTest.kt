@@ -30,8 +30,6 @@ class EmptyStateViewTest {
     private val icon = R.drawable.ic_cloud_off
     private val buttonText = R.string.import_new_data
 
-    // TODO add test with custom attributes in xml
-
     @Before
     fun loadView() {
         context = getApplicationContext()

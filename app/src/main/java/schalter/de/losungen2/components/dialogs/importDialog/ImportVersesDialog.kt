@@ -21,6 +21,7 @@ import schalter.de.losungen2.backgroundTasks.ImportVersesTask
 import schalter.de.losungen2.components.emptyState.EmptyStateView
 import schalter.de.losungen2.dataAccess.Language
 import schalter.de.losungen2.utils.CoroutineDispatchers
+import schalter.de.losungen2.utils.LanguageUtils
 import kotlin.collections.set
 import kotlin.coroutines.CoroutineContext
 
@@ -144,8 +145,16 @@ class ImportVersesDialog : DialogFragment(), CoroutineScope {
                     spinnerContainer.visibility = View.VISIBLE
 
                     spinnerAdapter!!.addAll(availableLanguages)
-                    spinner.setSelection(0)
-                    // TODO change to select own language
+
+                    val displayLanguage = LanguageUtils.getDisplayLanguageEnum()
+                    val languageFoundIndex = availableLanguages.indexOf(displayLanguage?.longString)
+
+                    if (languageFoundIndex == -1) {
+                        spinner.setSelection(0)
+                    } else {
+                        spinner.setSelection(languageFoundIndex)
+                    }
+
                 } else {
                     onError()
                 }

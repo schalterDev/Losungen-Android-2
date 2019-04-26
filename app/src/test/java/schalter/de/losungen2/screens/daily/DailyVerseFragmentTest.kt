@@ -128,8 +128,6 @@ class DailyVerseFragmentTest {
             it.onOptionsItemSelected(item)
         }
 
-        // TODO add more detailed test
-
         verify { Share.dailyVerse(any(), any()) }
     }
 

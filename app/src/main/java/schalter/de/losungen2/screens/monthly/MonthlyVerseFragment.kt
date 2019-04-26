@@ -1,5 +1,6 @@
 package schalter.de.losungen2.screens.monthly
 
+import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,13 +17,14 @@ import java.util.*
 
 /**
  * A [Fragment] subclass.
- * Use the [DailyVerseFragment.newInstance] factory method to
+ * Use the [MonthlyVerseFragment.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
 class MonthlyVerseFragment : VerseListDateFragment() {
 
     private lateinit var mContext: Context
+    private lateinit var mApplication: Application
     private var monthlyVerse: MonthlyVerse? = null
     private var weeklyVerses: List<WeeklyVerse> = listOf()
 
@@ -30,6 +32,7 @@ class MonthlyVerseFragment : VerseListDateFragment() {
                               savedInstanceState: Bundle?): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
         mContext = view!!.context
+        mApplication = activity!!.application
 
         this.updateData(listOf())
         date?.let { loadDate(it) }
@@ -69,9 +72,9 @@ class MonthlyVerseFragment : VerseListDateFragment() {
     private fun updateDataByVerses() {
         val verses: MutableList<VerseCardData> = mutableListOf()
         if (monthlyVerse != null) {
-            verses.add(VerseCardData.fromMonthlyVerse(mContext, monthlyVerse!!))
+            verses.add(VerseCardData.fromMonthlyVerse(mApplication, monthlyVerse!!))
         }
-        verses.addAll(VerseCardData.fromWeeklyVerses(mContext, weeklyVerses))
+        verses.addAll(VerseCardData.fromWeeklyVerses(mApplication, weeklyVerses))
 
         this.updateData(verses)
     }

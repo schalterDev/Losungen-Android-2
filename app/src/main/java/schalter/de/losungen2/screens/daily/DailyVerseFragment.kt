@@ -1,5 +1,6 @@
 package schalter.de.losungen2.screens.daily
 
+import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.view.*
@@ -24,6 +25,7 @@ import java.util.*
 class DailyVerseFragment : VerseListDateFragment() {
 
     private lateinit var mContext: Context
+    private lateinit var mApplication: Application
     private lateinit var mViewModel: DailyVerseModel
 
     @VisibleForTesting
@@ -36,7 +38,7 @@ class DailyVerseFragment : VerseListDateFragment() {
 
     private fun updateDataByDailyVerse(dailyVerse: DailyVerse?) {
         if (dailyVerse != null) {
-            this.updateData(VerseCardData.fromDailyVerseTwoCards(mContext, dailyVerse))
+            this.updateData(VerseCardData.fromDailyVerseTwoCards(mApplication, dailyVerse))
             this.updateFavouriteMenuItem(dailyVerse.isFavourite)
         } else {
             this.updateData(listOf())
@@ -71,6 +73,7 @@ class DailyVerseFragment : VerseListDateFragment() {
                               savedInstanceState: Bundle?): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
         mContext = view!!.context
+        mApplication = activity!!.application
 
         updateDataByDailyVerse(null)
 

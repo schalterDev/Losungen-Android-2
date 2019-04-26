@@ -6,10 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import schalter.de.losungen2.R
-import schalter.de.losungen2.components.verseCard.VerseCardData
-import schalter.de.losungen2.dataAccess.VersesDatabase
 import schalter.de.losungen2.screens.VerseListFragment
 
 /**
@@ -18,9 +16,6 @@ import schalter.de.losungen2.screens.VerseListFragment
 class FavouriteVersesOverviewFragment : VerseListFragment() {
 
     private lateinit var mContext: Context
-    private var dailyVerses: List<VerseCardData> = listOf()
-    private var weeklyVerses: List<VerseCardData> = listOf()
-    private var monthlyVerses: List<VerseCardData> = listOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -38,66 +33,12 @@ class FavouriteVersesOverviewFragment : VerseListFragment() {
     }
 
     private fun loadData() {
-        val versesDatabase = VersesDatabase.provideVerseDatabase(mContext)
+        val mViewModel = ViewModelProviders.of(this,
+                FavouriteVersesModelFactory(activity!!.application, mContext)).get(FavouriteVersesModel::class.java)
 
-        val dailyVerseDao = versesDatabase.dailyVerseDao()
-        dailyVerseDao.findDailyVersesByFavourite().observe(
-                this,
-                Observer { verses ->
-                    val verseCardDataList = mutableListOf<VerseCardData>()
-                    verses.forEach { verse -> verseCardDataList.add(VerseCardData.fromDailyVerse(mContext, verse)) }
-                    updateData(verseCardDataList, daily = true)
-                }
-        )
-
-        val weeklyVersesDao = versesDatabase.weeklyVerseDao()
-        weeklyVersesDao.findWeeklyVersesByFavourite().observe(
-                this,
-                Observer { verses ->
-                    val verseCardDataList = VerseCardData.fromWeeklyVerses(mContext, verses.toList())
-                    verseCardDataList.forEach { verse ->
-                        verse.title = requireContext().getString(R.string.weekly_verse) + " " + verse.title
-                    }
-                    updateData(verseCardDataList, weekly = true)
-                }
-        )
-
-        val monthlyVersesDao = versesDatabase.monthlyVerseDao()
-        monthlyVersesDao.findMonthlyVersesByFavourite().observe(
-                this,
-                Observer { verses ->
-                    val verseCardDataList = mutableListOf<VerseCardData>()
-                    verses.forEach { verse ->
-                        val verseToAdd = VerseCardData.fromMonthlyVerse(mContext, verse)
-                        verseToAdd.title += " " + VerseCardData.formateDateOnlyMonthAndYear(verseToAdd.date!!)
-                        verseCardDataList.add(verseToAdd)
-                    }
-                    updateData(verseCardDataList, monthly = true)
-                }
-        )
-    }
-
-    private fun updateData(data: List<VerseCardData>, daily: Boolean = false, weekly: Boolean = false, monthly: Boolean = false) {
-        val listToSort = mutableListOf<VerseCardData>()
-        when {
-            daily -> {
-                dailyVerses = data
-            }
-            weekly -> {
-                weeklyVerses = data
-            }
-            monthly -> {
-                monthlyVerses = data
-            }
-        }
-        listToSort.addAll(dailyVerses)
-        listToSort.addAll(weeklyVerses)
-        listToSort.addAll(monthlyVerses)
-        super.updateData(sortData(listToSort))
-    }
-
-    private fun sortData(data: List<VerseCardData>): List<VerseCardData> {
-        return data.sortedBy { verse -> verse.date }
+        mViewModel.getVerses().observe(this, androidx.lifecycle.Observer { favouriteVerses ->
+            updateData(favouriteVerses)
+        })
     }
 
     companion object {

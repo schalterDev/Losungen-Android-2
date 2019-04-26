@@ -48,6 +48,10 @@ class DailyVerseFragment : VerseListDateFragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_daily_verse, menu)
 
+        mViewModel.getDailyVerse().value?.let {
+            updateFavouriteMenuItem(it.isFavourite)
+        }
+
         this.menu = menu
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -75,8 +79,6 @@ class DailyVerseFragment : VerseListDateFragment() {
         mContext = view!!.context
         mApplication = activity!!.application
 
-        updateDataByDailyVerse(null)
-
         mViewModel = ViewModelProviders.of(this,
                 DailyVerseModelFactory(mContext, date!!)).get(DailyVerseModel::class.java)
 
@@ -95,6 +97,8 @@ class DailyVerseFragment : VerseListDateFragment() {
             menu?.getItem(1)?.icon = resources
                     .getDrawable(R.drawable.ic_action_favorite_border)
         }
+
+        activity!!.invalidateOptionsMenu()
     }
 
     companion object {

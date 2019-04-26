@@ -12,7 +12,6 @@ import androidx.preference.PreferenceManager
 import schalter.de.losungen2.R
 import schalter.de.losungen2.components.dialogs.openVerseExternal.TAG_DEFAULT_OPEN
 
-// TODO add everything in this class
 class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -69,7 +69,6 @@ class EmptyStateView : FrameLayout {
         }
     }
 
-    // TODO write test
     fun hideButton() {
         button.visibility = View.GONE
     }

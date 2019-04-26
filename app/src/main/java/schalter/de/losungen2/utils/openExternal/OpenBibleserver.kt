@@ -1,11 +1,11 @@
 package schalter.de.losungen2.utils.openExternal
 
 import android.content.Context
+import schalter.de.losungen2.utils.LanguageUtils
 import schalter.de.losungen2.utils.Open
 
 const val BASE_URL = "https://www.bibleserver.com/text/"
 
-// TODO (add tests for this class)
 class OpenBibleserver(val context: Context) : OpenExternal {
     override fun getTitle(): String {
         return "bibleserver.com"
@@ -15,7 +15,7 @@ class OpenBibleserver(val context: Context) : OpenExternal {
         return true
     }
 
-    private val language = "de"
+    private val language = LanguageUtils.getDisplayLanguage()
 
     override fun open(bibleVerse: BibleVerse) {
         var chapter = ""

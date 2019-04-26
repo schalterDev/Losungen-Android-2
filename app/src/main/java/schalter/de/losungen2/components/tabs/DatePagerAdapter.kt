@@ -3,6 +3,7 @@ package schalter.de.losungen2.components.tabs
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.PagerAdapter
+import schalter.de.losungen2.utils.LanguageUtils
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -67,8 +68,7 @@ abstract class DatePagerAdapter(fm: FragmentManager, private var dateFormat: Str
     }
 
     private fun getTitleByDate(date: Date): String {
-        // TODO change for multi language
-        val df = SimpleDateFormat(dateFormat, Locale.GERMANY)
+        val df = SimpleDateFormat(dateFormat, LanguageUtils.getDisplayLanguageLocale())
         return df.format(date)
     }
 

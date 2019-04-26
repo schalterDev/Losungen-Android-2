@@ -71,6 +71,7 @@ enum class BookInBible(val bookNumber: Int) {
     fun toLocaleString(language: String): String {
         when (language) {
             "de" -> return GERMAN_BOOK_NAMES[bookNumber - 1][0]
+            "en" -> return ENGLISH_BOOK_NAMES[bookNumber - 1][0]
         }
 
         return GERMAN_BOOK_NAMES[bookNumber - 1][0]
@@ -112,7 +113,7 @@ enum class BookInBible(val bookNumber: Int) {
                 arrayOf("joel"),
                 arrayOf("amos"),
                 arrayOf("obadja"),
-                arrayOf("jonas"),
+                arrayOf("jona"),
                 arrayOf("micha"),
                 arrayOf("nahum"),
                 arrayOf("habakuk"),
@@ -148,8 +149,81 @@ enum class BookInBible(val bookNumber: Int) {
                 arrayOf("judas"),
                 arrayOf("offenbarung")
         )
+        private val ENGLISH_BOOK_NAMES = arrayOf(
+                arrayOf("genesis"),
+                arrayOf("exodus"),
+                arrayOf("leviticus"),
+                arrayOf("numbers"),
+                arrayOf("deuteronomy"),
+                arrayOf("joshua"),
+                arrayOf("judges"),
+                arrayOf("ruth"),
+                arrayOf("1samuel"),
+                arrayOf("2samuel"),
+                arrayOf("1kings"),
+                arrayOf("2kings"),
+                arrayOf("1chronicles"),
+                arrayOf("2chronicles"),
+                arrayOf("ezra"),
+                arrayOf("nehemiah"),
+                arrayOf("esther"),
+                arrayOf("job"),
+                arrayOf("psalms"),
+                arrayOf("proverbs"),
+                arrayOf("eclesiastes"),
+                arrayOf("songofsolomon"),
+                arrayOf("isaiah"),
+                arrayOf("jeremiah"),
+                arrayOf("lamentations"),
+                arrayOf("ezekiel"),
+                arrayOf("daniel"),
+                arrayOf("hosea"),
+                arrayOf("joel"),
+                arrayOf("amos"),
+                arrayOf("obadiah"),
+                arrayOf("jonah"),
+                arrayOf("micah"),
+                arrayOf("nahum"),
+                arrayOf("habbakuk"),
+                arrayOf("zephaniah"),
+                arrayOf("haggai"),
+                arrayOf("zechariah"),
+                arrayOf("malachi"),
+                arrayOf("matthew"),
+                arrayOf("mark"),
+                arrayOf("luke"),
+                arrayOf("john"),
+                arrayOf("acts"),
+                arrayOf("romans"),
+                arrayOf("1corinthians"),
+                arrayOf("2corinthians"),
+                arrayOf("galatians"),
+                arrayOf("ephesians"),
+                arrayOf("philippians"),
+                arrayOf("colossians"),
+                arrayOf("1thessalonians"),
+                arrayOf("2thessalonians"),
+                arrayOf("1timothy"),
+                arrayOf("2timothy"),
+                arrayOf("titus"),
+                arrayOf("philemon"),
+                arrayOf("hebrews"),
+                arrayOf("james"),
+                arrayOf("1peter"),
+                arrayOf("2peter"),
+                arrayOf("1john"),
+                arrayOf("2john"),
+                arrayOf("3john"),
+                arrayOf("jude"),
+                arrayOf("revelation")
+        )
 
-        private val BOOK_NAMES = GERMAN_BOOK_NAMES
+        private val BOOK_NAMES: Array<Array<String>> = GERMAN_BOOK_NAMES.mapIndexed { index, list ->
+            val newList = mutableListOf<String>()
+            newList.addAll(list)
+            newList.addAll(ENGLISH_BOOK_NAMES[index])
+            newList.toTypedArray()
+        }.toTypedArray()
 
         fun fromString(string: String): BookInBible? {
             val indexFoundBook = BOOK_NAMES.indexOfFirst { names -> names.contains(string) }

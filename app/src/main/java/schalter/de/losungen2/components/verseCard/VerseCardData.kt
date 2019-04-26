@@ -8,6 +8,7 @@ import schalter.de.losungen2.dataAccess.VersesDatabase
 import schalter.de.losungen2.dataAccess.daily.DailyVerse
 import schalter.de.losungen2.dataAccess.monthly.MonthlyVerse
 import schalter.de.losungen2.dataAccess.weekly.WeeklyVerse
+import schalter.de.losungen2.utils.LanguageUtils
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -30,8 +31,7 @@ data class VerseCardData(
     var updateIsFavourite: ((isFavourite: Boolean) -> Unit)? = null
 
     companion object {
-        // TODO change for multi language
-        val locale = Locale.GERMANY
+        private val locale = LanguageUtils.getDisplayLanguageLocale();
 
         private fun formatDate(date: Date): String {
             val dateFormat = SimpleDateFormat(datePattern, locale)

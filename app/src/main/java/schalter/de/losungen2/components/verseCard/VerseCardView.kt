@@ -44,7 +44,6 @@ class VerseCardView : FrameLayout {
 
         hideSecondVerse()
 
-        // TODO (test this click listener)
         this.setOnClickListener {
             try {
                 // only one verse is shown

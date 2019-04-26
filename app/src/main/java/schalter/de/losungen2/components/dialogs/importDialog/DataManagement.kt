@@ -75,7 +75,7 @@ class DataManagement : ViewModel(), CoroutineScope {
 
     companion object {
         fun getLanguagesFromData(data: List<YearLanguageUrl>): List<String> {
-            return data.map { dataElement -> dataElement.language.toLongString() }.distinct()
+            return data.map { dataElement -> dataElement.language.longString }.distinct()
         }
 
         fun getYearsForLanguageFromData(data: List<YearLanguageUrl>, language: Language): List<Int> {

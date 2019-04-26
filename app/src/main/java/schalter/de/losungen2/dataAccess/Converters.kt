@@ -21,6 +21,6 @@ class Converters {
 
     @TypeConverter
     fun stringToLanguage(languageCode: String?): Language? {
-        return languageCode?.let { Language.valueOf(languageCode) }
+        return languageCode?.let { Language.valueOf(languageCode.toUpperCase()) }
     }
 }

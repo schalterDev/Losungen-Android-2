@@ -15,7 +15,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         setupToolbar()
-        setupNavigationDrawer()
+        // when rotating savedInstanceState is not null then do not select a fragment
+        setupNavigationDrawer(savedInstanceState == null)
     }
 
     private fun setupToolbar() {
@@ -25,10 +26,13 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
     }
 
-    private fun setupNavigationDrawer() {
+    private fun setupNavigationDrawer(setDefaultFragment: Boolean = true) {
         val navigationDrawer = NavigationDrawer(this) { nextFragment, tag -> this@MainActivity.changeFragment(nextFragment, tag) }
         navigationDrawer.initAndShow(toolbar)
-        navigationDrawer.setActiveItem(NavigationDrawer.DrawerItem.DAILY_OVERVIEW)
+        if (setDefaultFragment)
+            navigationDrawer.setActiveItem(NavigationDrawer.DrawerItem.DAILY_OVERVIEW)
+        else
+            navigationDrawer.findActiveItem(supportFragmentManager)
     }
 
     private fun changeFragment(fragment: Fragment, tag: String) {

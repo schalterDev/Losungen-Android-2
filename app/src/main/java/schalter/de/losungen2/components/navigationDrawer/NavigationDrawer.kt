@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.DividerDrawerItem
@@ -94,32 +95,45 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
         return navigationDrawer
     }
 
-    fun setActiveItem(drawerItem: DrawerItem) {
-        val iDrawerItemClicked: IDrawerItem<*, *>
-
-        when (drawerItem) {
-            DrawerItem.DAILY_OVERVIEW -> iDrawerItemClicked = itemDailyVerses
-            DrawerItem.MONTHLY_OVERVIEW -> iDrawerItemClicked = itemMonthlyVerses
-            DrawerItem.FAVOURITE_OVERVIEW -> iDrawerItemClicked = itemFavourite
-            DrawerItem.WIDGET_OVERVIEW -> iDrawerItemClicked = itemWidget
-            DrawerItem.SETTINGS -> iDrawerItemClicked = itemSettings
-            DrawerItem.RATE -> iDrawerItemClicked = itemRate
-            DrawerItem.FEEDBACK -> iDrawerItemClicked = itemFeedback
-            DrawerItem.INFO -> iDrawerItemClicked = itemInfo
-            DrawerItem.PRIVACY -> iDrawerItemClicked = itemPrivacy
+    private fun getIDrawerItemFromDrawerItem(drawerItem: DrawerItem): IDrawerItem<*, *> {
+        return when (drawerItem) {
+            DrawerItem.DAILY_OVERVIEW -> itemDailyVerses
+            DrawerItem.MONTHLY_OVERVIEW -> itemMonthlyVerses
+            DrawerItem.FAVOURITE_OVERVIEW -> itemFavourite
+            DrawerItem.WIDGET_OVERVIEW -> itemWidget
+            DrawerItem.SETTINGS -> itemSettings
+            DrawerItem.RATE -> itemRate
+            DrawerItem.FEEDBACK -> itemFeedback
+            DrawerItem.INFO -> itemInfo
+            DrawerItem.PRIVACY -> itemPrivacy
         }
+    }
 
-        this.onItemClicked(iDrawerItemClicked);
+    fun setActiveItem(drawerItem: DrawerItem) {
+        val iDrawerItemClicked = getIDrawerItemFromDrawerItem(drawerItem)
+        this.onItemClicked(iDrawerItemClicked)
+    }
+
+    fun findActiveItem(supportFragmentManager: FragmentManager) {
+        DrawerItem.values().forEach { item ->
+            if (supportFragmentManager.findFragmentByTag(item.toString()) != null) {
+                navigationDrawer.setSelection(getIDrawerItemFromDrawerItem(item))
+            }
+        }
     }
 
     private fun onItemClicked(drawerItem: IDrawerItem<*, *>): Boolean {
         var fragmentToShowNext: Fragment? = null
 
         when (drawerItem) {
-            itemDailyVerses -> fragmentToShowNext = dailyVersesOverviewFragment ?: DailyVersesOverviewFragment.newInstance()
-            itemMonthlyVerses -> fragmentToShowNext = monthlyVersesOverviewFragment ?: MonthlyVersesOverviewFragment.newInstance()
-            itemFavourite -> fragmentToShowNext = favouriteVersesOverviewFragment ?: FavouriteVersesOverviewFragment.newInstance()
-            itemWidget -> fragmentToShowNext = widgetsOverviewFragment ?: WidgetsOverviewFragment.newInstance()
+            itemDailyVerses -> fragmentToShowNext = dailyVersesOverviewFragment
+                    ?: DailyVersesOverviewFragment.newInstance()
+            itemMonthlyVerses -> fragmentToShowNext = monthlyVersesOverviewFragment
+                    ?: MonthlyVersesOverviewFragment.newInstance()
+            itemFavourite -> fragmentToShowNext = favouriteVersesOverviewFragment
+                    ?: FavouriteVersesOverviewFragment.newInstance()
+            itemWidget -> fragmentToShowNext = widgetsOverviewFragment
+                    ?: WidgetsOverviewFragment.newInstance()
             itemSettings -> activity.startActivity(Intent(activity, SettingsActivity::class.java))
             itemRate -> Open.appInPlayStore(activity)
             itemFeedback -> Open.sendMailToProgrammer(activity)
@@ -136,7 +150,7 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
         return false
     }
 
-    fun getTagForFragment(fragment: Fragment): String? {
+    private fun getTagForFragment(fragment: Fragment): String? {
         when (fragment) {
             is DailyVersesOverviewFragment -> return DrawerItem.DAILY_OVERVIEW.toString()
             is MonthlyVersesOverviewFragment -> return DrawerItem.MONTHLY_OVERVIEW.toString()

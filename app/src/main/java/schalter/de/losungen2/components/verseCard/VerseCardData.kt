@@ -1,6 +1,6 @@
 package schalter.de.losungen2.components.verseCard
 
-import android.content.Context
+import android.app.Application
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import schalter.de.losungen2.R
@@ -43,9 +43,9 @@ data class VerseCardData(
             return dateFormat.format(date)
         }
 
-        fun fromDailyVerseTwoCards(context: Context, dailyVerse: DailyVerse): List<VerseCardData> {
-            val titleNewTestament = context.getString(R.string.new_testament_card_title)
-            val titleOldTestament = context.getString(R.string.old_testament_card_title)
+        fun fromDailyVerseTwoCards(application: Application, dailyVerse: DailyVerse): List<VerseCardData> {
+            val titleNewTestament = application.getString(R.string.new_testament_card_title)
+            val titleOldTestament = application.getString(R.string.old_testament_card_title)
 
             return listOf(
                     VerseCardData(
@@ -63,11 +63,11 @@ data class VerseCardData(
                             date = dailyVerse.date))
         }
 
-        fun fromDailyVerse(context: Context, dailyVerse: DailyVerse): VerseCardData {
+        fun fromDailyVerse(application: Application, dailyVerse: DailyVerse): VerseCardData {
             val date = formatDate(dailyVerse.date)
 
-            val titleNewTestament = context.getString(R.string.new_testament_card_title) + " " + date
-            val titleOldTestament = context.getString(R.string.old_testament_card_title) + " " + date
+            val titleNewTestament = application.getString(R.string.new_testament_card_title) + " " + date
+            val titleOldTestament = application.getString(R.string.old_testament_card_title) + " " + date
 
             val data = VerseCardData(
                     titleOldTestament,
@@ -82,15 +82,15 @@ data class VerseCardData(
             data.showFavouriteIcon = true
             data.updateIsFavourite = { isFavourite ->
                 GlobalScope.launch {
-                    val database = VersesDatabase.provideVerseDatabase(context)
+                    val database = VersesDatabase.provideVerseDatabase(application)
                     database.dailyVerseDao().updateIsFavourite(dailyVerse.date, isFavourite)
                 }
             }
             return data
         }
 
-        fun fromMonthlyVerse(context: Context, monthlyVerse: MonthlyVerse): VerseCardData {
-            val titleMonthlyVerse = context.getString(R.string.monthly_verse_title)
+        fun fromMonthlyVerse(application: Application, monthlyVerse: MonthlyVerse): VerseCardData {
+            val titleMonthlyVerse = application.getString(R.string.monthly_verse_title)
 
             val data = VerseCardData(
                     titleMonthlyVerse,
@@ -103,7 +103,7 @@ data class VerseCardData(
             data.showFavouriteIcon = true
             data.updateIsFavourite = { isFavourite ->
                 GlobalScope.launch {
-                    val database = VersesDatabase.provideVerseDatabase(context)
+                    val database = VersesDatabase.provideVerseDatabase(application)
                     database.monthlyVerseDao().updateIsFavourite(monthlyVerse.date, isFavourite)
                 }
             }
@@ -111,7 +111,7 @@ data class VerseCardData(
             return data
         }
 
-        private fun fromWeeklyVerse(context: Context, weeklyVerse: WeeklyVerse): VerseCardData {
+        private fun fromWeeklyVerse(application: Application, weeklyVerse: WeeklyVerse): VerseCardData {
             val title = this.formatDate(weeklyVerse.date)
 
             val data = VerseCardData(
@@ -125,15 +125,15 @@ data class VerseCardData(
             data.showFavouriteIcon = true
             data.updateIsFavourite = { isFavourite ->
                 GlobalScope.launch {
-                    val database = VersesDatabase.provideVerseDatabase(context)
+                    val database = VersesDatabase.provideVerseDatabase(application)
                     database.weeklyVerseDao().updateIsFavourite(weeklyVerse.date, isFavourite)
                 }
             }
             return data
         }
 
-        fun fromWeeklyVerses(context: Context, weeklyVerses: List<WeeklyVerse>): List<VerseCardData> {
-            return weeklyVerses.map { fromWeeklyVerse(context, it) }
+        fun fromWeeklyVerses(application: Application, weeklyVerses: List<WeeklyVerse>): List<VerseCardData> {
+            return weeklyVerses.map { fromWeeklyVerse(application, it) }
         }
     }
 }

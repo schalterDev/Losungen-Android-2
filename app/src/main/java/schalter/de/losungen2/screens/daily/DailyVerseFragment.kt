@@ -5,16 +5,15 @@ import android.os.Bundle
 import android.view.*
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import androidx.lifecycle.ViewModelProviders
 import schalter.de.losungen2.R
 import schalter.de.losungen2.components.verseCard.VerseCardData
-import schalter.de.losungen2.dataAccess.VersesDatabase
 import schalter.de.losungen2.dataAccess.daily.DailyVerse
 import schalter.de.losungen2.screens.ARG_DATE
 import schalter.de.losungen2.screens.VerseListDateFragment
 import schalter.de.losungen2.utils.Share
 import java.util.*
+
 
 /**
  * A simple [Fragment] subclass.
@@ -25,7 +24,7 @@ import java.util.*
 class DailyVerseFragment : VerseListDateFragment() {
 
     private lateinit var mContext: Context
-    private var dailyVerse: DailyVerse? = null
+    private lateinit var mViewModel: DailyVerseModel
 
     @VisibleForTesting
     private var menu: Menu? = null
@@ -35,31 +34,32 @@ class DailyVerseFragment : VerseListDateFragment() {
         setHasOptionsMenu(true)
     }
 
+    private fun updateDataByDailyVerse(dailyVerse: DailyVerse?) {
+        if (dailyVerse != null) {
+            this.updateData(VerseCardData.fromDailyVerseTwoCards(mContext, dailyVerse))
+            this.updateFavouriteMenuItem(dailyVerse.isFavourite)
+        } else {
+            this.updateData(listOf())
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_daily_verse, menu)
 
         this.menu = menu
-        if (dailyVerse != null) {
-            this.updateFavouriteMenuItem(dailyVerse!!.isFavourite)
-        }
-
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_share -> {
-                if (dailyVerse != null) {
-                    Share.dailyVerse(mContext, dailyVerse!!)
+                mViewModel.getDailyVerse().value?.let {
+                    Share.dailyVerse(mContext, it)
                 }
                 return true
             }
             R.id.action_favourite -> {
-                if (dailyVerse != null) {
-                    GlobalScope.launch {
-                        VersesDatabase.provideVerseDatabase(mContext).dailyVerseDao().updateIsFavourite(dailyVerse!!.date, !dailyVerse!!.isFavourite)
-                    }
-                }
+                mViewModel.toggleFavourite()
                 return true
             }
         }
@@ -72,26 +72,16 @@ class DailyVerseFragment : VerseListDateFragment() {
         val view = super.onCreateView(inflater, container, savedInstanceState)
         mContext = view!!.context
 
-        date?.let { loadDate(it) }
+        updateDataByDailyVerse(null)
+
+        mViewModel = ViewModelProviders.of(this,
+                DailyVerseModelFactory(mContext, date!!)).get(DailyVerseModel::class.java)
+
+        mViewModel.getDailyVerse().observe(this, androidx.lifecycle.Observer { dailyVerse ->
+            updateDataByDailyVerse(dailyVerse)
+        })
 
         return view
-    }
-
-    private fun loadDate(date: Date) {
-        val dailyVersesDatabase = VersesDatabase.provideVerseDatabase(mContext)
-        dailyVersesDatabase.dailyVerseDao().findDailyVerseByDate(date).observe(
-                this,
-                androidx.lifecycle.Observer<DailyVerse> { dailyVerse: DailyVerse? -> updateDataByDailyVerse(dailyVerse) })
-    }
-
-    private fun updateDataByDailyVerse(dailyVerse: DailyVerse?) {
-        if (dailyVerse != null) {
-            this.dailyVerse = dailyVerse
-            this.updateData(VerseCardData.fromDailyVerseTwoCards(mContext, dailyVerse))
-            this.updateFavouriteMenuItem(dailyVerse.isFavourite)
-        } else {
-            this.updateData(listOf())
-        }
     }
 
     private fun updateFavouriteMenuItem(isFavourite: Boolean) {

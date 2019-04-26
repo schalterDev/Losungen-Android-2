@@ -8,7 +8,8 @@ import schalter.de.losungen2.dataAccess.Language
 import java.util.*
 
 @Entity(indices = [
-    Index(value = ["date", "language"], unique = true),
+//    Index(value = ["date", "language"], unique = true),
+    Index(value = ["date"], unique = true),
     Index(value = ["monthly_verse_id"])
 ])
 class MonthlyVerse(

@@ -100,7 +100,6 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
             DrawerItem.DAILY_OVERVIEW -> itemDailyVerses
             DrawerItem.MONTHLY_OVERVIEW -> itemMonthlyVerses
             DrawerItem.FAVOURITE_OVERVIEW -> itemFavourite
-            DrawerItem.WIDGET_OVERVIEW -> itemWidget
             DrawerItem.SETTINGS -> itemSettings
             DrawerItem.RATE -> itemRate
             DrawerItem.FEEDBACK -> itemFeedback
@@ -155,7 +154,6 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
             is DailyVersesOverviewFragment -> return DrawerItem.DAILY_OVERVIEW.toString()
             is MonthlyVersesOverviewFragment -> return DrawerItem.MONTHLY_OVERVIEW.toString()
             is FavouriteVersesOverviewFragment -> return DrawerItem.FAVOURITE_OVERVIEW.toString()
-            is WidgetsOverviewFragment -> return DrawerItem.WIDGET_OVERVIEW.toString()
             is InfoFragment -> return DrawerItem.INFO.toString()
         }
 
@@ -166,7 +164,6 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
         DAILY_OVERVIEW,
         MONTHLY_OVERVIEW,
         FAVOURITE_OVERVIEW,
-        WIDGET_OVERVIEW,
         SETTINGS,
         RATE,
         FEEDBACK,

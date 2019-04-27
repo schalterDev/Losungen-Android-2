@@ -26,7 +26,6 @@ import schalter.de.losungen2.screens.favourite.FavouriteVersesOverviewFragment
 import schalter.de.losungen2.screens.info.InfoFragment
 import schalter.de.losungen2.screens.monthly.MonthlyVersesOverviewFragment
 import schalter.de.losungen2.screens.settings.SettingsActivity
-import schalter.de.losungen2.screens.widget.WidgetsOverviewFragment
 import schalter.de.losungen2.utils.Constants
 
 
@@ -72,12 +71,6 @@ class MainActivityTest {
         openNavigationDrawer()
         onView(withText(R.string.favorite_verses)).perform(click())
         fragment = activity.supportFragmentManager.findFragmentByTag(NavigationDrawer.DrawerItem.FAVOURITE_OVERVIEW.toString()) as FavouriteVersesOverviewFragment
-        assertTrue(fragment.isVisible)
-
-        //Widget
-        openNavigationDrawer()
-        onView(withText(R.string.configure_widgets)).perform(click())
-        fragment = activity.supportFragmentManager.findFragmentByTag(NavigationDrawer.DrawerItem.WIDGET_OVERVIEW.toString()) as WidgetsOverviewFragment
         assertTrue(fragment.isVisible)
 
         //Info

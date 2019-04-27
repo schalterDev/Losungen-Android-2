@@ -41,4 +41,13 @@
     <string name="delete_open_external_default_value">Click to delete default value for opening verse in external program</string>
     <string name="successful">successful</string>
     <string name="weekly_verse">Weekly verse</string>
+    <string name="title_activity_app_widget">Widget Settings</string>
+    <string name="widget_is_loading">Widget is loading…</string>
+    <string name="widget_content">Widget content</string>
+    <string name="font_size">Font size</string>
+    <string name="text_color">Text color</string>
+    <string name="background_color">Background color</string>
+    <string name="preview">Preview</string>
+    <string name="save">Save</string>
+    <string name="ok">OK</string>
 </resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="widget_contents">
+        <item>@string/old_testament_card_title</item>
+        <item>@string/new_testament_card_title</item>
+        <item>@string/old_new_testament_title</item>
+    </string-array>
+
+</resources>

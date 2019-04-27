@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="120dp"
+    android:minHeight="40dp"
+    android:updatePeriodMillis="1800000"
+    android:initialLayout="@layout/app_widget"
+    android:configure="schalter.de.losungen2.widgets.AppWidgetActivity"
+    android:resizeMode="horizontal|vertical"
+    android:widgetCategory="home_screen" />

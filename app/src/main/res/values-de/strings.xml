@@ -42,5 +42,7 @@
     <string name="delete_open_external_default_value">Klicke um den Standartwert für das Öffnen von Versen in externen APPs zu löschen</string>
     <string name="successful">Erfolgreich</string>
     <string name="weekly_verse">Wochenspruch</string>
+    <string name="title_activity_app_widget">Widget einstellen</string>
+    <string name="widget_is_loading">Widget lädt…</string>
 
 </resources>

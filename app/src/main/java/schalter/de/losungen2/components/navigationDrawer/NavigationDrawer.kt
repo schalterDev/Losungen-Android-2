@@ -16,7 +16,6 @@ import schalter.de.losungen2.screens.favourite.FavouriteVersesOverviewFragment
 import schalter.de.losungen2.screens.info.InfoFragment
 import schalter.de.losungen2.screens.monthly.MonthlyVersesOverviewFragment
 import schalter.de.losungen2.screens.settings.SettingsActivity
-import schalter.de.losungen2.screens.widget.WidgetsOverviewFragment
 import schalter.de.losungen2.utils.Open
 
 class NavigationDrawer(private val activity: Activity, private val fragmentChangeListener: (Fragment, String) -> Unit) {
@@ -26,14 +25,12 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
     private var dailyVersesOverviewFragment: DailyVersesOverviewFragment? = null
     private var monthlyVersesOverviewFragment: MonthlyVersesOverviewFragment? = null
     private var favouriteVersesOverviewFragment: FavouriteVersesOverviewFragment? = null
-    private var widgetsOverviewFragment: WidgetsOverviewFragment? = null
     private var infoFragment: InfoFragment? = null
 
     // Items
     private lateinit var itemDailyVerses: PrimaryDrawerItem
     private lateinit var itemMonthlyVerses: PrimaryDrawerItem
     private lateinit var itemFavourite: PrimaryDrawerItem
-    private lateinit var itemWidget: PrimaryDrawerItem
     private lateinit var itemSettings: PrimaryDrawerItem
     private lateinit var itemRate: PrimaryDrawerItem
     private lateinit var itemFeedback: PrimaryDrawerItem
@@ -50,9 +47,6 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
         itemFavourite = PrimaryDrawerItem().withName(R.string.favorite_verses)
                 .withIconTintingEnabled(true)
                 .withIcon(R.drawable.ic_action_favorite)
-        itemWidget = PrimaryDrawerItem().withName(R.string.configure_widgets)
-                .withIconTintingEnabled(true)
-                .withIcon(R.drawable.ic_action_color_lens)
         itemSettings = PrimaryDrawerItem().withName(R.string.settings)
                 .withIconTintingEnabled(true)
                 .withIcon(R.drawable.ic_action_settings)
@@ -81,7 +75,6 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
                         itemDailyVerses,
                         itemMonthlyVerses,
                         itemFavourite,
-                        itemWidget,
                         itemSettings,
                         DividerDrawerItem(),
                         itemRate,
@@ -100,7 +93,6 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
             DrawerItem.DAILY_OVERVIEW -> itemDailyVerses
             DrawerItem.MONTHLY_OVERVIEW -> itemMonthlyVerses
             DrawerItem.FAVOURITE_OVERVIEW -> itemFavourite
-            DrawerItem.WIDGET_OVERVIEW -> itemWidget
             DrawerItem.SETTINGS -> itemSettings
             DrawerItem.RATE -> itemRate
             DrawerItem.FEEDBACK -> itemFeedback
@@ -132,8 +124,6 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
                     ?: MonthlyVersesOverviewFragment.newInstance()
             itemFavourite -> fragmentToShowNext = favouriteVersesOverviewFragment
                     ?: FavouriteVersesOverviewFragment.newInstance()
-            itemWidget -> fragmentToShowNext = widgetsOverviewFragment
-                    ?: WidgetsOverviewFragment.newInstance()
             itemSettings -> activity.startActivity(Intent(activity, SettingsActivity::class.java))
             itemRate -> Open.appInPlayStore(activity)
             itemFeedback -> Open.sendMailToProgrammer(activity)
@@ -155,7 +145,6 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
             is DailyVersesOverviewFragment -> return DrawerItem.DAILY_OVERVIEW.toString()
             is MonthlyVersesOverviewFragment -> return DrawerItem.MONTHLY_OVERVIEW.toString()
             is FavouriteVersesOverviewFragment -> return DrawerItem.FAVOURITE_OVERVIEW.toString()
-            is WidgetsOverviewFragment -> return DrawerItem.WIDGET_OVERVIEW.toString()
             is InfoFragment -> return DrawerItem.INFO.toString()
         }
 
@@ -166,7 +155,6 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
         DAILY_OVERVIEW,
         MONTHLY_OVERVIEW,
         FAVOURITE_OVERVIEW,
-        WIDGET_OVERVIEW,
         SETTINGS,
         RATE,
         FEEDBACK,

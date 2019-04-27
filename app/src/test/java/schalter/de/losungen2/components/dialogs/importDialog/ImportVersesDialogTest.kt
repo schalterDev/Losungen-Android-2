@@ -125,7 +125,7 @@ class ImportVersesDialogTest {
         assertEquals(Language.DE.longString, spinner.adapter?.getItem(0))
         assertEquals(Language.EN.longString, spinner.adapter?.getItem(1))
 
-        assertEquals(Language.DE.longString, spinner.selectedItem)
+        assertEquals(Language.EN.longString, spinner.selectedItem)
     }
 
     @Test
@@ -133,6 +133,9 @@ class ImportVersesDialogTest {
         liveDataDataManagement.postValue(testData)
 
         assertFalse(getPositiveButton().isEnabled)
+
+        // select english language
+        getSpinner()!!.setSelection(0)
 
         val innerWrapper = getInnerWrapper()!!
         assertEquals(3, innerWrapper.childCount)
@@ -161,6 +164,9 @@ class ImportVersesDialogTest {
         every { anyConstructed<ImportVersesTask>().execute(any()) } just Runs
 
         liveDataDataManagement.postValue(testData)
+
+        // select english language
+        getSpinner()!!.setSelection(0)
 
         val innerWrapper = getInnerWrapper()!!
         innerWrapper.getChildAt(0).performClick()

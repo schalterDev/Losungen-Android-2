@@ -142,6 +142,7 @@ class WeeklyVersesUnitTest {
         weeklyVerseDao.insertWeeklyVerse(weeklyVerse)
 
         val calendar = Calendar.getInstance()
+        calendar.firstDayOfWeek = Calendar.SUNDAY
         calendar.time = weeklyVerse.date
         if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY)

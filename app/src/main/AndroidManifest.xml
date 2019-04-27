@@ -11,6 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".widgets.AppWidgetActivity"
+            android:label="@string/title_activity_app_widget"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,8 +23,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="schalter.de.losungen2.screens.settings.SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:name=".screens.settings.SettingsActivity"
+            android:label="@string/title_activity_settings" />
+
+        <receiver android:name=".widgets.WidgetBroadcast">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info" />
+        </receiver>
     </application>
 
 </manifest>

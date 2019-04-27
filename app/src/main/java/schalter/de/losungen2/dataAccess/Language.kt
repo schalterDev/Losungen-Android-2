@@ -38,7 +38,7 @@ enum class Language(val languageCode: String) {
     companion object {
         fun fromString(value: String): Language? {
             for (language in values()) {
-                if (language.toString() == value.toLowerCase() || language.longString == value) {
+                if (language.toString().toLowerCase() == value.toLowerCase() || language.longString == value) {
                     return language
                 }
             }

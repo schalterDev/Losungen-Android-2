@@ -10,7 +10,10 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import schalter.de.losungen2.R
-import schalter.de.losungen2.components.dialogs.openVerseExternal.TAG_DEFAULT_OPEN
+import schalter.de.losungen2.components.preferences.timePicker.TimeDialog
+import schalter.de.losungen2.components.preferences.timePicker.TimePreference
+import schalter.de.losungen2.utils.PreferenceTags
+
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -59,15 +62,24 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
 
-        val button = findPreference<Preference>(TAG_DEFAULT_OPEN)
-        button!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+        val defaultOpenExternalProgram = findPreference<Preference>(PreferenceTags.OPEN_EXTERNAL_DEFAULT)
+        defaultOpenExternalProgram?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             val editor = preferences.edit()
-            editor.putString(TAG_DEFAULT_OPEN, null)
+            editor.putString(PreferenceTags.OPEN_EXTERNAL_DEFAULT, null)
             editor.apply()
 
             Toast.makeText(context!!, R.string.successful, Toast.LENGTH_SHORT).show()
             true
         }
+    }
+
+    override fun onDisplayPreferenceDialog(preference: Preference) {
+        if (preference is TimePreference) {
+            val dialogFragment = TimeDialog.newInstance(preference.key)
+            dialogFragment.setTargetFragment(this, 0)
+            dialogFragment.show(fragmentManager!!, null)
+        } else
+            super.onDisplayPreferenceDialog(preference)
     }
 }
 

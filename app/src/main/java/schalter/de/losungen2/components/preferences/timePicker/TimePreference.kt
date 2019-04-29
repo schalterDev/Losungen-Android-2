@@ -6,13 +6,15 @@ import android.text.format.DateFormat
 import android.util.AttributeSet
 import androidx.preference.DialogPreference
 import schalter.de.losungen2.R
+import schalter.de.losungen2.backgroundTasks.notifications.ScheduleNotification
+import schalter.de.losungen2.utils.PreferenceTags
 import java.util.*
 
 
 class TimePreference(context: Context, attrs: AttributeSet) : DialogPreference(context, attrs) {
 
     private val calendar: Calendar = Calendar.getInstance()
-    private var time = 60 * 7
+    private var time = PreferenceTags.NOTIFICATION_TIME_DEFAULT_VALUE
 
     init {
         positiveButtonText = context.resources.getString(R.string.save)
@@ -60,6 +62,7 @@ class TimePreference(context: Context, attrs: AttributeSet) : DialogPreference(c
 
     fun persistValue() {
         persistInt(time)
+        ScheduleNotification(context).scheduleNotification(time)
         notifyChanged()
     }
 

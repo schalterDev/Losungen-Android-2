@@ -9,7 +9,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
+import androidx.preference.SwitchPreferenceCompat
 import schalter.de.losungen2.R
+import schalter.de.losungen2.backgroundTasks.notifications.ScheduleNotification
 import schalter.de.losungen2.components.preferences.timePicker.TimeDialog
 import schalter.de.losungen2.components.preferences.timePicker.TimePreference
 import schalter.de.losungen2.utils.PreferenceTags
@@ -69,6 +71,19 @@ class SettingsFragment : PreferenceFragmentCompat() {
             editor.apply()
 
             Toast.makeText(context!!, R.string.successful, Toast.LENGTH_SHORT).show()
+            true
+        }
+
+        val notificationToggle = findPreference<SwitchPreferenceCompat>(PreferenceTags.NOTIFICATION_SHOW)
+        notificationToggle?.setOnPreferenceChangeListener { _, newValue ->
+            val showNotification = newValue as Boolean
+
+            if (showNotification) {
+                ScheduleNotification(context!!).scheduleNotification(instantlyShowNotification = true)
+            } else {
+                ScheduleNotification(context!!).cancelScheduledNotification(true)
+            }
+
             true
         }
     }

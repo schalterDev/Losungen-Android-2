@@ -19,7 +19,7 @@ class TimeDialog : PreferenceDialogFragmentCompat() {
 
     override fun onBindDialogView(v: View) {
         super.onBindDialogView(v)
-        timePicker!!.setIs24HourView(true)
+        timePicker!!.setIs24HourView(LanguageUtils.is24Hour(context!!))
         val pref = preference as TimePreference
         timePicker!!.currentHour = pref.getHour()
         timePicker!!.currentMinute = pref.getMinute()

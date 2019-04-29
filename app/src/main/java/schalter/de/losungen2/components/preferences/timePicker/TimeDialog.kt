@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TimePicker
 import androidx.preference.PreferenceDialogFragmentCompat
+import schalter.de.losungen2.utils.LanguageUtils
 
 
 class TimeDialog : PreferenceDialogFragmentCompat() {

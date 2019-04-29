@@ -1,4 +1,4 @@
-package schalter.de.losungen2.backgroundTasks.notifications
+package schalter.de.losungen2.backgroundTasks.dailyNotifications
 
 import android.app.AlarmManager
 import android.app.PendingIntent

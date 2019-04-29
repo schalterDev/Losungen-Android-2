@@ -11,7 +11,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
 import schalter.de.losungen2.R
-import schalter.de.losungen2.backgroundTasks.notifications.ScheduleNotification
+import schalter.de.losungen2.backgroundTasks.dailyNotifications.ScheduleNotification
 import schalter.de.losungen2.components.preferences.timePicker.TimeDialog
 import schalter.de.losungen2.components.preferences.timePicker.TimePreference
 import schalter.de.losungen2.utils.PreferenceTags

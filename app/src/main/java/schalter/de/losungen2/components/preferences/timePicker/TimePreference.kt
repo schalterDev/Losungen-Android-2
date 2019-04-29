@@ -6,7 +6,7 @@ import android.text.format.DateFormat
 import android.util.AttributeSet
 import androidx.preference.DialogPreference
 import schalter.de.losungen2.R
-import schalter.de.losungen2.backgroundTasks.notifications.ScheduleNotification
+import schalter.de.losungen2.backgroundTasks.dailyNotifications.ScheduleNotification
 import schalter.de.losungen2.utils.PreferenceTags
 import java.util.*
 

@@ -43,14 +43,14 @@
         </receiver>
 
         <!-- Daily notifications -->
-        <receiver android:name=".backgroundTasks.notifications.NotificationBroadcastReceiver">
+        <receiver android:name=".backgroundTasks.dailyNotifications.NotificationBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
         <!-- Will not be called unless the application explicitly enables it -->
         <receiver
-            android:name=".backgroundTasks.notifications.DeviceBootReceiver"
+            android:name=".backgroundTasks.dailyNotifications.DeviceBootReceiver"
             android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

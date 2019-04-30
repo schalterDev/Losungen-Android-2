@@ -23,8 +23,7 @@ object Open {
         val intent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                 "mailto", Constants.programmerMail, null))
         intent.putExtra(Intent.EXTRA_SUBJECT, "Losungen - APP Feedback")
-        //intent.putExtra(Intent.EXTRA_TEXT, message);
-        // TODO send relevant system info
+        intent.putExtra(Intent.EXTRA_TEXT, AppSystemData.getDebugInformationAsString(context))
         context.startActivity(Intent.createChooser(intent, context.resources.getString(R.string.send_mail)))
     }
 

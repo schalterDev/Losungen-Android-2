@@ -29,7 +29,7 @@
     <string name="error_loading_data_check_connection">Fehler beim Laden der Daten. Überprüfe deine Internetverbindung</string>
     <string name="downloading_file">Lade Datei %1$d von %2$d herunter</string>
     <string name="uncompressing_file">Entpacke Datei %1$d von %2$d</string>
-    <string name="importing_file">Importier Datei %1$d von %2$d</string>
+    <string name="importing_file">Importiere Datei %1$d von %2$d</string>
     <string name="choose_date">Datum wählen</string>
     <string name="share">Teilen</string>
     <string name="old_new_testament_title">Losung und Lehrtext</string>
@@ -44,5 +44,22 @@
     <string name="weekly_verse">Wochenspruch</string>
     <string name="title_activity_app_widget">Widget einstellen</string>
     <string name="widget_is_loading">Widget lädt…</string>
+    <string name="background_color">Hintergrund-Farbe</string>
+    <string name="daily_word">Losung</string>
+    <string name="daily_word_notification_channel_description">Zeigt die Losung jeden Tag als Benachrichtigung</string>
+    <string name="daily_word_notification_channel_name">Tägliche Benachrichtigung</string>
+    <string name="external_program">Externes Programm</string>
+    <string name="font_size">Schriftgröße</string>
+    <string name="notification_content">Benachrichtigungs-Inhalt</string>
+    <string name="notifications">Benachrichtigungen</string>
+    <string name="ok">Ok</string>
+    <string name="preview">Vorschau</string>
+    <string name="save">Speichern</string>
+    <string name="show_notification">Zeige Benachrichtigungen</string>
+    <string name="show_notification_of_daily_word">Zeigt eine tägliche Benachrichtigung mit der Losung</string>
+    <string name="text_color">Text-Farbe</string>
+    <string name="time_notification">Zeit für die Benachrichtigung</string>
+    <string name="widget_content">Inhalt des Widgets</string>
+    <string name="marked_as_favourite">Als Favorit markiert</string>
 
 </resources>

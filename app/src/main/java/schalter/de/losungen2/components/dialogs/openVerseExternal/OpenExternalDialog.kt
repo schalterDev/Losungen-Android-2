@@ -5,12 +5,12 @@ import android.preference.PreferenceManager
 import android.view.View
 import android.widget.CheckBox
 import schalter.de.losungen2.R
+import schalter.de.losungen2.utils.PreferenceTags
 import schalter.de.losungen2.utils.openExternal.BibleVerse
 import schalter.de.losungen2.utils.openExternal.OpenBibleserver
 import schalter.de.losungen2.utils.openExternal.OpenExternal
 import schalter.de.losungen2.utils.openExternal.OpenQuickBible
 
-const val TAG_DEFAULT_OPEN = "openExternalDefault"
 
 class OpenExternalDialog(val context: Context) {
 
@@ -36,7 +36,7 @@ class OpenExternalDialog(val context: Context) {
         } else {
             var openedWithDefault = false
 
-            val defaultOption = sharedPreferences.getString(TAG_DEFAULT_OPEN, null)
+            val defaultOption = sharedPreferences.getString(PreferenceTags.OPEN_EXTERNAL_DEFAULT, null)
             if (defaultOption != null) {
                 for (tool in availableExternalTools) {
                     if (tool.getTitle() == defaultOption) {
@@ -62,7 +62,7 @@ class OpenExternalDialog(val context: Context) {
                 builder.setItems(items.toTypedArray()) { _, which ->
                     if (saveChoice) {
                         val editor = sharedPreferences.edit()
-                        editor.putString(TAG_DEFAULT_OPEN, availableExternalTools[which].getTitle())
+                        editor.putString(PreferenceTags.OPEN_EXTERNAL_DEFAULT, availableExternalTools[which].getTitle())
                         editor.apply()
                     }
 

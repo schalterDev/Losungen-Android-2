@@ -1,5 +1,7 @@
 package schalter.de.losungen2.utils
 
+import android.content.Context
+import android.text.format.DateFormat
 import schalter.de.losungen2.dataAccess.Language
 import java.util.*
 
@@ -25,6 +27,10 @@ object LanguageUtils {
      */
     fun getDisplayLanguageLocale(): Locale {
         return getDisplayLanguageEnum()?.locale ?: Locale.ENGLISH
+    }
+
+    fun is24Hour(context: Context): Boolean {
+        return DateFormat.is24HourFormat(context)
     }
 
 }

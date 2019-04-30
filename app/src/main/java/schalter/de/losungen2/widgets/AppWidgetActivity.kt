@@ -18,14 +18,8 @@ import com.flask.colorpicker.builder.ColorPickerDialogBuilder
 import kotlinx.android.synthetic.main.toolbar.*
 import schalter.de.losungen2.MainActivity
 import schalter.de.losungen2.R
+import schalter.de.losungen2.utils.PreferenceTags
 import java.util.*
-
-
-const val TAG_WIDGET_COLOR = "widgetTag"
-const val TAG_WIDGET_BACKGROUND = "widgetBackground"
-const val TAG_WIDGET_FONT_SIZE = "widgetFontSize"
-const val TAG_WIDGET_CONTENT = "widgetContent"
-const val TAG_WIDGET_IDS = "widgetIds"
 
 /**
  * All widget ids are in TAG_WIDGET_IDS
@@ -177,17 +171,17 @@ data class WidgetData(
     fun save(context: Context) {
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-        val ids = preferences.getStringSet(TAG_WIDGET_IDS, mutableSetOf())!!
+        val ids = preferences.getStringSet(PreferenceTags.WIDGET_IDS, mutableSetOf())!!
         if (!ids.contains(widgetId.toString())) {
             ids.add(widgetId.toString())
         }
 
         val editor = preferences.edit()
-        editor.putInt(TAG_WIDGET_COLOR + widgetId, color)
-        editor.putInt(TAG_WIDGET_BACKGROUND + widgetId, background)
-        editor.putInt(TAG_WIDGET_FONT_SIZE + widgetId, fontSize)
-        editor.putString(TAG_WIDGET_CONTENT + widgetId, content.toString())
-        editor.putStringSet(TAG_WIDGET_IDS, ids)
+        editor.putInt(PreferenceTags.WIDGET_COLOR + widgetId, color)
+        editor.putInt(PreferenceTags.WIDGET_BACKGROUND + widgetId, background)
+        editor.putInt(PreferenceTags.WIDGET_FONT_SIZE + widgetId, fontSize)
+        editor.putString(PreferenceTags.WIDGET_CONTENT + widgetId, content.toString())
+        editor.putStringSet(PreferenceTags.WIDGET_IDS, ids)
         editor.apply()
     }
 
@@ -195,15 +189,15 @@ data class WidgetData(
         fun remove(context: Context, widgetId: Int) {
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-            val ids = preferences.getStringSet(TAG_WIDGET_IDS, mutableSetOf())!!
+            val ids = preferences.getStringSet(PreferenceTags.WIDGET_IDS, mutableSetOf())!!
             ids.remove(widgetId.toString())
 
             val editor = preferences.edit()
-            editor.remove(TAG_WIDGET_COLOR + widgetId)
-            editor.remove(TAG_WIDGET_BACKGROUND + widgetId)
-            editor.remove(TAG_WIDGET_CONTENT + widgetId)
-            editor.remove(TAG_WIDGET_FONT_SIZE + widgetId)
-            editor.putStringSet(TAG_WIDGET_IDS, ids)
+            editor.remove(PreferenceTags.WIDGET_COLOR + widgetId)
+            editor.remove(PreferenceTags.WIDGET_BACKGROUND + widgetId)
+            editor.remove(PreferenceTags.WIDGET_CONTENT + widgetId)
+            editor.remove(PreferenceTags.WIDGET_FONT_SIZE + widgetId)
+            editor.putStringSet(PreferenceTags.WIDGET_IDS, ids)
             editor.apply()
         }
 
@@ -211,10 +205,10 @@ data class WidgetData(
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
             return WidgetData(
                     widgetId,
-                    preferences.getInt(TAG_WIDGET_COLOR + widgetId, Color.BLACK),
-                    preferences.getInt(TAG_WIDGET_BACKGROUND + widgetId, Color.WHITE),
-                    preferences.getInt(TAG_WIDGET_FONT_SIZE + widgetId, 12),
-                    WidgetContent.valueOf(preferences.getString(TAG_WIDGET_CONTENT + widgetId, WidgetContent.OLD_AND_NEW_TESTAMENT.toString())!!))
+                    preferences.getInt(PreferenceTags.WIDGET_COLOR + widgetId, Color.BLACK),
+                    preferences.getInt(PreferenceTags.WIDGET_BACKGROUND + widgetId, Color.WHITE),
+                    preferences.getInt(PreferenceTags.WIDGET_FONT_SIZE + widgetId, 12),
+                    WidgetContent.valueOf(preferences.getString(PreferenceTags.WIDGET_CONTENT + widgetId, WidgetContent.OLD_AND_NEW_TESTAMENT.toString())!!))
         }
 
         fun generateWidgetId(): Int {

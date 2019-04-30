@@ -42,7 +42,7 @@ dependencies {
 
     // settings screen
     implementation "androidx.preference:preference:1.1.0-alpha04"
-//    implementation "androidx.preference:preference-ktx:1.1.0-alpha04"
+    implementation "androidx.preference:preference-ktx:1.1.0-alpha04"
 
     // Color picker
     implementation "com.github.QuadFlask:colorpicker:0.0.13"

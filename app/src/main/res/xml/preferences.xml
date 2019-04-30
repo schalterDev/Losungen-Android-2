@@ -1,8 +1,47 @@
 <androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Preference
-        app:key="openExternalDefault"
-        app:title="@string/open_external_default_value"
-        app:summary="@string/delete_open_external_default_value" />
+    <PreferenceCategory
+        app:title="@string/notifications"
+        app:iconSpaceReserved="false">
+
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:defaultValue="false"
+            app:key="show_notification"
+            app:summary="@string/show_notification_of_daily_word"
+            app:title="@string/show_notification" />
+
+        <ListPreference
+            app:iconSpaceReserved="false"
+            app:defaultValue="2"
+            app:dependency="show_notification"
+            app:entries="@array/widget_contents"
+            app:entryValues="@array/widget_contents_values"
+            app:key="notification_content"
+            app:negativeButtonText="@null"
+            app:positiveButtonText="@null"
+            app:summary="%s"
+            app:title="@string/notification_content" />
+
+        <schalter.de.losungen2.components.preferences.timePicker.TimePreference
+            app:iconSpaceReserved="false"
+            app:key="notification_time"
+            app:defaultValue="420"
+            app:title="@string/time_notification"
+            app:dependency="show_notification" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="@string/external_program"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="open_external_default"
+            app:title="@string/delete_open_external_default_value"
+            app:summary="@string/delete_open_external_default_value" />
+
+    </PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>

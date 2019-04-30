@@ -55,7 +55,7 @@ class ScheduleNotification(private val context: Context) {
         scheduleNotification(hour, minute)
 
         if (instantlyShowNotification) {
-            context.sendBroadcast(Intent(context, NotificationBroadcastReceiver::class.java).apply { action = NotificationBroadcastReceiver.ACTION })
+            context.sendBroadcast(Intent(context, NotificationBroadcastReceiver::class.java).apply { action = NotificationBroadcastReceiver.ACTION_SHOW_NOTIFICATION })
         }
     }
 
@@ -73,7 +73,7 @@ class ScheduleNotification(private val context: Context) {
 
     private fun getPendingIntent(): PendingIntent {
         val notificationIntent = Intent(context, NotificationBroadcastReceiver::class.java)
-        notificationIntent.action = NotificationBroadcastReceiver.ACTION
+        notificationIntent.action = NotificationBroadcastReceiver.ACTION_SHOW_NOTIFICATION
         return PendingIntent.getBroadcast(context, 0, notificationIntent, 0)
     }
 

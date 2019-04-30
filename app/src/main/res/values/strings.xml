@@ -49,11 +49,14 @@
     <string name="background_color">Background color</string>
     <string name="preview">Preview</string>
     <string name="save">Save</string>
-    <string name="ok">OK</string>
+    <string name="ok">Ok</string>
     <string name="show_notification">Show notifications</string>
     <string name="show_notification_of_daily_word">Show a notification with the daily word every day</string>
     <string name="notifications">Notifications</string>
     <string name="external_program">External program</string>
     <string name="notification_content">Notification content</string>
     <string name="time_notification">Time to show notification</string>
+    <string name="daily_word_notification_channel_name">Daily notification</string>
+    <string name="daily_word_notification_channel_description">Shows the daily word every day as a notification</string>
+    <string name="daily_word">Daily Word</string>
 </resources>

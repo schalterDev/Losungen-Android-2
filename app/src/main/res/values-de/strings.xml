@@ -60,5 +60,6 @@
     <string name="text_color">Text-Farbe</string>
     <string name="time_notification">Zeit für die Benachrichtigung</string>
     <string name="widget_content">Inhalt des Widgets</string>
+    <string name="marked_as_favourite">Als Favorit markiert</string>
 
 </resources>

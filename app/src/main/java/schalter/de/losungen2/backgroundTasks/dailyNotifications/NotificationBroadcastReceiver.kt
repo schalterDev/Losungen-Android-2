@@ -1,5 +1,6 @@
 package schalter.de.losungen2.backgroundTasks.dailyNotifications
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -9,13 +10,17 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.preference.PreferenceManager
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import io.reactivex.Observable
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import schalter.de.losungen2.MainActivity
 import schalter.de.losungen2.R
 import schalter.de.losungen2.dataAccess.VersesDatabase
 import schalter.de.losungen2.dataAccess.daily.DailyVerse
 import schalter.de.losungen2.utils.PreferenceTags
+import schalter.de.losungen2.utils.Share
 import java.util.*
 
 class NotificationBroadcastReceiver : BroadcastReceiver() {
@@ -23,15 +28,27 @@ class NotificationBroadcastReceiver : BroadcastReceiver() {
     private lateinit var context: Context
 
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == ACTION_SHOW_NOTIFICATION) {
-            this.context = context
-            createNotificationChannel()
-            showNotification()
+        this.context = context
+
+        when {
+            intent.action == ACTION_SHOW_NOTIFICATION -> {
+                createNotificationChannel()
+                showNotification()
+            }
+            intent.action == ACTION_MARK -> {
+                markNotification(intent.getLongExtra(EXTRA_DATE, Date().time))
+            }
+            intent.action == ACTION_SHARE -> {
+                shareNotification(intent.getStringExtra(EXTRA_MESSAGE))
+            }
         }
     }
 
+    // ------------ INTENT SHOW -----------------
+
+    @SuppressLint("CheckResult")
     private fun showNotification() {
-        val result = getNotificationData().firstElement().subscribe { notificationData ->
+        getNotificationData().firstElement().subscribe { notificationData ->
             val mBuilder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setSmallIcon(R.drawable.ic_launcher_foreground)
@@ -43,7 +60,7 @@ class NotificationBroadcastReceiver : BroadcastReceiver() {
                     .setAutoCancel(true)
                     .addAction(R.drawable.ic_action_share,
                             context.resources.getString(R.string.share),
-                            getPendingActionShare(context, notificationData.message, notificationData.title))
+                            getPendingActionShare(context, notificationData.message))
                     .addAction(R.drawable.ic_action_star,
                             context.resources.getString(R.string.mark_as_favorite),
                             getPendingActionMark(context, Date()))
@@ -72,13 +89,12 @@ class NotificationBroadcastReceiver : BroadcastReceiver() {
         }
     }
 
-    private fun getPendingActionShare(context: Context, message: String, title: String): PendingIntent {
+    private fun getPendingActionShare(context: Context, message: String): PendingIntent {
         val intent = Intent(context, NotificationBroadcastReceiver::class.java)
         intent.putExtra(EXTRA_MESSAGE, message)
-        intent.putExtra(EXTRA_TITLE, title)
         intent.action = ACTION_SHARE
 
-        return PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
     private fun getPendingActionMark(context: Context, date: Date): PendingIntent {
@@ -86,7 +102,7 @@ class NotificationBroadcastReceiver : BroadcastReceiver() {
         intent.putExtra(EXTRA_DATE, date.time)
         intent.action = ACTION_MARK
 
-        return PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
     private fun getNotificationData(): Observable<NotificationData> {
@@ -131,13 +147,33 @@ class NotificationBroadcastReceiver : BroadcastReceiver() {
         }
     }
 
+    // ---------- INTENT MARK OR SHARE ---------------
+    private fun shareNotification(message: String) {
+        val intent = Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
+        context.sendBroadcast(intent)
+
+        Share.text(context, message)
+    }
+
+    private fun markNotification(date: Long) {
+        val database = VersesDatabase.provideVerseDatabase(context)
+
+        GlobalScope.launch {
+            database.dailyVerseDao().updateIsFavourite(Date(date), true)
+        }
+
+        val intentClose = Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
+        context.sendBroadcast(intentClose)
+
+        Toast.makeText(context, context.resources.getString(R.string.marked_as_favourite), Toast.LENGTH_SHORT).show()
+    }
+
     companion object {
         const val ACTION_SHOW_NOTIFICATION = "dailyWord.DAILY_NOTIFICATION"
         const val ACTION_SHARE = "dailyWord.DAILY_NOTIFICATION_SHARE"
         const val ACTION_MARK = "dailyWord.DAILY_NOTIFICATION_MARK"
 
         const val EXTRA_DATE = "date"
-        const val EXTRA_TITLE = "title"
         const val EXTRA_MESSAGE = "message"
 
         const val NOTIFICATION_CHANNEL_ID = "daily_word_notification"

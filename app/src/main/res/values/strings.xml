@@ -59,4 +59,5 @@
     <string name="daily_word_notification_channel_name">Daily notification</string>
     <string name="daily_word_notification_channel_description">Shows the daily word every day as a notification</string>
     <string name="daily_word">Daily Word</string>
+    <string name="marked_as_favourite">Marked as favourite</string>
 </resources>

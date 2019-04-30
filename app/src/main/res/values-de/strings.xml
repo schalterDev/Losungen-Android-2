@@ -63,5 +63,6 @@
     <string name="marked_as_favourite">Als Favorit markiert</string>
     <string name="app_info">App Infos</string>
     <string name="app_version">Appversion</string>
+    <string name="licences">Lizensen</string>
 
 </resources>

@@ -60,4 +60,7 @@
     <string name="daily_word_notification_channel_description">Shows the daily word every day as a notification</string>
     <string name="daily_word">Daily Word</string>
     <string name="marked_as_favourite">Marked as favourite</string>
+    <string name="app_info">App info</string>
+    <string name="app_version">App version</string>
+    <string name="licences">Licenses</string>
 </resources>

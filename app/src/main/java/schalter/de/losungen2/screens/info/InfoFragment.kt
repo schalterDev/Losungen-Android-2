@@ -1,11 +1,16 @@
 package schalter.de.losungen2.screens.info
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import de.psdev.licensesdialog.LicensesDialog
 import schalter.de.losungen2.R
+import schalter.de.losungen2.utils.AppSystemData
+
 
 /**
  * A simple [Fragment] subclass.
@@ -14,10 +19,33 @@ import schalter.de.losungen2.R
  */
 class InfoFragment : Fragment() {
 
+    private lateinit var mContext: Context
+
+    private lateinit var textViewAppVersion: TextView
+    private lateinit var textViewLicenses: TextView
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_info, container, false)
+
+        val view = inflater.inflate(R.layout.fragment_info, container, false)
+
+        mContext = view.context
+
+        textViewAppVersion = view.findViewById(R.id.textView_app_version)
+        textViewAppVersion.text = AppSystemData.getAppVersion(view.context).toString()
+
+        textViewLicenses = view.findViewById(R.id.textView_licenses)
+        textViewLicenses.setOnClickListener { openLicenseDialog() }
+
+        return view
+    }
+
+    private fun openLicenseDialog() {
+        LicensesDialog.Builder(mContext)
+                .setNotices(R.raw.notices)
+                .setIncludeOwnLicense(true)
+                .build()
+                .show()
     }
 
     companion object {

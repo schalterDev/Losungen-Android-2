@@ -61,5 +61,7 @@
     <string name="time_notification">Zeit für die Benachrichtigung</string>
     <string name="widget_content">Inhalt des Widgets</string>
     <string name="marked_as_favourite">Als Favorit markiert</string>
+    <string name="app_info">App Infos</string>
+    <string name="app_version">Appversion</string>
 
 </resources>

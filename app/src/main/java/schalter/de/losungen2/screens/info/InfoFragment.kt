@@ -1,5 +1,6 @@
 package schalter.de.losungen2.screens.info
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,6 +25,7 @@ class InfoFragment : Fragment() {
     private lateinit var textViewAppVersion: TextView
     private lateinit var textViewLicenses: TextView
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -32,7 +34,8 @@ class InfoFragment : Fragment() {
         mContext = view.context
 
         textViewAppVersion = view.findViewById(R.id.textView_app_version)
-        textViewAppVersion.text = AppSystemData.getAppVersion(view.context).toString()
+        textViewAppVersion.text = mContext.getString(R.string.app_version) +
+                " " + AppSystemData.getAppVersion(view.context).toString()
 
         textViewLicenses = view.findViewById(R.id.textView_licenses)
         textViewLicenses.setOnClickListener { openLicenseDialog() }

@@ -1,0 +1,26 @@
+<notices>
+    <notice>
+        <name>QuadFlask colorpicker</name>
+        <url>https://github.com/QuadFlask/colorpicker</url>
+        <copyright>Copyright 2014-2017 QuadFlask</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>RxJava</name>
+        <url>https://github.com/ReactiveX/RxJava</url>
+        <copyright>Copyright (c) 2016-present, RxJava Contributors.</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>Fuel</name>
+        <url>https://github.com/kittinunf/fuel</url>
+        <copyright>Copyright (c) 2018 Kittinun Vantasin</copyright>
+        <license>MIT License</license>
+    </notice>
+    <notice>
+        <name>MaterialDrawer</name>
+        <url>https://github.com/mikepenz/MaterialDrawer</url>
+        <copyright>Copyright 2018 Mike Penz</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+</notices>

@@ -49,7 +49,7 @@
     <string name="background_color">Background color</string>
     <string name="preview">Preview</string>
     <string name="save">Save</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="show_notification">Show notifications</string>
     <string name="show_notification_of_daily_word">Show a notification with the daily word every day</string>
     <string name="notifications">Notifications</string>
@@ -61,6 +61,9 @@
     <string name="daily_word">Daily Word</string>
     <string name="marked_as_favourite">Marked as favourite</string>
     <string name="app_info">App info</string>
-    <string name="app_version">App version</string>
+    <string name="app_version">App version: %1$d</string>
     <string name="licences">Licenses</string>
+    <string name="want_to_support">You want to support the app?</string>
+    <string name="help_translating">This app ist available in various languages. You can help to translate the app into more. Click here to start.</string>
+    <string name="help_developing">This app is open source and developed in my free time. When you can program you are welcome to contribute. Just click here.</string>
 </resources>

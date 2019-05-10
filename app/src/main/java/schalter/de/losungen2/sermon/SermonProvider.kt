@@ -63,10 +63,8 @@ abstract class SermonProvider(val context: Context) {
      * specified in the settings. The stream has to be closed self
      */
     protected fun saveSermon(input: InputStream) {
-        // TODO implement more destinations
-
         // write to private storage
-        val directory = File(context.filesDir, SERMON_FOLDER)
+        val directory = File(FileDestinations.getPrivatePath(context), SERMON_FOLDER)
         directory.mkdirs()
         val file = File(directory, getFileName())
         writeFile(file, input)

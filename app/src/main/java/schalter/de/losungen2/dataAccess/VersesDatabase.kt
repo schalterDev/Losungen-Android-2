@@ -12,6 +12,7 @@ import schalter.de.losungen2.dataAccess.daily.DailyVersesDao
 import schalter.de.losungen2.dataAccess.monthly.MonthlyVerse
 import schalter.de.losungen2.dataAccess.monthly.MonthlyVersesDao
 import schalter.de.losungen2.dataAccess.sermon.Sermon
+import schalter.de.losungen2.dataAccess.sermon.SermonDao
 import schalter.de.losungen2.dataAccess.weekly.WeeklyVerse
 import schalter.de.losungen2.dataAccess.weekly.WeeklyVersesDao
 
@@ -22,12 +23,14 @@ abstract class VersesDatabase : RoomDatabase() {
     abstract fun weeklyVerseDao(): WeeklyVersesDao
     abstract fun monthlyVerseDao(): MonthlyVersesDao
     abstract fun availableDataDao(): AvailableDataDao
+    abstract fun sermonDao(): SermonDao
 
     companion object {
         private var database: VersesDatabase? = null
 
         fun provideVerseDatabase(context: Context): VersesDatabase {
-            database = database ?: Room.databaseBuilder(context, VersesDatabase::class.java, "VersesDatabase").build()
+            database = database
+                    ?: Room.databaseBuilder(context, VersesDatabase::class.java, "VersesDatabase").build()
             return database!!
         }
     }

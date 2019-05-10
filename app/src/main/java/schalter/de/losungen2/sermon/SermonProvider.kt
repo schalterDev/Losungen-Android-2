@@ -1,11 +1,13 @@
 package schalter.de.losungen2.sermon
 
+import android.content.Context
 import io.reactivex.Observable
 import schalter.de.losungen2.dataAccess.daily.DailyVerse
 import schalter.de.losungen2.dataAccess.sermon.Sermon
+import java.io.File
 import java.io.InputStream
 
-abstract class SermonProvider {
+abstract class SermonProvider(val context: Context) {
 
     /**
      * Loads a sermon. That means that all data is present to download or
@@ -13,6 +15,12 @@ abstract class SermonProvider {
      * @return the download url of the sermon
      */
     abstract fun load(dailyVerse: DailyVerse): Observable<String>
+
+    /**
+     * can be called after the load method was successful
+     * @return the file name
+     */
+    abstract fun getFileName(): String?
 
     /**
      * Can only be called when the sermon was loaded. Saves the sermon to
@@ -52,9 +60,23 @@ abstract class SermonProvider {
 
     /**
      * Call this method to save the sermon to the file system like the users
-     * spezified in the settings
+     * specified in the settings. The stream has to be closed self
      */
     protected fun saveSermon(input: InputStream) {
-        // TODO implement
+        // TODO implement more destinations
+
+        // write to private storage
+        val directory = File(context.filesDir, SERMON_FOLDER)
+        directory.mkdirs()
+        val file = File(directory, getFileName())
+        writeFile(file, input)
+    }
+
+    private fun writeFile(file: File, input: InputStream) {
+        file.outputStream().use { input.copyTo(it) }
+    }
+
+    companion object {
+        private const val SERMON_FOLDER = "sermons"
     }
 }

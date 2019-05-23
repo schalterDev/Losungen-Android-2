@@ -3,6 +3,7 @@ package schalter.de.losungen2.screens.daily
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
@@ -12,6 +13,7 @@ import schalter.de.losungen2.components.verseCard.VerseCardData
 import schalter.de.losungen2.dataAccess.daily.DailyVerse
 import schalter.de.losungen2.screens.ARG_DATE
 import schalter.de.losungen2.screens.VerseListDateFragment
+import schalter.de.losungen2.sermon.erf.ErfWortZumTagSermonImplementation
 import schalter.de.losungen2.utils.Share
 import java.util.*
 
@@ -38,6 +40,14 @@ class DailyVerseFragment : VerseListDateFragment() {
 
     private fun updateDataByDailyVerse(dailyVerse: DailyVerse?) {
         if (dailyVerse != null) {
+            val disposable = ErfWortZumTagSermonImplementation(mContext).loadAndSave(dailyVerse)
+                    .subscribe(
+                            { success -> Log.d("Losungen-debug", success) },
+                            { error ->
+                                error.printStackTrace()
+                                Log.e("Losungen-debug", error.toString())
+                            })
+
             this.updateData(VerseCardData.fromDailyVerseTwoCards(mApplication, dailyVerse))
             this.updateFavouriteMenuItem(dailyVerse.isFavourite)
         } else {

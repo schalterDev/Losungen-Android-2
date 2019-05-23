@@ -78,6 +78,9 @@ dependencies {
     implementation "androidx.annotation:annotation:1.0.1"
     implementation "com.google.android.material:material:1.0.0"
     implementation "com.android.support:design:28.0.0"
+    
+    // rss reader
+    implementation "com.prof.rssparser:rssparser:2.0.3"
 
     // ----------- TESTING ----------
     testImplementation "junit:junit:4.12"

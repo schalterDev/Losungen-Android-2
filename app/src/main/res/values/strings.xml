@@ -60,4 +60,7 @@
     <string name="daily_word_notification_channel_description">Shows the daily word every day as a notification</string>
     <string name="daily_word">Daily Word</string>
     <string name="marked_as_favourite">Marked as favourite</string>
+    <string name="no_sermon_found">No sermon found</string>
+    <string name="failed_to_parse_erf_site">Could not find the mp3 file on the ERF site</string>
+    <string name="could_not_parse_date_of_rss">Could not parse date of rss entry</string>
 </resources>

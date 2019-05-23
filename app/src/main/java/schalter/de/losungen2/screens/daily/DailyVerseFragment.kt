@@ -8,15 +8,18 @@ import android.view.*
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.snackbar.Snackbar
 import schalter.de.losungen2.R
+import schalter.de.losungen2.components.exceptions.TranslatableException
 import schalter.de.losungen2.components.verseCard.VerseCardData
 import schalter.de.losungen2.dataAccess.daily.DailyVerse
+import schalter.de.losungen2.dataAccess.sermon.Sermon
 import schalter.de.losungen2.screens.ARG_DATE
 import schalter.de.losungen2.screens.VerseListDateFragment
-import schalter.de.losungen2.sermon.erf.ErfWortZumTagSermonImplementation
 import schalter.de.losungen2.utils.Share
 import java.util.*
 
+const val TAG_DEBUG = "Losungen"
 
 /**
  * A simple [Fragment] subclass.
@@ -40,19 +43,31 @@ class DailyVerseFragment : VerseListDateFragment() {
 
     private fun updateDataByDailyVerse(dailyVerse: DailyVerse?) {
         if (dailyVerse != null) {
-            val disposable = ErfWortZumTagSermonImplementation(mContext).loadAndSave(dailyVerse)
-                    .subscribe(
-                            { success -> Log.d("Losungen-debug", success) },
-                            { error ->
-                                error.printStackTrace()
-                                Log.e("Losungen-debug", error.toString())
-                            })
-
             this.updateData(VerseCardData.fromDailyVerseTwoCards(mApplication, dailyVerse))
             this.updateFavouriteMenuItem(dailyVerse.isFavourite)
         } else {
             this.updateData(listOf())
         }
+    }
+
+    private fun playSermon(sermon: Sermon) {
+        // TODO implement
+    }
+
+    private fun showError(exception: Throwable) {
+        val errorMessage =
+                if (exception is TranslatableException) {
+                    exception.getStringForUser(mContext)
+                } else {
+                    exception.message
+                }
+
+        exception.printStackTrace()
+        Log.w(TAG_DEBUG, errorMessage)
+
+        val snackBar = Snackbar.make(activity!!.findViewById(android.R.id.content),
+                errorMessage.toString(), Snackbar.LENGTH_LONG)
+        snackBar.show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -77,6 +92,17 @@ class DailyVerseFragment : VerseListDateFragment() {
             R.id.action_favourite -> {
                 mViewModel.toggleFavourite()
                 return true
+            }
+            R.id.action_sermon -> {
+                mViewModel.getDailyVerse().value?.let {
+                    mViewModel.loadSermon(mContext).observe(this, androidx.lifecycle.Observer { sermonWrapper ->
+                        if (sermonWrapper.error != null) {
+                            showError(sermonWrapper.error)
+                        } else {
+                            playSermon(sermonWrapper.value!!)
+                        }
+                    })
+                }
             }
         }
 

@@ -35,6 +35,8 @@ class ErfWortZumTagSermonImplementation(context: Context) : SermonProvider(conte
         return Single.fromCallable {
             val inputStream = BufferedInputStream(URL(downloadPathMp3).openStream())
             savePathMp3 = saveSermon(inputStream)
+            inputStream.close()
+            saveToDatabase()
             savePathMp3
         }
     }

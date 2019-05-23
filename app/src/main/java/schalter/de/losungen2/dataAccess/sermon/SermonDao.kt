@@ -11,11 +11,11 @@ import androidx.room.Update
 abstract class SermonDao {
 
     @Insert(onConflict = REPLACE)
-    protected abstract fun insertSermon(sermon: Sermon)
+    abstract fun insertSermon(sermon: Sermon)
 
     @Update
-    protected abstract fun updateSermon(sermon: Sermon)
+    abstract fun updateSermon(sermon: Sermon)
 
     @Query("SELECT * FROM Sermon WHERE daily_verse_id IS :dailyVerseId")
-    protected abstract fun getSermonsForDailyVerseId(dailyVerseId: Int): LiveData<List<Sermon>>
+    abstract fun getSermonsForDailyVerseId(dailyVerseId: Int): LiveData<List<Sermon>>
 }

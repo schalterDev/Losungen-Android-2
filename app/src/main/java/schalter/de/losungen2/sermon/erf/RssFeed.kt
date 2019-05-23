@@ -14,24 +14,28 @@ class RssFeed {
     fun load(url: String, date: Date): Single<FeedLoaded> {
         return Single.create<FeedLoaded> { emitter ->
             GlobalScope.launch {
-                val articleList = Parser().getArticles(url)
-                val foundArticle = articleList.find { article ->
-                    if (article.pubDate != null) {
-                        try {
-                            sameDate(date, article.pubDate!!)
-                        } catch (_: NumberFormatException) {
-                            emitter.onError(TranslatableException(R.string.could_not_parse_date_of_rss))
+                try {
+                    val articleList = Parser().getArticles(url)
+                    val foundArticle = articleList.find { article ->
+                        if (article.pubDate != null) {
+                            try {
+                                sameDate(date, article.pubDate!!)
+                            } catch (_: NumberFormatException) {
+                                emitter.onError(TranslatableException(R.string.could_not_parse_date_of_rss))
+                                false
+                            }
+                        } else {
                             false
                         }
-                    } else {
-                        false
                     }
-                }
 
-                if (foundArticle?.link == null) {
-                    emitter.onError(TranslatableException(R.string.no_sermon_found))
-                } else {
-                    emitter.onSuccess(FeedLoaded(foundArticle.author, foundArticle.link!!))
+                    if (foundArticle?.link == null) {
+                        emitter.onError(TranslatableException(R.string.no_sermon_found))
+                    } else {
+                        emitter.onSuccess(FeedLoaded(foundArticle.author, foundArticle.link!!))
+                    }
+                } catch (e: Exception) {
+                    emitter.onError(e)
                 }
             }
         }

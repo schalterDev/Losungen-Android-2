@@ -2,6 +2,7 @@ package schalter.de.losungen2.sermon
 
 import android.content.Context
 import io.reactivex.Single
+import schalter.de.losungen2.dataAccess.VersesDatabase
 import schalter.de.losungen2.dataAccess.daily.DailyVerse
 import schalter.de.losungen2.dataAccess.sermon.Sermon
 import java.io.File
@@ -51,8 +52,8 @@ abstract class SermonProvider(val context: Context) {
      * Loads the sermon and saves the sermon to the file system
      * @return absolute path of the sermon on the file system
      */
-    fun loadAndSave(dailyVerse: DailyVerse): Single<String?> {
-        return loadDownloadUrl(dailyVerse).flatMap { save() }
+    fun loadAndSave(dailyVerse: DailyVerse): Single<Sermon?> {
+        return loadDownloadUrl(dailyVerse).flatMap { save() }.map { getSermon() }
     }
 
     /**
@@ -67,6 +68,15 @@ abstract class SermonProvider(val context: Context) {
         writeFile(file, input)
 
         return file.absolutePath
+    }
+
+    /**
+     * Call this method to save all info to the database. The information has to be ready,
+     * so the method save has to be called first
+     */
+    protected fun saveToDatabase() {
+        val sermonDao = VersesDatabase.provideVerseDatabase(context).sermonDao()
+        sermonDao.insertSermon(getSermon()!!)
     }
 
     private fun writeFile(file: File, input: InputStream) {

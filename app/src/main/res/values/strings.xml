@@ -63,4 +63,5 @@
     <string name="no_sermon_found">No sermon found</string>
     <string name="failed_to_parse_erf_site">Could not find the mp3 file on the ERF site</string>
     <string name="could_not_parse_date_of_rss">Could not parse date of rss entry</string>
+    <string name="play_sermon">Play sermon</string>
 </resources>

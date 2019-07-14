@@ -65,4 +65,6 @@
     <string name="could_not_parse_date_of_rss">Could not parse date of rss entry</string>
     <string name="play_sermon">Play sermon</string>
     <string name="stop_sermon">Stop sermon</string>
+    <string name="media_player_notification_channel_id">Media player controls</string>
+    <string name="media_player_notification_channel_description">Notification to conrol the the sermon</string>
 </resources>

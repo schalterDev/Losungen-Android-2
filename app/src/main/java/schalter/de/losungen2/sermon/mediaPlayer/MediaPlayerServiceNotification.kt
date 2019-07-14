@@ -43,8 +43,8 @@ class MediaPlayerServiceNotification(
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val importance = NotificationManager.IMPORTANCE_LOW
-            val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_NAME, importance)
-            channel.description = NOTIFICATION_CHANNEL_DESCRIPTION
+            val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, context.getString(notificationChannelIdRes), importance)
+            channel.description = context.getString(notificationChannelDescriptionRes)
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
             val notificationManager = context.getSystemService(NotificationManager::class.java)
@@ -101,9 +101,9 @@ class MediaPlayerServiceNotification(
     }
 
     companion object {
-        private const val NOTIFICATION_CHANNEL_ID = "play-audio"
-        private const val NOTIFICATION_CHANNEL_NAME = "Play audio"
-        private const val NOTIFICATION_CHANNEL_DESCRIPTION = "playing audio for sermon and show controls as notification"
+        private const val NOTIFICATION_CHANNEL_ID = "media-player-notification-id"
+        var notificationChannelIdRes = R.string.media_player_notification_channel_id
+        var notificationChannelDescriptionRes = R.string.media_player_notification_channel_description
         const val NOTIFICATION_ID = 8645156
     }
 }

@@ -66,5 +66,7 @@
     <string name="no_sermon_found">Keine Predigt gefunden</string>
     <string name="stop_sermon">Predigt stoppen</string>
     <string name="play_sermon">Predigt abspielen</string>
+    <string name="media_player_notification_channel_id">Bedienelemente für Medienplayer</string>
+    <string name="media_player_notification_channel_description">Benachrichtigung für die Bedienelemte der Andacht</string>
 
 </resources>

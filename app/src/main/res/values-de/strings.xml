@@ -64,5 +64,7 @@
     <string name="could_not_parse_date_of_rss">Fehler beim Interpretieren des Datums im RSS-Eintrag</string>
     <string name="failed_to_parse_erf_site">Konnte keine MP3 Datei auf der ERF Seite finden</string>
     <string name="no_sermon_found">Keine Predigt gefunden</string>
+    <string name="stop_sermon">Predigt stoppen</string>
+    <string name="play_sermon">Predigt abspielen</string>
 
 </resources>

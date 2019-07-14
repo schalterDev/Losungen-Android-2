@@ -32,6 +32,10 @@
             android:name=".screens.settings.SettingsActivity"
             android:label="@string/title_activity_settings" />
 
+        <service
+            android:name=".sermon.mediaPlayer.MediaPlayerService"
+            android:enabled="true" />
+
         <receiver android:name=".widgets.WidgetBroadcast">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

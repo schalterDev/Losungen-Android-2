@@ -9,6 +9,7 @@ import java.io.BufferedInputStream
 import java.net.URL
 
 class ErfWortZumTagSermonImplementation(context: Context) : SermonProvider(context) {
+
     private var dailyVerse: DailyVerse? = null
 
     private var author: String? = null
@@ -46,7 +47,8 @@ class ErfWortZumTagSermonImplementation(context: Context) : SermonProvider(conte
                 dailyVerseId = this.dailyVerse!!.dailyVerseId!!,
                 downloadUrl = downloadPathMp3!!,
                 pathSaved = savePathMp3!!,
-                author = author)
+                author = author,
+                provider = getProviderName())
     }
 
     override fun getVerseInBible(): String? {
@@ -55,6 +57,8 @@ class ErfWortZumTagSermonImplementation(context: Context) : SermonProvider(conte
     }
 
     override fun getAuthor() = author
+
+    override fun getProviderName(): String = "ERF Wort zum Tag"
 
     companion object {
         const val URL_RSS_FEED = "https://feedpress.me/erf-plus-wortzumtag"

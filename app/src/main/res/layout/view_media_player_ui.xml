@@ -19,20 +19,11 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         tools:ignore="HardcodedText" />
 
-    <TextView
-        android:id="@+id/textView_audio_subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView_audio_title"
-        android:text="Subtitle Audio"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        tools:ignore="HardcodedText" />
-
     <SeekBar
         android:id="@+id/audio_seekbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView_audio_subtitle"
+        android:layout_below="@+id/textView_audio_title"
         android:layout_alignParentStart="true" />
 
     <ImageView

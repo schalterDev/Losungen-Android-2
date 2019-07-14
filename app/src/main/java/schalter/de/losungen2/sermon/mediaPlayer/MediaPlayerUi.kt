@@ -19,7 +19,6 @@ import schalter.de.losungen2.R
 class MediaPlayerUi : FrameLayout {
 
     private var title: TextView
-    private var subtitle: TextView
     private var seekBar: SeekBar
     private var duration: TextView
     private var playButton: ImageView
@@ -44,7 +43,6 @@ class MediaPlayerUi : FrameLayout {
         val view = View.inflate(context, R.layout.view_media_player_ui, null)
 
         title = view.findViewById(R.id.textView_audio_title)
-        subtitle = view.findViewById(R.id.textView_audio_subtitle)
         seekBar = view.findViewById(R.id.audio_seekbar)
         duration = view.findViewById(R.id.textView_audio_duration)
         playButton = view.findViewById(R.id.audio_play)
@@ -152,12 +150,13 @@ class MediaPlayerUi : FrameLayout {
         }
     }
 
-    private fun setTitle(title: String) {
-        this.title.text = title
-    }
-
-    private fun setSubtitle(subtitle: String) {
-        this.subtitle.text = subtitle
+    fun setTitle(title: String?) {
+        if (title == null) {
+            this.title.visibility = View.GONE
+        } else {
+            this.title.visibility = View.VISIBLE
+            this.title.text = title
+        }
     }
 
     @SuppressLint("SetTextI18n")

@@ -50,6 +50,12 @@ abstract class SermonProvider(val context: Context) {
     abstract fun getAuthor(): String?
 
     /**
+     * The name of the provider
+     * @return the name of the provider
+     */
+    abstract fun getProviderName(): String
+
+    /**
      * Loads the sermon and saves the sermon to the file system
      * @return absolute path of the sermon on the file system
      */

@@ -71,6 +71,7 @@ class DailyVerseFragment : VerseListDateFragment() {
 
     private fun playSermon(sermon: Sermon) {
         mediaPlayerUi.playAudio(sermon.pathSaved, mViewModel.getDailyVerse().value?.date?.time.toString())
+        mediaPlayerUi.setTitle(sermon.provider)
     }
 
     private fun showError(exception: Throwable) {

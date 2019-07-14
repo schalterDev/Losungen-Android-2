@@ -63,9 +63,9 @@
     <string name="marked_as_favourite">Als Favorit markiert</string>
     <string name="could_not_parse_date_of_rss">Fehler beim Interpretieren des Datums im RSS-Eintrag</string>
     <string name="failed_to_parse_erf_site">Konnte keine MP3 Datei auf der ERF Seite finden</string>
-    <string name="no_sermon_found">Keine Predigt gefunden</string>
-    <string name="stop_sermon">Predigt stoppen</string>
-    <string name="play_sermon">Predigt abspielen</string>
+    <string name="no_sermon_found">Keine Andacht gefunden</string>
+    <string name="stop_sermon">Andacht stoppen</string>
+    <string name="play_sermon">Andacht abspielen</string>
     <string name="media_player_notification_channel_id">Bedienelemente für Medienplayer</string>
     <string name="media_player_notification_channel_description">Benachrichtigung für die Bedienelemte der Andacht</string>
 

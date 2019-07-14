@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.LinearLayout
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -16,8 +17,10 @@ import schalter.de.losungen2.dataAccess.daily.DailyVerse
 import schalter.de.losungen2.dataAccess.sermon.Sermon
 import schalter.de.losungen2.screens.ARG_DATE
 import schalter.de.losungen2.screens.VerseListDateFragment
+import schalter.de.losungen2.sermon.mediaPlayer.MediaPlayerUi
 import schalter.de.losungen2.utils.Share
 import java.util.*
+
 
 const val TAG_DEBUG = "Losungen"
 
@@ -33,6 +36,8 @@ class DailyVerseFragment : VerseListDateFragment() {
     private lateinit var mApplication: Application
     private lateinit var mViewModel: DailyVerseModel
 
+    private lateinit var mediaPlayerUi: MediaPlayerUi
+
     @VisibleForTesting
     private var menu: Menu? = null
 
@@ -41,17 +46,31 @@ class DailyVerseFragment : VerseListDateFragment() {
         setHasOptionsMenu(true)
     }
 
+    override fun onPause() {
+        super.onPause()
+        mediaPlayerUi.unbindService()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mViewModel.getDailyVerse().value?.date?.let {
+            mediaPlayerUi.checkServiceIsRunningAndBind(it.time.toString())
+        }
+    }
+
     private fun updateDataByDailyVerse(dailyVerse: DailyVerse?) {
         if (dailyVerse != null) {
             this.updateData(VerseCardData.fromDailyVerseTwoCards(mApplication, dailyVerse))
             this.updateFavouriteMenuItem(dailyVerse.isFavourite)
+
+            mediaPlayerUi.checkServiceIsRunningAndBind(dailyVerse.date.time.toString())
         } else {
             this.updateData(listOf())
         }
     }
 
     private fun playSermon(sermon: Sermon) {
-        // TODO implement
+        mediaPlayerUi.playAudio(sermon.pathSaved, mViewModel.getDailyVerse().value?.date?.time.toString())
     }
 
     private fun showError(exception: Throwable) {
@@ -121,6 +140,13 @@ class DailyVerseFragment : VerseListDateFragment() {
         mViewModel.getDailyVerse().observe(this, androidx.lifecycle.Observer { dailyVerse ->
             updateDataByDailyVerse(dailyVerse)
         })
+
+        mediaPlayerUi = MediaPlayerUi(mContext)
+        mediaPlayerUi.layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT)
+
+        this.linearLayout.addView(mediaPlayerUi)
 
         return view
     }

@@ -12,7 +12,7 @@ import schalter.de.losungen2.components.exceptions.DataExceptionWrapper
 import schalter.de.losungen2.dataAccess.VersesDatabase
 import schalter.de.losungen2.dataAccess.daily.DailyVerse
 import schalter.de.losungen2.dataAccess.sermon.Sermon
-import schalter.de.losungen2.sermon.erf.ErfWortZumTagSermonImplementation
+import schalter.de.losungen2.sermon.SermonProvider
 import java.util.*
 
 class DailyVerseModel(private val database: VersesDatabase, private val date: Date) : ViewModel() {
@@ -45,7 +45,7 @@ class DailyVerseModel(private val database: VersesDatabase, private val date: Da
     fun loadSermon(context: Context): LiveData<DataExceptionWrapper<Sermon>> {
         // TODO check if sermon is already in the database
 
-        ErfWortZumTagSermonImplementation(context).loadAndSave(dailyVerse.value!!)
+        SermonProvider.getImplementation(context).loadAndSave(dailyVerse.value!!)
                 .subscribe(
                         { success -> sermon.postValue(DataExceptionWrapper(value = success)) },
                         { error -> sermon.postValue(DataExceptionWrapper(error = error)) })

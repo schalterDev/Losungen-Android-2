@@ -5,6 +5,7 @@ import io.reactivex.Single
 import schalter.de.losungen2.dataAccess.VersesDatabase
 import schalter.de.losungen2.dataAccess.daily.DailyVerse
 import schalter.de.losungen2.dataAccess.sermon.Sermon
+import schalter.de.losungen2.sermon.erf.ErfWortZumTagSermonImplementation
 import java.io.File
 import java.io.InputStream
 
@@ -85,5 +86,9 @@ abstract class SermonProvider(val context: Context) {
 
     companion object {
         private const val SERMON_FOLDER = "sermons"
+
+        fun getImplementation(context: Context): SermonProvider {
+            return ErfWortZumTagSermonImplementation(context)
+        }
     }
 }

@@ -11,6 +11,8 @@ import kotlin.concurrent.schedule
 
 class MediaPlayerService : Service() {
 
+    private var mediaPlayerServiceNotification: MediaPlayerServiceNotification? = null
+
     private var mediaPlayer: MediaPlayer? = null
     private val myBinder = MediaPlayerServiceBinder()
     private var state = State.Initial
@@ -35,12 +37,16 @@ class MediaPlayerService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if (isRunning) {
-            stopAudio(false)
-        }
-
         when (intent?.action) {
             ACTION_START -> {
+                if (isRunning) {
+                    stopAudio(false)
+                }
+
+                if (intent.extras?.getBoolean(EXTRA_SHOW_NOTIFICATION, true) == true) {
+                    initNotification()
+                }
+
                 startAudio(intent.extras?.getString(EXTRA_PATH), intent.extras?.getString(EXTRA_ID))
             }
             ACTION_PAUSE -> {
@@ -73,11 +79,29 @@ class MediaPlayerService : Service() {
         }
     }
 
+    private fun initNotification() {
+        mediaPlayerServiceNotification = MediaPlayerServiceNotification(
+                applicationContext,
+                this,
+                "Test")
+
+        updateNotification()
+    }
+
+    private fun updateNotification() {
+        mediaPlayerServiceNotification?.let {
+            startForeground(
+                    MediaPlayerServiceNotification.NOTIFICATION_ID,
+                    it.getNotification())
+        }
+    }
+
     private fun setState(newState: State) {
         this.stateListener.forEach {
             it.stateChanged(this.state, newState)
         }
         this.state = newState
+        updateNotification()
     }
 
     fun getState(): State = this.state
@@ -106,7 +130,12 @@ class MediaPlayerService : Service() {
         } catch (_: IllegalStateException) {
         }
 
-        if (stopService) stopSelf()
+        if (stopService) {
+            if (mediaPlayerServiceNotification == null)
+                stopSelf()
+            else
+                stopForeground(true)
+        }
     }
 
     fun seekTo(position: Int) {
@@ -114,7 +143,7 @@ class MediaPlayerService : Service() {
         seekListener.forEach { it.seekChanged(position) }
     }
 
-    fun getDuration() = mediaPlayer!!.duration
+    fun getDuration() = mediaPlayer?.duration
 
     // -------- LISTENER ---------
     fun addStateListener(listener: StateListener) {
@@ -163,6 +192,7 @@ class MediaPlayerService : Service() {
         const val ACTION_STOP = "STOP"
         const val EXTRA_PATH = "PATH"
         const val EXTRA_ID = "ID"
+        const val EXTRA_SHOW_NOTIFICATION = "SHOW_NOTIFICATION" // default value is true
 
         const val refreshRateMillis = 500L
 

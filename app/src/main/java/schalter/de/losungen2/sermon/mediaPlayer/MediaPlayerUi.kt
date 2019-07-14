@@ -96,6 +96,8 @@ class MediaPlayerUi : FrameLayout {
     }
 
     private fun bindService() {
+        unbindService()
+
         val intent = Intent(context, MediaPlayerService::class.java)
 
         serviceConnection = object : ServiceConnection {
@@ -122,32 +124,40 @@ class MediaPlayerUi : FrameLayout {
     }
 
     private fun initService() {
-        if (mediaPlayerService != null) {
-            totalTime = mediaPlayerService!!.getDuration()
-            this.seekBar.max = totalTime!!
+        mediaPlayerService?.let { mediaPlayerService ->
+            if (mediaPlayerService.getState() == MediaPlayerService.State.Stopped) {
+                serviceStopped()
+            } else {
+                totalTime = mediaPlayerService.getDuration()
+                this.seekBar.max = totalTime!!
 
-            mediaPlayerService!!.addSeekListener(object : MediaPlayerService.SeekListener {
-                override fun seekChanged(newPosition: Int) {
-                    this@MediaPlayerUi.actualTime = newPosition
-                    this@MediaPlayerUi.updateDuration()
-                }
-            })
-
-            mediaPlayerService!!.addStateListener(object : MediaPlayerService.StateListener {
-                override fun stateChanged(oldState: MediaPlayerService.State?, newState: MediaPlayerService.State) {
-                    if (newState == MediaPlayerService.State.Playing) {
-                        updateIcon(playing = true)
-                    } else {
-                        updateIcon(playing = false)
+                mediaPlayerService.addSeekListener(object : MediaPlayerService.SeekListener {
+                    override fun seekChanged(newPosition: Int) {
+                        this@MediaPlayerUi.actualTime = newPosition
+                        this@MediaPlayerUi.updateDuration()
                     }
+                })
 
-                    if (newState == MediaPlayerService.State.Stopped) {
-                        unbindService()
-                        visibility = View.GONE
+                mediaPlayerService.addStateListener(object : MediaPlayerService.StateListener {
+                    override fun stateChanged(oldState: MediaPlayerService.State?, newState: MediaPlayerService.State) {
+                        if (newState == MediaPlayerService.State.Playing) {
+                            updateIcon(playing = true)
+                        } else {
+                            updateIcon(playing = false)
+                        }
+
+                        if (newState == MediaPlayerService.State.Stopped) {
+                            serviceStopped()
+                        }
                     }
-                }
-            })
+                })
+            }
         }
+    }
+
+    private fun serviceStopped() {
+        unbindService()
+        visibility = View.GONE
     }
 
     fun setTitle(title: String?) {

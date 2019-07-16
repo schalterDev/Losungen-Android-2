@@ -67,15 +67,17 @@ class MediaPlayerService : Service() {
         if (path != null && id != null) {
             actualId = id
 
-            mediaPlayer = MediaPlayer()
-            mediaPlayer!!.setOnCompletionListener { stopAudio() }
+            mediaPlayer = MediaPlayer().apply {
+                this.setOnCompletionListener { stopAudio() }
 
-            mediaPlayer!!.setDataSource(path)
-            setState(State.Preparing)
-            mediaPlayer!!.prepare()
+                this.setDataSource(path)
+                setState(State.Preparing)
+                this.prepare()
+            }
+
             resumeAudio()
         } else {
-            // TODO error handling
+            onError()
         }
     }
 
@@ -83,7 +85,7 @@ class MediaPlayerService : Service() {
         mediaPlayerServiceNotification = MediaPlayerServiceNotification(
                 applicationContext,
                 this,
-                "Test")
+                "Test") // TODO add title
 
         updateNotification()
     }
@@ -104,31 +106,42 @@ class MediaPlayerService : Service() {
         updateNotification()
     }
 
+    private fun onError() {
+        setState(State.Error)
+        stopAudio()
+    }
+
     fun getState(): State = this.state
 
     fun pauseAudio() {
-        mediaPlayer?.pause()
         setState(State.Paused)
+        mediaPlayer?.pause()
         timerTask?.cancel()
     }
 
     fun resumeAudio() {
-        mediaPlayer?.start()
         setState(State.Playing)
+        mediaPlayer?.start()
         timerTask = Timer().schedule(0L, refreshRateMillis) {
-            if (state != State.Stopped)
-                seekListener.forEach { it.seekChanged(mediaPlayer!!.currentPosition) }
+            if (state != State.Stopped) {
+                mediaPlayer?.let { mediaPlayer ->
+                    seekListener.forEach {
+                        it.seekChanged(mediaPlayer.currentPosition)
+                    }
+                }
+            }
         }
     }
 
     fun stopAudio(stopService: Boolean = true) {
-        try {
-            timerTask?.cancel()
+        timerTask?.cancel()
+
+        if (state != State.Initial && state != State.Preparing && state != State.Stopped) {
             mediaPlayer?.stop()
             mediaPlayer?.release()
-            setState(State.Stopped)
-        } catch (_: IllegalStateException) {
         }
+
+        setState(State.Stopped)
 
         if (stopService) {
             if (mediaPlayerServiceNotification == null)
@@ -182,7 +195,8 @@ class MediaPlayerService : Service() {
         Preparing,
         Playing,
         Paused,
-        Stopped
+        Stopped,
+        Error
     }
 
     companion object {

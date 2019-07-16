@@ -31,7 +31,6 @@ class MediaPlayerServiceNotification(
         createNotificationChannel(context)
         mBuilder.setAutoCancel(false)
 
-        // pending intent notification
         val intent = Intent(context, MainActivity::class.java)
         pendingIntentNotification = PendingIntent.getActivity(
                 context, 0, intent,

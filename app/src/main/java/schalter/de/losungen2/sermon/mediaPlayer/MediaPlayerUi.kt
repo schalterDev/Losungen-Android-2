@@ -5,9 +5,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
-import android.os.Handler
 import android.os.IBinder
-import android.os.Looper
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
@@ -15,8 +13,9 @@ import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
 import schalter.de.losungen2.R
+import schalter.de.losungen2.utils.AsyncUtils
 
-class MediaPlayerUi : FrameLayout {
+class MediaPlayerUi : FrameLayout, MediaPlayerService.StateListener, MediaPlayerService.SeekListener {
 
     private var title: TextView
     private var seekBar: SeekBar
@@ -25,7 +24,6 @@ class MediaPlayerUi : FrameLayout {
     private var stopButton: ImageView
 
     private var totalTime: Int? = null
-    private var actualTime: Int? = null
 
     private var serviceConnection: ServiceConnection? = null
     private var mediaPlayerService: MediaPlayerService? = null
@@ -38,6 +36,8 @@ class MediaPlayerUi : FrameLayout {
     constructor(context: Context, attributeSet: AttributeSet, defStyle: Int) : super(context, attributeSet, defStyle) {
         initAttributes(attributeSet)
     }
+
+    private fun initAttributes(attributeSet: AttributeSet) {}
 
     init {
         val view = View.inflate(context, R.layout.view_media_player_ui, null)
@@ -60,7 +60,7 @@ class MediaPlayerUi : FrameLayout {
         playButton.setOnClickListener {
             if (mediaPlayerService?.getState() == MediaPlayerService.State.Playing) {
                 mediaPlayerService?.pauseAudio()
-            } else {
+            } else if (mediaPlayerService?.getState() == MediaPlayerService.State.Paused) {
                 mediaPlayerService?.resumeAudio()
             }
         }
@@ -74,8 +74,10 @@ class MediaPlayerUi : FrameLayout {
         this.visibility = View.GONE
     }
 
-    private fun initAttributes(attributeSet: AttributeSet) {}
-
+    /**
+     * Checks if a service is running and binds to it when the id is the same.
+     * When the service is already binded nothing happens
+     */
     fun checkServiceIsRunningAndBind(id: String) {
         if (serviceConnection == null && // service is not bind already
                 MediaPlayerService.isRunning && MediaPlayerService.actualId == id
@@ -84,6 +86,9 @@ class MediaPlayerUi : FrameLayout {
         }
     }
 
+    /**
+     * Play the audio. Creates a service and binds to it
+     */
     fun playAudio(path: String, id: String) {
         val intent = Intent(context, MediaPlayerService::class.java)
 
@@ -95,71 +100,6 @@ class MediaPlayerUi : FrameLayout {
         bindService()
     }
 
-    private fun bindService() {
-        unbindService()
-
-        val intent = Intent(context, MediaPlayerService::class.java)
-
-        serviceConnection = object : ServiceConnection {
-            override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-                val binder = service as MediaPlayerService.MediaPlayerServiceBinder
-                this@MediaPlayerUi.mediaPlayerService = binder.getService()
-                this@MediaPlayerUi.visibility = View.VISIBLE
-                this@MediaPlayerUi.initService()
-            }
-
-            override fun onServiceDisconnected(name: ComponentName?) {
-                this@MediaPlayerUi.mediaPlayerService = null
-                this@MediaPlayerUi.visibility = View.GONE
-            }
-        }
-
-        context.bindService(intent, serviceConnection!!, Context.BIND_AUTO_CREATE)
-    }
-
-    fun unbindService() {
-        serviceConnection?.let { context.unbindService(it) }
-        mediaPlayerService = null
-        serviceConnection = null
-    }
-
-    private fun initService() {
-        mediaPlayerService?.let { mediaPlayerService ->
-            if (mediaPlayerService.getState() == MediaPlayerService.State.Stopped) {
-                serviceStopped()
-            } else {
-                totalTime = mediaPlayerService.getDuration()
-                this.seekBar.max = totalTime!!
-
-                mediaPlayerService.addSeekListener(object : MediaPlayerService.SeekListener {
-                    override fun seekChanged(newPosition: Int) {
-                        this@MediaPlayerUi.actualTime = newPosition
-                        this@MediaPlayerUi.updateDuration()
-                    }
-                })
-
-                mediaPlayerService.addStateListener(object : MediaPlayerService.StateListener {
-                    override fun stateChanged(oldState: MediaPlayerService.State?, newState: MediaPlayerService.State) {
-                        if (newState == MediaPlayerService.State.Playing) {
-                            updateIcon(playing = true)
-                        } else {
-                            updateIcon(playing = false)
-                        }
-
-                        if (newState == MediaPlayerService.State.Stopped) {
-                            serviceStopped()
-                        }
-                    }
-                })
-            }
-        }
-    }
-
-    private fun serviceStopped() {
-        unbindService()
-        visibility = View.GONE
-    }
-
     fun setTitle(title: String?) {
         if (title == null) {
             this.title.visibility = View.GONE
@@ -169,29 +109,115 @@ class MediaPlayerUi : FrameLayout {
         }
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun updateDuration() {
-        if (this.actualTime != null && this.totalTime != null) {
-            val actualTime = getTimeInMinutesAndSeconds(this.actualTime!!)
-            val totalTime = getTimeInMinutesAndSeconds(this.totalTime!!)
+    private fun bindService() {
+        unbindService()
 
-            Handler(Looper.getMainLooper()).post {
-                this.duration.text = "$actualTime / $totalTime"
-                this.seekBar.progress = this.actualTime!!
+        val intent = Intent(context, MediaPlayerService::class.java)
+
+        serviceConnection = object : ServiceConnection {
+            override fun onServiceConnected(name: ComponentName?, serviceBinder: IBinder?) {
+                val binder = serviceBinder as MediaPlayerService.MediaPlayerServiceBinder
+                mediaPlayerService = binder.getService().apply {
+                    initService(this)
+                }
             }
+
+            override fun onServiceDisconnected(name: ComponentName?) {
+                mediaPlayerService = null
+                serviceConnection = null
+                visibility = View.GONE
+            }
+        }.apply {
+            context.bindService(intent, this, Context.BIND_AUTO_CREATE)
+        }
+    }
+
+    /**
+     * Unbinds the service created with playAudio. Should be called when the activity
+     * or fragment is paused or destroyed.
+     * When this function is called multiple times it has no effect
+     */
+    fun unbindService() {
+        unregisterListeners()
+        serviceConnection?.let { context.unbindService(it) }
+        mediaPlayerService = null
+        serviceConnection = null
+    }
+
+    /**
+     * Unbinds and updates the ui when the service is stopped.
+     * Updates the ui and registers listener otherwise
+     */
+    private fun initService(mediaPlayerService: MediaPlayerService) {
+        if (mediaPlayerService.getState() == MediaPlayerService.State.Stopped) {
+            serviceStopped()
         } else {
+            visibility = View.VISIBLE
+
+            totalTime = mediaPlayerService.getDuration()
+            this.seekBar.max = totalTime!!
+
+            registerListeners()
+        }
+    }
+
+    private fun registerListeners() {
+        mediaPlayerService?.addSeekListener(this)
+        mediaPlayerService?.addStateListener(this)
+    }
+
+    private fun unregisterListeners() {
+        mediaPlayerService?.removeSeekListener(this)
+        mediaPlayerService?.removeStateListener(this)
+    }
+
+    private fun serviceStopped() {
+        unbindService()
+        visibility = View.GONE
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun updateDuration(actualTime: Int) {
+        this.totalTime?.let { totalTime ->
+            val actualTimeString = getTimeInMinutesAndSeconds(actualTime)
+            val totalTimeString = getTimeInMinutesAndSeconds(totalTime)
+
+            AsyncUtils.runOnMainThread {
+                this.duration.text = "$actualTimeString / $totalTimeString"
+                this.seekBar.progress = actualTime
+            }
+        }
+
+        if (this.totalTime == null) {
             this.duration.text = ""
         }
     }
 
-    private fun updateIcon(playing: Boolean) {
-        Handler(Looper.getMainLooper()).post {
+    private fun updatePlayPauseIcon(playing: Boolean) {
+        AsyncUtils.runOnMainThread {
             if (playing) {
                 this.playButton.setImageResource(R.drawable.ic_pause)
             } else {
                 this.playButton.setImageResource(R.drawable.ic_play_arrow)
             }
         }
+    }
+
+    // ------- SERVICE LISTENERS -----------
+    override fun stateChanged(oldState: MediaPlayerService.State?, newState: MediaPlayerService.State) {
+        if (newState == MediaPlayerService.State.Playing) {
+            updatePlayPauseIcon(true)
+        } else {
+            updatePlayPauseIcon(false)
+        }
+
+        if (newState == MediaPlayerService.State.Stopped) {
+            serviceStopped()
+        }
+    }
+
+    override fun seekChanged(newPosition: Int) {
+        updateDuration(newPosition)
     }
 
     // --------- HELPER FUNCTIONS ------------

@@ -45,7 +45,7 @@ class DailyVerseModel(private val database: VersesDatabase, private val date: Da
     fun loadSermon(context: Context): LiveData<DataExceptionWrapper<Sermon>> {
         // TODO check if sermon is already in the database
 
-        SermonProvider.getImplementation(context).loadAndSave(dailyVerse.value!!)
+        SermonProvider.getImplementation(context).getIfExistsOrLoadAndSave(dailyVerse.value!!)
                 .subscribe(
                         { success -> sermon.postValue(DataExceptionWrapper(value = success)) },
                         { error -> sermon.postValue(DataExceptionWrapper(error = error)) })

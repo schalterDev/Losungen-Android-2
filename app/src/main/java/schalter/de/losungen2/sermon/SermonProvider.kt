@@ -6,6 +6,7 @@ import schalter.de.losungen2.dataAccess.VersesDatabase
 import schalter.de.losungen2.dataAccess.daily.DailyVerse
 import schalter.de.losungen2.dataAccess.sermon.Sermon
 import schalter.de.losungen2.sermon.erf.ErfWortZumTagSermonImplementation
+import schalter.de.losungen2.utils.AsyncUtils
 import java.io.File
 import java.io.InputStream
 
@@ -56,11 +57,40 @@ abstract class SermonProvider(val context: Context) {
     abstract fun getProviderName(): String
 
     /**
-     * Loads the sermon and saves the sermon to the file system
-     * @return absolute path of the sermon on the file system
+     * Loads the sermon and saves the sermon to the file system and database
+     * @return the sermon from database or downloaded sermon
      */
-    fun loadAndSave(dailyVerse: DailyVerse): Single<Sermon?> {
-        return loadDownloadUrl(dailyVerse).flatMap { save() }.map { getSermon() }
+    fun getIfExistsOrLoadAndSave(dailyVerse: DailyVerse): Single<Sermon?> {
+        return Single.create {
+            getSermonIfExists(dailyVerse).subscribe { sermon ->
+                if (sermon.value != null) {
+                    it.onSuccess(sermon.value)
+                } else {
+                    loadDownloadUrl(dailyVerse).flatMap {
+                        save()
+                    }.map {
+                        getSermon()
+                    }.subscribe { newSermon ->
+                        it.onSuccess(newSermon!!)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getSermonIfExists(dailyVerse: DailyVerse): Single<AsyncUtils.Optional<Sermon>> {
+        val sermonDao = VersesDatabase.provideVerseDatabase(context).sermonDao()
+        val sermons = sermonDao.getSermonsForDailyVerseId(dailyVerse.dailyVerseId!!)
+
+        return Single.create {
+            AsyncUtils.liveDataToSingleOptional(sermons).subscribe { success ->
+                if (success.value?.isNotEmpty() == true) {
+                    it.onSuccess(AsyncUtils.Optional(success.value[0]))
+                } else {
+                    it.onSuccess(AsyncUtils.Optional(null))
+                }
+            }
+        }
     }
 
     /**

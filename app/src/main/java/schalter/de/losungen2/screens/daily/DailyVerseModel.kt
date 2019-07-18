@@ -38,6 +38,16 @@ class DailyVerseModel(private val database: VersesDatabase, private val date: Da
         }
     }
 
+    fun saveNotes(notes: String) {
+        dailyVerse.value?.let {
+            if (notes != it.notes) {
+                GlobalScope.launch {
+                    database.dailyVerseDao().updateNotes(it.date, notes)
+                }
+            }
+        }
+    }
+
     /**
      * daily verse has to have a value
      */

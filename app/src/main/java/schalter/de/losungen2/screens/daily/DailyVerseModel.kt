@@ -43,6 +43,7 @@ class DailyVerseModel(private val database: VersesDatabase, private val date: Da
      */
     @SuppressLint("CheckResult")
     fun loadSermon(context: Context): LiveData<DataExceptionWrapper<Sermon>> {
+        sermon = MutableLiveData()
         SermonProvider.getImplementation(context).getIfExistsOrLoadAndSave(dailyVerse.value!!.date)
                 .subscribe(
                         { success -> sermon.postValue(DataExceptionWrapper(value = success)) },

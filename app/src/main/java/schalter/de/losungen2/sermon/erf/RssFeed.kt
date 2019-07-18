@@ -12,7 +12,7 @@ import java.util.*
 
 class RssFeed {
     fun load(url: String, date: Date): Single<FeedLoaded> {
-        return Single.create<FeedLoaded> { emitter ->
+        return Single.create { emitter ->
             GlobalScope.launch {
                 try {
                     val articleList = Parser().getArticles(url)

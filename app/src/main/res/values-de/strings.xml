@@ -77,5 +77,11 @@
     <string name="daily_word_not_found">Losung nicht gefunden</string>
     <string name="loading_sermon">Lade Andacht</string>
     <string name="share_sermon">Andacht Teilen</string>
+    <string name="app_info">App Infos</string>
+    <string name="app_version">Appversion: %1$d</string>
+    <string name="licences">Lizensen</string>
+    <string name="help_developing">Ich entwickle diese open-source APP in meiner Freizeit. Wenn du Programmieren kannst, freue ich mich über Hilfe.  Dazu klicke hier.</string>
+    <string name="help_translating">Diese APP ist in vielen Sprachen verfügbar. Du kannst beim Übersetzen hilfen. Klicke hier zum starten.</string>
+    <string name="want_to_support">Willst du die APP unterstützen?</string>
 
 </resources>

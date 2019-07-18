@@ -61,11 +61,34 @@
     <string name="time_notification">Zeit für die Benachrichtigung</string>
     <string name="widget_content">Inhalt des Widgets</string>
     <string name="marked_as_favourite">Als Favorit markiert</string>
+    <string name="could_not_parse_date_of_rss">Fehler beim Interpretieren des Datums im RSS-Eintrag</string>
+    <string name="failed_to_parse_erf_site">Konnte keine MP3 Datei auf der ERF Seite finden</string>
+    <string name="no_sermon_found">Keine Andacht gefunden</string>
+    <string name="stop_sermon">Andacht stoppen</string>
+    <string name="play_sermon">Andacht abspielen</string>
+    <string name="media_player_notification_channel_id">Bedienelemente für Medienplayer</string>
+    <string name="media_player_notification_channel_description">Benachrichtigung für die Bedienelemte der Andacht</string>
+    <string name="aborted_by_user">Vom Benutzer abgebrochen</string>
+    <string name="downloading_sermon">Lade Andacht herunter</string>
+    <string name="error_downloading_sermon">Fehler beim Herunterladen der Andacht</string>
+    <string name="searching_sermon">Suche Andacht</string>
+    <string name="sermon_provider_notification_channel_description">Zeigt den Fortschritt des Herunterladens der Andacht</string>
+    <string name="sermon_provider_notification_channel_id">Download Fortschritt</string>
+    <string name="daily_word_not_found">Losung nicht gefunden</string>
+    <string name="loading_sermon">Lade Andacht</string>
+    <string name="share_sermon">Andacht Teilen</string>
     <string name="app_info">App Infos</string>
     <string name="app_version">Appversion: %1$d</string>
     <string name="licences">Lizensen</string>
     <string name="help_developing">Ich entwickle diese open-source APP in meiner Freizeit. Wenn du Programmieren kannst, freue ich mich über Hilfe.  Dazu klicke hier.</string>
     <string name="help_translating">Diese APP ist in vielen Sprachen verfügbar. Du kannst beim Übersetzen hilfen. Klicke hier zum starten.</string>
     <string name="want_to_support">Willst du die APP unterstützen?</string>
+    <string name="playing_sermon">Spiele Andacht ab</string>
+    <string name="sermons">Anachten</string>
+    <string name="auto_delete_sermons">Andachten automatisch löschen</string>
+    <string name="auto_delete_sermons_description">Alte Audiodateien nach x Tagen löschen (0 löscht sie niemals)</string>
+    <string name="only_numbers_allowed">Es sind nur Zahlen erlaubt</string>
+    <string name="delete_sermons">Andachten löschen</string>
+    <string name="delete_sermons_description">Du kannst auswählen welche Daten gelöscht werden</string>
 
 </resources>

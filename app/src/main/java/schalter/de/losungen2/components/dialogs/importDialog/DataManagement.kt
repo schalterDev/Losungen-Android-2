@@ -18,7 +18,7 @@ import schalter.de.losungen2.utils.CoroutineDispatchers
 import java.util.*
 import kotlin.coroutines.CoroutineContext
 
-const val DEBUG_TAG = "DataManagement"
+private const val DEBUG_TAG = "DataManagement"
 
 class DataManagement : ViewModel(), CoroutineScope {
 
@@ -61,7 +61,7 @@ class DataManagement : ViewModel(), CoroutineScope {
                 if (yearLanguageUrlArray != null && response.statusCode == 200 && error == null) {
                     yearLanguageUrlList = Arrays.asList(*yearLanguageUrlArray)
                 } else {
-                    Log.e(DEBUG_TAG, "Error while trying to load available data")
+                    Log.e(DEBUG_TAG, "Error while trying to loadDownloadUrl available data")
                     Log.e(DEBUG_TAG, "Response: $response")
                     Log.e(DEBUG_TAG, "Error: $error")
                 }

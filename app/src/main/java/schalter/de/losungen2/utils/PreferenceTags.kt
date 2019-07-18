@@ -9,6 +9,10 @@ object PreferenceTags {
 
     const val OPEN_EXTERNAL_DEFAULT = "open_external_default"
 
+    // sermons
+    const val SERMONS_DELETE = "delete_sermons"
+    const val SERMONS_DELETE_AUTO = "auto_delete_sermons"
+
     // widgets
     const val WIDGET_BACKGROUND = "widgetBackground"
     const val WIDGET_COLOR = "widgetColor"

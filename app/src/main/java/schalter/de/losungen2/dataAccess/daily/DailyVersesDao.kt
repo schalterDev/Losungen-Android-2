@@ -49,4 +49,7 @@ abstract class DailyVersesDao {
 
     @Query("UPDATE DailyVerse SET is_favourite = :isFavourite WHERE date = :date")
     protected abstract fun updateIsFavouriteExactDate(date: Date, isFavourite: Boolean)
+
+    @Query("SELECT * FROM DailyVerse INNER JOIN Sermon on DailyVerse.daily_verse_id = Sermon.daily_verse_id")
+    abstract fun getAllDailyVersesWithSermon(): Array<DailyVerse>
 }

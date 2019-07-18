@@ -3,18 +3,26 @@ package schalter.de.losungen2.screens.daily
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import android.widget.LinearLayout
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.snackbar.Snackbar
 import schalter.de.losungen2.R
+import schalter.de.losungen2.components.exceptions.TranslatableException
 import schalter.de.losungen2.components.verseCard.VerseCardData
 import schalter.de.losungen2.dataAccess.daily.DailyVerse
+import schalter.de.losungen2.dataAccess.sermon.Sermon
 import schalter.de.losungen2.screens.ARG_DATE
 import schalter.de.losungen2.screens.VerseListDateFragment
+import schalter.de.losungen2.sermon.mediaPlayer.MediaPlayerUi
 import schalter.de.losungen2.utils.Share
 import java.util.*
 
+
+const val TAG_DEBUG = "Losungen"
 
 /**
  * A simple [Fragment] subclass.
@@ -28,6 +36,8 @@ class DailyVerseFragment : VerseListDateFragment() {
     private lateinit var mApplication: Application
     private lateinit var mViewModel: DailyVerseModel
 
+    private lateinit var mediaPlayerUi: MediaPlayerUi
+
     @VisibleForTesting
     private var menu: Menu? = null
 
@@ -36,13 +46,49 @@ class DailyVerseFragment : VerseListDateFragment() {
         setHasOptionsMenu(true)
     }
 
+    override fun onPause() {
+        super.onPause()
+        mediaPlayerUi.unbindService()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mViewModel.getDailyVerse().value?.date?.let {
+            mediaPlayerUi.checkServiceIsRunningAndBind(it.time.toString())
+        }
+    }
+
     private fun updateDataByDailyVerse(dailyVerse: DailyVerse?) {
         if (dailyVerse != null) {
             this.updateData(VerseCardData.fromDailyVerseTwoCards(mApplication, dailyVerse))
             this.updateFavouriteMenuItem(dailyVerse.isFavourite)
+
+            mediaPlayerUi.checkServiceIsRunningAndBind(dailyVerse.date.time.toString())
         } else {
             this.updateData(listOf())
         }
+    }
+
+    private fun playSermon(sermon: Sermon) {
+        mediaPlayerUi.playAudio(sermon.pathSaved, mViewModel.getDailyVerse().value?.date?.time.toString(), sermon.provider
+                ?: mContext.getString(R.string.playing_sermon))
+        mediaPlayerUi.setTitle(sermon.provider)
+    }
+
+    private fun showError(exception: Throwable) {
+        val errorMessage =
+                if (exception is TranslatableException) {
+                    exception.getStringForUser(mContext)
+                } else {
+                    exception.message ?: ""
+                }
+
+        exception.printStackTrace()
+        Log.w(TAG_DEBUG, errorMessage)
+
+        val snackBar = Snackbar.make(activity!!.findViewById(android.R.id.content),
+                errorMessage, Snackbar.LENGTH_LONG)
+        snackBar.show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -64,9 +110,26 @@ class DailyVerseFragment : VerseListDateFragment() {
                 }
                 return true
             }
+            R.id.action_share_sermon -> {
+                mViewModel.getDailyVerse().value?.let {
+                    Share.sermon(mContext, it.date)
+                }
+                return true
+            }
             R.id.action_favourite -> {
                 mViewModel.toggleFavourite()
                 return true
+            }
+            R.id.action_sermon -> {
+                mViewModel.getDailyVerse().value?.let {
+                    mViewModel.loadSermon(mContext).observe(this, androidx.lifecycle.Observer { sermonWrapper ->
+                        if (sermonWrapper.error != null) {
+                            showError(sermonWrapper.error)
+                        } else {
+                            playSermon(sermonWrapper.value!!)
+                        }
+                    })
+                }
             }
         }
 
@@ -85,6 +148,13 @@ class DailyVerseFragment : VerseListDateFragment() {
         mViewModel.getDailyVerse().observe(this, androidx.lifecycle.Observer { dailyVerse ->
             updateDataByDailyVerse(dailyVerse)
         })
+
+        mediaPlayerUi = MediaPlayerUi(mContext)
+        mediaPlayerUi.layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT)
+
+        this.linearLayout.addView(mediaPlayerUi)
 
         return view
     }

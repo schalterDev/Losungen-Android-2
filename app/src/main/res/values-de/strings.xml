@@ -84,5 +84,11 @@
     <string name="help_translating">Diese APP ist in vielen Sprachen verfügbar. Du kannst beim Übersetzen hilfen. Klicke hier zum starten.</string>
     <string name="want_to_support">Willst du die APP unterstützen?</string>
     <string name="playing_sermon">Spiele Andacht ab</string>
+    <string name="sermons">Anachten</string>
+    <string name="auto_delete_sermons">Andachten automatisch löschen</string>
+    <string name="auto_delete_sermons_description">Alte Audiodateien nach x Tagen löschen (0 löscht sie niemals)</string>
+    <string name="only_numbers_allowed">Es sind nur Zahlen erlaubt</string>
+    <string name="delete_sermons">Andachten löschen</string>
+    <string name="delete_sermons_description">Du kannst auswählen welche Daten gelöscht werden</string>
 
 </resources>

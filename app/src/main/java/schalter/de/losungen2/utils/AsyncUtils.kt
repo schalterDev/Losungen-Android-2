@@ -10,14 +10,12 @@ object AsyncUtils {
 
     fun <T> liveDataToSingleOptional(liveData: LiveData<T>): Single<Optional<T>> {
         return Single.create { single ->
-            val observer: androidx.lifecycle.Observer<T?> = object : androidx.lifecycle.Observer<T?> {
+            liveData.observeForever(object : androidx.lifecycle.Observer<T?> {
                 override fun onChanged(value: T?) {
                     single.onSuccess(Optional(value))
                     liveData.removeObserver(this)
                 }
-            }
-
-            liveData.observeForever(observer)
+            })
         }
     }
 

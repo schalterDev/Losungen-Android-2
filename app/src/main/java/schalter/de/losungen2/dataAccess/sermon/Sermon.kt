@@ -7,7 +7,8 @@ import schalter.de.losungen2.dataAccess.daily.DailyVerse
     ForeignKey(
             entity = DailyVerse::class,
             parentColumns = arrayOf("daily_verse_id"),
-            childColumns = arrayOf("daily_verse_id")
+            childColumns = arrayOf("daily_verse_id"),
+            onDelete = ForeignKey.CASCADE
     )],
         indices = [Index(value = ["daily_verse_id"])])
 data class Sermon(

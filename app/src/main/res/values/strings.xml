@@ -83,4 +83,10 @@
     <string name="help_translating">This app ist available in various languages. You can help to translate the app into more. Click here to start.</string>
     <string name="help_developing">This app is open source and developed in my free time. When you can program you are welcome to contribute. Just click here.</string>
     <string name="playing_sermon">Playing sermon</string>
+    <string name="sermons">Sermons</string>
+    <string name="auto_delete_sermons">Delete sermons automatically</string>
+    <string name="auto_delete_sermons_description">Delete audio files after x days (0 to deactivate)</string>
+    <string name="only_numbers_allowed">Only numbers are allowed</string>
+    <string name="delete_sermons">Delete sermons</string>
+    <string name="delete_sermons_description">You can choose which sermons</string>
 </resources>

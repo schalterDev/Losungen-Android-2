@@ -6,12 +6,10 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
-import androidx.preference.SwitchPreferenceCompat
+import androidx.preference.*
 import schalter.de.losungen2.R
 import schalter.de.losungen2.backgroundTasks.dailyNotifications.ScheduleNotification
+import schalter.de.losungen2.components.dialogs.deleteSermons.DeleteSermonsDialog
 import schalter.de.losungen2.components.preferences.timePicker.TimeDialog
 import schalter.de.losungen2.components.preferences.timePicker.TimePreference
 import schalter.de.losungen2.utils.PreferenceTags
@@ -64,28 +62,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
 
-        val defaultOpenExternalProgram = findPreference<Preference>(PreferenceTags.OPEN_EXTERNAL_DEFAULT)
-        defaultOpenExternalProgram?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            val editor = preferences.edit()
-            editor.putString(PreferenceTags.OPEN_EXTERNAL_DEFAULT, null)
-            editor.apply()
-
-            Toast.makeText(context!!, R.string.successful, Toast.LENGTH_SHORT).show()
-            true
-        }
-
-        val notificationToggle = findPreference<SwitchPreferenceCompat>(PreferenceTags.NOTIFICATION_SHOW)
-        notificationToggle?.setOnPreferenceChangeListener { _, newValue ->
-            val showNotification = newValue as Boolean
-
-            if (showNotification) {
-                ScheduleNotification(context!!).scheduleNotification(instantlyShowNotification = true)
-            } else {
-                ScheduleNotification(context!!).cancelScheduledNotification(true)
-            }
-
-            true
-        }
+        openExternalDefault()
+        showNotification()
+        deleteSermons()
+        deleteSermonsAutomatically()
     }
 
     override fun onDisplayPreferenceDialog(preference: Preference) {
@@ -95,6 +75,66 @@ class SettingsFragment : PreferenceFragmentCompat() {
             dialogFragment.show(fragmentManager!!, null)
         } else
             super.onDisplayPreferenceDialog(preference)
+    }
+
+    // ---------- NOTIFICATION CHANGE LISTENER ---------
+    private fun openExternalDefault() {
+        findPreference<Preference>(PreferenceTags.OPEN_EXTERNAL_DEFAULT)?.apply {
+            this.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                val editor = preferences.edit()
+                editor.putString(PreferenceTags.OPEN_EXTERNAL_DEFAULT, null)
+                editor.apply()
+
+                Toast.makeText(context!!, R.string.successful, Toast.LENGTH_SHORT).show()
+                true
+            }
+        }
+    }
+
+    private fun showNotification() {
+        findPreference<SwitchPreferenceCompat>(PreferenceTags.NOTIFICATION_SHOW)?.apply {
+            this.setOnPreferenceChangeListener { _, newValue ->
+                val showNotification = newValue as Boolean
+
+                if (showNotification) {
+                    ScheduleNotification(context!!).scheduleNotification(instantlyShowNotification = true)
+                } else {
+                    ScheduleNotification(context!!).cancelScheduledNotification(true)
+                }
+
+                true
+            }
+        }
+    }
+
+    private fun deleteSermonsAutomatically() {
+        findPreference<EditTextPreference>(PreferenceTags.SERMONS_DELETE_AUTO)?.apply {
+            this.setOnPreferenceChangeListener { _, newValue ->
+                var days = 0
+                try {
+                    days = (newValue as String).toInt()
+                } catch (error: NumberFormatException) {
+                    Toast.makeText(context, R.string.only_numbers_allowed, Toast.LENGTH_LONG).show()
+                }
+
+                val editor = preferences.edit()
+                editor.putString(PreferenceTags.SERMONS_DELETE_AUTO, days.toString())
+                editor.apply()
+
+                this.text = days.toString()
+
+                false
+            }
+        }
+    }
+
+    private fun deleteSermons() {
+        findPreference<Preference>(PreferenceTags.SERMONS_DELETE)?.apply {
+            this.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                DeleteSermonsDialog(context).show(this@SettingsFragment.fragmentManager!!, null)
+                true
+            }
+        }
     }
 }
 

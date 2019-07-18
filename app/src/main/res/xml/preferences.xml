@@ -44,4 +44,22 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        app:title="@string/sermons"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="delete_sermons"
+            app:title="@string/delete_sermons"
+            app:summary="@string/delete_sermons_description" />
+
+        <EditTextPreference
+            app:iconSpaceReserved="false"
+            app:key="auto_delete_sermons"
+            app:title="@string/auto_delete_sermons"
+            app:summary="@string/auto_delete_sermons_description" />
+
+    </PreferenceCategory>
+
 </androidx.preference.PreferenceScreen>

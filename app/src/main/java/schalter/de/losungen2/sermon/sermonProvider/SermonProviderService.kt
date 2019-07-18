@@ -11,6 +11,7 @@ import schalter.de.losungen2.dataAccess.VersesDatabase
 import schalter.de.losungen2.dataAccess.daily.DailyVerse
 import schalter.de.losungen2.dataAccess.sermon.Sermon
 import schalter.de.losungen2.utils.AsyncUtils
+import java.io.File
 import java.util.*
 
 class SermonProviderService : Service() {
@@ -45,10 +46,10 @@ class SermonProviderService : Service() {
                     if (dailyVerse.value != null) {
                         this.dailyVerse = dailyVerse.value
                         sermonProvider.getSermonIfExists(dailyVerse.value).subscribe { sermon ->
-                            if (sermon.value == null) {
-                                startDownload(sermonProvider)
-                            } else {
+                            if (sermon.value != null && File(sermon.value.pathSaved).exists()) {
                                 finished(sermon.value)
+                            } else {
+                                startDownload(sermonProvider)
                             }
                         }
                     } else {

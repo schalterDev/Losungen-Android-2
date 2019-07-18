@@ -68,5 +68,11 @@
     <string name="play_sermon">Andacht abspielen</string>
     <string name="media_player_notification_channel_id">Bedienelemente für Medienplayer</string>
     <string name="media_player_notification_channel_description">Benachrichtigung für die Bedienelemte der Andacht</string>
+    <string name="aborted_by_user">Vom Benutzer abgebrochen</string>
+    <string name="downloading_sermon">Lade Andacht herunter</string>
+    <string name="error_downloading_sermon">Fehler beim Herunterladen der Andacht</string>
+    <string name="searching_sermon">Suche Andacht</string>
+    <string name="sermon_provider_notification_channel_description">Zeigt den Fortschritt des Herunterladens der Andacht</string>
+    <string name="sermon_provider_notification_channel_id">Download Fortschritt</string>
 
 </resources>

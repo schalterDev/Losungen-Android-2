@@ -70,7 +70,8 @@ class DailyVerseFragment : VerseListDateFragment() {
     }
 
     private fun playSermon(sermon: Sermon) {
-        mediaPlayerUi.playAudio(sermon.pathSaved, mViewModel.getDailyVerse().value?.date?.time.toString())
+        mediaPlayerUi.playAudio(sermon.pathSaved, mViewModel.getDailyVerse().value?.date?.time.toString(), sermon.provider
+                ?: mContext.getString(R.string.playing_sermon))
         mediaPlayerUi.setTitle(sermon.provider)
     }
 

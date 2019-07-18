@@ -83,5 +83,6 @@
     <string name="help_developing">Ich entwickle diese open-source APP in meiner Freizeit. Wenn du Programmieren kannst, freue ich mich über Hilfe.  Dazu klicke hier.</string>
     <string name="help_translating">Diese APP ist in vielen Sprachen verfügbar. Du kannst beim Übersetzen hilfen. Klicke hier zum starten.</string>
     <string name="want_to_support">Willst du die APP unterstützen?</string>
+    <string name="playing_sermon">Spiele Andacht ab</string>
 
 </resources>

@@ -44,7 +44,9 @@ class MediaPlayerService : Service() {
                 }
 
                 if (intent.extras?.getBoolean(EXTRA_SHOW_NOTIFICATION, true) == true) {
-                    initNotification()
+                    intent.extras?.getString(EXTRA_TITLE)?.let {
+                        initNotification(it)
+                    }
                 }
 
                 startAudio(intent.extras?.getString(EXTRA_PATH), intent.extras?.getString(EXTRA_ID))
@@ -81,11 +83,11 @@ class MediaPlayerService : Service() {
         }
     }
 
-    private fun initNotification() {
+    private fun initNotification(title: String) {
         mediaPlayerServiceNotification = MediaPlayerServiceNotification(
                 applicationContext,
                 this,
-                "Test") // TODO add title
+                title)
 
         updateNotification()
     }
@@ -207,6 +209,7 @@ class MediaPlayerService : Service() {
         const val EXTRA_PATH = "PATH"
         const val EXTRA_ID = "ID"
         const val EXTRA_SHOW_NOTIFICATION = "SHOW_NOTIFICATION" // default value is true
+        const val EXTRA_TITLE = "TITLE"
 
         const val refreshRateMillis = 500L
 

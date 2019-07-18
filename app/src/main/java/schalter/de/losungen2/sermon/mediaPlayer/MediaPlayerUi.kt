@@ -89,12 +89,13 @@ class MediaPlayerUi : FrameLayout, MediaPlayerService.StateListener, MediaPlayer
     /**
      * Play the audio. Creates a service and binds to it
      */
-    fun playAudio(path: String, id: String) {
+    fun playAudio(path: String, id: String, title: String) {
         val intent = Intent(context, MediaPlayerService::class.java)
 
         intent.action = MediaPlayerService.ACTION_START
         intent.putExtra(MediaPlayerService.EXTRA_PATH, path)
         intent.putExtra(MediaPlayerService.EXTRA_ID, id)
+        intent.putExtra(MediaPlayerService.EXTRA_TITLE, title)
         context.startService(intent)
 
         bindService()

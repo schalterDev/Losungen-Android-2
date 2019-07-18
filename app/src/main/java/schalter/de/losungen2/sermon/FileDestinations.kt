@@ -12,4 +12,8 @@ object FileDestinations {
             return context.filesDir
         }
     }
+
+    fun getCachePath(context: Context): File {
+        return context.cacheDir
+    }
 }

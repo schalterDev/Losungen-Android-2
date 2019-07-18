@@ -74,5 +74,8 @@
     <string name="searching_sermon">Suche Andacht</string>
     <string name="sermon_provider_notification_channel_description">Zeigt den Fortschritt des Herunterladens der Andacht</string>
     <string name="sermon_provider_notification_channel_id">Download Fortschritt</string>
+    <string name="daily_word_not_found">Losung nicht gefunden</string>
+    <string name="loading_sermon">Lade Andacht</string>
+    <string name="share_sermon">Andacht Teilen</string>
 
 </resources>

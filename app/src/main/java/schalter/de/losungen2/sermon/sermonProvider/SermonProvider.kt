@@ -70,7 +70,7 @@ abstract class SermonProvider(val context: Context) {
      */
     protected fun saveSermon(input: InputStream): String {
         // write to private storage
-        val directory = File(FileDestinations.getPrivatePath(context), SERMON_FOLDER)
+        val directory = File(FileDestinations.getCachePath(context), SERMON_FOLDER)
         directory.mkdirs()
         val file = File(directory, getFileName())
         writeFile(file, input)

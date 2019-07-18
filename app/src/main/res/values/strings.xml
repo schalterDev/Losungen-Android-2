@@ -73,5 +73,7 @@
     <string name="searching_sermon">Searching sermon</string>
     <string name="downloading_sermon">Downloading sermon</string>
     <string name="error_downloading_sermon">Error while downloading sermon</string>
-    <string name="aborted_by_user">Aboretd by user</string>
+    <string name="aborted_by_user">Aborted by user</string>
+    <string name="share_sermon">Share sermon</string>
+    <string name="loading_sermon">Loading sermon</string>
 </resources>

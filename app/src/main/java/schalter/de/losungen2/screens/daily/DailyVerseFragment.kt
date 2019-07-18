@@ -109,6 +109,12 @@ class DailyVerseFragment : VerseListDateFragment() {
                 }
                 return true
             }
+            R.id.action_share_sermon -> {
+                mViewModel.getDailyVerse().value?.let {
+                    Share.sermon(mContext, it.date)
+                }
+                return true
+            }
             R.id.action_favourite -> {
                 mViewModel.toggleFavourite()
                 return true

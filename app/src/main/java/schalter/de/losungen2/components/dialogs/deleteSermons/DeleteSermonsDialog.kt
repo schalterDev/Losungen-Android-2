@@ -69,7 +69,7 @@ class DeleteSermonsDialog(context: Context) : DialogFragment() {
 
     private fun getEntryValuesLong(): Array<Long> {
         var versesWithSermon: Array<DailyVerse>? = null
-        // TODO change this to work asynchroun. For this the dialog has to be
+        // TODO change this to work asynchronous. For this the dialog has to be
         // rewritten to have a loading indicator and then shows the items
         Thread {
             versesWithSermon = versesDatabase.dailyVerseDao().getAllDailyVersesWithSermon()

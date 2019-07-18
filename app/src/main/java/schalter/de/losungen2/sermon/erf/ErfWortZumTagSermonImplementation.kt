@@ -4,7 +4,7 @@ import android.content.Context
 import io.reactivex.Single
 import schalter.de.losungen2.dataAccess.daily.DailyVerse
 import schalter.de.losungen2.dataAccess.sermon.Sermon
-import schalter.de.losungen2.sermon.SermonProvider
+import schalter.de.losungen2.sermon.sermonProvider.SermonProvider
 import java.io.BufferedInputStream
 import java.net.URL
 
@@ -16,7 +16,7 @@ class ErfWortZumTagSermonImplementation(context: Context) : SermonProvider(conte
     private var downloadPathMp3: String? = null
     private var savePathMp3: String? = null
 
-    override fun loadDownloadUrl(dailyVerse: DailyVerse): Single<String?> {
+    override fun loadDownloadUrl(dailyVerse: DailyVerse): Single<String> {
         this.dailyVerse = dailyVerse
 
         return RssFeed().load(URL_RSS_FEED, dailyVerse.date).map { feedData ->
@@ -32,9 +32,9 @@ class ErfWortZumTagSermonImplementation(context: Context) : SermonProvider(conte
 
     override fun getFileName() = "erf-${downloadPathMp3!!.substring(downloadPathMp3!!.lastIndexOf("/") + 1)}"
 
-    override fun save(): Single<String?> {
+    override fun downloadAndSaveToFileAndDatabase(url: String): Single<String> {
         return Single.fromCallable {
-            val inputStream = BufferedInputStream(URL(downloadPathMp3).openStream())
+            val inputStream = BufferedInputStream(URL(url).openStream())
             savePathMp3 = saveSermon(inputStream)
             inputStream.close()
             saveToDatabase()

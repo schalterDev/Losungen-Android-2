@@ -67,4 +67,11 @@
     <string name="stop_sermon">Stop sermon</string>
     <string name="media_player_notification_channel_id">Media player controls</string>
     <string name="media_player_notification_channel_description">Notification to controle the sermon</string>
+    <string name="sermon_provider_notification_channel_id">Download progress</string>
+    <string name="sermon_provider_notification_channel_description">Shows the progress of the downloaded sermon</string>
+    <string name="daily_word_not_found">Daily word not found</string>
+    <string name="searching_sermon">Searching sermon</string>
+    <string name="downloading_sermon">Downloading sermon</string>
+    <string name="error_downloading_sermon">Error while downloading sermon</string>
+    <string name="aborted_by_user">Aboretd by user</string>
 </resources>

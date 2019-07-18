@@ -12,7 +12,7 @@ import schalter.de.losungen2.components.exceptions.DataExceptionWrapper
 import schalter.de.losungen2.dataAccess.VersesDatabase
 import schalter.de.losungen2.dataAccess.daily.DailyVerse
 import schalter.de.losungen2.dataAccess.sermon.Sermon
-import schalter.de.losungen2.sermon.SermonProvider
+import schalter.de.losungen2.sermon.sermonProvider.SermonProvider
 import java.util.*
 
 class DailyVerseModel(private val database: VersesDatabase, private val date: Date) : ViewModel() {
@@ -43,9 +43,7 @@ class DailyVerseModel(private val database: VersesDatabase, private val date: Da
      */
     @SuppressLint("CheckResult")
     fun loadSermon(context: Context): LiveData<DataExceptionWrapper<Sermon>> {
-        // TODO check if sermon is already in the database
-
-        SermonProvider.getImplementation(context).getIfExistsOrLoadAndSave(dailyVerse.value!!)
+        SermonProvider.getImplementation(context).getIfExistsOrLoadAndSave(dailyVerse.value!!.date)
                 .subscribe(
                         { success -> sermon.postValue(DataExceptionWrapper(value = success)) },
                         { error -> sermon.postValue(DataExceptionWrapper(error = error)) })

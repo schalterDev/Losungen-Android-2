@@ -35,6 +35,9 @@
         <service
             android:name=".sermon.mediaPlayer.MediaPlayerService"
             android:enabled="true" />
+        <service
+            android:name=".sermon.sermonProvider.SermonProviderService"
+            android:enabled="true" />
 
         <receiver android:name=".widgets.WidgetBroadcast">
             <intent-filter>

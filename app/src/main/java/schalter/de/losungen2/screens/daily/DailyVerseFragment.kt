@@ -79,14 +79,14 @@ class DailyVerseFragment : VerseListDateFragment() {
                 if (exception is TranslatableException) {
                     exception.getStringForUser(mContext)
                 } else {
-                    exception.message
+                    exception.message ?: ""
                 }
 
         exception.printStackTrace()
         Log.w(TAG_DEBUG, errorMessage)
 
         val snackBar = Snackbar.make(activity!!.findViewById(android.R.id.content),
-                errorMessage.toString(), Snackbar.LENGTH_LONG)
+                errorMessage, Snackbar.LENGTH_LONG)
         snackBar.show()
     }
 

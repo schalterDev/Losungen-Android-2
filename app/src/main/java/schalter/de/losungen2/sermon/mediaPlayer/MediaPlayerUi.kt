@@ -117,8 +117,9 @@ class MediaPlayerUi : FrameLayout, MediaPlayerService.StateListener, MediaPlayer
         serviceConnection = object : ServiceConnection {
             override fun onServiceConnected(name: ComponentName?, serviceBinder: IBinder?) {
                 val binder = serviceBinder as MediaPlayerService.MediaPlayerServiceBinder
-                mediaPlayerService = binder.getService().apply {
-                    initService(this)
+                mediaPlayerService = binder.getService()
+                mediaPlayerService?.let {
+                    initService(it)
                 }
             }
 

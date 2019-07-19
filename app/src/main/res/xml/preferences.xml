@@ -2,7 +2,7 @@
 
     <PreferenceCategory
         app:title="@string/notifications"
-        app:iconSpaceReserved="false">
+        app:icon="@drawable/ic_action_notifications">
 
         <SwitchPreferenceCompat
             app:iconSpaceReserved="false"
@@ -46,7 +46,8 @@
 
     <PreferenceCategory
         app:title="@string/sermons"
-        app:iconSpaceReserved="false">
+        app:iconSpaceReserved="false"
+        app:icon="@drawable/ic_action_audiotrack">
 
         <Preference
             app:iconSpaceReserved="false"

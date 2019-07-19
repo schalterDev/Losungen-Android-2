@@ -1,6 +1,8 @@
 package schalter.de.losungen2.screens.settings
 
 import android.content.SharedPreferences
+import android.graphics.PorterDuff
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -66,6 +68,19 @@ class SettingsFragment : PreferenceFragmentCompat() {
         showNotification()
         deleteSermons()
         deleteSermonsAutomatically()
+
+        val colorAttr = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            android.R.attr.colorAccent
+        } else {
+            android.R.attr.textColorSecondary
+        }
+
+        context?.theme?.obtainStyledAttributes(intArrayOf(colorAttr))?.apply {
+            val iconColor = this.getColor(0, 0)
+            this.recycle()
+            tintIcons(preferenceScreen, iconColor)
+        }
+
     }
 
     override fun onDisplayPreferenceDialog(preference: Preference) {
@@ -75,6 +90,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
             dialogFragment.show(fragmentManager!!, null)
         } else
             super.onDisplayPreferenceDialog(preference)
+    }
+
+    private fun tintIcons(preference: Preference, color: Int) {
+        if (preference is PreferenceGroup) {
+            preference.forEach {
+                tintIcons(it, color)
+            }
+        }
+        val icon = preference.icon
+        icon?.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+
     }
 
     // ---------- NOTIFICATION CHANGE LISTENER ---------

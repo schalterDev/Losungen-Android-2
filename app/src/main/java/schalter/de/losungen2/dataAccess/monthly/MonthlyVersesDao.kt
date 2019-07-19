@@ -38,4 +38,7 @@ abstract class MonthlyVersesDao {
 
     @Query("UPDATE MonthlyVerse SET is_favourite = :favourite WHERE date = :date")
     protected abstract fun updateIsFavouriteByExactDate(date: Date, favourite: Boolean)
+
+    @Query("SELECT DISTINCT * FROM MonthlyVerse WHERE verse_bible LIKE '%' || :search || '%' OR verse_text LIKE '%' || :search || '%'")
+    abstract fun searchVerses(search: String): LiveData<List<MonthlyVerse>>
 }

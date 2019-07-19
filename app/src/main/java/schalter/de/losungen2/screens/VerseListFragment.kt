@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import schalter.de.losungen2.R
@@ -19,6 +21,7 @@ abstract class VerseListFragment(val layout: Int = R.layout.fragment_verse_list)
     private lateinit var recyclerView: RecyclerView
     private lateinit var gridAdapter: VerseCardGridAdapter
     protected lateinit var linearLayout: LinearLayout
+    protected lateinit var actionBar: ActionBar
 
     private var importDialog: ImportVersesDialog? = null
 
@@ -27,6 +30,7 @@ abstract class VerseListFragment(val layout: Int = R.layout.fragment_verse_list)
         emptyStateView = view.findViewById(R.id.emptyState)
         recyclerView = view.findViewById(R.id.versesList)
         linearLayout = view.findViewById(R.id.versesLinearLayout)
+        actionBar = (activity as AppCompatActivity).supportActionBar!!
 
         recyclerView.layoutManager = VerseCardGridAdapter.getLayoutManager(view.context)
         gridAdapter = VerseCardGridAdapter()

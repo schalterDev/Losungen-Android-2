@@ -90,5 +90,7 @@
     <string name="only_numbers_allowed">Es sind nur Zahlen erlaubt</string>
     <string name="delete_sermons">Andachten löschen</string>
     <string name="delete_sermons_description">Du kannst auswählen welche Daten gelöscht werden</string>
+    <string name="add_notes">Notizen hinzufügen</string>
+    <string name="notes">Notizen</string>
 
 </resources>

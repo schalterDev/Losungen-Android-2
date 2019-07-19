@@ -89,4 +89,6 @@
     <string name="only_numbers_allowed">Only numbers are allowed</string>
     <string name="delete_sermons">Delete sermons</string>
     <string name="delete_sermons_description">You can choose which sermons</string>
+    <string name="notes">Notes</string>
+    <string name="add_notes">Add notes</string>
 </resources>

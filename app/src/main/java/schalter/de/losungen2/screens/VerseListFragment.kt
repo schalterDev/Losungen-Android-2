@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import schalter.de.losungen2.R
@@ -19,6 +21,8 @@ abstract class VerseListFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var gridAdapter: VerseCardGridAdapter
     protected lateinit var linearLayout: LinearLayout
+    protected lateinit var textViewNotes: TextView
+    protected lateinit var buttonShowNotes: Button
 
     private var importDialog: ImportVersesDialog? = null
 
@@ -35,6 +39,14 @@ abstract class VerseListFragment : Fragment() {
         emptyStateView.onButtonClick {
             importDialog = ImportVersesDialog()
             importDialog!!.show(activity!!.supportFragmentManager, null)
+        }
+
+        textViewNotes = view.findViewById(R.id.text_notes)
+        buttonShowNotes = view.findViewById<Button>(R.id.button_add_notes).apply {
+            this.setOnClickListener {
+                textViewNotes.visibility = View.VISIBLE
+                this.visibility = View.GONE
+            }
         }
 
         return view

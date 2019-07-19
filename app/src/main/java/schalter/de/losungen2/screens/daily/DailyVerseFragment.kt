@@ -3,6 +3,8 @@ package schalter.de.losungen2.screens.daily
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.LinearLayout
@@ -35,6 +37,7 @@ class DailyVerseFragment : VerseListDateFragment() {
     private lateinit var mContext: Context
     private lateinit var mApplication: Application
     private lateinit var mViewModel: DailyVerseModel
+    private var firstData = true
 
     private lateinit var mediaPlayerUi: MediaPlayerUi
 
@@ -60,10 +63,19 @@ class DailyVerseFragment : VerseListDateFragment() {
 
     private fun updateDataByDailyVerse(dailyVerse: DailyVerse?) {
         if (dailyVerse != null) {
+            if (firstData) {
+                firstData = false
+                mediaPlayerUi.checkServiceIsRunningAndBind(dailyVerse.date.time.toString())
+                textViewNotes.text = dailyVerse.notes
+            }
+
+            if (dailyVerse.notes != null && dailyVerse.notes != "") {
+                textViewNotes.visibility = View.VISIBLE
+                buttonShowNotes.visibility = View.GONE
+            }
+
             this.updateData(VerseCardData.fromDailyVerseTwoCards(mApplication, dailyVerse))
             this.updateFavouriteMenuItem(dailyVerse.isFavourite)
-
-            mediaPlayerUi.checkServiceIsRunningAndBind(dailyVerse.date.time.toString())
         } else {
             this.updateData(listOf())
         }
@@ -149,12 +161,25 @@ class DailyVerseFragment : VerseListDateFragment() {
             updateDataByDailyVerse(dailyVerse)
         })
 
-        mediaPlayerUi = MediaPlayerUi(mContext)
-        mediaPlayerUi.layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT)
+        mediaPlayerUi = MediaPlayerUi(mContext).apply {
+            this.layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT)
+        }
 
         this.linearLayout.addView(mediaPlayerUi)
+
+        buttonShowNotes.visibility = View.VISIBLE
+        textViewNotes.apply {
+            this.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable) {
+                    mViewModel.saveNotes(s.toString())
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            })
+        }
 
         return view
     }

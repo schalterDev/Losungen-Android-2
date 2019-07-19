@@ -1,11 +1,12 @@
 package schalter.de.losungen2.screens
 
 import android.os.Bundle
+import schalter.de.losungen2.R
 import java.util.*
 
 const val ARG_DATE = "arg_date"
 
-abstract class VerseListDateFragment : VerseListFragment() {
+abstract class VerseListDateFragment(layout: Int = R.layout.fragment_verse_list) : VerseListFragment(layout) {
 
     protected var date: Date? = null
 

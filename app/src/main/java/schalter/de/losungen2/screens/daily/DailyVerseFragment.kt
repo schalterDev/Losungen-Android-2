@@ -7,7 +7,9 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
+import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -32,7 +34,7 @@ const val TAG_DEBUG = "Losungen"
  * create an instance of this fragment.
  *
  */
-class DailyVerseFragment : VerseListDateFragment() {
+class DailyVerseFragment : VerseListDateFragment(R.layout.fragment_verse_list_notes) {
 
     private lateinit var mContext: Context
     private lateinit var mApplication: Application
@@ -40,6 +42,9 @@ class DailyVerseFragment : VerseListDateFragment() {
     private var firstData = true
 
     private lateinit var mediaPlayerUi: MediaPlayerUi
+
+    private lateinit var textViewNotes: TextView
+    private lateinit var buttonShowNotes: Button
 
     @VisibleForTesting
     private var menu: Menu? = null
@@ -169,8 +174,15 @@ class DailyVerseFragment : VerseListDateFragment() {
 
         this.linearLayout.addView(mediaPlayerUi)
 
-        buttonShowNotes.visibility = View.VISIBLE
-        textViewNotes.apply {
+        buttonShowNotes = view.findViewById<Button>(R.id.button_add_notes).apply {
+            this.visibility = View.VISIBLE
+            this.setOnClickListener {
+                textViewNotes.visibility = View.VISIBLE
+                this.visibility = View.GONE
+            }
+        }
+
+        textViewNotes = view.findViewById<TextView>(R.id.text_notes).apply {
             this.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable) {
                     mViewModel.saveNotes(s.toString())

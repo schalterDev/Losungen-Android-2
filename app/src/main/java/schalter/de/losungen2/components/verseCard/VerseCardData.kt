@@ -63,6 +63,10 @@ data class VerseCardData(
                             date = dailyVerse.date))
         }
 
+        fun fromDailyVerses(application: Application, dailyVerses: List<DailyVerse>): List<VerseCardData> {
+            return dailyVerses.map { fromDailyVerse(application, it) }
+        }
+
         fun fromDailyVerse(application: Application, dailyVerse: DailyVerse): VerseCardData {
             val date = formatDate(dailyVerse.date)
 
@@ -87,6 +91,10 @@ data class VerseCardData(
                 }
             }
             return data
+        }
+
+        fun fromMonthlyVerses(application: Application, monthlyVerses: List<MonthlyVerse>): List<VerseCardData> {
+            return monthlyVerses.map { fromMonthlyVerse(application, it) }
         }
 
         fun fromMonthlyVerse(application: Application, monthlyVerse: MonthlyVerse): VerseCardData {

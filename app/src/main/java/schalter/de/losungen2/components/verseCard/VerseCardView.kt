@@ -96,7 +96,7 @@ class VerseCardView : FrameLayout {
     }
 
     fun setTitle2(title: String) {
-        titleView2.text = title;
+        titleView2.text = title
         titleView2.visibility = View.VISIBLE
     }
 
@@ -129,9 +129,15 @@ class VerseCardView : FrameLayout {
         setVerseInBible(verseCardData.verse)
         setIsFavourite(verseCardData.isFavourite)
 
-        verseCardData.title2?.let { setTitle2(it) }
-        verseCardData.text2?.let { setVerse2(it) }
-        verseCardData.verse2?.let { setVerseInBible2(it) }
+        verseCardData.title2?.let { setTitle2(it) } ?: run {
+            titleView2.visibility = View.GONE
+        }
+        verseCardData.text2?.let { setVerse2(it) } ?: run {
+            verseTextView2.visibility = View.GONE
+        }
+        verseCardData.verse2?.let { setVerseInBible2(it) } ?: run {
+            verseInBibleView2.visibility = View.GONE
+        }
     }
 
     private fun setVisibilityFavouriteIcon(visible: Boolean) {

@@ -52,4 +52,10 @@ abstract class DailyVersesDao {
 
     @Query("SELECT * FROM DailyVerse INNER JOIN Sermon on DailyVerse.daily_verse_id = Sermon.daily_verse_id")
     abstract fun getAllDailyVersesWithSermon(): Array<DailyVerse>
+
+    @Query("SELECT DISTINCT * FROM DailyVerse WHERE old_testament_verse_text LIKE '%' || :search || '%' " +
+            "OR new_testament_verse_text LIKE '%' || :search || '%'" +
+            "OR old_testament_verse_bible LIKE '%' || :search || '%'" +
+            "OR new_testament_verse_bible LIKE '%' || :search || '%'")
+    abstract fun searchVerses(search: String): LiveData<List<DailyVerse>>
 }

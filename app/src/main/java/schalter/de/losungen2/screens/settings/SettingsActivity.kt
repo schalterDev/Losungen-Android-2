@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.preference.*
+import schalter.de.customize.Customize
 import schalter.de.losungen2.R
 import schalter.de.losungen2.backgroundTasks.dailyNotifications.ScheduleNotification
 import schalter.de.losungen2.components.dialogs.deleteSermons.DeleteSermonsDialog
@@ -21,6 +22,8 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        setTheme(Customize.getTheme(this))
         setContentView(R.layout.activity_main)
 
         setupToolbar()

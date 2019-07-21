@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme.Menu" parent="ThemeOverlay.AppCompat">
+        <item name="android:colorBackground">?colorBackground</item>
+        <item name="android:textColor">?colorFont</item>
+    </style>
+
+    <style name="AppTheme.Toolbar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">?colorIconsToolbar</item>
+    </style>
+
+    <style name="AppTheme.BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorIconsToolbar">@color/lightToolbarIconText</item>
+        <item name="colorBackground">@color/lightBackground</item>
+        <item name="colorWindowBackground">@color/lightWindowBackground</item>
+        <item name="android:windowBackground">@color/lightWindowBackground</item>
+        <item name="android:colorBackground">@color/lightBackground</item>
+    </style>
+
+    <style name="AppThemeDark.BaseDarkTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorIconsToolbar">@color/darkToolbarIconText</item>
+        <item name="colorBackground">@color/darkBackground</item>
+        <item name="colorWindowBackground">@color/darkWindowBackground</item>
+        <item name="android:windowBackground">@color/darkWindowBackground</item>
+        <item name="android:colorBackground">@color/darkBackground</item>
+    </style>
+
+    <style name="AppTheme_Blue" parent="AppTheme.BaseTheme">
+        <item name="colorPrimary">#2196F3</item>
+        <item name="colorPrimaryDark">#1976D2</item>
+        <item name="colorPrimaryLight">#B2EBF2</item>
+        <item name="colorAccent">#FFC107</item>
+
+        <item name="colorFont">#292929</item>
+        <item name="colorFontDisabled">#9a292929</item>
+        <item name="colorSecondFont">#c8292929</item>
+    </style>
+
+    <style name="AppTheme_Green" parent="AppTheme.BaseTheme">
+        <item name="colorPrimary">#4CAF50</item>
+        <item name="colorPrimaryDark">#388E3C</item>
+        <item name="colorPrimaryLight">#A5D6A7</item>
+        <item name="colorAccent">#26A69A</item>
+
+        <item name="colorFont">#292929</item>
+        <item name="colorFontDisabled">#9a292929</item>
+        <item name="colorSecondFont">#c8292929</item>
+    </style>
+
+    <style name="AppTheme_Red" parent="AppTheme.BaseTheme">
+        <item name="colorPrimary">#f44336</item>
+        <item name="colorPrimaryDark">#d32f2f</item>
+        <item name="colorPrimaryLight">#e57373</item>
+        <item name="colorAccent">#FFA000</item>
+
+        <item name="colorFont">#292929</item>
+        <item name="colorFontDisabled">#9a292929</item>
+        <item name="colorSecondFont">#c8292929</item>
+    </style>
+
+    <style name="AppTheme_Yellow" parent="AppTheme.BaseTheme">
+        <item name="colorPrimary">#FFC107</item>
+        <item name="colorPrimaryDark">#FFA000</item>
+        <item name="colorPrimaryLight">#FFD54F</item>
+        <item name="colorAccent">#7CB342</item>
+
+        <item name="colorFont">#292929</item>
+        <item name="colorFontDisabled">#9a292929</item>
+        <item name="colorSecondFont">#c8292929</item>
+    </style>
+
+    <style name="AppTheme_Dark" parent="AppThemeDark.BaseDarkTheme">
+        <item name="colorPrimary">#424242</item>
+        <item name="colorPrimaryDark">#212121</item>
+        <item name="colorPrimaryLight">#9E9E9E</item>
+        <item name="colorAccent">#FF7043</item>
+
+        <item name="colorFont">#EEEEEE</item>
+        <item name="colorFontDisabled">#9AEEEEEE</item>
+        <item name="colorSecondFont">#c8EEEEEE</item>
+
+
+    </style>
+
+    <style name="AppTheme_Light" parent="AppTheme.BaseTheme">
+        <item name="colorPrimary">#EEEEEE</item>
+        <item name="colorPrimaryDark">#BDBDBD</item>
+        <item name="colorPrimaryLight">#FAFAFA</item>
+        <item name="colorAccent">#EC407A</item>
+
+        <item name="colorFont">#292929</item>
+        <item name="colorFontDisabled">#9a292929</item>
+        <item name="colorSecondFont">#c8292929</item>
+    </style>
+</resources>

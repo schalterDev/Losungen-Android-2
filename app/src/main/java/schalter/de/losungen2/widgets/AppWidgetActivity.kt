@@ -10,12 +10,14 @@ import android.preference.PreferenceManager
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.flask.colorpicker.ColorPickerView
 import com.flask.colorpicker.OnColorSelectedListener
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder
 import kotlinx.android.synthetic.main.toolbar.*
+import schalter.de.customize.Customize
 import schalter.de.losungen2.MainActivity
 import schalter.de.losungen2.R
 import schalter.de.losungen2.utils.PreferenceTags
@@ -45,8 +47,10 @@ class AppWidgetActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setTheme(Customize.getTheme(this))
         setContentView(R.layout.activity_app_widget)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(toolbar as Toolbar)
 
         val extras = intent.extras
         val widgetId = extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, WidgetData.generateWidgetId())

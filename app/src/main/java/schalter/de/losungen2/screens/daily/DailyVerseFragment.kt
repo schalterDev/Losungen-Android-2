@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
@@ -198,11 +199,9 @@ class DailyVerseFragment : VerseListDateFragment(R.layout.fragment_verse_list_no
 
     private fun updateFavouriteMenuItem(isFavourite: Boolean) {
         if (isFavourite) {
-            menu?.getItem(1)?.icon = resources
-                    .getDrawable(R.drawable.ic_action_favorite)
+            menu?.getItem(1)?.icon = ContextCompat.getDrawable(mContext, R.drawable.ic_action_favorite)
         } else {
-            menu?.getItem(1)?.icon = resources
-                    .getDrawable(R.drawable.ic_action_favorite_border)
+            menu?.getItem(1)?.icon = ContextCompat.getDrawable(mContext, R.drawable.ic_action_favorite_border)
         }
 
         activity!!.invalidateOptionsMenu()

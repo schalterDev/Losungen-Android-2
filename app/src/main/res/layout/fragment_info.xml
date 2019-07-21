@@ -38,7 +38,7 @@
                     android:text="@string/app_info"
                     android:textAllCaps="true"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textColor="@color/colorAccent" />
+                    android:textColor="?colorAccent" />
 
                 <TextView
                     android:id="@+id/textView_app_version"
@@ -109,7 +109,7 @@
                     android:text="@string/want_to_support"
                     android:textAllCaps="true"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textColor="@color/colorAccent" />
+                    android:textColor="?colorAccent" />
 
                 <TextView
                     android:id="@+id/textView_translate"

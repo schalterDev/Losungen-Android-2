@@ -8,13 +8,12 @@
     android:orientation="vertical"
     tools:context=".widgets.AppWidgetActivity">
 
-    <androidx.appcompat.widget.Toolbar
+    <schalter.de.customize.CustomizeToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        app:titleTextColor="?android:textColorPrimary">
+        android:layout_height="?actionBarSize"
+        android:background="?colorPrimary"
+        app:theme="@style/AppTheme.Toolbar">
 
         <Button
             android:id="@+id/btn_widget_save"
@@ -24,10 +23,9 @@
             android:layout_gravity="end"
             android:drawableStart="@drawable/ic_done"
             android:drawablePadding="8dp"
-            android:text="@string/save"
-            android:textColor="@color/colorText" />
+            android:text="@string/save" />
 
-    </androidx.appcompat.widget.Toolbar>
+    </schalter.de.customize.CustomizeToolbar>
 
     <ScrollView
         android:layout_width="match_parent"

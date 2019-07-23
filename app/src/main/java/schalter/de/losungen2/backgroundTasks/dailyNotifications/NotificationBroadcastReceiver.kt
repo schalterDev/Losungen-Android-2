@@ -51,7 +51,7 @@ class NotificationBroadcastReceiver : BroadcastReceiver() {
         getNotificationData().firstElement().subscribe { notificationData ->
             val mBuilder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setSmallIcon(R.drawable.ic_launcher_foreground)
+                    .setSmallIcon(R.drawable.ic_notification)
                     .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.mipmap.ic_launcher))
                     .setContentTitle(notificationData.title)
                     .setStyle(NotificationCompat.BigTextStyle()

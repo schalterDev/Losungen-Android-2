@@ -1,7 +1,6 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme">
+    <style name="AppThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- MaterialDrawer specific values -->
         <item name="material_drawer_background">?colorBackground</item>
         <item name="material_drawer_primary_text">?colorSecondFont</item>
@@ -10,10 +9,21 @@
         <item name="material_drawer_hint_text">?colorFontDisabled</item>
         <item name="material_drawer_divider">?colorFont</item>
         <item name="material_drawer_selected">?colorWindowBackground</item>
-        <item name="material_drawer_selected_text">?colorPrimary</item>
+        <item name="material_drawer_selected_text">?colorAccent</item>
         <item name="material_drawer_header_selection_text">?colorPrimary</item>
     </style>
 
-    <style name="AppThemeDark" parent="AppTheme" />
+    <style name="AppThemeDark" parent="Theme.AppCompat.NoActionBar">
+        <!-- MaterialDrawer specific values -->
+        <item name="material_drawer_background">?colorBackground</item>
+        <item name="material_drawer_primary_text">?colorSecondFont</item>
+        <item name="material_drawer_primary_icon">?colorSecondFont</item>
+        <item name="material_drawer_secondary_text">?colorFontDisabled</item>
+        <item name="material_drawer_hint_text">?colorFontDisabled</item>
+        <item name="material_drawer_divider">?colorFont</item>
+        <item name="material_drawer_selected">?colorWindowBackground</item>
+        <item name="material_drawer_selected_text">?colorSecondFont</item>
+        <item name="material_drawer_header_selection_text">?colorPrimary</item>
+    </style>
 
 </resources>

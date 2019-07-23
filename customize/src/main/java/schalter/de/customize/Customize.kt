@@ -2,21 +2,34 @@ package schalter.de.customize
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Resources
 import android.os.Build
 import android.preference.PreferenceManager
 import android.util.TypedValue
 import android.view.WindowManager
 
+
 object Customize {
-    private const val PREFERENCE_TAG = "selected_theme"
+    const val PREFERENCE_TAG = "selected_theme"
 
-    private const val BLUE = 0
-    private const val YELLOW = 1
-    private const val GREEN = 2
-    private const val RED = 3
+    private const val THEME_BLUE = 0
+    private const val THEME_YELLOW = 1
+    private const val THEME_GREEN = 2
+    private const val THEME_RED = 3
+    private const val THEME_DARK = 4
+    private const val THEME_LIGHT = 5
 
-    private const val DARK = 4
-    private const val LIGHT = 5
+    private val THEMES_RESOURCES = arrayListOf(
+            R.style.Theme_Blue,
+            R.style.Theme_Yellow,
+            R.style.Theme_Green,
+            R.style.Theme_Red,
+            R.style.Theme_Gray,
+            R.style.Theme_Dark,
+            R.style.Theme_Light
+    )
+
+    private var actualStyle: Int? = null
 
     val PRIMARY = R.attr.colorPrimary
     val PRIMARY_DARK = R.attr.colorPrimaryDark
@@ -29,27 +42,46 @@ object Customize {
     val BACKGROUND = R.attr.colorBackground
     val WINDOW_BACKGROUND = R.attr.colorWindowBackground
 
-    fun getColor(context: Context, attrColor: Int): Int {
+    fun getColor(context: Context, attrColor: Int, theme: Resources.Theme? = null): Int {
         val typedValue = TypedValue()
-        val theme = context.theme
-        theme.resolveAttribute(attrColor, typedValue, true)
+        val themeToUse = if (theme == null) {
+            context.theme
+        } else {
+            theme
+        }
+        themeToUse.resolveAttribute(attrColor, typedValue, true)
 
         return typedValue.data
     }
 
+    fun getThemeData(context: Context, themeRes: Int): CustomizeTheme {
+        val theme = context.resources.newTheme()
+        theme.applyStyle(themeRes, true)
+
+        return CustomizeTheme(
+                primary = getColor(context, PRIMARY, theme),
+                accent = getColor(context, ACCENT, theme),
+                toolbarIcon = getColor(context, ICONS_TOOLBAR, theme),
+                windowBackground = getColor(context, WINDOW_BACKGROUND, theme)
+        )
+    }
+
+    fun getAllThemes(context: Context): List<CustomizeTheme> {
+        return THEMES_RESOURCES.map { themeRes ->
+            getThemeData(context, themeRes)
+        }
+    }
+
     fun getTheme(context: Context): Int {
         PreferenceManager.getDefaultSharedPreferences(context).apply {
-            return when (this.getInt(PREFERENCE_TAG, 1)) {
-                BLUE -> R.style.AppTheme_Blue
-                YELLOW -> R.style.AppTheme_Yellow
-                GREEN -> R.style.AppTheme_Green
-                RED -> R.style.AppTheme_Red
-                DARK -> R.style.AppTheme_Dark
-                LIGHT -> R.style.AppTheme_Light
-                else -> R.style.AppTheme_Blue
+            return THEMES_RESOURCES[this.getInt(PREFERENCE_TAG, 0)].also {
+                actualStyle = it
             }
         }
+    }
 
+    fun themeChanged(oldStyle: Int): Boolean {
+        return oldStyle != actualStyle
     }
 
     fun setStatusBarColor(activity: Activity, color: Int) {

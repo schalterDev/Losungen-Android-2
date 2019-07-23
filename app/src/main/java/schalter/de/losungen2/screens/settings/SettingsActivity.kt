@@ -1,15 +1,19 @@
 package schalter.de.losungen2.screens.settings
 
+import android.app.Activity
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.preference.*
+import schalter.de.customize.ChooseStylePreference
+import schalter.de.customize.ChooseStylePreferenceDialog
 import schalter.de.customize.Customize
+import schalter.de.customize.CustomizeActivity
 import schalter.de.losungen2.R
 import schalter.de.losungen2.backgroundTasks.dailyNotifications.ScheduleNotification
 import schalter.de.losungen2.components.dialogs.deleteSermons.DeleteSermonsDialog
@@ -18,11 +22,11 @@ import schalter.de.losungen2.components.preferences.timePicker.TimePreference
 import schalter.de.losungen2.utils.PreferenceTags
 
 
-class SettingsActivity : AppCompatActivity() {
+class SettingsActivity : CustomizeActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         setTheme(Customize.getTheme(this))
         setContentView(R.layout.activity_main)
 
@@ -52,6 +56,13 @@ class SettingsActivity : AppCompatActivity() {
 
         return super.onOptionsItemSelected(item)
     }
+
+    private fun restartApp(activity: Activity) {
+        val i = activity.packageManager
+                .getLaunchIntentForPackage(activity.packageName)
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(i)
+    }
 }
 
 class SettingsFragment : PreferenceFragmentCompat() {
@@ -72,6 +83,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         deleteSermons()
         deleteSermonsAutomatically()
 
+        // TODO restart on back when style changed
+
         val colorAttr = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             android.R.attr.colorAccent
         } else {
@@ -87,12 +100,21 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     override fun onDisplayPreferenceDialog(preference: Preference) {
-        if (preference is TimePreference) {
-            val dialogFragment = TimeDialog.newInstance(preference.key)
-            dialogFragment.setTargetFragment(this, 0)
-            dialogFragment.show(fragmentManager!!, null)
-        } else
-            super.onDisplayPreferenceDialog(preference)
+        when (preference) {
+            is TimePreference -> {
+                TimeDialog.newInstance(preference.key).let { dialogFragment ->
+                    dialogFragment.setTargetFragment(this, 0)
+                    dialogFragment.show(fragmentManager!!, null)
+                }
+            }
+            is ChooseStylePreference -> {
+                ChooseStylePreferenceDialog.newInstance().let { dialogFragment ->
+                    dialogFragment.setTargetFragment(this, 0)
+                    dialogFragment.show(fragmentManager!!, null)
+                }
+            }
+            else -> super.onDisplayPreferenceDialog(preference)
+        }
     }
 
     private fun tintIcons(preference: Preference, color: Int) {

@@ -93,5 +93,7 @@
     <string name="add_notes">Notizen hinzufügen</string>
     <string name="notes">Notizen</string>
     <string name="search_verses">Verse durchsuchen</string>
+    <string name="customization">Design Anpassungen</string>
+    <string name="choose_style">Wähle das Design</string>
 
 </resources>

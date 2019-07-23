@@ -33,6 +33,18 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        app:title="@string/customization"
+        app:iconSpaceReserved="false">
+
+        <schalter.de.customize.ChooseStylePreference
+            app:iconSpaceReserved="false"
+            app:key="selected_theme"
+            app:title="@string/choose_style"
+            titleToolbar="@string/app_name" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         app:title="@string/external_program"
         app:iconSpaceReserved="false">
 

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "951750147878",
+    "firebase_url": "https://losungen-test.firebaseio.com",
+    "project_id": "losungen-test",
+    "storage_bucket": "losungen-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:951750147878:android:41f800e156b33ef0",
+        "android_client_info": {
+          "package_name": "de.schalter.losungen2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "951750147878-n10a5uu7957jbthdbui67dkp7bnrrps4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBn6O2lKRsrD3BYnZ3TQK_phiRX_IGyQ5M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "951750147878-n10a5uu7957jbthdbui67dkp7bnrrps4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

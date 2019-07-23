@@ -23,7 +23,7 @@
             app:summary="%s"
             app:title="@string/notification_content" />
 
-        <de.schalter.losungen2.components.preferences.timePicker.TimePreference
+        <de.schalter.losungen.components.preferences.timePicker.TimePreference
             app:iconSpaceReserved="false"
             app:key="notification_time"
             app:defaultValue="420"

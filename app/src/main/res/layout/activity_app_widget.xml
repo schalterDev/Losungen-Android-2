@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".widgets.AppWidgetActivity">
 
-    <schalter.de.customize.CustomizeToolbar
+    <de.schalter.customize.CustomizeToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
@@ -25,7 +25,7 @@
             android:drawablePadding="8dp"
             android:text="@string/save" />
 
-    </schalter.de.customize.CustomizeToolbar>
+    </de.schalter.customize.CustomizeToolbar>
 
     <ScrollView
         android:layout_width="match_parent"

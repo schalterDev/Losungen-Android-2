@@ -6,7 +6,7 @@ apply plugin: "kotlin-kapt"
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "schalter.de.losungen2"
+        applicationId "de.schalter.losungen2"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1

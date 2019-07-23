@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <schalter.de.losungen2.components.verseCard.VerseCardView
+    <de.schalter.losungen2.components.verseCard.VerseCardView
         android:id="@+id/verseCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

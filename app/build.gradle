@@ -11,13 +11,18 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
+        debug {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
@@ -95,7 +100,6 @@ dependencies {
     implementation "com.prof.rssparser:rssparser:2.0.3"
 
     // ads, analytics
-    implementation "androidx.multidex:multidex:2.0.1"
     implementation 'com.google.firebase:firebase-core:17.0.1'
     implementation "com.google.firebase:firebase-ads:18.1.0"
 

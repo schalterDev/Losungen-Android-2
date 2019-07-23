@@ -6,12 +6,12 @@
     tools:context=".screens.daily.DailyVerseFragment"
     android:orientation="vertical">
 
-    <schalter.de.losungen2.components.verseCard.VerseCardView
+    <de.schalter.losungen2.components.verseCard.VerseCardView
         android:id="@+id/oldTestamentCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <schalter.de.losungen2.components.verseCard.VerseCardView
+    <de.schalter.losungen2.components.verseCard.VerseCardView
         android:id="@+id/newTestamentCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="schalter.de.losungen2">
+    package="de.schalter.losungen2">
 
     <!-- to download daily words and sermon -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -16,10 +16,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-2270371481189370~4191783045" />
+
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
+
+        <meta-data
+            android:name="google_analytics_adid_collection_enabled"
+            android:value="false" />
+
         <activity
-            android:name=".widgets.AppWidgetActivity"
+            android:name="de.schalter.losungen2.widgets.AppWidgetActivity"
             android:label="@string/title_activity_app_widget" />
-        <activity android:name=".MainActivity">
+        <activity android:name="de.schalter.losungen2.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,7 +40,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".screens.settings.SettingsActivity"
+            android:name="de.schalter.losungen2.screens.settings.SettingsActivity"
             android:label="@string/title_activity_settings" />
 
         <provider
@@ -41,13 +54,13 @@
         </provider>
 
         <service
-            android:name=".sermon.mediaPlayer.MediaPlayerService"
+            android:name="de.schalter.losungen2.sermon.mediaPlayer.MediaPlayerService"
             android:enabled="true" />
         <service
-            android:name=".sermon.sermonProvider.SermonProviderService"
+            android:name="de.schalter.losungen2.sermon.sermonProvider.SermonProviderService"
             android:enabled="true" />
 
-        <receiver android:name=".widgets.WidgetBroadcast">
+        <receiver android:name="de.schalter.losungen2.widgets.WidgetBroadcast">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -58,14 +71,14 @@
         </receiver>
 
         <!-- Daily notifications -->
-        <receiver android:name=".backgroundTasks.dailyNotifications.NotificationBroadcastReceiver">
+        <receiver android:name="de.schalter.losungen2.backgroundTasks.dailyNotifications.NotificationBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
         <!-- Will not be called unless the application explicitly enables it -->
         <receiver
-            android:name=".backgroundTasks.dailyNotifications.DeviceBootReceiver"
+            android:name="de.schalter.losungen2.backgroundTasks.dailyNotifications.DeviceBootReceiver"
             android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

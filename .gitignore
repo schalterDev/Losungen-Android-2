@@ -34,3 +34,5 @@ captures/
 \.idea/
 
 *.iml
+
+app/google-services\.json\.new

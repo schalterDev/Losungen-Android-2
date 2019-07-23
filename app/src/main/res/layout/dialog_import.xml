@@ -46,7 +46,7 @@
             android:layout_gravity="center"
             android:layout_margin="50dp" />
 
-        <schalter.de.losungen2.components.emptyState.EmptyStateView
+        <de.schalter.losungen2.components.emptyState.EmptyStateView
             android:id="@+id/emptyStateImportDialog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

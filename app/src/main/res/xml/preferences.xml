@@ -23,7 +23,7 @@
             app:summary="%s"
             app:title="@string/notification_content" />
 
-        <schalter.de.losungen2.components.preferences.timePicker.TimePreference
+        <de.schalter.losungen2.components.preferences.timePicker.TimePreference
             app:iconSpaceReserved="false"
             app:key="notification_time"
             app:defaultValue="420"
@@ -33,10 +33,29 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        app:title="@string/ads_and_statistics"
+        app:iconSpaceReserved="false">
+
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:defaultValue="false"
+            app:key="showAds"
+            app:summary="@string/show_ads_description"
+            app:title="@string/show_ads" />
+
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:defaultValue="false"
+            app:key="sendStatistics"
+            app:title="@string/send_statistics" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         app:title="@string/customization"
         app:iconSpaceReserved="false">
 
-        <schalter.de.customize.ChooseStylePreference
+        <de.schalter.customize.ChooseStylePreference
             app:iconSpaceReserved="false"
             app:key="selected_theme"
             app:title="@string/choose_style"

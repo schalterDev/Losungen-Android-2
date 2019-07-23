@@ -95,5 +95,9 @@
     <string name="search_verses">Verse durchsuchen</string>
     <string name="customization">Design Anpassungen</string>
     <string name="choose_style">Wähle das Design</string>
+    <string name="ads_and_statistics">Werbung und Statistik</string>
+    <string name="send_statistics">Anonyme Statistiken senden</string>
+    <string name="show_ads">Werbung anzeigen</string>
+    <string name="show_ads_description">Wenn du diese APP unterstützden möchtest kannst du ein kleines Banner aktivieren</string>
 
 </resources>

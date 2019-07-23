@@ -6,7 +6,7 @@ apply plugin: "kotlin-kapt"
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "schalter.de.losungen2"
+        applicationId "de.schalter.losungen2"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
@@ -15,8 +15,14 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
+        debug {
+            minifyEnabled true
+            useProguard false
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
@@ -93,6 +99,10 @@ dependencies {
     // rss reader
     implementation "com.prof.rssparser:rssparser:2.0.3"
 
+    // ads, analytics
+    implementation 'com.google.firebase:firebase-core:17.0.1'
+    implementation "com.google.firebase:firebase-ads:18.1.0"
+
     // ----------- TESTING ----------
     testImplementation "junit:junit:4.12"
     testImplementation "androidx.test:core:1.1.0"
@@ -117,3 +127,5 @@ dependencies {
 repositories {
     mavenCentral()
 }
+
+apply plugin: 'com.google.gms.google-services'

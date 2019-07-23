@@ -20,4 +20,9 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class de.schalter.** { *; }
+#-keep class de.schalter.** { *; }
+#-keep class ** { *; }
+-keepattributes SourceFile,LineNumberTable
+-keepattributes LocalVariableTable,LocalVariableTypeTable
+-dontoptimize
+-dontobfuscate

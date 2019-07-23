@@ -17,6 +17,7 @@
         android:text="@string/migrating_info_features" />
 
     <LinearLayout
+        android:id="@+id/progressBarContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

@@ -99,5 +99,10 @@
     <string name="send_statistics">Anonyme Statistiken senden</string>
     <string name="show_ads">Werbung anzeigen</string>
     <string name="show_ads_description">Wenn du diese APP unterstützden möchtest kannst du ein kleines Banner aktivieren</string>
+    <string name="migrating_database">Migriere Datenbank</string>
+    <string name="migrating_info">Diese Aktualisierung benötigt eine Migration aller Daten. Dies kann ein paar Minuten dauert. Schließe die APP währenddessen nicht!</string>
+    <string name="migrating_info_features">Aus technischen Gründen müssen alle Widgets auf dem Startbildschirm neu erstellt werden. Es wurden sehr viele Bugs wie zum Beispiel die Benachrichtigungen behoben.</string>
+    <string name="migrating_preferences">Migriere Einstellungen</string>
+    <string name="finish">Fertigstellen</string>
 
 </resources>

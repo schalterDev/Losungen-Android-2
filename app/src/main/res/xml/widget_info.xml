@@ -4,6 +4,6 @@
     android:minHeight="40dp"
     android:updatePeriodMillis="1800000"
     android:initialLayout="@layout/app_widget"
-    android:configure="de.schalter.losungen2.widgets.AppWidgetActivity"
+    android:configure="de.schalter.losungen.widgets.AppWidgetActivity"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen" />

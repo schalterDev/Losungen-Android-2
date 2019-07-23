@@ -24,9 +24,9 @@ object Customize {
             R.style.Theme_Yellow,
             R.style.Theme_Green,
             R.style.Theme_Red,
-            R.style.Theme_Gray,
             R.style.Theme_Dark,
-            R.style.Theme_Light
+            R.style.Theme_Light,
+            R.style.Theme_Gray
     )
 
     private var actualStyle: Int? = null

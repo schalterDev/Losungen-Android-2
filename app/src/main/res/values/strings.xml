@@ -99,4 +99,8 @@
     <string name="show_ads">Show ad banner</string>
     <string name="show_ads_description">When you want to support this APP you can activate a small banner at the bottom of the Screen</string>
     <string name="send_statistics">Send anonymous statistics</string>
+    <string name="migrating_database">Migrating database</string>
+    <string name="migrating_preferences">Migrating preferences</string>
+    <string name="migrating_info">This update requires a migration of all data. This can take a few minutes. Please do not close the App.</string>
+    <string name="migrating_info_features">After this update you will notice a few changes. If you miss something you can write an E-Mail to the developer in the info section.</string>
 </resources>

@@ -17,7 +17,7 @@ import de.schalter.losungen2.backgroundTasks.dailyNotifications.ScheduleNotifica
 import de.schalter.losungen2.components.dialogs.deleteSermons.DeleteSermonsDialog
 import de.schalter.losungen2.components.preferences.timePicker.TimeDialog
 import de.schalter.losungen2.components.preferences.timePicker.TimePreference
-import de.schalter.losungen2.utils.FirebaseUtil
+import de.schalter.losungen2.firebase.FirebaseUtil
 import de.schalter.losungen2.utils.PreferenceTags
 
 

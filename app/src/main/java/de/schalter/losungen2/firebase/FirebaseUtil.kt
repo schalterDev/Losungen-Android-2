@@ -1,10 +1,11 @@
-package de.schalter.losungen2.utils
+package de.schalter.losungen2.firebase
 
 import android.content.Context
 import android.os.Bundle
 import android.preference.PreferenceManager
 import androidx.fragment.app.Fragment
 import com.google.firebase.analytics.FirebaseAnalytics
+import de.schalter.losungen2.utils.PreferenceTags
 
 object FirebaseUtil {
 

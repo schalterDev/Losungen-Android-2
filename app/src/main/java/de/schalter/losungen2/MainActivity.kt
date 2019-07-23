@@ -12,7 +12,9 @@ import de.schalter.customize.CustomizeToolbar
 import de.schalter.losungen2.components.navigationDrawer.NavigationDrawer
 import de.schalter.losungen2.dataAccess.VersesDatabase
 import de.schalter.losungen2.dataAccess.sermon.Sermon
-import de.schalter.losungen2.utils.FirebaseUtil
+import de.schalter.losungen2.firebase.FirebaseUtil
+import de.schalter.losungen2.migration.MigrateProgressDialog
+import de.schalter.losungen2.migration.Migration
 import de.schalter.losungen2.utils.PreferenceTags
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -33,8 +35,9 @@ class MainActivity : CustomizeActivity() {
         setupNavigationDrawer(savedInstanceState == null)
 
         checkForOldSermonsToDelete()
-
         setupFirebase()
+
+        migrateOldData()
     }
 
     private fun setupToolbar() {
@@ -97,6 +100,19 @@ class MainActivity : CustomizeActivity() {
                     }
                 }
             })
+        }
+    }
+
+    private fun migrateOldData() {
+        val migrate = Migration(this)
+
+        if (migrate.needMigrationFromLegacyApp()) {
+            MigrateProgressDialog().show(
+                    this.supportFragmentManager,
+                    null
+            )
+        } else {
+            migrate.migrateIfNecessary()
         }
     }
 }

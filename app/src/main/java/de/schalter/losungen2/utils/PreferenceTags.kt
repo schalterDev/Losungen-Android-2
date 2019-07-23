@@ -2,6 +2,9 @@ package de.schalter.losungen2.utils
 
 object PreferenceTags {
 
+    // version
+    const val APP_VERSIONSCODE = "versioncode" // version code of the last app start
+
     // notifications
     const val NOTIFICATION_SHOW = "show_notification"
     const val NOTIFICATION_CONTENT = "notification_content"

@@ -9,18 +9,18 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.View
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.flask.colorpicker.ColorPickerView
 import com.flask.colorpicker.OnColorSelectedListener
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder
-import kotlinx.android.synthetic.main.toolbar.*
 import de.schalter.customize.Customize
+import de.schalter.customize.CustomizeActivity
 import de.schalter.losungen2.MainActivity
 import de.schalter.losungen2.R
 import de.schalter.losungen2.utils.PreferenceTags
+import kotlinx.android.synthetic.main.toolbar.*
 import java.util.*
 
 /**
@@ -35,7 +35,7 @@ import java.util.*
  * The configuration is saved in sharedPreferences
  * TAG{widgetId} = data
  */
-class AppWidgetActivity : AppCompatActivity() {
+class AppWidgetActivity : CustomizeActivity() {
 
     private lateinit var mViewModel: AppWidgetModel
     private lateinit var spinner: Spinner

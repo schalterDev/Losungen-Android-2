@@ -15,12 +15,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".widgets.AppWidgetActivity"
-            android:label="@string/title_activity_app_widget"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_app_widget" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

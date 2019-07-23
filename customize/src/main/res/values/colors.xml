@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="lightToolbarIconText">#000000</color>
+    <color name="lightBackground">#FFFFFF</color>
+    <color name="lightWindowBackground">#E2E2E2</color>
+
+    <color name="darkToolbarIconText">#FFFFFF</color>
+    <color name="darkBackground">#202020</color>
+    <color name="darkWindowBackground">#0E0E0E</color>
+</resources>

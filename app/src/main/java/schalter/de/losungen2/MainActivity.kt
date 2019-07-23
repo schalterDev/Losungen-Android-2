@@ -2,11 +2,11 @@ package schalter.de.losungen2
 
 import android.os.Bundle
 import android.preference.PreferenceManager
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import schalter.de.customize.CustomizeActivity
+import schalter.de.customize.CustomizeToolbar
 import schalter.de.losungen2.components.navigationDrawer.NavigationDrawer
 import schalter.de.losungen2.dataAccess.VersesDatabase
 import schalter.de.losungen2.dataAccess.sermon.Sermon
@@ -14,9 +14,9 @@ import schalter.de.losungen2.utils.PreferenceTags
 import java.io.File
 import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : CustomizeActivity() {
 
-    private lateinit var toolbar: Toolbar
+    private lateinit var toolbar: CustomizeToolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

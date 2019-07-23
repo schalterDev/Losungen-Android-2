@@ -1,6 +1,7 @@
 package schalter.de.losungen2.screens.info
 
 import android.content.Context
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import de.psdev.licensesdialog.LicensesDialog
+import schalter.de.customize.Customize
 import schalter.de.losungen2.R
 import schalter.de.losungen2.utils.AppSystemData
 import schalter.de.losungen2.utils.Constants
@@ -30,13 +32,30 @@ class InfoFragment : Fragment() {
 
         mContext = view.context
 
-        val textAppVersion = mContext.getString(R.string.app_version, AppSystemData.getAppVersion(view.context))
-        view.findViewById<TextView>(R.id.textView_app_version).text = textAppVersion
+        val textViews: MutableList<TextView> = mutableListOf()
 
-        view.findViewById<TextView>(R.id.textView_licenses).setOnClickListener { openLicenseDialog() }
-        view.findViewById<TextView>(R.id.textView_translate).setOnClickListener { openWebsiteForTranslation() }
-        view.findViewById<TextView>(R.id.textView_martin_schalter).setOnClickListener { openWebsiteOfDeveloper() }
-        view.findViewById<TextView>(R.id.textView_github).setOnClickListener { openGithubPage() }
+        val textAppVersion = mContext.getString(R.string.app_version, AppSystemData.getAppVersion(view.context))
+        textViews.add(view.findViewById<TextView>(R.id.textView_app_version).apply {
+            this.text = textAppVersion
+        })
+
+        textViews.add(view.findViewById<TextView>(R.id.textView_licenses).apply {
+            this.setOnClickListener { openLicenseDialog() }
+        })
+
+        textViews.add(view.findViewById<TextView>(R.id.textView_translate).apply {
+            this.setOnClickListener { openWebsiteForTranslation() }
+        })
+        textViews.add(view.findViewById<TextView>(R.id.textView_martin_schalter).apply {
+            this.setOnClickListener { openWebsiteOfDeveloper() }
+        })
+        textViews.add(view.findViewById<TextView>(R.id.textView_github).apply {
+            this.setOnClickListener { openGithubPage() }
+        })
+
+        textViews.forEach {
+            setTintedCompoundDrawable(it)
+        }
 
         return view
     }
@@ -53,6 +72,12 @@ class InfoFragment : Fragment() {
     private fun openWebsiteOfDeveloper() = Open.website(mContext, Constants.urlProgrammer)
 
     private fun openGithubPage() = Open.website(mContext, Constants.urlGitHub)
+
+    private fun setTintedCompoundDrawable(textView: TextView) {
+        textView.compoundDrawablesRelative.forEach { drawable ->
+            drawable?.setColorFilter(Customize.getColor(textView.context, Customize.FONT), PorterDuff.Mode.SRC_IN)
+        }
+    }
 
     companion object {
 

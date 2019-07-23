@@ -4,7 +4,7 @@
     android:id="@+id/audio_notification_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary">
+    android:background="?colorPrimary">
 
     <ImageView
         android:id="@+id/image_view_logo"
@@ -13,7 +13,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:adjustViewBounds="true"
-        android:background="@color/colorPrimaryDark"
+        android:background="?colorPrimaryDark"
         android:contentDescription="@string/app_name"
         android:padding="9dp"
         app:srcCompat="@drawable/ic_launcher_foreground" />

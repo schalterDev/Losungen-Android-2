@@ -92,4 +92,6 @@
     <string name="notes">Notes</string>
     <string name="add_notes">Add notes</string>
     <string name="search_verses">Search verses</string>
+    <string name="customization">Customization</string>
+    <string name="choose_style">Choose style</string>
 </resources>

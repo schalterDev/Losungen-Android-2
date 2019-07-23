@@ -5,10 +5,11 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.fragment_tabs.*
 import de.schalter.losungen2.R
 import de.schalter.losungen2.components.dialogs.dateChooser.DateChooserDialog
 import de.schalter.losungen2.components.tabs.DatePagerAdapter
+import de.schalter.losungen2.firebase.AnalyticsFragment
+import kotlinx.android.synthetic.main.fragment_tabs.*
 import java.util.*
 
 /**
@@ -16,7 +17,7 @@ import java.util.*
  * Use the [DailyVersesOverviewFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class DailyVersesOverviewFragment : Fragment() {
+class DailyVersesOverviewFragment : AnalyticsFragment() {
 
     private var actualDate: Date = Calendar.getInstance().time
     private lateinit var pagerAdapter: DailyVersePagerAdapter

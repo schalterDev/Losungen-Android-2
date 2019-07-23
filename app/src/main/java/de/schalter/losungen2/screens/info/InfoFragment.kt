@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import de.psdev.licensesdialog.LicensesDialog
 import de.schalter.customize.Customize
 import de.schalter.losungen2.R
+import de.schalter.losungen2.firebase.AnalyticsFragment
 import de.schalter.losungen2.utils.AppSystemData
 import de.schalter.losungen2.utils.Constants
 import de.schalter.losungen2.utils.Open
@@ -21,7 +22,7 @@ import de.schalter.losungen2.utils.Open
  * Use the [InfoFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class InfoFragment : Fragment() {
+class InfoFragment : AnalyticsFragment() {
 
     private lateinit var mContext: Context
 

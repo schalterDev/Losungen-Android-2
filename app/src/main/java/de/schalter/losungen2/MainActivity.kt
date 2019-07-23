@@ -7,12 +7,12 @@ import androidx.fragment.app.Fragment
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
-import com.google.firebase.analytics.FirebaseAnalytics
 import de.schalter.customize.CustomizeActivity
 import de.schalter.customize.CustomizeToolbar
 import de.schalter.losungen2.components.navigationDrawer.NavigationDrawer
 import de.schalter.losungen2.dataAccess.VersesDatabase
 import de.schalter.losungen2.dataAccess.sermon.Sermon
+import de.schalter.losungen2.utils.FirebaseUtil
 import de.schalter.losungen2.utils.PreferenceTags
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -23,7 +23,6 @@ import java.util.*
 class MainActivity : CustomizeActivity() {
 
     private lateinit var toolbar: CustomizeToolbar
-    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +34,7 @@ class MainActivity : CustomizeActivity() {
 
         checkForOldSermonsToDelete()
 
-        setupAnalytics()
-        setupAds()
+        setupFirebase()
     }
 
     private fun setupToolbar() {
@@ -62,7 +60,9 @@ class MainActivity : CustomizeActivity() {
                 .commit()
     }
 
-    private fun setupAds() {
+    private fun setupFirebase() {
+        FirebaseUtil.init(this)
+
         val adView = findViewById<AdView>(R.id.adView)
 
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
@@ -78,11 +78,6 @@ class MainActivity : CustomizeActivity() {
         } else {
             adView.visibility = View.GONE
         }
-    }
-
-    private fun setupAnalytics() {
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        firebaseAnalytics.setCurrentScreen(this, null, null)
     }
 
     private fun checkForOldSermonsToDelete() {

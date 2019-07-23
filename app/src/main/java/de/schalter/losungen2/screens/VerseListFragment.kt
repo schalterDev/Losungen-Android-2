@@ -7,15 +7,15 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import de.schalter.losungen2.R
 import de.schalter.losungen2.components.dialogs.importDialog.ImportVersesDialog
 import de.schalter.losungen2.components.emptyState.EmptyStateView
 import de.schalter.losungen2.components.verseCard.VerseCardData
 import de.schalter.losungen2.components.verseCard.VerseCardGridAdapter
+import de.schalter.losungen2.firebase.AnalyticsFragment
 
-abstract class VerseListFragment(val layout: Int = R.layout.fragment_verse_list) : Fragment() {
+abstract class VerseListFragment(val layout: Int = R.layout.fragment_verse_list) : AnalyticsFragment() {
 
     protected lateinit var emptyStateView: EmptyStateView
     private lateinit var recyclerView: RecyclerView

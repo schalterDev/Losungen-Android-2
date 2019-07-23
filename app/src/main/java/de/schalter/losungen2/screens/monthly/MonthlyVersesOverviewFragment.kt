@@ -7,15 +7,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.fragment_tabs.*
 import de.schalter.losungen2.R
 import de.schalter.losungen2.components.tabs.DatePagerAdapter
+import de.schalter.losungen2.firebase.AnalyticsFragment
+import kotlinx.android.synthetic.main.fragment_tabs.*
 import java.util.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class MonthlyVersesOverviewFragment : Fragment() {
+class MonthlyVersesOverviewFragment : AnalyticsFragment() {
 
     private lateinit var pagerAdapter: MonthlyVersePagerAdapter
 

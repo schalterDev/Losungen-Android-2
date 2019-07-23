@@ -1,7 +1,5 @@
 package de.schalter.losungen2.screens.settings
 
-import android.app.Activity
-import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.PorterDuff
 import android.os.Build
@@ -19,6 +17,7 @@ import de.schalter.losungen2.backgroundTasks.dailyNotifications.ScheduleNotifica
 import de.schalter.losungen2.components.dialogs.deleteSermons.DeleteSermonsDialog
 import de.schalter.losungen2.components.preferences.timePicker.TimeDialog
 import de.schalter.losungen2.components.preferences.timePicker.TimePreference
+import de.schalter.losungen2.utils.FirebaseUtil
 import de.schalter.losungen2.utils.PreferenceTags
 
 
@@ -56,34 +55,48 @@ class SettingsActivity : CustomizeActivity() {
 
         return super.onOptionsItemSelected(item)
     }
-
-    private fun restartApp(activity: Activity) {
-        val i = activity.packageManager
-                .getLaunchIntentForPackage(activity.packageName)
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(i)
-    }
 }
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
     private lateinit var preferences: SharedPreferences
+    private var sharedPreferenceListener: SharedPreferences.OnSharedPreferenceChangeListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        preferences = PreferenceManager.getDefaultSharedPreferences(context!!)
+        preferences = PreferenceManager.getDefaultSharedPreferences(context)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        context?.let { context ->
+            sharedPreferenceListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+                val newValue = preferences.all[key]
+                FirebaseUtil.trackSettingsChanged(context, key, newValue.toString())
+            }
+            preferences.registerOnSharedPreferenceChangeListener(sharedPreferenceListener)
+        }
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        sharedPreferenceListener?.let {
+            preferences.unregisterOnSharedPreferenceChangeListener(it)
+        }
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
 
+        allowStatistics()
         openExternalDefault()
         showNotification()
         deleteSermons()
         deleteSermonsAutomatically()
-
-        // TODO restart on back when style changed
 
         val colorAttr = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             android.R.attr.colorAccent
@@ -129,6 +142,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     // ---------- NOTIFICATION CHANGE LISTENER ---------
+    private fun allowStatistics() {
+        findPreference<SwitchPreferenceCompat>(PreferenceTags.SEND_STATISTICS)?.apply {
+            this.setOnPreferenceChangeListener { _, newValue ->
+                if (newValue is Boolean) {
+                    FirebaseUtil.allowSending(context, newValue)
+                }
+                true
+            }
+        }
+    }
+
     private fun openExternalDefault() {
         findPreference<Preference>(PreferenceTags.OPEN_EXTERNAL_DEFAULT)?.apply {
             this.onPreferenceClickListener = Preference.OnPreferenceClickListener {

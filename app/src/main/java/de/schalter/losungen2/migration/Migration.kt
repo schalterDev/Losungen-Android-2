@@ -21,19 +21,15 @@ class Migration(private val activity: Activity) {
     var progressChangeListener: OnProgressChanged? = null
 
     private val preference: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-    private val actualVersionCode: Int
+    private val actualVersionCode: Int = activity.packageManager.getPackageInfo(activity.packageName, 0).versionCode
     private val versionCodeLastStart: Int
 
     init {
-        versionCodeLastStart = preference.getInt(PreferenceTags.APP_VERSIONSCODE, 0)
-        actualVersionCode = activity.packageManager.getPackageInfo(activity.packageName, 0).versionCode
-
+        versionCodeLastStart = preference.getInt(PreferenceTags.APP_VERSIONSCODE, actualVersionCode)
         preference.edit().putInt(PreferenceTags.APP_VERSIONSCODE, actualVersionCode).apply()
     }
 
-    fun migrateIfNecessary() {
-
-    }
+    fun migrateIfNecessary() {}
 
     fun migrateFromLegacyIfNecessary() {
         if (needMigrationFromLegacyApp()) {

@@ -28,7 +28,7 @@ class SettingsActivity : CustomizeActivity() {
         super.onCreate(savedInstanceState)
 
         setTheme(Customize.getTheme(this))
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_settings)
 
         setupToolbar()
 

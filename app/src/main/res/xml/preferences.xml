@@ -33,6 +33,25 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        app:title="@string/ads_and_statistics"
+        app:iconSpaceReserved="false">
+
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:defaultValue="false"
+            app:key="showAds"
+            app:summary="@string/show_ads_description"
+            app:title="@string/show_ads" />
+
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:defaultValue="false"
+            app:key="sendStatistics"
+            app:title="@string/send_statistics" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         app:title="@string/customization"
         app:iconSpaceReserved="false">
 

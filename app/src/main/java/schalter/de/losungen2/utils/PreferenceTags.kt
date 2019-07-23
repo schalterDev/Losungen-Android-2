@@ -20,6 +20,10 @@ object PreferenceTags {
     const val WIDGET_FONT_SIZE = "widgetFontSize"
     const val WIDGET_IDS = "widgetIds"
 
+    // ad and statistic
+    const val SHOW_ADS = "showAds"
+    const val SEND_STATISTICS = "sendStatistics"
+
     const val NOTIFICATION_TIME_DEFAULT_VALUE = 60 * 7
 
 }

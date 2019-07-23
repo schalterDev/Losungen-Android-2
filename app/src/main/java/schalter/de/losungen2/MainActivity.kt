@@ -2,6 +2,7 @@ package schalter.de.losungen2
 
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
@@ -59,13 +60,20 @@ class MainActivity : CustomizeActivity() {
     }
 
     private fun setupAds() {
-        MobileAds.initialize(this)
+        val adView = findViewById<AdView>(R.id.adView)
 
-        findViewById<AdView>(R.id.adView).apply {
-            val request = AdRequest.Builder()
-                    .addTestDevice("B8112A79125951F1A5CFFC6EB2FFDE24")
-                    .build()
-            this.loadAd(request)
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        if (preferences.getBoolean(PreferenceTags.SHOW_ADS, false)) {
+            MobileAds.initialize(this)
+
+            adView.apply {
+                val request = AdRequest.Builder()
+                        .addTestDevice("B8112A79125951F1A5CFFC6EB2FFDE24")
+                        .build()
+                this.loadAd(request)
+            }
+        } else {
+            adView.visibility = View.GONE
         }
     }
 

@@ -94,4 +94,9 @@
     <string name="search_verses">Search verses</string>
     <string name="customization">Customization</string>
     <string name="choose_style">Choose style</string>
+
+    <string name="ads_and_statistics">Ads and statistics</string>
+    <string name="show_ads">Show ad banner</string>
+    <string name="show_ads_description">When you want to support this APP you can activate a small banner at the bottom of the Screen</string>
+    <string name="send_statistics">Send anonymous statistics</string>
 </resources>

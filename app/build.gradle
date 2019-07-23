@@ -83,10 +83,6 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
     kapt "android.arch.persistence.room:compiler:1.1.1"
 
-    // ads, analytics
-    implementation "androidx.multidex:multidex:2.0.1"
-    implementation "com.google.firebase:firebase-ads:18.1.0"
-
     // material drawer
     implementation "com.mikepenz:materialdrawer:6.1.1"
     implementation "androidx.appcompat:appcompat:1.0.2"
@@ -97,6 +93,11 @@ dependencies {
 
     // rss reader
     implementation "com.prof.rssparser:rssparser:2.0.3"
+
+    // ads, analytics
+    implementation "androidx.multidex:multidex:2.0.1"
+    implementation 'com.google.firebase:firebase-core:17.0.1'
+    implementation "com.google.firebase:firebase-ads:18.1.0"
 
     // ----------- TESTING ----------
     testImplementation "junit:junit:4.12"
@@ -122,3 +123,5 @@ dependencies {
 repositories {
     mavenCentral()
 }
+
+apply plugin: 'com.google.gms.google-services'

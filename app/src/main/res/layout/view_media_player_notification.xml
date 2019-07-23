@@ -16,7 +16,7 @@
         android:background="?colorPrimaryDark"
         android:contentDescription="@string/app_name"
         android:padding="9dp"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        app:srcCompat="@mipmap/ic_launcher_round" />
 
     <TextView
         android:id="@+id/audio_notification_title"

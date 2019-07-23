@@ -3,6 +3,9 @@ package schalter.de.losungen2
 import android.os.Bundle
 import android.preference.PreferenceManager
 import androidx.fragment.app.Fragment
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import schalter.de.customize.CustomizeActivity
@@ -13,6 +16,7 @@ import schalter.de.losungen2.dataAccess.sermon.Sermon
 import schalter.de.losungen2.utils.PreferenceTags
 import java.io.File
 import java.util.*
+
 
 class MainActivity : CustomizeActivity() {
 
@@ -27,6 +31,8 @@ class MainActivity : CustomizeActivity() {
         setupNavigationDrawer(savedInstanceState == null)
 
         checkForOldSermonsToDelete()
+
+        setupAds()
     }
 
     private fun setupToolbar() {
@@ -50,6 +56,17 @@ class MainActivity : CustomizeActivity() {
                 .beginTransaction()
                 .replace(R.id.main_activity_fragment, fragment, tag)
                 .commit()
+    }
+
+    private fun setupAds() {
+        MobileAds.initialize(this)
+
+        findViewById<AdView>(R.id.adView).apply {
+            val request = AdRequest.Builder()
+                    .addTestDevice("B8112A79125951F1A5CFFC6EB2FFDE24")
+                    .build()
+            this.loadAd(request)
+        }
     }
 
     private fun checkForOldSermonsToDelete() {

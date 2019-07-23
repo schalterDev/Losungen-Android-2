@@ -11,6 +11,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -81,6 +82,10 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
     testImplementation "androidx.room:room-testing:$room_version"
     kapt "android.arch.persistence.room:compiler:1.1.1"
+
+    // ads, analytics
+    implementation "androidx.multidex:multidex:2.0.1"
+    implementation "com.google.firebase:firebase-ads:18.1.0"
 
     // material drawer
     implementation "com.mikepenz:materialdrawer:6.1.1"

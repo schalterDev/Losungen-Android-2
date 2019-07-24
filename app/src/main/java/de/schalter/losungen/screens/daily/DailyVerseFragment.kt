@@ -176,7 +176,6 @@ class DailyVerseFragment : VerseListDateFragment(R.layout.fragment_verse_list_no
         this.linearLayout.addView(mediaPlayerUi)
 
         buttonShowNotes = view.findViewById<Button>(R.id.button_add_notes).apply {
-            this.visibility = View.VISIBLE
             this.setOnClickListener {
                 textViewNotes.visibility = View.VISIBLE
                 this.visibility = View.GONE

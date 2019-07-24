@@ -186,7 +186,8 @@ class DailyVerseFragment : VerseListDateFragment(R.layout.fragment_verse_list_no
         textViewNotes = view.findViewById<TextView>(R.id.text_notes).apply {
             this.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable) {
-                    mViewModel.saveNotes(s.toString())
+                    if (!firstData)
+                        mViewModel.saveNotes(s.toString())
                 }
 
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

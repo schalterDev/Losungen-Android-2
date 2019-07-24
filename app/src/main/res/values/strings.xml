@@ -104,4 +104,5 @@
     <string name="migrating_info">This update requires a migration of all data. This can take a few minutes. Please do not close the App.</string>
     <string name="migrating_info_features">For technical reasons you have to recreate all widgets on your start screen. A lot of bugs like notifications are fixed now.</string>
     <string name="finish">finish</string>
+    <string name="download_and_play_sermon">Download and play sermon</string>
 </resources>

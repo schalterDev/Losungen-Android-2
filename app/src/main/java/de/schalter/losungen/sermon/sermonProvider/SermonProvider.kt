@@ -5,13 +5,15 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
-import io.reactivex.Single
+import de.schalter.losungen.dataAccess.Language
 import de.schalter.losungen.dataAccess.VersesDatabase
 import de.schalter.losungen.dataAccess.daily.DailyVerse
 import de.schalter.losungen.dataAccess.sermon.Sermon
 import de.schalter.losungen.sermon.FileDestinations
 import de.schalter.losungen.sermon.erf.ErfWortZumTagSermonImplementation
 import de.schalter.losungen.utils.AsyncUtils
+import de.schalter.losungen.utils.LanguageUtils
+import io.reactivex.Single
 import java.io.File
 import java.io.InputStream
 import java.util.*
@@ -63,6 +65,8 @@ abstract class SermonProvider(val context: Context) {
      * @return the name of the provider
      */
     abstract fun getProviderName(): String
+
+    abstract fun language(): Language
 
     /**
      * Call this method save the sermon to the file system like the users
@@ -157,6 +161,14 @@ abstract class SermonProvider(val context: Context) {
 
         fun getImplementation(context: Context): SermonProvider {
             return ErfWortZumTagSermonImplementation(context)
+        }
+
+        fun implementationForLanguageAvailable(context: Context, language: Language? = LanguageUtils.getDisplayLanguageEnum()): Boolean {
+            if (ErfWortZumTagSermonImplementation(context).language() == language) {
+                return true
+            }
+
+            return false
         }
     }
 }

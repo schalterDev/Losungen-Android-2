@@ -38,7 +38,7 @@ data class VerseCardData(
             return dateFormat.format(date)
         }
 
-        fun formateDateOnlyMonthAndYear(date: Date): String {
+        fun formatDateOnlyMonthAndYear(date: Date): String {
             val dateFormat = SimpleDateFormat(datePatternMonthYear, locale)
             return dateFormat.format(date)
         }

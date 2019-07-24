@@ -23,4 +23,9 @@
         <copyright>Copyright 2018 Mike Penz</copyright>
         <license>Apache Software License 2.0</license>
     </notice>
+    <notice>
+        <name>AppIntro</name>
+        <url>https://github.com/AppIntro/AppIntro</url>
+        <license>Apache Software License 2.0</license>
+    </notice>
 </notices>

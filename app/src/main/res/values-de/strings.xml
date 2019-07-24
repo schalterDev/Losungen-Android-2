@@ -63,7 +63,7 @@
     <string name="marked_as_favourite">Als Favorit markiert</string>
     <string name="could_not_parse_date_of_rss">Fehler beim Interpretieren des Datums im RSS-Eintrag</string>
     <string name="failed_to_parse_erf_site">Konnte keine MP3 Datei auf der ERF Seite finden</string>
-    <string name="no_sermon_found">Keine Andacht gefunden</string>
+    <string name="no_sermon_found">Keine Andacht für diesen Tag gefunden</string>
     <string name="stop_sermon">Andacht stoppen</string>
     <string name="play_sermon">Andacht abspielen</string>
     <string name="media_player_notification_channel_id">Bedienelemente für Medienplayer</string>
@@ -105,5 +105,15 @@
     <string name="migrating_preferences">Migriere Einstellungen</string>
     <string name="finish">Fertigstellen</string>
     <string name="download_and_play_sermon">Andacht herunterladen und abspielen</string>
+    <string name="activate_notifications">Benachrichtigungen aktivieren</string>
+    <string name="ads">Werbung</string>
+    <string name="app_intro">App Intro</string>
+    <string name="can_be_changed_in_the_settings">Kann in den Einstellungen geändert werden</string>
+    <string name="remember_gods_word">Jeden Tag an Gottes Wort erinnert werden</string>
+    <string name="widgets">Widgets</string>
+    <string name="widgets_personalized">Mit personalisierter Farbe, Größe, Text, …</string>
+    <string name="could_not_get_sermon_list">Konnte die Liste der Andachten nicht laden</string>
+    <string name="error_downloading_site_of_sermon">Fehler beim Herunterladen der Website der Andacht</string>
+    <string name="no_mp3_found">Audio Datei wurde nicht auf der Website gefunden</string>
 
 </resources>

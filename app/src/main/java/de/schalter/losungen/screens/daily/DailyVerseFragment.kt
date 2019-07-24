@@ -2,6 +2,7 @@ package de.schalter.losungen.screens.daily
 
 import android.app.Application
 import android.content.Context
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
+import de.schalter.customize.Customize
 import de.schalter.losungen.R
 import de.schalter.losungen.components.exceptions.TranslatableException
 import de.schalter.losungen.components.verseCard.VerseCardData
@@ -214,6 +216,8 @@ class DailyVerseFragment : VerseListDateFragment(R.layout.fragment_verse_list_no
 
         // ------ SERMON ---------
         buttonPlaySermon = view.findViewById(R.id.button_play_sermon)
+        setTintedCompoundDrawable(buttonPlaySermon)
+
         if (mViewModel.sermonProviderForLanguageAvailable(mContext)) {
             mediaPlayerUi = MediaPlayerUi(mContext).apply {
                 this.layoutParams = LinearLayout.LayoutParams(
@@ -259,6 +263,12 @@ class DailyVerseFragment : VerseListDateFragment(R.layout.fragment_verse_list_no
         }
 
         activity!!.invalidateOptionsMenu()
+    }
+
+    private fun setTintedCompoundDrawable(button: Button) {
+        button.compoundDrawablesRelative.forEach { drawable ->
+            drawable?.setColorFilter(Customize.getColor(button.context, Customize.ACCENT), PorterDuff.Mode.SRC_IN)
+        }
     }
 
     companion object {

@@ -76,6 +76,7 @@ class Migration(private val activity: Activity) {
                 .putString(PreferenceTags.NOTIFICATION_CONTENT, notificationContent)
                 .putInt(PreferenceTags.NOTIFICATION_TIME, notificationTime.toInt())
                 .putInt(PreferenceTags.APP_VERSIONSCODE, actualVersionCode)
+                .putBoolean(PreferenceTags.FIRST_START, false)
                 .apply()
 
         // schedule notification when is was set

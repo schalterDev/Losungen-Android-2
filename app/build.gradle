@@ -100,6 +100,9 @@ dependencies {
     // rss reader
     implementation "com.prof.rssparser:rssparser:2.0.3"
 
+    // app intro
+    implementation 'com.github.paolorotolo:AppIntro:v5.1.0'
+
     // ads, analytics
     implementation 'com.google.firebase:firebase-core:17.0.1'
     implementation "com.google.firebase:firebase-ads:18.1.0"

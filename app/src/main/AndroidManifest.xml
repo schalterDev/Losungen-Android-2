@@ -42,6 +42,10 @@
         <activity
             android:name="de.schalter.losungen.screens.settings.SettingsActivity"
             android:label="@string/title_activity_settings" />
+        <activity
+            android:name=".screens.intro.IntroActivity"
+            android:label="@string/app_intro"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
 
         <provider
             android:authorities="de.schalter.losungen.file.provider"

@@ -1,8 +1,8 @@
 package de.schalter.losungen
 
+import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.google.android.gms.ads.AdRequest
@@ -16,6 +16,7 @@ import de.schalter.losungen.dataAccess.sermon.Sermon
 import de.schalter.losungen.firebase.FirebaseUtil
 import de.schalter.losungen.migration.MigrateProgressDialog
 import de.schalter.losungen.migration.Migration
+import de.schalter.losungen.screens.intro.IntroActivity
 import de.schalter.losungen.utils.PreferenceTags
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -38,7 +39,10 @@ class MainActivity : CustomizeActivity() {
         checkForOldSermonsToDelete()
         setupFirebase()
 
-        migrateOldData()
+        val legacyMigrationRun = migrateOldData()
+        if (!legacyMigrationRun) {
+            checkFirstStart()
+        }
     }
 
     private fun setupToolbar() {
@@ -104,18 +108,33 @@ class MainActivity : CustomizeActivity() {
         }
     }
 
-    private fun migrateOldData() {
+    /**
+     * @return returns true when the legacy migration has to run
+     */
+    private fun migrateOldData(): Boolean {
         val migrate = Migration(this)
 
         if (migrate.needMigrationFromLegacyApp()) {
-            Log.d("Losungen", "needs legacy migration")
             MigrateProgressDialog().show(
                     this.supportFragmentManager,
                     null
             )
+            return true
         } else {
-            Log.d("Losungen", "does not need legacy migration")
             migrate.migrateIfNecessary()
+        }
+
+        return false
+    }
+
+    private fun checkFirstStart() {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        if (preferences.getBoolean(PreferenceTags.FIRST_START, true)) {
+            preferences.edit()
+                    .putBoolean(PreferenceTags.FIRST_START, false)
+                    .apply()
+
+            startActivity(Intent(this, IntroActivity::class.java))
         }
     }
 }

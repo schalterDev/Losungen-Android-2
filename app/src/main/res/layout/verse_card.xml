@@ -25,10 +25,10 @@
 
                 <TextView
                     android:id="@+id/verseTitle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:textAlignment="viewStart"
                     android:layout_weight="1"
-                    android:foregroundGravity="left"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="20sp" />
 
@@ -36,7 +36,6 @@
                     android:id="@+id/verseCardFavoriteImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0"
                     android:contentDescription="@string/mark_as_favorite"
                     android:visibility="gone"
                     android:tint="?colorAccent"

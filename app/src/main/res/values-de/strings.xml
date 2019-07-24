@@ -104,5 +104,6 @@
     <string name="migrating_info_features">Aus technischen Gründen müssen alle Widgets auf dem Startbildschirm neu erstellt werden. Es wurden sehr viele Bugs wie zum Beispiel die Benachrichtigungen behoben.</string>
     <string name="migrating_preferences">Migriere Einstellungen</string>
     <string name="finish">Fertigstellen</string>
+    <string name="download_and_play_sermon">Andacht herunterladen und abspielen</string>
 
 </resources>

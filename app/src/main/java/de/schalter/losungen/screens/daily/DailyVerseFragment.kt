@@ -100,7 +100,7 @@ class DailyVerseFragment : VerseListDateFragment(R.layout.fragment_verse_list_no
             }
 
             this.updateData(VerseCardData.fromDailyVerseTwoCards(mApplication, dailyVerse))
-            this.updateFavouriteMenuItem(dailyVerse.isFavourite)
+            this.updateFavouriteMenuItem()
         } else {
             this.updateData(listOf())
         }
@@ -151,7 +151,11 @@ class DailyVerseFragment : VerseListDateFragment(R.layout.fragment_verse_list_no
         inflater.inflate(R.menu.menu_daily_verse, menu)
 
         mViewModel.getDailyVerse().value?.let {
-            updateFavouriteMenuItem(it.isFavourite)
+            if (it.isFavourite) {
+                menu.getItem(1)?.icon = ContextCompat.getDrawable(mContext, R.drawable.ic_action_favorite)
+            } else {
+                menu.getItem(1)?.icon = ContextCompat.getDrawable(mContext, R.drawable.ic_action_favorite_border)
+            }
         }
 
         this.menu = menu
@@ -255,13 +259,7 @@ class DailyVerseFragment : VerseListDateFragment(R.layout.fragment_verse_list_no
         buttonShowNotes.textAlignment = View.TEXT_ALIGNMENT_VIEW_END
     }
 
-    private fun updateFavouriteMenuItem(isFavourite: Boolean) {
-        if (isFavourite) {
-            menu?.getItem(1)?.icon = ContextCompat.getDrawable(mContext, R.drawable.ic_action_favorite)
-        } else {
-            menu?.getItem(1)?.icon = ContextCompat.getDrawable(mContext, R.drawable.ic_action_favorite_border)
-        }
-
+    private fun updateFavouriteMenuItem() {
         activity!!.invalidateOptionsMenu()
     }
 

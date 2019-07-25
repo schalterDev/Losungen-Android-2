@@ -115,5 +115,8 @@
     <string name="could_not_get_sermon_list">Konnte die Liste der Andachten nicht laden</string>
     <string name="error_downloading_site_of_sermon">Fehler beim Herunterladen der Website der Andacht</string>
     <string name="no_mp3_found">Audio Datei wurde nicht auf der Website gefunden</string>
+    <string name="show_notes">Notizen anzeigen</string>
+    <string name="show_notes_description">Notizen bei den Monatssprüchen, Suchergebnissen und favorisierten Versen anzeigen</string>
+    <string name="toggle_notes">Zeige / verstecke Notizen</string>
 
 </resources>

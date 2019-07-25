@@ -39,6 +39,8 @@ abstract class WeeklyVersesDao {
                     weeklyVerse.verseBible,
                     weeklyVerse.language)
 
+    fun updateNotes(date: Date, notes: String) = this.updateNotesExactDate(WeeklyVerse.getDateForWeek(date), notes)
+
     @Insert(onConflict = REPLACE)
     abstract fun insertWeeklyVerse(weeklyVerse: WeeklyVerse)
 
@@ -61,6 +63,9 @@ abstract class WeeklyVersesDao {
     @Query("UPDATE WeeklyVerse SET is_favourite = :favourite WHERE date = :date")
     protected abstract fun updateIsFavouriteByExactDate(date: Date, favourite: Boolean)
 
-    @Query("SELECT DISTINCT * FROM WeeklyVerse WHERE verse_bible LIKE '%' || :search || '%' OR verse_text LIKE '%' || :search || '%'")
+    @Query("SELECT DISTINCT * FROM WeeklyVerse WHERE verse_bible LIKE '%' || :search || '%' OR verse_text LIKE '%' || :search || '%' OR notes LIKE '%' || :search || '%'")
     abstract fun searchVerses(search: String): LiveData<List<WeeklyVerse>>
+
+    @Query("UPDATE WeeklyVerse SET notes = :notes WHERE date = :date")
+    protected abstract fun updateNotesExactDate(date: Date, notes: String)
 }

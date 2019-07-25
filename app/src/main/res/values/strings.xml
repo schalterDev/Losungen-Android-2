@@ -115,4 +115,7 @@
     <string name="no_mp3_found">Audio file not found on website</string>
     <string name="error_downloading_site_of_sermon">Error while downloading website of sermon</string>
     <string name="could_not_get_sermon_list">Could not get list of sermons</string>
+    <string name="toggle_notes">Show / hide notes</string>
+    <string name="show_notes">Show notes</string>
+    <string name="show_notes_description">Show notes in monthly, weekly, search and favourite screen</string>
 </resources>

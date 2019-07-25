@@ -30,6 +30,9 @@ object PreferenceTags {
     // intro
     const val FIRST_START = "firstStart"
 
+    // customize
+    const val SHOW_NOTES = "showAlwaysNotes"
+
     const val NOTIFICATION_TIME_DEFAULT_VALUE = 60 * 7
 
 }

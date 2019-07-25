@@ -56,6 +56,7 @@ abstract class DailyVersesDao {
     @Query("SELECT DISTINCT * FROM DailyVerse WHERE old_testament_verse_text LIKE '%' || :search || '%' " +
             "OR new_testament_verse_text LIKE '%' || :search || '%'" +
             "OR old_testament_verse_bible LIKE '%' || :search || '%'" +
-            "OR new_testament_verse_bible LIKE '%' || :search || '%'")
+            "OR old_testament_verse_bible LIKE '%' || :search || '%'" +
+            "OR notes LIKE '%' || :search || '%'")
     abstract fun searchVerses(search: String): LiveData<List<DailyVerse>>
 }

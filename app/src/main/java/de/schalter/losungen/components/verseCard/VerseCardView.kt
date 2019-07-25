@@ -1,17 +1,20 @@
 package de.schalter.losungen.components.verseCard
 
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import kotlinx.android.synthetic.main.verse_card.view.*
 import de.schalter.losungen.R
 import de.schalter.losungen.components.dialogs.openVerseExternal.OpenExternalDialog
+import de.schalter.losungen.dataAccess.VersesDatabase
 import de.schalter.losungen.utils.openExternal.BibleVerse
 import de.schalter.losungen.utils.openExternal.BibleVerseParseException
+import kotlinx.android.synthetic.main.verse_card.view.*
 
 class VerseCardView : FrameLayout {
 
@@ -22,6 +25,9 @@ class VerseCardView : FrameLayout {
     private var verseTextView2: TextView
     private var verseInBibleView2: TextView
     private var imageFavourite: ImageView
+    private var notesView: TextView
+
+    private var verseCardViewModel = VerseCardViewModel(VersesDatabase.provideVerseDatabase(context))
 
     constructor(context: Context) : super(context)
 
@@ -41,6 +47,17 @@ class VerseCardView : FrameLayout {
         verseInBibleView2 = view.findViewById(R.id.verseInBible2)
 
         imageFavourite = view.findViewById(R.id.verseCardFavoriteImage)
+
+        notesView = view.findViewById<TextView>(R.id.verseNotes).also {
+            it.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable) {
+                    verseCardViewModel.updateNotes(s.toString())
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            })
+        }
 
         hideSecondVerse()
 
@@ -74,38 +91,29 @@ class VerseCardView : FrameLayout {
         }
     }
 
-    fun setTitle(titleRes: Int) {
-        titleView.text = context.getString(titleRes)
-    }
-
-    fun setTitle(title: String) {
+    private fun setTitle(title: String) {
         titleView.text = title
     }
 
-    fun setVerse(verse: String) {
+    private fun setVerse(verse: String) {
         verseTextView.text = verse
     }
 
-    fun setVerseInBible(verseInBible: String) {
+    private fun setVerseInBible(verseInBible: String) {
         verseInBibleView.text = verseInBible
     }
 
-    fun setTitle2(titleRes: Int) {
-        titleView2.text = context.getString(titleRes)
-        titleView2.visibility = View.VISIBLE
-    }
-
-    fun setTitle2(title: String) {
+    private fun setTitle2(title: String) {
         titleView2.text = title
         titleView2.visibility = View.VISIBLE
     }
 
-    fun setVerse2(verse: String) {
+    private fun setVerse2(verse: String) {
         verseTextView2.text = verse
         verseTextView2.visibility = View.VISIBLE
     }
 
-    fun setVerseInBible2(verseInBible: String) {
+    private fun setVerseInBible2(verseInBible: String) {
         verseInBibleView2.text = verseInBible
         verseInBibleView2.visibility = View.VISIBLE
     }
@@ -121,8 +129,12 @@ class VerseCardView : FrameLayout {
     }
 
     fun setData(verseCardData: VerseCardData) {
+        verseCardViewModel.setData(verseCardData)
+
         setVisibilityFavouriteIcon(verseCardData.showFavouriteIcon)
-        imageFavourite.setOnClickListener { verseCardData.updateIsFavourite?.invoke(!verseCardData.isFavourite) }
+        imageFavourite.setOnClickListener {
+            verseCardViewModel.toggleIsFavourite()
+        }
 
         setTitle(verseCardData.title)
         setVerse(verseCardData.text)
@@ -138,6 +150,9 @@ class VerseCardView : FrameLayout {
         verseCardData.verse2?.let { setVerseInBible2(it) } ?: run {
             verseInBibleView2.visibility = View.GONE
         }
+        verseCardData.notes?.let {
+            notesView.text = it
+        }
     }
 
     private fun setVisibilityFavouriteIcon(visible: Boolean) {
@@ -149,19 +164,24 @@ class VerseCardView : FrameLayout {
     }
 
     fun getData(): VerseCardData {
-        return VerseCardData(
-                titleView.text as String,
-                verseTextView.text as String,
-                verseInBibleView.text as String,
-                titleView2.text as String,
-                verseTextView2.text as String,
-                verseInBibleView2.text as String
-        )
+        return verseCardViewModel.getData()!!
     }
 
     private fun hideSecondVerse() {
         titleView2.visibility = View.GONE
         verseTextView2.visibility = View.GONE
         verseInBibleView2.visibility = View.GONE
+    }
+
+    fun showNotes(showNotes: Boolean) {
+        if (showNotes) {
+            notesView.visibility = View.VISIBLE
+        } else {
+            notesView.visibility = View.GONE
+        }
+    }
+
+    fun saveNotes() {
+        verseCardViewModel.saveNotes()
     }
 }

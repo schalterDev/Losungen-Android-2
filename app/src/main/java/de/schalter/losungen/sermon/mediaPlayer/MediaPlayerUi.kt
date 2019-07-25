@@ -28,6 +28,8 @@ class MediaPlayerUi : FrameLayout, MediaPlayerService.StateListener, MediaPlayer
     private var serviceConnection: ServiceConnection? = null
     private var mediaPlayerService: MediaPlayerService? = null
 
+    var mediaPlayerStopped: (() -> Unit)? = null
+
     constructor(context: Context) : super(context)
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
         initAttributes(attributeSet)
@@ -77,13 +79,17 @@ class MediaPlayerUi : FrameLayout, MediaPlayerService.StateListener, MediaPlayer
     /**
      * Checks if a service is running and binds to it when the id is the same.
      * When the service is already binded nothing happens
+     * @return true when the service is running
      */
-    fun checkServiceIsRunningAndBind(id: String) {
+    fun checkServiceIsRunningAndBind(id: String): Boolean {
         if (serviceConnection == null && // service is not bind already
                 MediaPlayerService.isRunning && MediaPlayerService.actualId == id
         ) {
             bindService()
+            return true
         }
+
+        return false
     }
 
     /**
@@ -176,6 +182,7 @@ class MediaPlayerUi : FrameLayout, MediaPlayerService.StateListener, MediaPlayer
     private fun serviceStopped() {
         unbindService()
         visibility = View.GONE
+        mediaPlayerStopped?.let { it() }
     }
 
     @SuppressLint("SetTextI18n")

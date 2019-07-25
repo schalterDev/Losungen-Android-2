@@ -61,6 +61,13 @@
             app:title="@string/choose_style"
             titleToolbar="@string/app_name" />
 
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:defaultValue="false"
+            app:key="showAlwaysNotes"
+            app:summary="@string/show_notes_description"
+            app:title="@string/show_notes" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

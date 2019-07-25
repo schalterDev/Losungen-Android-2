@@ -64,7 +64,7 @@ class FavouriteVersesModel(private val mApplication: Application, database: Vers
                 val verseCardDataList = mutableListOf<VerseCardData>()
                 verses.forEach { verse ->
                     val verseToAdd = VerseCardData.fromMonthlyVerse(mApplication, verse)
-                    verseToAdd.title += " " + VerseCardData.formateDateOnlyMonthAndYear(verseToAdd.date!!)
+                    verseToAdd.title += " " + VerseCardData.formatDateOnlyMonthAndYear(verseToAdd.date!!)
                     verseCardDataList.add(verseToAdd)
                 }
                 updateData(verseCardDataList, monthly = true)

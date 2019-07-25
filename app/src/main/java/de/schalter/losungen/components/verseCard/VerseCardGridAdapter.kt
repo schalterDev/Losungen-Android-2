@@ -8,7 +8,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import de.schalter.losungen.R
 
-class VerseCardGridAdapter(private val verseCards: MutableList<VerseCardData> = mutableListOf()) : RecyclerView.Adapter<VerseCardGridAdapter.VerseCardViewHolder>() {
+class VerseCardGridAdapter(
+        private val verseCards: MutableList<VerseCardData> = mutableListOf(),
+        private var showNotes: Boolean = false) : RecyclerView.Adapter<VerseCardGridAdapter.VerseCardViewHolder>() {
+
+    private var holders: Array<VerseCardViewHolder?> = arrayOfNulls(verseCards.size)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VerseCardViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.verse_card_wrapper, parent, false)
@@ -19,22 +23,29 @@ class VerseCardGridAdapter(private val verseCards: MutableList<VerseCardData> = 
 
     override fun onBindViewHolder(holder: VerseCardViewHolder, position: Int) {
         val verseCardData = verseCards[position]
+
         holder.setData(verseCardData)
+        holder.showNotes(showNotes)
+
+        holders[position] = holder
     }
 
-    fun addVerseCard(verseCard: VerseCardData) {
-        verseCards.add(verseCard)
+    fun showNotes(showNotes: Boolean) {
+        this.showNotes = showNotes
+        this.saveNotes()
         this.notifyDataSetChanged()
     }
 
-    fun removeVerseCard(verseCard: VerseCardData) {
-        verseCards.remove(verseCard)
-        this.notifyDataSetChanged()
+    fun saveNotes() {
+        holders.forEach {
+            it?.saveNotes()
+        }
     }
 
     fun setData(list: List<VerseCardData>) {
         verseCards.clear()
         verseCards.addAll(list)
+        holders = arrayOfNulls(verseCards.size)
         this.notifyDataSetChanged()
     }
 
@@ -43,6 +54,14 @@ class VerseCardGridAdapter(private val verseCards: MutableList<VerseCardData> = 
 
         fun setData(verseCardData: VerseCardData) {
             cardView.setData(verseCardData)
+        }
+
+        fun showNotes(showNotes: Boolean) {
+            cardView.showNotes(showNotes)
+        }
+
+        fun saveNotes() {
+            cardView.saveNotes()
         }
 
         fun getData(): VerseCardData {

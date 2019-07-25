@@ -1,12 +1,12 @@
 package de.schalter.losungen.sermon.erf
 
 import com.prof.rssparser.Parser
-import io.reactivex.Single
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import de.schalter.losungen.R
 import de.schalter.losungen.components.exceptions.TranslatableException
 import de.schalter.losungen.dataAccess.daily.DailyVerse
+import io.reactivex.Single
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -35,7 +35,7 @@ class RssFeed {
                         emitter.onSuccess(FeedLoaded(foundArticle.author, foundArticle.link!!))
                     }
                 } catch (e: Exception) {
-                    emitter.onError(e)
+                    emitter.onError(TranslatableException(R.string.could_not_get_sermon_list))
                 }
             }
         }

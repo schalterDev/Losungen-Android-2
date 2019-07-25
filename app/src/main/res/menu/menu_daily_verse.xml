@@ -16,13 +16,6 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_sermon"
-        android:orderInCategory="200"
-        android:title="@string/play_sermon"
-        android:icon="@drawable/ic_action_audiotrack"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/action_share_sermon"
         android:orderInCategory="300"
         android:title="@string/share_sermon"

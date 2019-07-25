@@ -39,9 +39,11 @@ class InfoFragment : AnalyticsFragment() {
         textViews.add(view.findViewById<TextView>(R.id.textView_app_version).apply {
             this.text = textAppVersion
         })
-
         textViews.add(view.findViewById<TextView>(R.id.textView_licenses).apply {
             this.setOnClickListener { openLicenseDialog() }
+        })
+        textViews.add(view.findViewById<TextView>(R.id.textView_send_email).apply {
+            this.setOnClickListener { sendIntentToWriteEmail() }
         })
 
         textViews.add(view.findViewById<TextView>(R.id.textView_translate).apply {
@@ -53,6 +55,7 @@ class InfoFragment : AnalyticsFragment() {
         textViews.add(view.findViewById<TextView>(R.id.textView_github).apply {
             this.setOnClickListener { openGithubPage() }
         })
+
 
         textViews.forEach {
             setTintedCompoundDrawable(it)
@@ -67,6 +70,8 @@ class InfoFragment : AnalyticsFragment() {
                     .setIncludeOwnLicense(true)
                     .build()
                     .show()
+
+    private fun sendIntentToWriteEmail() = Open.sendMailToProgrammer(mContext)
 
     private fun openWebsiteForTranslation() = Open.website(mContext, Constants.urlTranslation)
 

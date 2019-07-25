@@ -1,10 +1,11 @@
 package de.schalter.losungen.sermon.erf
 
 import android.content.Context
-import io.reactivex.Single
+import de.schalter.losungen.dataAccess.Language
 import de.schalter.losungen.dataAccess.daily.DailyVerse
 import de.schalter.losungen.dataAccess.sermon.Sermon
 import de.schalter.losungen.sermon.sermonProvider.SermonProvider
+import io.reactivex.Single
 import java.io.BufferedInputStream
 import java.net.URL
 
@@ -59,6 +60,8 @@ class ErfWortZumTagSermonImplementation(context: Context) : SermonProvider(conte
     override fun getAuthor() = author
 
     override fun getProviderName(): String = "ERF Wort zum Tag"
+
+    override fun language(): Language = Language.DE
 
     companion object {
         const val URL_RSS_FEED = "https://feedpress.me/erf-plus-wortzumtag"

@@ -13,7 +13,7 @@ import de.schalter.losungen.screens.VerseListFragment
 /**
  * A simple [Fragment] subclass.
  */
-class SearchFragment : VerseListFragment(R.layout.fragment_verse_list_search) {
+class SearchFragment : VerseListFragment(R.layout.fragment_verse_list_search, true) {
 
     private lateinit var mContext: Context
     private lateinit var mViewModel: SearchModel
@@ -73,7 +73,6 @@ class SearchFragment : VerseListFragment(R.layout.fragment_verse_list_search) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_search -> {
-                // TODO maybe implement
                 return true
             }
         }

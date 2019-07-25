@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import androidx.test.core.app.ApplicationProvider
+import de.schalter.losungen.R
 import org.hamcrest.Matchers.equalTo
 import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import de.schalter.losungen.R
 
 @RunWith(RobolectricTestRunner::class)
 class VerseCardViewTest {
@@ -51,9 +51,10 @@ class VerseCardViewTest {
         val verse2 = "Verse2"
         val bible2 = "Bible2"
 
-        verseCardView.setTitle(title)
-        verseCardView.setVerse(verse)
-        verseCardView.setVerseInBible(bible)
+        // TODO update with setData
+//        verseCardView.setTitle(title)
+//        verseCardView.setVerse(verse)
+//        verseCardView.setVerseInBible(bible)
 
         assertThat(title1TextView.text as String, equalTo(title))
         assertThat(verse1TextView.text as String, equalTo(verse))
@@ -63,9 +64,10 @@ class VerseCardViewTest {
         assertThat(bible2TextView.visibility, equalTo(View.GONE))
         assertThat(verse2TextView.visibility, equalTo(View.GONE))
 
-        verseCardView.setTitle2(title2)
-        verseCardView.setVerse2(verse2)
-        verseCardView.setVerseInBible2(bible2)
+        // TODO update with setData
+//        verseCardView.setTitle2(title2)
+//        verseCardView.setVerse2(verse2)
+//        verseCardView.setVerseInBible2(bible2)
 
         assertThat(title2TextView.visibility, equalTo(View.VISIBLE))
         assertThat(bible2TextView.visibility, equalTo(View.VISIBLE))
@@ -85,7 +87,8 @@ class VerseCardViewTest {
                 "title2",
                 "text2",
                 "verse2",
-                true
+                true,
+                type = VerseCardData.Type.DAILY
         )
 
         verseCardView.setData(verseCardData)

@@ -1,10 +1,7 @@
 package de.schalter.losungen.components.verseCard
 
 import android.app.Application
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import de.schalter.losungen.R
-import de.schalter.losungen.dataAccess.VersesDatabase
 import de.schalter.losungen.dataAccess.daily.DailyVerse
 import de.schalter.losungen.dataAccess.monthly.MonthlyVerse
 import de.schalter.losungen.dataAccess.weekly.WeeklyVerse
@@ -23,22 +20,22 @@ data class VerseCardData(
         var text2: String? = null,
         var verse2: String? = null,
         var isFavourite: Boolean = false,
-        var date: Date? = null) {
+        var date: Date? = null,
+        var notes: String? = null,
+        var type: Type) {
 
     var showFavouriteIcon = false
         private set
 
-    var updateIsFavourite: ((isFavourite: Boolean) -> Unit)? = null
-
     companion object {
-        private val locale = LanguageUtils.getDisplayLanguageLocale();
+        private val locale = LanguageUtils.getDisplayLanguageLocale()
 
         private fun formatDate(date: Date): String {
             val dateFormat = SimpleDateFormat(datePattern, locale)
             return dateFormat.format(date)
         }
 
-        fun formateDateOnlyMonthAndYear(date: Date): String {
+        fun formatDateOnlyMonthAndYear(date: Date): String {
             val dateFormat = SimpleDateFormat(datePatternMonthYear, locale)
             return dateFormat.format(date)
         }
@@ -53,14 +50,16 @@ data class VerseCardData(
                             dailyVerse.oldTestamentVerseText,
                             dailyVerse.oldTestamentVerseBible,
                             isFavourite = dailyVerse.isFavourite,
-                            date = dailyVerse.date
+                            date = dailyVerse.date,
+                            type = Type.DAILY
                     ),
                     VerseCardData(
                             titleNewTestament,
                             dailyVerse.newTestamentVerseText,
                             dailyVerse.newTestamentVerseBible,
                             isFavourite = dailyVerse.isFavourite,
-                            date = dailyVerse.date))
+                            date = dailyVerse.date,
+                            type = Type.DAILY))
         }
 
         fun fromDailyVerses(application: Application, dailyVerses: List<DailyVerse>): List<VerseCardData> {
@@ -81,15 +80,11 @@ data class VerseCardData(
                     dailyVerse.newTestamentVerseText,
                     dailyVerse.newTestamentVerseBible,
                     isFavourite = dailyVerse.isFavourite,
-                    date = dailyVerse.date)
+                    date = dailyVerse.date,
+                    notes = dailyVerse.notes,
+                    type = Type.DAILY)
 
             data.showFavouriteIcon = true
-            data.updateIsFavourite = { isFavourite ->
-                GlobalScope.launch {
-                    val database = VersesDatabase.provideVerseDatabase(application)
-                    database.dailyVerseDao().updateIsFavourite(dailyVerse.date, isFavourite)
-                }
-            }
             return data
         }
 
@@ -105,17 +100,12 @@ data class VerseCardData(
                     monthlyVerse.verseText,
                     monthlyVerse.verseBible,
                     isFavourite = monthlyVerse.isFavourite,
-                    date = monthlyVerse.date
+                    date = monthlyVerse.date,
+                    notes = monthlyVerse.notes,
+                    type = Type.MONTHLY
             )
 
             data.showFavouriteIcon = true
-            data.updateIsFavourite = { isFavourite ->
-                GlobalScope.launch {
-                    val database = VersesDatabase.provideVerseDatabase(application)
-                    database.monthlyVerseDao().updateIsFavourite(monthlyVerse.date, isFavourite)
-                }
-            }
-
             return data
         }
 
@@ -127,21 +117,21 @@ data class VerseCardData(
                     weeklyVerse.verseText,
                     weeklyVerse.verseBible,
                     isFavourite = weeklyVerse.isFavourite,
-                    date = weeklyVerse.date
+                    date = weeklyVerse.date,
+                    notes = weeklyVerse.notes,
+                    type = Type.WEEKLY
             )
 
             data.showFavouriteIcon = true
-            data.updateIsFavourite = { isFavourite ->
-                GlobalScope.launch {
-                    val database = VersesDatabase.provideVerseDatabase(application)
-                    database.weeklyVerseDao().updateIsFavourite(weeklyVerse.date, isFavourite)
-                }
-            }
             return data
         }
 
         fun fromWeeklyVerses(application: Application, weeklyVerses: List<WeeklyVerse>): List<VerseCardData> {
             return weeklyVerses.map { fromWeeklyVerse(application, it) }
         }
+    }
+
+    enum class Type {
+        DAILY, WEEKLY, MONTHLY
     }
 }

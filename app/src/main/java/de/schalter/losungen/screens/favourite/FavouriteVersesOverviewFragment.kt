@@ -13,7 +13,7 @@ import de.schalter.losungen.screens.VerseListFragment
 /**
  * A simple [Fragment] subclass.
  */
-class FavouriteVersesOverviewFragment : VerseListFragment() {
+class FavouriteVersesOverviewFragment : VerseListFragment(showMenuItemToggleNotes = true) {
 
     private lateinit var mContext: Context
 

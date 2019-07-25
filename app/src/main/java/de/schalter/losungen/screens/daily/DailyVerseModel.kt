@@ -6,13 +6,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import de.schalter.losungen.components.exceptions.DataExceptionWrapper
 import de.schalter.losungen.dataAccess.VersesDatabase
 import de.schalter.losungen.dataAccess.daily.DailyVerse
 import de.schalter.losungen.dataAccess.sermon.Sermon
 import de.schalter.losungen.sermon.sermonProvider.SermonProvider
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 
 class DailyVerseModel(private val database: VersesDatabase, private val date: Date) : ViewModel() {
@@ -26,6 +26,14 @@ class DailyVerseModel(private val database: VersesDatabase, private val date: Da
 
     fun getDailyVerse(): LiveData<DailyVerse> {
         return dailyVerse
+    }
+
+    fun sermonProviderForLanguageAvailable(context: Context): Boolean {
+        return SermonProvider.implementationForLanguageAvailable(context)
+    }
+
+    fun sermonAvailable(): LiveData<List<Sermon>> {
+        return database.sermonDao().getSermonsForDate(DailyVerse.getDateForDay(date))
     }
 
     fun toggleFavourite() {

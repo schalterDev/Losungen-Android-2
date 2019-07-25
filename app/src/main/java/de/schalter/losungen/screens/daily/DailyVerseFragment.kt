@@ -2,6 +2,7 @@ package de.schalter.losungen.screens.daily
 
 import android.app.Application
 import android.content.Context
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
+import de.schalter.customize.Customize
 import de.schalter.losungen.R
 import de.schalter.losungen.components.exceptions.TranslatableException
 import de.schalter.losungen.components.verseCard.VerseCardData
@@ -42,10 +44,11 @@ class DailyVerseFragment : VerseListDateFragment(R.layout.fragment_verse_list_no
     private lateinit var mViewModel: DailyVerseModel
     private var firstData = true
 
-    private lateinit var mediaPlayerUi: MediaPlayerUi
+    private var mediaPlayerUi: MediaPlayerUi? = null
 
     private lateinit var textViewNotes: TextView
     private lateinit var buttonShowNotes: Button
+    private lateinit var buttonPlaySermon: Button
 
     @VisibleForTesting
     private var menu: Menu? = null
@@ -57,13 +60,29 @@ class DailyVerseFragment : VerseListDateFragment(R.layout.fragment_verse_list_no
 
     override fun onPause() {
         super.onPause()
-        mediaPlayerUi.unbindService()
+        mediaPlayerUi?.unbindService()
     }
 
     override fun onResume() {
         super.onResume()
         mViewModel.getDailyVerse().value?.date?.let {
-            mediaPlayerUi.checkServiceIsRunningAndBind(it.time.toString())
+            bindMediaPlayerWhenPossible(it)
+        }
+    }
+
+    private fun bindMediaPlayerWhenPossible(date: Date) {
+        if (mediaPlayerUi?.checkServiceIsRunningAndBind(date.time.toString()) == true) {
+            hideSermonPlayButton()
+
+            mediaPlayerUi?.mediaPlayerStopped = {
+                showSermonPlayButton()
+            }
+
+            mViewModel.sermonAvailable().observe(this, androidx.lifecycle.Observer { sermons ->
+                if (sermons.isNotEmpty()) {
+                    mediaPlayerUi?.setTitle(sermons[0].provider)
+                }
+            })
         }
     }
 
@@ -71,7 +90,7 @@ class DailyVerseFragment : VerseListDateFragment(R.layout.fragment_verse_list_no
         if (dailyVerse != null) {
             if (firstData) {
                 firstData = false
-                mediaPlayerUi.checkServiceIsRunningAndBind(dailyVerse.date.time.toString())
+                bindMediaPlayerWhenPossible(dailyVerse.date)
                 textViewNotes.text = dailyVerse.notes
             }
 
@@ -81,16 +100,35 @@ class DailyVerseFragment : VerseListDateFragment(R.layout.fragment_verse_list_no
             }
 
             this.updateData(VerseCardData.fromDailyVerseTwoCards(mApplication, dailyVerse))
-            this.updateFavouriteMenuItem(dailyVerse.isFavourite)
+            this.updateFavouriteMenuItem()
         } else {
             this.updateData(listOf())
         }
     }
 
+    private fun loadAndPlaySermon() {
+        hideSermonPlayButton()
+
+        mViewModel.getDailyVerse().value?.let {
+            mViewModel.loadSermon(mContext).observe(this, androidx.lifecycle.Observer { sermonWrapper ->
+                if (sermonWrapper.error != null) {
+                    showError(sermonWrapper.error)
+                    showSermonPlayButton()
+                } else {
+                    playSermon(sermonWrapper.value!!)
+                }
+            })
+        }
+    }
+
     private fun playSermon(sermon: Sermon) {
-        mediaPlayerUi.playAudio(sermon.pathSaved, mViewModel.getDailyVerse().value?.date?.time.toString(), sermon.provider
+        mediaPlayerUi?.playAudio(sermon.pathSaved, mViewModel.getDailyVerse().value?.date?.time.toString(), sermon.provider
                 ?: mContext.getString(R.string.playing_sermon))
-        mediaPlayerUi.setTitle(sermon.provider)
+        mediaPlayerUi?.setTitle(sermon.provider)
+
+        mediaPlayerUi?.mediaPlayerStopped = {
+            showSermonPlayButton()
+        }
     }
 
     private fun showError(exception: Throwable) {
@@ -113,7 +151,11 @@ class DailyVerseFragment : VerseListDateFragment(R.layout.fragment_verse_list_no
         inflater.inflate(R.menu.menu_daily_verse, menu)
 
         mViewModel.getDailyVerse().value?.let {
-            updateFavouriteMenuItem(it.isFavourite)
+            if (it.isFavourite) {
+                menu.getItem(1)?.icon = ContextCompat.getDrawable(mContext, R.drawable.ic_action_favorite)
+            } else {
+                menu.getItem(1)?.icon = ContextCompat.getDrawable(mContext, R.drawable.ic_action_favorite_border)
+            }
         }
 
         this.menu = menu
@@ -138,17 +180,6 @@ class DailyVerseFragment : VerseListDateFragment(R.layout.fragment_verse_list_no
                 mViewModel.toggleFavourite()
                 return true
             }
-            R.id.action_sermon -> {
-                mViewModel.getDailyVerse().value?.let {
-                    mViewModel.loadSermon(mContext).observe(this, androidx.lifecycle.Observer { sermonWrapper ->
-                        if (sermonWrapper.error != null) {
-                            showError(sermonWrapper.error)
-                        } else {
-                            playSermon(sermonWrapper.value!!)
-                        }
-                    })
-                }
-            }
         }
 
         return super.onOptionsItemSelected(item)
@@ -167,16 +198,8 @@ class DailyVerseFragment : VerseListDateFragment(R.layout.fragment_verse_list_no
             updateDataByDailyVerse(dailyVerse)
         })
 
-        mediaPlayerUi = MediaPlayerUi(mContext).apply {
-            this.layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT)
-        }
-
-        this.linearLayout.addView(mediaPlayerUi)
-
+        // ----------- NOTES -----------
         buttonShowNotes = view.findViewById<Button>(R.id.button_add_notes).apply {
-            this.visibility = View.VISIBLE
             this.setOnClickListener {
                 textViewNotes.visibility = View.VISIBLE
                 this.visibility = View.GONE
@@ -186,7 +209,8 @@ class DailyVerseFragment : VerseListDateFragment(R.layout.fragment_verse_list_no
         textViewNotes = view.findViewById<TextView>(R.id.text_notes).apply {
             this.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable) {
-                    mViewModel.saveNotes(s.toString())
+                    if (!firstData)
+                        mViewModel.saveNotes(s.toString())
                 }
 
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -194,17 +218,55 @@ class DailyVerseFragment : VerseListDateFragment(R.layout.fragment_verse_list_no
             })
         }
 
+        // ------ SERMON ---------
+        buttonPlaySermon = view.findViewById(R.id.button_play_sermon)
+        setTintedCompoundDrawable(buttonPlaySermon)
+
+        if (mViewModel.sermonProviderForLanguageAvailable(mContext)) {
+            mediaPlayerUi = MediaPlayerUi(mContext).apply {
+                this.layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT)
+            }
+
+            this.linearLayout.addView(mediaPlayerUi)
+
+            buttonPlaySermon.setOnClickListener {
+                loadAndPlaySermon()
+            }
+
+            mViewModel.sermonAvailable().observe(this, androidx.lifecycle.Observer { sermons ->
+                if (sermons.isEmpty()) {
+                    buttonPlaySermon.text = mContext.getString(R.string.download_and_play_sermon)
+                } else {
+                    buttonPlaySermon.text = mContext.getString(R.string.play_sermon)
+                }
+            })
+        } else {
+            hideSermonPlayButton()
+        }
+
         return view
     }
 
-    private fun updateFavouriteMenuItem(isFavourite: Boolean) {
-        if (isFavourite) {
-            menu?.getItem(1)?.icon = ContextCompat.getDrawable(mContext, R.drawable.ic_action_favorite)
-        } else {
-            menu?.getItem(1)?.icon = ContextCompat.getDrawable(mContext, R.drawable.ic_action_favorite_border)
-        }
+    private fun hideSermonPlayButton() {
+        buttonPlaySermon.visibility = View.GONE
+        buttonShowNotes.textAlignment = View.TEXT_ALIGNMENT_CENTER
+    }
 
+    private fun showSermonPlayButton() {
+        buttonPlaySermon.visibility = View.VISIBLE
+        buttonShowNotes.textAlignment = View.TEXT_ALIGNMENT_VIEW_END
+    }
+
+    private fun updateFavouriteMenuItem() {
         activity!!.invalidateOptionsMenu()
+    }
+
+    private fun setTintedCompoundDrawable(button: Button) {
+        button.compoundDrawablesRelative.forEach { drawable ->
+            drawable?.setColorFilter(Customize.getColor(button.context, Customize.ACCENT), PorterDuff.Mode.SRC_IN)
+        }
     }
 
     companion object {

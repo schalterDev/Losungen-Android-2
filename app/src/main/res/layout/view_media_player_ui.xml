@@ -34,6 +34,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="false"
         android:layout_gravity="end"
+        android:tint="?colorFont"
         android:contentDescription="@string/stop_sermon"
         app:srcCompat="@drawable/ic_close" />
 
@@ -46,6 +47,7 @@
         android:layout_gravity="center_horizontal"
         android:contentDescription="@string/play_sermon"
         android:paddingBottom="5dp"
+        android:tint="?colorFont"
         app:srcCompat="@drawable/ic_play_arrow" />
 
     <TextView

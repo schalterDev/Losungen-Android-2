@@ -29,7 +29,7 @@
                 android:showDividers="middle">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="16dp"
                     android:paddingTop="8dp"
@@ -77,6 +77,18 @@
                     android:text="Martin Schalter"
                     tools:ignore="HardcodedText" />
 
+                <TextView
+                    android:id="@+id/textView_send_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:drawableStart="@drawable/ic_action_email"
+                    android:drawablePadding="12dp"
+                    android:text="@string/send_feedback_bug" />
+
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -100,7 +112,7 @@
                 android:showDividers="middle">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="16dp"
                     android:paddingTop="8dp"

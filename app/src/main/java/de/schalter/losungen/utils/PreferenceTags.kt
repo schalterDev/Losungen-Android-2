@@ -27,6 +27,12 @@ object PreferenceTags {
     const val SHOW_ADS = "showAds"
     const val SEND_STATISTICS = "sendStatistics"
 
+    // intro
+    const val FIRST_START = "firstStart"
+
+    // customize
+    const val SHOW_NOTES = "showAlwaysNotes"
+
     const val NOTIFICATION_TIME_DEFAULT_VALUE = 60 * 7
 
 }

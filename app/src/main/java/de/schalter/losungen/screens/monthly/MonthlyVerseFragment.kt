@@ -18,7 +18,7 @@ import java.util.*
  * create an instance of this fragment.
  *
  */
-class MonthlyVerseFragment : VerseListDateFragment() {
+class MonthlyVerseFragment : VerseListDateFragment(showMenuItemToggleNotes = true) {
 
     private lateinit var mContext: Context
     private lateinit var mApplication: Application

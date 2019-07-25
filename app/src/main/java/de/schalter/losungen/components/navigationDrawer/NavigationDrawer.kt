@@ -36,7 +36,6 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
     private lateinit var itemSearch: PrimaryDrawerItem
     private lateinit var itemSettings: PrimaryDrawerItem
     private lateinit var itemRate: PrimaryDrawerItem
-    private lateinit var itemFeedback: PrimaryDrawerItem
     private lateinit var itemInfo: PrimaryDrawerItem
     private lateinit var itemPrivacy: PrimaryDrawerItem
 
@@ -61,10 +60,6 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
                 .withIconTintingEnabled(true)
                 .withIcon(R.drawable.ic_action_star)
                 .withSelectable(false)
-        itemFeedback = PrimaryDrawerItem().withName(R.string.send_feedback_bug)
-                .withIconTintingEnabled(true)
-                .withIcon(R.drawable.ic_action_email)
-                .withSelectable(false)
         itemInfo = PrimaryDrawerItem().withName(R.string.info_help)
                 .withIcon(R.drawable.ic_action_info)
                 .withIconTintingEnabled(true)
@@ -85,7 +80,6 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
                         itemSettings,
                         DividerDrawerItem(),
                         itemRate,
-                        itemFeedback,
                         itemInfo,
                         itemPrivacy
                 )
@@ -103,7 +97,6 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
             DrawerItem.SEARCH -> itemSearch
             DrawerItem.SETTINGS -> itemSettings
             DrawerItem.RATE -> itemRate
-            DrawerItem.FEEDBACK -> itemFeedback
             DrawerItem.INFO -> itemInfo
             DrawerItem.PRIVACY -> itemPrivacy
         }
@@ -136,7 +129,6 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
                     ?: SearchFragment.newInstance()
             itemSettings -> activity.startActivity(Intent(activity, SettingsActivity::class.java))
             itemRate -> Open.appInPlayStore(activity)
-            itemFeedback -> Open.sendMailToProgrammer(activity)
             itemInfo -> fragmentToShowNext = infoFragment ?: InfoFragment.newInstance()
             itemPrivacy -> Open.privacyWebsite(activity)
         }
@@ -169,7 +161,6 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
         SEARCH,
         SETTINGS,
         RATE,
-        FEEDBACK,
         INFO,
         PRIVACY
     }

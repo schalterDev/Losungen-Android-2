@@ -73,7 +73,7 @@ class SearchModel(private val mApplication: Application, private val database: V
             addSource(monthlyVersesLiveData!!) { verses ->
                 val verseCardDataList = VerseCardData.fromMonthlyVerses(mApplication, verses)
                 verseCardDataList.forEach { verse ->
-                    verse.title += " " + VerseCardData.formateDateOnlyMonthAndYear(verse.date!!)
+                    verse.title += " " + VerseCardData.formatDateOnlyMonthAndYear(verse.date!!)
                 }
                 updateData(verseCardDataList, monthly = true)
             }

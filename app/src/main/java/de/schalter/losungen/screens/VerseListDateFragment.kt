@@ -6,7 +6,10 @@ import java.util.*
 
 const val ARG_DATE = "arg_date"
 
-abstract class VerseListDateFragment(layout: Int = R.layout.fragment_verse_list) : VerseListFragment(layout) {
+abstract class VerseListDateFragment(
+        layout: Int = R.layout.fragment_verse_list,
+        showMenuItemToggleNotes: Boolean = false
+) : VerseListFragment(layout, showMenuItemToggleNotes) {
 
     protected var date: Date? = null
 

@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.widget.RemoteViews
 import de.schalter.losungen.MainActivity
 import de.schalter.losungen.R
@@ -69,5 +70,11 @@ class WidgetBroadcast : AppWidgetProvider() {
             }
             dailyVerseLiveData.observeForever(observer)
         }
+    }
+
+    override fun onAppWidgetOptionsChanged(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int, newOptions: Bundle?) {
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions)
+
+        appWidgetManager.updateAppWidget(appWidgetId, RemoteViews(context.packageName, R.layout.app_widget))
     }
 }

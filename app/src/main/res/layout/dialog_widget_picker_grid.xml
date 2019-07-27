@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:horizontalSpacing="8dp"
-    android:numColumns="auto_fit"
+    android:numColumns="1"
     android:paddingStart="2dp"
     android:paddingTop="8dp"
     android:paddingEnd="4dp"
     android:paddingBottom="8dp"
     android:scrollbarStyle="outsideOverlay"
     android:verticalSpacing="8dp"
-    tools:listitem="@layout/theme_picker_item" />
+    tools:listitem="@layout/app_widget" />

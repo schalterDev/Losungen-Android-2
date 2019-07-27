@@ -51,14 +51,23 @@ class CustomizeToolbar : Toolbar {
     }
 
     private fun doColorizing(v: View, colorFilter: ColorFilter, toolbarIconsColor: Int) {
+        if (v is Button) {
+            v.compoundDrawablesRelative.forEach { drawable ->
+                drawable?.setColorFilter(toolbarIconsColor, PorterDuff.Mode.SRC_IN)
+            }
+            v.setTextColor(toolbarIconsColor)
+        }
+
         if (v is ImageButton) {
             v.drawable.alpha = 255
             v.drawable.colorFilter = colorFilter
+            v.setColorFilter(toolbarIconsColor, PorterDuff.Mode.SRC_IN)
         }
 
         if (v is ImageView) {
             v.drawable.alpha = 255
             v.drawable.colorFilter = colorFilter
+            v.setColorFilter(toolbarIconsColor, PorterDuff.Mode.SRC_IN)
         }
 
         if (v is AutoCompleteTextView) {
@@ -74,8 +83,8 @@ class CustomizeToolbar : Toolbar {
         }
 
         if (v is ViewGroup) {
-            for (lli in 0 until v.childCount) {
-                doColorizing(v.getChildAt(lli), colorFilter, toolbarIconsColor)
+            v.forEach { child ->
+                doColorizing(child, colorFilter, toolbarIconsColor)
             }
         }
 
@@ -86,6 +95,7 @@ class CustomizeToolbar : Toolbar {
                         innerView.compoundDrawables.forEach { compoundDrawable ->
                             compoundDrawable?.colorFilter = colorFilter
                         }
+                        innerView.setTextColor(toolbarIconsColor)
                     }
                 }
             }

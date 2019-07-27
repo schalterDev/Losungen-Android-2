@@ -19,6 +19,7 @@ import de.schalter.customize.Customize
 import de.schalter.customize.CustomizeActivity
 import de.schalter.losungen.MainActivity
 import de.schalter.losungen.R
+import de.schalter.losungen.components.dialogs.widgetStyleChooser.WidgetStyleChooserDialog
 import de.schalter.losungen.utils.PreferenceTags
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.*
@@ -44,6 +45,8 @@ class AppWidgetActivity : CustomizeActivity() {
     private lateinit var btnBackgroundColor: Button
     private lateinit var textViewPreview: TextView
     private lateinit var btnSave: Button
+
+    private var firstData = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -135,12 +138,31 @@ class AppWidgetActivity : CustomizeActivity() {
                 .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
                 .density(12)
                 .setOnColorSelectedListener(onColorSelectedListener)
+                .setOnColorChangedListener { onColorSelectedListener.onColorSelected(it) }
                 .setPositiveButton(R.string.ok) { _, selectedColor, _ -> onColorSelectedListener.onColorSelected(selectedColor) }
                 .build()
                 .show()
     }
 
     private fun updateTextView(widgetData: WidgetData) {
+        if (firstData) {
+            widgetData.contentToShow?.let { content ->
+                if (content != "" && content.trim() != "null") {
+
+                    firstData = false
+                    WidgetStyleChooserDialog(content).apply {
+                        this.onStyleSelected = {
+                            widgetData.background = it.backgroundColor
+                            widgetData.color = it.fontColor
+                            widgetData.fontSize = it.fontSize.toInt()
+
+                            mViewModel.setWidgetData(widgetData)
+                        }
+                    }.show(supportFragmentManager, null)
+                }
+            }
+        }
+
         textViewPreview.textSize = widgetData.fontSize.toFloat()
         textViewPreview.text = widgetData.contentToShow
         textViewPreview.setTextColor(widgetData.color)

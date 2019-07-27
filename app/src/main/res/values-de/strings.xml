@@ -118,5 +118,6 @@
     <string name="show_notes">Notizen anzeigen</string>
     <string name="show_notes_description">Notizen bei den Monatssprüchen, Suchergebnissen und favorisierten Versen anzeigen</string>
     <string name="toggle_notes">Zeige / verstecke Notizen</string>
+    <string name="choose_widget_style">Design auswählen</string>
 
 </resources>

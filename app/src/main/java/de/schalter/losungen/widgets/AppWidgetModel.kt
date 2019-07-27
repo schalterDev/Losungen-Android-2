@@ -37,11 +37,13 @@ class AppWidgetModel(private var database: VersesDatabase, private var date: Dat
             background?.let { widgetData.background = it }
             fontSize?.let { widgetData.fontSize = it }
             content?.let {
-                widgetData.content = it
-                widgetData.contentToShow = when (it) {
-                    WidgetContent.OLD_TESTAMENT -> oldTestamentText
-                    WidgetContent.NEW_TESTAMENT -> newTestamentText
-                    WidgetContent.OLD_AND_NEW_TESTAMENT -> oldTestamentText + "\n\n" + newTestamentText
+                if (newTestamentText != null && oldTestamentText != null) {
+                    widgetData.content = it
+                    widgetData.contentToShow = when (it) {
+                        WidgetContent.OLD_TESTAMENT -> oldTestamentText
+                        WidgetContent.NEW_TESTAMENT -> newTestamentText
+                        WidgetContent.OLD_AND_NEW_TESTAMENT -> oldTestamentText + "\n\n" + newTestamentText
+                    }
                 }
             }
 

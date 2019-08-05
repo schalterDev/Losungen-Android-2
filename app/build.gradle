@@ -107,6 +107,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:17.0.1'
     implementation "com.google.firebase:firebase-ads:18.1.0"
 
+    // changelog
+    implementation 'com.github.MFlisar:changelog:1.1.6'
+
     // ----------- TESTING ----------
     testImplementation "junit:junit:4.12"
     testImplementation "androidx.test:core:1.1.0"

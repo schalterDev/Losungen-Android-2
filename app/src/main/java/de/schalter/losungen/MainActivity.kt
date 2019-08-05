@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.michaelflisar.changelog.ChangelogBuilder
+import com.michaelflisar.changelog.classes.ChangelogFilter
 import de.schalter.customize.CustomizeActivity
 import de.schalter.customize.CustomizeToolbar
 import de.schalter.losungen.components.navigationDrawer.NavigationDrawer
@@ -17,6 +19,7 @@ import de.schalter.losungen.firebase.FirebaseUtil
 import de.schalter.losungen.migration.MigrateProgressDialog
 import de.schalter.losungen.migration.Migration
 import de.schalter.losungen.screens.intro.IntroActivity
+import de.schalter.losungen.sermon.sermonProvider.SermonProvider
 import de.schalter.losungen.utils.PreferenceTags
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -122,6 +125,18 @@ class MainActivity : CustomizeActivity() {
             return true
         } else {
             migrate.migrateIfNecessary()
+
+            // show changelog
+            ChangelogBuilder()
+                    .withManagedShowOnStart(true)
+                    .withSummary(true, true)
+                    .apply {
+                        // do not show changelog for sermon when language does not support sermon
+                        if (!SermonProvider.implementationForLanguageAvailable(this@MainActivity)) {
+                            this.withFilter(ChangelogFilter(ChangelogFilter.Mode.NotContains, "sermon", true))
+                        }
+                    }
+                    .buildAndShowDialog(this, false)
         }
 
         return false

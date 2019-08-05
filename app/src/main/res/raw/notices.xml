@@ -28,4 +28,9 @@
         <url>https://github.com/AppIntro/AppIntro</url>
         <license>Apache Software License 2.0</license>
     </notice>
+    <notice>
+        <name>changelog</name>
+        <url>https://github.com/MFlisar/changelog</url>
+        <license>Apache Software License 2.0</license>
+    </notice>
 </notices>

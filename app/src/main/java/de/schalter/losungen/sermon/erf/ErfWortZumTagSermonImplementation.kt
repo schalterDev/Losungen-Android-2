@@ -35,7 +35,10 @@ class ErfWortZumTagSermonImplementation(context: Context) : SermonProvider(conte
 
     override fun downloadAndSaveToFileAndDatabase(url: String): Single<String> {
         return Single.fromCallable {
-            val inputStream = BufferedInputStream(URL(url).openStream())
+            val connection = URL(url).openConnection()
+            connection.connectTimeout = 3000
+            connection.readTimeout = 3000
+            val inputStream = BufferedInputStream(connection.getInputStream())
             savePathMp3 = saveSermon(inputStream)
             inputStream.close()
             saveToDatabase()

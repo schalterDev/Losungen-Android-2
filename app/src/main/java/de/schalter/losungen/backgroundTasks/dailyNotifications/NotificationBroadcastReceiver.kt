@@ -12,15 +12,15 @@ import android.os.Build
 import android.preference.PreferenceManager
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
-import io.reactivex.Observable
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import de.schalter.losungen.MainActivity
 import de.schalter.losungen.R
 import de.schalter.losungen.dataAccess.VersesDatabase
 import de.schalter.losungen.dataAccess.daily.DailyVerse
 import de.schalter.losungen.utils.PreferenceTags
 import de.schalter.losungen.utils.Share
+import io.reactivex.Observable
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 
 class NotificationBroadcastReceiver : BroadcastReceiver() {
@@ -107,7 +107,7 @@ class NotificationBroadcastReceiver : BroadcastReceiver() {
 
     private fun getNotificationData(): Observable<NotificationData> {
         // create a observable that will be castet to a future
-        return Observable.create<NotificationData> {
+        return Observable.create {
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
             val notificationContent = preferences.getString(PreferenceTags.NOTIFICATION_CONTENT, CONTENT_OT_NT)
 

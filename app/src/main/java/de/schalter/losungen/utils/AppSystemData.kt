@@ -6,9 +6,9 @@ object AppSystemData {
 
     fun getAppVersion(context: Context) = context.packageManager.getPackageInfo(context.packageName, 0).versionCode
     fun getAndroidVersion() = android.os.Build.VERSION.SDK_INT
-    fun getDevice() = android.os.Build.DEVICE
-    fun getModel() = android.os.Build.MODEL
-    fun getProduct() = android.os.Build.PRODUCT
+    fun getDevice() = android.os.Build.DEVICE!!
+    fun getModel() = android.os.Build.MODEL!!
+    fun getProduct() = android.os.Build.PRODUCT!!
 
     fun getDebugInformationAsString(context: Context): String {
         val stringBuilder = StringBuilder()

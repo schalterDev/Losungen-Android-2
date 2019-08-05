@@ -15,7 +15,7 @@ object Open {
         try {
             context.startActivity(goToMarket)
         } catch (e: ActivityNotFoundException) {
-            Open.website(context, "http://play.google.com/store/apps/details?id=" + context.packageName)
+            website(context, "http://play.google.com/store/apps/details?id=" + context.packageName)
         }
     }
 
@@ -28,7 +28,7 @@ object Open {
     }
 
     fun privacyWebsite(context: Context) {
-        Open.website(context, Constants.urlPrivacyWebsite)
+        website(context, Constants.urlPrivacyWebsite)
     }
 
     fun website(context: Context, website: String) {

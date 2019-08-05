@@ -44,11 +44,7 @@ object Customize {
 
     fun getColor(context: Context, attrColor: Int, theme: Resources.Theme? = null): Int {
         val typedValue = TypedValue()
-        val themeToUse = if (theme == null) {
-            context.theme
-        } else {
-            theme
-        }
+        val themeToUse = theme ?: context.theme
         themeToUse.resolveAttribute(attrColor, typedValue, true)
 
         return typedValue.data

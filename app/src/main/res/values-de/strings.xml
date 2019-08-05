@@ -3,7 +3,6 @@
     <string name="losungen">Losungen</string>
     <string name="monthly_verses">Monats-, Wochensprüche</string>
     <string name="favorite_verses">Markierte Verse</string>
-    <string name="configure_widgets">Widgets konfigurieren</string>
     <string name="settings">Einstellungen</string>
     <string name="rate">Bewerten</string>
     <string name="send_feedback_bug">Feedack / Fehler melden</string>
@@ -11,7 +10,6 @@
     <string name="privacy_policy">Datenschutzerklärung</string>
 
     <string name="title_activity_settings">Einstellungen</string>
-    <string name="pref_general">Allgemein</string>
     <string name="send_mail">Email verschicken</string>
 
     <string name="old_testament_card_title">Losung</string>
@@ -38,7 +36,6 @@
     <string name="open_verse_external">Mit externem Programm öffnen</string>
     <string name="could_not_parse_verse">Konnte den Vers nicht verstehen</string>
     <string name="remember_my_decision">Merke meine Wahl</string>
-    <string name="open_external_default_value">Standartwert zum Öffnen von Versen mit externen App</string>
     <string name="delete_open_external_default_value">Klicke um den Standartwert für das Öffnen von Versen in externen APPs zu löschen</string>
     <string name="successful">Erfolgreich</string>
     <string name="weekly_verse">Wochenspruch</string>
@@ -62,7 +59,6 @@
     <string name="widget_content">Inhalt des Widgets</string>
     <string name="marked_as_favourite">Als Favorit markiert</string>
     <string name="could_not_parse_date_of_rss">Fehler beim Interpretieren des Datums im RSS-Eintrag</string>
-    <string name="failed_to_parse_erf_site">Konnte keine MP3 Datei auf der ERF Seite finden</string>
     <string name="no_sermon_found">Keine Andacht für diesen Tag gefunden</string>
     <string name="stop_sermon">Andacht stoppen</string>
     <string name="play_sermon">Andacht abspielen</string>
@@ -74,7 +70,6 @@
     <string name="searching_sermon">Suche Andacht</string>
     <string name="sermon_provider_notification_channel_description">Zeigt den Fortschritt des Herunterladens der Andacht</string>
     <string name="sermon_provider_notification_channel_id">Download Fortschritt</string>
-    <string name="daily_word_not_found">Losung nicht gefunden</string>
     <string name="loading_sermon">Lade Andacht</string>
     <string name="share_sermon">Andacht Teilen</string>
     <string name="app_info">App Infos</string>

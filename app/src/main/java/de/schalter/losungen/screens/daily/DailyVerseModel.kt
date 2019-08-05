@@ -69,8 +69,6 @@ class DailyVerseModel(private val database: VersesDatabase, private val date: Da
 
         return sermon
     }
-
-    fun getSermon() = sermon
 }
 
 class DailyVerseModelFactory(private val context: Context, private val date: Date) : ViewModelProvider.NewInstanceFactory() {

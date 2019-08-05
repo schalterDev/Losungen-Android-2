@@ -17,9 +17,6 @@ class BibleVerse(verseAsString: String) {
     var chapter: Int? = null //the book judas only has one chapter
     var verses: List<Int>
 
-    private val REGEX_CHAPTER_VERSE = Regex(" [\\d\\[.,\\-\\]]+")
-    private val REGEX_CHAPTER = Regex("\\d+,")
-
     init {
         // parse book
         var book = verseAsString.replace(REGEX_CHAPTER_VERSE, "")
@@ -66,5 +63,10 @@ class BibleVerse(verseAsString: String) {
         } catch (e: NumberFormatException) {
             throw BibleVerseParseException("Tried to parse number: " + e.message)
         }
+    }
+
+    companion object {
+        private val REGEX_CHAPTER_VERSE = Regex(" [\\d\\[.,\\-\\]]+")
+        private val REGEX_CHAPTER = Regex("\\d+,")
     }
 }

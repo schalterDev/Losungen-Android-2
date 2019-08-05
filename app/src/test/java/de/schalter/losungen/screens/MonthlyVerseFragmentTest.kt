@@ -9,14 +9,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
-import io.mockk.every
-import io.mockk.mockkClass
-import io.mockk.mockkObject
-import org.hamcrest.Matchers.equalTo
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 import de.schalter.losungen.R
 import de.schalter.losungen.components.emptyState.EmptyStateView
 import de.schalter.losungen.components.verseCard.VerseCardData
@@ -29,6 +21,14 @@ import de.schalter.losungen.dataAccess.monthly.MonthlyVersesDao
 import de.schalter.losungen.dataAccess.weekly.WeeklyVerse
 import de.schalter.losungen.dataAccess.weekly.WeeklyVersesDao
 import de.schalter.losungen.screens.monthly.MonthlyVerseFragment
+import io.mockk.every
+import io.mockk.mockkClass
+import io.mockk.mockkObject
+import org.hamcrest.Matchers.equalTo
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -67,7 +67,7 @@ class MonthlyVerseFragmentTest {
             putLong(ARG_DATE, Calendar.getInstance().time.time)
         }
 
-        fragmentScenario = launchFragmentInContainer<MonthlyVerseFragment>(fragmentArgs)
+        fragmentScenario = launchFragmentInContainer(fragmentArgs)
     }
 
     private fun mockDatabase() {
@@ -112,7 +112,8 @@ class MonthlyVerseFragmentTest {
                 monthlyVerse.verseBible,
                 "",
                 "",
-                ""
+                "",
+                type = VerseCardData.Type.MONTHLY
         )
 
         val simpleDateFormat = SimpleDateFormat(datePattern)
@@ -123,7 +124,8 @@ class MonthlyVerseFragmentTest {
                 weeklyVerse.verseBible,
                 "",
                 "",
-                ""
+                "",
+                type = VerseCardData.Type.MONTHLY
         )
 
         assertThat(monthlyVerseViewHolder.getData(), equalTo(expectedDataMonth))

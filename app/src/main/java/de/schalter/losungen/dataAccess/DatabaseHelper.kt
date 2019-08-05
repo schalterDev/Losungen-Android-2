@@ -9,12 +9,6 @@ class DatabaseHelper(val context: Context) {
 
     private var database: VersesDatabase = VersesDatabase.provideVerseDatabase(context)
 
-    fun importAllVerses(dailyVerses: List<DailyVerse>, weeklyVerses: List<WeeklyVerse>, monthlyVerses: List<MonthlyVerse>) {
-        importDailyVerses(dailyVerses)
-        importWeeklyVerses(weeklyVerses)
-        importMonthlyVerses(monthlyVerses)
-    }
-
     fun importDailyVerses(dailyVerses: List<DailyVerse>) {
         dailyVerses.forEach { database.dailyVerseDao().insertDailyVerse(it) }
     }

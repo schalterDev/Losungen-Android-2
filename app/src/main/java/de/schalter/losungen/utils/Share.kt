@@ -33,7 +33,7 @@ object Share {
         builder.setTitle(R.string.share)
         builder.setCancelable(true)
         builder.setItems(itemTitlesDialog.toTypedArray()) { _, which ->
-            Share.text(context, items[which].text)
+            text(context, items[which].text)
         }.create().show()
     }
 

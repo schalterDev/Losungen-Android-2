@@ -39,7 +39,7 @@ class ChooseStylePreferenceDialogGridAdapter(private val themes: List<CustomizeT
 
     override fun getCount(): Int = themes.size
 
-    private class ViewHolder(val itemView: View, val titleToolbar: String) {
+    private class ViewHolder(val itemView: View, titleToolbar: String) {
 
         val toolbar: LinearLayout
         val toolbarText: TextView

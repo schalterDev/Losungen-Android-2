@@ -7,7 +7,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "de.schalter.losungen"
-        minSdkVersion 19
+        minSdkVersion 17
         targetSdkVersion 28
         versionCode 100
         versionName "2.0"
@@ -105,7 +105,7 @@ dependencies {
 
     // ads, analytics
     implementation 'com.google.firebase:firebase-core:17.0.1'
-    implementation "com.google.firebase:firebase-ads:18.1.0"
+    implementation "com.google.firebase:firebase-ads:18.1.1"
 
     // changelog
     implementation 'com.github.MFlisar:changelog:1.1.6'

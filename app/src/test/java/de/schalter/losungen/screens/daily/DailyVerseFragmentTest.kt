@@ -9,6 +9,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
+import de.schalter.losungen.R
+import de.schalter.losungen.components.emptyState.EmptyStateView
+import de.schalter.losungen.components.verseCard.VerseCardData
+import de.schalter.losungen.components.verseCard.VerseCardGridAdapter
+import de.schalter.losungen.dataAccess.Language
+import de.schalter.losungen.dataAccess.daily.DailyVerse
+import de.schalter.losungen.screens.ARG_DATE
+import de.schalter.losungen.utils.DatabaseUtils.mockDailyVerseDaoFindDailyVerseByDate
+import de.schalter.losungen.utils.DatabaseUtils.mockDailyVersesDao
+import de.schalter.losungen.utils.Share
 import io.mockk.*
 import org.hamcrest.Matchers.equalTo
 import org.junit.Assert.assertEquals
@@ -20,16 +30,6 @@ import org.robolectric.Robolectric.flushForegroundThreadScheduler
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 import org.robolectric.fakes.RoboMenuItem
-import de.schalter.losungen.R
-import de.schalter.losungen.components.emptyState.EmptyStateView
-import de.schalter.losungen.components.verseCard.VerseCardData
-import de.schalter.losungen.components.verseCard.VerseCardGridAdapter
-import de.schalter.losungen.dataAccess.Language
-import de.schalter.losungen.dataAccess.daily.DailyVerse
-import de.schalter.losungen.screens.ARG_DATE
-import de.schalter.losungen.utils.DatabaseUtils.mockDailyVerseDaoFindDailyVerseByDate
-import de.schalter.losungen.utils.DatabaseUtils.mockDailyVersesDao
-import de.schalter.losungen.utils.Share
 import java.util.*
 
 @RunWith(RobolectricTestRunner::class)
@@ -90,7 +90,8 @@ class DailyVerseFragmentTest {
                 dailyVerse.oldTestamentVerseBible,
                 "",
                 "",
-                ""
+                "",
+                type = VerseCardData.Type.DAILY
         )
         val expectedDataNewTestament = VerseCardData(
                 context.getString(R.string.new_testament_card_title),
@@ -98,7 +99,8 @@ class DailyVerseFragmentTest {
                 dailyVerse.newTestamentVerseBible,
                 "",
                 "",
-                ""
+                "",
+                type = VerseCardData.Type.DAILY
         )
 
         assertThat(oldTestamentViewHolder.getData(), equalTo(expectedDataOldTestament))

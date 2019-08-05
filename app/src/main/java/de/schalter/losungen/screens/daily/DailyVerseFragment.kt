@@ -80,7 +80,7 @@ class DailyVerseFragment : VerseListDateFragment(R.layout.fragment_verse_list_no
 
             mViewModel.sermonAvailable().observe(this, androidx.lifecycle.Observer { sermons ->
                 if (sermons.isNotEmpty()) {
-                    mediaPlayerUi?.setTitle(sermons[0].provider)
+                    mediaPlayerUi?.setTitle(getTitleForSermon(sermons[0]))
                 }
             })
         }
@@ -124,11 +124,20 @@ class DailyVerseFragment : VerseListDateFragment(R.layout.fragment_verse_list_no
     private fun playSermon(sermon: Sermon) {
         mediaPlayerUi?.playAudio(sermon.pathSaved, mViewModel.getDailyVerse().value?.date?.time.toString(), sermon.provider
                 ?: mContext.getString(R.string.playing_sermon))
-        mediaPlayerUi?.setTitle(sermon.provider)
+        mediaPlayerUi?.setTitle(getTitleForSermon(sermon))
 
         mediaPlayerUi?.mediaPlayerStopped = {
             showSermonPlayButton()
         }
+    }
+
+    private fun getTitleForSermon(sermon: Sermon): String? {
+        var title = sermon.provider
+        sermon.author?.let { author ->
+            title += " ($author)"
+        }
+
+        return title
     }
 
     private fun showError(exception: Throwable) {

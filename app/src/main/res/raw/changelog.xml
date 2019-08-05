@@ -9,6 +9,7 @@
             filter="sermon"
             type="summary">Show author of sermon
         </new>
+        <new type="summary">Design templates for home screen widget</new>
         <new>New APP icon</new>
         <info>Some design changes</info>
     </release>

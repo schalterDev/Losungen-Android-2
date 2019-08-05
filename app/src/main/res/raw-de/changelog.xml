@@ -9,6 +9,7 @@
             filter="sermon"
             type="summary">Der Autor der Andacht wird angezeigt
         </new>
+        <new type="summary">Design-Vorlagen für Widgets auf dem Startbildschirm</new>
         <new>Neues App-icon</new>
         <info>Designänderungen</info>
     </release>

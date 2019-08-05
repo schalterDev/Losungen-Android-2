@@ -3,10 +3,14 @@ package de.schalter.losungen.migration
 import android.app.Activity
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import androidx.appcompat.app.AppCompatActivity
+import com.michaelflisar.changelog.ChangelogBuilder
+import com.michaelflisar.changelog.classes.ChangelogFilter
 import de.schalter.customize.Customize
 import de.schalter.losungen.R
 import de.schalter.losungen.backgroundTasks.dailyNotifications.ScheduleNotification
 import de.schalter.losungen.dataAccess.VersesDatabase
+import de.schalter.losungen.sermon.sermonProvider.SermonProvider
 import de.schalter.losungen.utils.PreferenceTags
 import java.io.File
 
@@ -29,6 +33,22 @@ class Migration(private val activity: Activity) {
     }
 
     fun migrateIfNecessary() {
+        if (actualVersionCode != versionCodeLastStart) {
+
+            // show changelog
+            if (activity is AppCompatActivity) {
+                ChangelogBuilder()
+                        .withSummary(true, true)
+                        .apply {
+                            // do not show changelog for sermon when language does not support sermon
+                            if (!SermonProvider.implementationForLanguageAvailable(activity)) {
+                                this.withFilter(ChangelogFilter(ChangelogFilter.Mode.NotContains, "sermon", true))
+                            }
+                        }
+                        .buildAndShowDialog(activity, false)
+            }
+        }
+
         preference.edit().putInt(PreferenceTags.APP_VERSIONSCODE, actualVersionCode).apply()
     }
 

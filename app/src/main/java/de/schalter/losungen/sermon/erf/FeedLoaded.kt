@@ -1,3 +1,6 @@
 package de.schalter.losungen.sermon.erf
 
-data class FeedLoaded(val author: String?, val downloadPath: String)
+data class FeedLoaded(
+        val downloadPath: String,
+        val author: String? = null,
+        val bibleVerse: String? = null)

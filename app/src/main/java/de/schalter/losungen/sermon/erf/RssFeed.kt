@@ -32,7 +32,19 @@ class RssFeed {
                     if (foundArticle?.link == null) {
                         emitter.onError(TranslatableException(R.string.no_sermon_found))
                     } else {
-                        emitter.onSuccess(FeedLoaded(foundArticle.author, foundArticle.link!!))
+                        // foundArticle.author is null. But the author is in the description
+                        // Example: Some text (Autor: ...)
+                        val authorStartIndex = foundArticle.description?.indexOf(AUTHOR_START_TEXT)
+                                ?: -1
+                        val authorEndIndex = foundArticle.description?.indexOf(AUTHOR_END_TEXT, authorStartIndex)
+                                ?: -1
+                        val author = if (authorStartIndex != -1 && authorEndIndex != -1) {
+                            foundArticle.description?.substring(authorStartIndex + AUTHOR_START_TEXT.length, authorEndIndex)?.trim()
+                        } else {
+                            null
+                        }
+
+                        emitter.onSuccess(FeedLoaded(foundArticle.link!!, author = author, bibleVerse = foundArticle.title))
                     }
                 } catch (e: Exception) {
                     emitter.onError(TranslatableException(R.string.could_not_get_sermon_list))
@@ -50,5 +62,8 @@ class RssFeed {
 
     companion object {
         const val DATE_FORMAT = "EEE, d MMM yyyy hh:mm:ss Z"
+
+        const val AUTHOR_START_TEXT = "Autor:"
+        const val AUTHOR_END_TEXT = ")"
     }
 }

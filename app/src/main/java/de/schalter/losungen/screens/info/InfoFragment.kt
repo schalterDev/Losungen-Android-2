@@ -55,6 +55,9 @@ class InfoFragment : AnalyticsFragment() {
         textViews.add(view.findViewById<TextView>(R.id.textView_github).apply {
             this.setOnClickListener { openGithubPage() }
         })
+        textViews.add(view.findViewById<TextView>(R.id.textView_contributor).apply {
+            this.text = mContext.getString(R.string.contributors, CONTRIBUTORS.joinToString())
+        })
 
 
         textViews.forEach {
@@ -86,6 +89,7 @@ class InfoFragment : AnalyticsFragment() {
     }
 
     companion object {
+        val CONTRIBUTORS = arrayOf("Martin Schalter")
 
         /**
          * Use this factory method to create a new instance of

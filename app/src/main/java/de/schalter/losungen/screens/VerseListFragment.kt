@@ -5,8 +5,6 @@ import android.preference.PreferenceManager
 import android.view.*
 import android.widget.LinearLayout
 import androidx.annotation.VisibleForTesting
-import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import de.schalter.losungen.R
@@ -26,7 +24,6 @@ abstract class VerseListFragment(
     private lateinit var recyclerView: RecyclerView
     private lateinit var gridAdapter: VerseCardGridAdapter
     protected lateinit var linearLayout: LinearLayout
-    protected lateinit var actionBar: ActionBar
 
     @VisibleForTesting
     private var menu: Menu? = null
@@ -44,7 +41,6 @@ abstract class VerseListFragment(
         emptyStateView = view.findViewById(R.id.emptyState)
         recyclerView = view.findViewById(R.id.versesList)
         linearLayout = view.findViewById(R.id.versesLinearLayout)
-        actionBar = (activity as AppCompatActivity).supportActionBar!!
 
         recyclerView.layoutManager = VerseCardGridAdapter.getLayoutManager(view.context)
         gridAdapter = VerseCardGridAdapter()

@@ -28,6 +28,7 @@ class VerseCardViewTest {
     @Before
     fun loadView() {
         context = ApplicationProvider.getApplicationContext()
+        context.setTheme(R.style.Theme_Blue)
         verseCardView = LayoutInflater
                 .from(context)
                 .inflate(R.layout.verse_card, VerseCardView(context), true)
@@ -42,7 +43,7 @@ class VerseCardViewTest {
     }
 
     @Test
-    fun shouldShowData() {
+    fun shouldShowDataAndHideNotUsedViews() {
         val title = "Title"
         val verse = "Verse"
         val bible = "Bible"
@@ -51,10 +52,7 @@ class VerseCardViewTest {
         val verse2 = "Verse2"
         val bible2 = "Bible2"
 
-        // TODO update with setData
-//        verseCardView.setTitle(title)
-//        verseCardView.setVerse(verse)
-//        verseCardView.setVerseInBible(bible)
+        verseCardView.setData(VerseCardData(title, verse, bible, type = VerseCardData.Type.DAILY))
 
         assertThat(title1TextView.text as String, equalTo(title))
         assertThat(verse1TextView.text as String, equalTo(verse))
@@ -64,10 +62,7 @@ class VerseCardViewTest {
         assertThat(bible2TextView.visibility, equalTo(View.GONE))
         assertThat(verse2TextView.visibility, equalTo(View.GONE))
 
-        // TODO update with setData
-//        verseCardView.setTitle2(title2)
-//        verseCardView.setVerse2(verse2)
-//        verseCardView.setVerseInBible2(bible2)
+        verseCardView.setData(VerseCardData(title, verse, bible, title2, verse2, bible2, type = VerseCardData.Type.DAILY))
 
         assertThat(title2TextView.visibility, equalTo(View.VISIBLE))
         assertThat(bible2TextView.visibility, equalTo(View.VISIBLE))

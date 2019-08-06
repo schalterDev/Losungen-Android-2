@@ -7,7 +7,7 @@ class TestApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        setTheme(R.style.BaseThemeLight)
+        setTheme(R.style.Theme_Blue)
     }
 
 }

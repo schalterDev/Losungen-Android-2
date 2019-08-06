@@ -1,7 +1,11 @@
 package de.schalter.losungen.dataAccess
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import de.schalter.losungen.dataAccess.daily.DailyVerse
+import de.schalter.losungen.dataAccess.daily.DailyVersesDao
+import de.schalter.losungen.utils.DatabaseUtils
+import de.schalter.losungen.utils.DateUtils
+import de.schalter.losungen.utils.blockingObserve
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.isEmptyOrNullString
 import org.junit.After
@@ -9,16 +13,9 @@ import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import de.schalter.losungen.dataAccess.daily.DailyVerse
-import de.schalter.losungen.dataAccess.daily.DailyVersesDao
-import de.schalter.losungen.utils.DatabaseUtils
-import de.schalter.losungen.utils.DateUtils
-import de.schalter.losungen.utils.blockingObserve
 import java.io.IOException
 import java.util.*
 
-@RunWith(AndroidJUnit4::class)
 class DailyVersesUnitTest {
 
     @get:Rule

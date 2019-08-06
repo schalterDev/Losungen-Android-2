@@ -1,6 +1,5 @@
 package de.schalter.losungen.utils
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
@@ -17,7 +16,7 @@ object DatabaseUtils {
 
     fun getInMemoryDatabase(): VersesDatabase {
         return Room.inMemoryDatabaseBuilder(
-                getApplicationContext<Context>(), VersesDatabase::class.java).build()
+                getApplicationContext(), VersesDatabase::class.java).build()
     }
 
     fun mockDailyVersesDao(): DailyVersesDao {

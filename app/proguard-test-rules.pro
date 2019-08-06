@@ -23,6 +23,11 @@
 #-keep class de.schalter.** { *; }
 #-keep class ** { *; }
 
+# needed for instrumentation tests
+-keep class androidx.test.** { *; }
+-keep class androidx.arch.** { *; }
+-keep class androidx.room.** { *; }
+-keep class de.schalter.** { *; }
 -keepattributes SourceFile,LineNumberTable
 -keepattributes LocalVariableTable,LocalVariableTypeTable
 -dontoptimize

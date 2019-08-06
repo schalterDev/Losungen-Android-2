@@ -19,7 +19,7 @@ android {
             debuggable true
             minifyEnabled true
             shrinkResources false
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-test-rules.pro"
         }
         release {
             minifyEnabled true
@@ -112,24 +112,33 @@ dependencies {
 
     // ----------- TESTING ----------
     testImplementation "junit:junit:4.12"
-    testImplementation "androidx.test:core:1.1.0"
-    testImplementation "androidx.test:runner:1.1.1"
-    testImplementation "androidx.test:rules:1.1.1"
-    testImplementation "androidx.arch.core:core-testing:2.0.0"
-    testImplementation "androidx.test.espresso:espresso-core:3.1.1"
-    testImplementation "com.android.support.test.espresso:espresso-contrib:3.0.2"
-    testImplementation "org.robolectric:robolectric:4.1"
+    testImplementation "androidx.test:core:1.2.0"
+    testImplementation "androidx.test:runner:1.2.0"
+    testImplementation "androidx.test:rules:1.2.0"
+    testImplementation "androidx.test:monitor:1.2.0"
+    testImplementation "androidx.arch.core:core-testing:2.0.1"
+    testImplementation "androidx.test.espresso:espresso-core:3.2.0"
+    testImplementation "androidx.test.espresso:espresso-contrib:3.2.0"
+    testImplementation "org.robolectric:robolectric:4.3"
     testImplementation "io.mockk:mockk:1.8.13"
 
-    debugImplementation "androidx.fragment:fragment-testing:1.1.0-rc01"
+    debugImplementation "androidx.fragment:fragment-testing:1.1.0-rc03"
 
     androidTestImplementation "io.mockk:mockk-android:1.8.13"
-    androidTestImplementation "androidx.arch.core:core-testing:2.0.0"
-    androidTestImplementation "androidx.test:rules:1.1.1"
-    androidTestImplementation "androidx.test.ext:junit:1.1.0"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
-    androidTestImplementation "com.android.support.test.espresso:espresso-contrib:3.0.2"
-    androidTestImplementation "com.android.support.test.espresso:espresso-intents:3.0.2"
+    androidTestImplementation "androidx.arch.core:core-testing:2.0.1"
+    androidTestImplementation "androidx.test:rules:1.2.0"
+    androidTestImplementation "androidx.test.ext:junit:1.1.1"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.2.0"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:3.2.0"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:3.2.0"
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:core:1.2.0'
+}
+configurations.all {
+    resolutionStrategy {
+        force group: 'androidx.test', name: 'core', version: '1.2.0'
+    }
 }
 repositories {
     mavenCentral()

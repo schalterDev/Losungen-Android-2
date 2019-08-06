@@ -1,5 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?><!--suppress AndroidDomInspection -->
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <style name="AppThemeLight" />
+
+    <style name="AppThemeDark" />
 
     <style name="AppTheme.Menu" parent="ThemeOverlay.AppCompat">
         <item name="android:colorBackground">?colorBackground</item>

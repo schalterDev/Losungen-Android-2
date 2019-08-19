@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppThemeLight" />
+
+    <style name="AppThemeDark" />
+
+    <style name="AppTheme.Menu" parent="ThemeOverlay.AppCompat">
+        <item name="android:colorBackground">?colorBackground</item>
+        <item name="android:textColor">?colorFont</item>
+    </style>
+
+    <style name="AppTheme.Toolbar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">?colorIconsToolbar</item>
+    </style>
+
+    <style name="BaseThemeLight" parent="AppThemeLight">
+        <item name="colorIconsToolbar">@color/lightToolbarIconText</item>
+        <item name="colorBackground">@color/lightBackground</item>
+        <item name="colorWindowBackground">@color/lightWindowBackground</item>
+        <item name="android:windowBackground">@color/lightWindowBackground</item>
+        <item name="android:colorBackground">@color/lightBackground</item>
+
+        <item name="colorFont">#212121</item>
+        <item name="colorFontDisabled">#444444</item>
+        <item name="colorSecondFont">#757575</item>
+    </style>
+
+    <style name="BaseDarkTheme" parent="AppThemeDark">
+        <item name="colorIconsToolbar">@color/darkToolbarIconText</item>
+        <item name="colorBackground">@color/darkBackground</item>
+        <item name="colorWindowBackground">@color/darkWindowBackground</item>
+        <item name="android:windowBackground">@color/darkWindowBackground</item>
+        <item name="android:colorBackground">@color/darkBackground</item>
+
+        <item name="colorFont">#EEEEEE</item>
+        <item name="colorFontDisabled">#BEBEBE</item>
+        <item name="colorSecondFont">#D8D4D4</item>
+    </style>
+
+    <style name="Theme_Blue" parent="BaseThemeLight">
+        <item name="colorIconsToolbar">@color/darkToolbarIconText</item>
+
+        <item name="colorPrimary">#03A9F4</item>
+        <item name="colorPrimaryDark">#1976D2</item>
+        <item name="colorPrimaryLight">#B2EBF2</item>
+        <item name="colorAccent">#FFC107</item>
+    </style>
+
+    <style name="Theme_Gray" parent="BaseThemeLight">
+        <item name="colorIconsToolbar">@color/darkToolbarIconText</item>
+
+        <item name="colorPrimary">#607D8B</item>
+        <item name="colorPrimaryDark">#455A64</item>
+        <item name="colorPrimaryLight">#CFD8DC</item>
+        <item name="colorAccent">#FF4081</item>
+    </style>
+
+    <style name="Theme_Green" parent="BaseThemeLight">
+        <item name="colorPrimary">#8BC34A</item>
+        <item name="colorPrimaryDark">#689F38</item>
+        <item name="colorPrimaryLight">#DCEDC8</item>
+        <item name="colorAccent">#009688</item>
+    </style>
+
+    <style name="Theme_Red" parent="BaseThemeLight">
+        <item name="colorIconsToolbar">@color/darkToolbarIconText</item>
+
+        <item name="colorPrimary">#F44336</item>
+        <item name="colorPrimaryDark">#D32F2F</item>
+        <item name="colorPrimaryLight">#FFCDD2</item>
+        <item name="colorAccent">#607D8B</item>
+    </style>
+
+    <style name="Theme_Yellow" parent="BaseThemeLight">
+        <item name="colorPrimary">#FFC107</item>
+        <item name="colorPrimaryDark">#FFA000</item>
+        <item name="colorPrimaryLight">#FFECB3</item>
+        <item name="colorAccent">#FF5722</item>
+    </style>
+
+    <style name="Theme_Dark" parent="BaseDarkTheme">
+        <item name="colorPrimary">#424242</item>
+        <item name="colorPrimaryDark">#212121</item>
+        <item name="colorPrimaryLight">#9E9E9E</item>
+        <item name="colorAccent">#FF7043</item>
+    </style>
+
+    <style name="Theme_Light" parent="BaseThemeLight">
+        <item name="colorPrimary">#EEEEEE</item>
+        <item name="colorPrimaryDark">#BDBDBD</item>
+        <item name="colorPrimaryLight">#FAFAFA</item>
+        <item name="colorAccent">#009688</item>
+    </style>
+</resources>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/audio_relative"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="8dp"
+    android:paddingTop="5dp"
+    android:paddingEnd="8dp"
+    android:paddingBottom="10dp"
+    android:visibility="visible">
+
+    <TextView
+        android:id="@+id/textView_audio_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title Audio"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        tools:ignore="HardcodedText" />
+
+    <SeekBar
+        android:id="@+id/audio_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView_audio_title"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:id="@+id/audio_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/audio_seekbar"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="false"
+        android:layout_gravity="end"
+        android:tint="?colorFont"
+        android:contentDescription="@string/stop_sermon"
+        app:srcCompat="@drawable/ic_close" />
+
+    <ImageView
+        android:id="@+id/audio_play"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/audio_seekbar"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="@string/play_sermon"
+        android:paddingBottom="5dp"
+        android:tint="?colorFont"
+        app:srcCompat="@drawable/ic_play_arrow" />
+
+    <TextView
+        android:id="@+id/textView_audio_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/audio_seekbar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="false"
+        android:text="0:00"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        tools:ignore="HardcodedText" />
+
+</RelativeLayout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        layout="@layout/fragment_verse_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <EditText
+        android:id="@+id/text_notes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:ems="10"
+        android:gravity="bottom|start"
+        android:hint="@string/notes"
+        android:inputType="textMultiLine"
+        android:lineSpacingExtra="3sp"
+        android:maxLines="5"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_play_sermon"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/download_and_play_sermon"
+            android:textAlignment="viewStart"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:drawableStart="@drawable/ic_action_audiotrack"
+            android:drawablePadding="12dp" />
+
+        <Button
+            android:id="@+id/button_add_notes"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/add_notes"
+            android:textAlignment="viewEnd"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+    </LinearLayout>
+
+</LinearLayout>

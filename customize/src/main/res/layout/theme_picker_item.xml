@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:clickable="false">
+
+    <LinearLayout
+        android:id="@+id/item_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:background="@android:color/holo_green_light"
+        android:orientation="horizontal"
+        android:clickable="false">
+
+        <TextView
+            android:id="@+id/item_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center"
+            android:layout_marginStart="20dp"
+            android:layout_weight="1"
+            android:textColor="@color/lightToolbarIconText"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:clickable="false" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/item_body"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@android:color/darker_gray"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:clickable="false">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/item_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:clickable="false"
+            android:tint="@android:color/white"
+            app:srcCompat="@drawable/ic_add" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -9,7 +9,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="7dp"
         android:layout_marginTop="7dp"
-        android:layout_marginEnd="7dp">
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="4dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,10 +25,10 @@
 
                 <TextView
                     android:id="@+id/verseTitle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:foregroundGravity="left"
+                    android:textAlignment="viewStart"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="20sp" />
 
@@ -35,8 +36,8 @@
                     android:id="@+id/verseCardFavoriteImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0"
                     android:contentDescription="@string/mark_as_favorite"
+                    android:tint="?colorAccent"
                     android:visibility="gone"
                     app:srcCompat="@drawable/ic_action_favorite_border" />
             </LinearLayout>
@@ -54,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:textAlignment="textEnd"
-                android:textColor="?attr/colorPrimary" />
+                android:textColor="?attr/colorAccent" />
 
             <TextView
                 android:id="@+id/verseTitle2"
@@ -76,7 +77,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:textAlignment="textEnd"
-                android:textColor="?attr/colorPrimary" />
+                android:textColor="?attr/colorAccent" />
+
+            <EditText
+                android:id="@+id/verseNotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:ems="10"
+                android:gravity="bottom|start"
+                android:hint="@string/notes"
+                android:inputType="textMultiLine"
+                android:lineSpacingExtra="3sp"
+                android:maxLines="5"
+                android:visibility="gone" />
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="schalter.de.losungen2">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="de.schalter.losungen">
 
+    <!-- to download daily words and sermon -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Permission to start Alarm for notification on device reboot -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -10,8 +15,24 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        tools:ignore="GoogleAppIndexingWarning">
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-2270371481189370~4191783045" />
+
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
+
+        <meta-data
+            android:name="google_analytics_adid_collection_enabled"
+            android:value="false" />
+
+        <activity
+            android:name="de.schalter.losungen.widgets.AppWidgetActivity"
+            android:label="@string/title_activity_app_widget" />
+        <activity android:name="de.schalter.losungen.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,8 +40,55 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="schalter.de.losungen2.screens.settings.SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:name="de.schalter.losungen.screens.settings.SettingsActivity"
+            android:label="@string/title_activity_settings" />
+        <activity
+            android:name=".screens.intro.IntroActivity"
+            android:label="@string/app_intro"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+
+        <provider
+            android:authorities="de.schalter.losungen.file.provider"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <service
+            android:name="de.schalter.losungen.sermon.mediaPlayer.MediaPlayerService"
+            android:enabled="true" />
+        <service
+            android:name="de.schalter.losungen.sermon.sermonProvider.SermonProviderService"
+            android:enabled="true" />
+
+        <receiver android:name="de.schalter.losungen.widgets.WidgetBroadcast">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info" />
+        </receiver>
+
+        <!-- Daily notifications -->
+        <receiver android:name="de.schalter.losungen.backgroundTasks.dailyNotifications.NotificationBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <!-- Will not be called unless the application explicitly enables it -->
+        <receiver
+            android:name="de.schalter.losungen.backgroundTasks.dailyNotifications.DeviceBootReceiver"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

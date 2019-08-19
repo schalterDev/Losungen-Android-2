@@ -1,4 +1,4 @@
-<FreeXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.brueder-unitaet.de/losung/losungen.xsd">
+<FreeXml>
     <Losungen>
         <Datum>2019-011T00:00:00</Datum>
         <Wtag>Dienstag</Wtag>

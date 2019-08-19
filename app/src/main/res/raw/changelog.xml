@@ -1,0 +1,17 @@
+<changelog>
+
+    <release
+        versionCode="100"
+        versionName="v2"
+        date="05-08-2019">
+        <bugfix type="summary">Notifications work again</bugfix>
+        <new
+            filter="sermon"
+            type="summary">Show author of sermon
+        </new>
+        <new type="summary">Design templates for home screen widget</new>
+        <new>New APP icon</new>
+        <info>Some design changes</info>
+    </release>
+
+</changelog>

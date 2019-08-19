@@ -4,19 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
+    android:id="@+id/versesLinearLayout"
     tools:context=".screens.daily.DailyVerseFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/versesList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingBottom="2dp" />
 
-    <schalter.de.losungen2.components.emptyState.EmptyStateView
+    <de.schalter.losungen.components.emptyState.EmptyStateView
         android:id="@+id/emptyState"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:visibility="gone"
         custom:emptyStateButtonText="@string/import_new_data"

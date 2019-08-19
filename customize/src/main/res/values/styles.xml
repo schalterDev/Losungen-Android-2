@@ -44,7 +44,7 @@
         <item name="colorPrimary">#03A9F4</item>
         <item name="colorPrimaryDark">#1976D2</item>
         <item name="colorPrimaryLight">#B2EBF2</item>
-        <item name="colorAccent">#FFC107</item>
+        <item name="colorAccent">#FFA000</item>
     </style>
 
     <style name="Theme_Gray" parent="BaseThemeLight">

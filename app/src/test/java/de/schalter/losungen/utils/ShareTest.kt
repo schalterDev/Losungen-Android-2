@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import androidx.test.core.app.ApplicationProvider
+import de.schalter.losungen.R
 import io.mockk.*
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -27,6 +28,8 @@ class ShareTest {
     fun prepare() {
         activity = Robolectric.buildActivity(FragmentActivity::class.java).create().start().resume().get()
         context = ApplicationProvider.getApplicationContext()
+        context.setTheme(R.style.Theme_Blue)
+        activity.setTheme(R.style.Theme_Blue)
     }
 
     @Test

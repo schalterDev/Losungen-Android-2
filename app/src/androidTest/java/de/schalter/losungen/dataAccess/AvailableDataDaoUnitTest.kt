@@ -2,20 +2,17 @@ package de.schalter.losungen.dataAccess
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import de.schalter.losungen.dataAccess.availableData.AvailableData
+import de.schalter.losungen.dataAccess.availableData.AvailableDataDao
+import de.schalter.losungen.utils.DatabaseUtils
+import de.schalter.losungen.utils.blockingObserve
 import org.hamcrest.Matchers.equalTo
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import de.schalter.losungen.dataAccess.availableData.AvailableData
-import de.schalter.losungen.dataAccess.availableData.AvailableDataDao
-import de.schalter.losungen.utils.DatabaseUtils
-import de.schalter.losungen.utils.blockingObserve
 import java.io.IOException
 
-@RunWith(AndroidJUnit4::class)
 class AvailableDataDaoUnitTest {
 
     @get:Rule

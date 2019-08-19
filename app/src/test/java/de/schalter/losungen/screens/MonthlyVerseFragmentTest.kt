@@ -59,6 +59,7 @@ class MonthlyVerseFragmentTest {
     @Before
     fun initFragment() {
         context = getApplicationContext()
+        context.setTheme(R.style.Theme_Blue)
 
         mockDatabase()
 
@@ -110,10 +111,8 @@ class MonthlyVerseFragmentTest {
                 context.getString(R.string.monthly_verse_title),
                 monthlyVerse.verseText,
                 monthlyVerse.verseBible,
-                "",
-                "",
-                "",
-                type = VerseCardData.Type.MONTHLY
+                type = VerseCardData.Type.MONTHLY,
+                date = monthlyVerse.date
         )
 
         val simpleDateFormat = SimpleDateFormat(datePattern)
@@ -122,10 +121,8 @@ class MonthlyVerseFragmentTest {
                 simpleDateFormat.format(weeklyVerse.date),
                 weeklyVerse.verseText,
                 weeklyVerse.verseBible,
-                "",
-                "",
-                "",
-                type = VerseCardData.Type.MONTHLY
+                type = VerseCardData.Type.WEEKLY,
+                date = weeklyVerse.date
         )
 
         assertThat(monthlyVerseViewHolder.getData(), equalTo(expectedDataMonth))

@@ -1,15 +1,12 @@
 package de.schalter.losungen.utils
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
-import io.mockk.every
-import io.mockk.mockkClass
-import io.mockk.mockkObject
 import de.schalter.losungen.dataAccess.VersesDatabase
 import de.schalter.losungen.dataAccess.daily.DailyVerse
 import de.schalter.losungen.dataAccess.daily.DailyVersesDao
+import io.mockk.*
 
 object DatabaseUtils {
 
@@ -19,7 +16,7 @@ object DatabaseUtils {
 
     fun getInMemoryDatabase(): VersesDatabase {
         return Room.inMemoryDatabaseBuilder(
-                getApplicationContext<Context>(), VersesDatabase::class.java).build()
+                getApplicationContext(), VersesDatabase::class.java).build()
     }
 
     fun mockDailyVersesDao(): DailyVersesDao {
@@ -40,6 +37,8 @@ object DatabaseUtils {
     fun mockDailyVerseDaoFindDailyVerseByDate(): MutableLiveData<DailyVerse> {
         val dao = mockDailyVersesDao()
         every { dao.findDailyVerseByDate(any()) } returns dailyVerseLiveData
+
+        every { dao.updateNotes(any(), any()) } just Runs
 
         return dailyVerseLiveData
     }

@@ -15,11 +15,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
-import org.hamcrest.Matchers.allOf
-import org.hamcrest.Matchers.not
-import org.junit.*
-import org.junit.Assert.assertTrue
-import org.junit.runner.RunWith
 import de.schalter.losungen.components.navigationDrawer.NavigationDrawer
 import de.schalter.losungen.screens.daily.DailyVersesOverviewFragment
 import de.schalter.losungen.screens.favourite.FavouriteVersesOverviewFragment
@@ -27,6 +22,11 @@ import de.schalter.losungen.screens.info.InfoFragment
 import de.schalter.losungen.screens.monthly.MonthlyVersesOverviewFragment
 import de.schalter.losungen.screens.settings.SettingsActivity
 import de.schalter.losungen.utils.Constants
+import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.not
+import org.junit.*
+import org.junit.Assert.assertTrue
+import org.junit.runner.RunWith
 
 
 @RunWith(AndroidJUnit4::class)
@@ -92,13 +92,6 @@ class MainActivityTest {
         openNavigationDrawer()
         onView(withText(R.string.rate)).perform(click())
         intended(hasAction(Intent.ACTION_VIEW))
-    }
-
-    @Test
-    fun feedbackClick() {
-        openNavigationDrawer()
-        onView(withText(R.string.send_feedback_bug)).perform(click())
-        intending(allOf(hasAction(Intent.ACTION_CHOOSER), hasExtra("act", Intent.ACTION_SENDTO)))
     }
 
     @Test

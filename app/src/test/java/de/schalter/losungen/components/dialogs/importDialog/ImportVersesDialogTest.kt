@@ -7,6 +7,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.test.core.app.ApplicationProvider
+import de.schalter.losungen.R
+import de.schalter.losungen.backgroundTasks.ImportVersesTask
+import de.schalter.losungen.components.emptyState.EmptyStateView
+import de.schalter.losungen.dataAccess.Language
+import de.schalter.losungen.utils.CoroutineUtils
+import de.schalter.losungen.utils.TestApplication
 import io.mockk.*
 import org.junit.Assert.*
 import org.junit.Before
@@ -16,12 +22,6 @@ import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowDialog
-import de.schalter.losungen.R
-import de.schalter.losungen.backgroundTasks.ImportVersesTask
-import de.schalter.losungen.components.emptyState.EmptyStateView
-import de.schalter.losungen.dataAccess.Language
-import de.schalter.losungen.utils.CoroutineUtils
-import de.schalter.losungen.utils.TestApplication
 
 
 @RunWith(RobolectricTestRunner::class)
@@ -43,12 +43,14 @@ class ImportVersesDialogTest {
 
     @Before
     fun loadDialog() {
+        context = ApplicationProvider.getApplicationContext()
+        context.setTheme(R.style.Theme_Blue)
         CoroutineUtils.runSingleThread()
         mockDataManagement()
-        context = ApplicationProvider.getApplicationContext()
 
         val fragment = ImportVersesDialog()
         val activity: FragmentActivity = Robolectric.buildActivity(FragmentActivity::class.java).create().start().resume().get()
+        activity.setTheme(R.style.Theme_Blue)
         val fragmentManager = activity.supportFragmentManager
         fragment.show(fragmentManager, "importDialog")
 

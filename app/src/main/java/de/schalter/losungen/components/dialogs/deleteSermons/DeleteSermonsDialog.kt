@@ -5,13 +5,13 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import de.schalter.losungen.R
 import de.schalter.losungen.dataAccess.VersesDatabase
 import de.schalter.losungen.dataAccess.daily.DailyVerse
 import de.schalter.losungen.utils.AsyncUtils
 import de.schalter.losungen.utils.LanguageUtils
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -23,7 +23,7 @@ class DeleteSermonsDialog(context: Context) : DialogFragment() {
     private val versesDatabase = VersesDatabase.provideVerseDatabase(context)
 
     private var entriesClicked: BooleanArray? = null
-    private var entryDates: Array<Long>? = null
+    private var entryDates: LongArray? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let { context ->
@@ -67,7 +67,7 @@ class DeleteSermonsDialog(context: Context) : DialogFragment() {
         }
     }
 
-    private fun getEntryValuesLong(): Array<Long> {
+    private fun getEntryValuesLong(): LongArray {
         var versesWithSermon: Array<DailyVerse>? = null
         // TODO change this to work asynchronous. For this the dialog has to be
         // rewritten to have a loading indicator and then shows the items
@@ -78,7 +78,9 @@ class DeleteSermonsDialog(context: Context) : DialogFragment() {
             this.join()
         }
 
-        entryDates = versesWithSermon?.map { it.date.time }?.toTypedArray()
+        entryDates = versesWithSermon?.map { it.date.time }?.toLongArray().apply {
+            this?.sort()
+        }
         return entryDates!!
     }
 
@@ -94,6 +96,6 @@ class DeleteSermonsDialog(context: Context) : DialogFragment() {
     }
 
     companion object {
-        private const val DATE_FORMAT = "E, dd.MM"
+        private const val DATE_FORMAT = "E dd.MM"
     }
 }

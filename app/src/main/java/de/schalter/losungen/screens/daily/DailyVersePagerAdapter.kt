@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager
 import de.schalter.losungen.components.tabs.DatePagerAdapter
 import java.util.*
 
-private const val dateFormat = "E, dd.MM"
+private const val dateFormat = "E dd.MM"
 
 class DailyVersePagerAdapter(fm: FragmentManager) : DatePagerAdapter(fm, dateFormat, Calendar.DAY_OF_MONTH) {
 

@@ -84,7 +84,11 @@ class Migration(private val activity: Activity) {
         val design = preference.getInt(LEGACY_DESIGN, 0)
         val notificationShow = preference.getBoolean(LEGACY_PREF_NOTIFICATION_SHOW, true)
         val notificationContent = preference.getString(LEGACY_PREF_NOTIFICATION_CONTENT, "2")
-        val notificationTime = preference.getLong(LEGACY_PREF_NOTIFICATION_TIME, 8 * 60)
+        var notificationTime: Long = 8 * 60
+        try {
+            notificationTime = preference.getLong(LEGACY_PREF_NOTIFICATION_TIME, 8 * 60)
+        } catch (_: Exception) {
+        }
 
         preference.edit()
                 .clear()

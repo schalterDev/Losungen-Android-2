@@ -115,5 +115,6 @@
     <string name="toggle_notes">Zeige / verstecke Notizen</string>
     <string name="choose_widget_style">Design auswählen</string>
     <string name="contributors">Mitwirkende: %1$s</string>
+    <string name="daily_word_from">Losung vom %1$s</string>
 
 </resources>

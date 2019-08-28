@@ -36,3 +36,5 @@ captures/
 *.iml
 
 app/google-services\.json\.new
+
+app-store/apks/

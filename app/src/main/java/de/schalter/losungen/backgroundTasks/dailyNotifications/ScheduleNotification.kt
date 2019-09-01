@@ -42,6 +42,7 @@ class ScheduleNotification(private val context: Context) {
 
     /**
      * Renew alarm manager after reboot
+     * @param time in minutes from 00:00
      */
     fun scheduleNotification(time: Int? = null, instantlyShowNotification: Boolean = false) {
         var notificationTime = time

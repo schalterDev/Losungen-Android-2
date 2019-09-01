@@ -24,7 +24,7 @@ abstract class RxAsyncTask<Params, Progress, Result> {
         this.runOnUiThread { onProgress(progress) }
     }
 
-    abstract fun doInBackground(params: Params): Result
+    protected abstract fun doInBackground(params: Params): Result
 
     protected open fun onPreExecute() {}
 

@@ -11,7 +11,7 @@ import de.schalter.losungen.R
 import de.schalter.losungen.backgroundTasks.ImportVersesTask
 import de.schalter.losungen.components.emptyState.EmptyStateView
 import de.schalter.losungen.dataAccess.Language
-import de.schalter.losungen.utils.CoroutineUtils
+import de.schalter.losungen.utils.AsyncUtils
 import de.schalter.losungen.utils.TestApplication
 import io.mockk.*
 import org.junit.Assert.*
@@ -45,7 +45,7 @@ class ImportVersesDialogTest {
     fun loadDialog() {
         context = ApplicationProvider.getApplicationContext()
         context.setTheme(R.style.Theme_Blue)
-        CoroutineUtils.runSingleThread()
+        AsyncUtils.runSingleThread()
         mockDataManagement()
 
         val fragment = ImportVersesDialog()

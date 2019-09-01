@@ -3,8 +3,6 @@ package de.schalter.losungen.backgroundTasks
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.widget.Toast
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.rx.rx_response
@@ -25,15 +23,16 @@ class ImportVersesTask(val context: Context) : RxAsyncTask<List<DataManagement.Y
         params.forEachIndexed { index, yearLanguageUrl ->
             publishProgress(context.getString(R.string.downloading_file, index + 1, params.size))
 
-            try {
-                var file: File? = null
-                Fuel.download(yearLanguageUrl.url).destination { _, _ ->
-                    file = File.createTempFile(yearLanguageUrl.year.toString() + yearLanguageUrl.language, ".zip", context.cacheDir)
-                    file!!
-                }.rx_response().blockingGet()
+            var file: File? = null
+            Fuel.download(yearLanguageUrl.url).destination { _, _ ->
+                File.createTempFile(yearLanguageUrl.year.toString() + yearLanguageUrl.language, ".zip", context.cacheDir).apply {
+                    file = this
+                }
+            }.rx_response().blockingGet()
 
-                publishProgress(context.getString(R.string.uncompressing_file, index + 1, params.size))
-                val directory = unzipFile(file!!)
+            publishProgress(context.getString(R.string.uncompressing_file, index + 1, params.size))
+            file?.let { actualFile ->
+                val directory = unzipFile(actualFile)
 
                 publishProgress(context.getString(R.string.importing_file, index + 1, params.size))
                 val databaseHelper = DatabaseHelper(context)
@@ -57,12 +56,8 @@ class ImportVersesTask(val context: Context) : RxAsyncTask<List<DataManagement.Y
                 }
 
                 directory.deleteRecursively()
-                file!!.delete()
-            } catch (error: Exception) {
-                Handler(Looper.getMainLooper()).post {
-                    Toast.makeText(context, R.string.error_loading_data_check_connection, Toast.LENGTH_LONG).show()
-                }
-            }
+                actualFile.delete()
+            } ?: throw IllegalStateException()
         }
     }
 
@@ -80,6 +75,8 @@ class ImportVersesTask(val context: Context) : RxAsyncTask<List<DataManagement.Y
 
     override fun onError(error: Throwable) {
         dialog?.cancel()
+
+        Toast.makeText(context, R.string.error_loading_data_check_connection, Toast.LENGTH_LONG).show()
     }
 
     /**

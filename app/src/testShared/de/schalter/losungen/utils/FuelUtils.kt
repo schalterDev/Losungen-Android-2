@@ -10,5 +10,10 @@ object FuelUtils {
         FuelManager.instance.client = client
 
         return client
+
+
+//        every { fuelMockClient.executeRequest(any()).statusCode } returns 200
+//        every { fuelMockClient.executeRequest(any()).responseMessage } returns "OK"
+//        every { fuelMockClient.executeRequest(any()).data } returns someJson.toByteArray()
     }
 }

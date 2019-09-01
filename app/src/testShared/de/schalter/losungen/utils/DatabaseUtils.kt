@@ -3,6 +3,7 @@ package de.schalter.losungen.utils
 import androidx.lifecycle.MutableLiveData
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
+import de.schalter.losungen.dataAccess.DatabaseHelper
 import de.schalter.losungen.dataAccess.VersesDatabase
 import de.schalter.losungen.dataAccess.daily.DailyVerse
 import de.schalter.losungen.dataAccess.daily.DailyVersesDao
@@ -41,6 +42,13 @@ object DatabaseUtils {
         every { dao.updateNotes(any(), any()) } just Runs
 
         return dailyVerseLiveData
+    }
+
+    fun mockDatabaseHelper() {
+        mockkConstructor(DatabaseHelper::class)
+        every { anyConstructed<DatabaseHelper>().importDailyVerses(any()) } returns Unit
+        every { anyConstructed<DatabaseHelper>().importWeeklyVerses(any()) } returns Unit
+        every { anyConstructed<DatabaseHelper>().importMonthlyVerses(any()) } returns Unit
     }
 
 }

@@ -23,6 +23,7 @@
 #-keep class de.schalter.** { *; }
 #-keep class ** { *; }
 
+-keep class de.schalter.** { *; }
 -keepattributes SourceFile,LineNumberTable
 -keepattributes LocalVariableTable,LocalVariableTypeTable
 -dontoptimize

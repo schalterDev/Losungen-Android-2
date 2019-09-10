@@ -9,13 +9,12 @@ import com.github.kittinunf.fuel.core.Request
 import com.github.kittinunf.fuel.core.Response
 import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.google.gson.Gson
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import de.schalter.losungen.dataAccess.Language
 import de.schalter.losungen.utils.Constants
 import de.schalter.losungen.utils.CoroutineDispatchers
-import java.util.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 private const val DEBUG_TAG = "DataManagement"
@@ -59,7 +58,7 @@ class DataManagement : ViewModel(), CoroutineScope {
                 val (yearLanguageUrlArray: Array<YearLanguageUrl>?, error) = result
 
                 if (yearLanguageUrlArray != null && response.statusCode == 200 && error == null) {
-                    yearLanguageUrlList = Arrays.asList(*yearLanguageUrlArray)
+                    yearLanguageUrlList = listOf(*yearLanguageUrlArray)
                 } else {
                     Log.e(DEBUG_TAG, "Error while trying to loadDownloadUrl available data")
                     Log.e(DEBUG_TAG, "Response: $response")

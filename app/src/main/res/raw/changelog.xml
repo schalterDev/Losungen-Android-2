@@ -1,5 +1,11 @@
 <changelog>
     <release
+        versionCode="107"
+        versionName="v2.02"
+        date="10-09-2019">
+        <bugfix type="summary">Fix crash when importing new data</bugfix>
+    </release>
+    <release
         versionCode="106"
         versionName="v2.01"
         date="27-08-2019">

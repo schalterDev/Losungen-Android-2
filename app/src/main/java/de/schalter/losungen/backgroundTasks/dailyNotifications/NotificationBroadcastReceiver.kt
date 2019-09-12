@@ -16,6 +16,7 @@ import de.schalter.losungen.MainActivity
 import de.schalter.losungen.R
 import de.schalter.losungen.dataAccess.VersesDatabase
 import de.schalter.losungen.dataAccess.daily.DailyVerse
+import de.schalter.losungen.firebase.FirebaseUtil
 import de.schalter.losungen.utils.PreferenceTags
 import de.schalter.losungen.utils.Share
 import io.reactivex.Observable
@@ -48,6 +49,8 @@ class NotificationBroadcastReceiver : BroadcastReceiver() {
 
     @SuppressLint("CheckResult")
     private fun showNotification() {
+        FirebaseUtil.trackShowedNotification(context)
+
         getNotificationData().firstElement().subscribe { notificationData ->
             val mBuilder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -149,6 +152,8 @@ class NotificationBroadcastReceiver : BroadcastReceiver() {
 
     // ---------- INTENT MARK OR SHARE ---------------
     private fun shareNotification(message: String) {
+        FirebaseUtil.trackNotificationClick(context, share = true)
+        
         val intent = Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
         context.sendBroadcast(intent)
 
@@ -156,6 +161,8 @@ class NotificationBroadcastReceiver : BroadcastReceiver() {
     }
 
     private fun markNotification(date: Long) {
+        FirebaseUtil.trackNotificationClick(context, markFavourite = true)
+
         val database = VersesDatabase.provideVerseDatabase(context)
 
         GlobalScope.launch {

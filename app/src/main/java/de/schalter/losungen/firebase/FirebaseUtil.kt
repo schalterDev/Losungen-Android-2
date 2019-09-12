@@ -75,6 +75,18 @@ object FirebaseUtil {
         getInstance(context).logEvent("sermon_shared", params)
     }
 
+    fun trackShowedNotification(context: Context) {
+        getInstance(context).logEvent("showed_notification", Bundle())
+    }
+
+    fun trackNotificationClick(context: Context, markFavourite: Boolean = false, share: Boolean = false) {
+        val params = Bundle()
+        params.putBoolean("favourite", markFavourite)
+        params.putBoolean("share", share)
+
+        getInstance(context).logEvent("notification_action", params)
+    }
+
     private fun getInstance(context: Context): FirebaseAnalytics {
         return FirebaseAnalytics.getInstance(context)
     }

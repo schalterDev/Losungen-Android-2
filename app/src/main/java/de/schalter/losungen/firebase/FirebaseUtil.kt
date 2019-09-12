@@ -56,6 +56,14 @@ object FirebaseUtil {
         getInstance(context).logEvent("marked_favourite", params)
     }
 
+    fun trackOpenExternal(context: Context, openedWith: String, defaultValue: Boolean) {
+        val params = Bundle()
+        params.putString("open_with", openedWith)
+        params.putBoolean("default", defaultValue)
+
+        getInstance(context).logEvent("open_external", params)
+    }
+
     private fun getInstance(context: Context): FirebaseAnalytics {
         return FirebaseAnalytics.getInstance(context)
     }

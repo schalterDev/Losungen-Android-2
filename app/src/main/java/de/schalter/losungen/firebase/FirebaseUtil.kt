@@ -79,10 +79,9 @@ object FirebaseUtil {
         getInstance(context).logEvent("showed_notification", Bundle())
     }
 
-    fun trackNotificationClick(context: Context, markFavourite: Boolean = false, share: Boolean = false) {
+    fun trackNotificationClick(context: Context, markFavourite: Boolean = false) {
         val params = Bundle()
-        params.putBoolean("favourite", markFavourite)
-        params.putBoolean("share", share)
+        params.putString("action", if (markFavourite) "favourite" else "share")
 
         getInstance(context).logEvent("notification_action", params)
     }

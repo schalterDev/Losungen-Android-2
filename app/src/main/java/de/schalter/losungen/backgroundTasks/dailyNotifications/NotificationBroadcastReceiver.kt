@@ -152,8 +152,8 @@ class NotificationBroadcastReceiver : BroadcastReceiver() {
 
     // ---------- INTENT MARK OR SHARE ---------------
     private fun shareNotification(message: String) {
-        FirebaseUtil.trackNotificationClick(context, share = true)
-        
+        FirebaseUtil.trackNotificationClick(context, markFavourite = false)
+
         val intent = Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
         context.sendBroadcast(intent)
 

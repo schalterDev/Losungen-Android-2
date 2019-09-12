@@ -64,6 +64,17 @@ object FirebaseUtil {
         getInstance(context).logEvent("open_external", params)
     }
 
+    fun trackVerseShared(context: Context) {
+        getInstance(context).logEvent("verse_shared", Bundle())
+    }
+
+    fun trackSermonShared(context: Context, mp3File: Boolean) {
+        val params = Bundle()
+        params.putBoolean("mp3_file", mp3File)
+
+        getInstance(context).logEvent("sermon_shared", params)
+    }
+
     private fun getInstance(context: Context): FirebaseAnalytics {
         return FirebaseAnalytics.getInstance(context)
     }

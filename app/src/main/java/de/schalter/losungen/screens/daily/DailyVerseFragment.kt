@@ -22,6 +22,7 @@ import de.schalter.losungen.components.exceptions.TranslatableException
 import de.schalter.losungen.components.verseCard.VerseCardData
 import de.schalter.losungen.dataAccess.daily.DailyVerse
 import de.schalter.losungen.dataAccess.sermon.Sermon
+import de.schalter.losungen.firebase.FirebaseUtil
 import de.schalter.losungen.screens.ARG_DATE
 import de.schalter.losungen.screens.VerseListDateFragment
 import de.schalter.losungen.sermon.mediaPlayer.MediaPlayerUi
@@ -119,6 +120,8 @@ class DailyVerseFragment : VerseListDateFragment(R.layout.fragment_verse_list_no
                 }
             })
         }
+
+        FirebaseUtil.trackSermonPlayed(mContext)
     }
 
     private fun playSermon(sermon: Sermon) {
@@ -186,6 +189,7 @@ class DailyVerseFragment : VerseListDateFragment(R.layout.fragment_verse_list_no
                 return true
             }
             R.id.action_favourite -> {
+                mViewModel.getDailyVerse().value?.let { FirebaseUtil.trackFavouriteVerse(mContext, value = !it.isFavourite) }
                 mViewModel.toggleFavourite()
                 return true
             }

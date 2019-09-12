@@ -38,6 +38,24 @@ object FirebaseUtil {
         getInstance(context).logEvent("preference_change_$tag", params)
     }
 
+    fun trackSermonPlayed(context: Context) {
+        getInstance(context).logEvent("sermon_played", Bundle())
+    }
+
+    fun trackFavouriteVerse(context: Context, weekly: Boolean = false, monthly: Boolean = false, value: Boolean) {
+        val params = Bundle()
+        val whichType =
+                when {
+                    weekly -> "week"
+                    monthly -> "month"
+                    else -> "day"
+                }
+        params.putString("type", whichType)
+        params.putBoolean("value", value)
+
+        getInstance(context).logEvent("marked_favourite", params)
+    }
+
     private fun getInstance(context: Context): FirebaseAnalytics {
         return FirebaseAnalytics.getInstance(context)
     }

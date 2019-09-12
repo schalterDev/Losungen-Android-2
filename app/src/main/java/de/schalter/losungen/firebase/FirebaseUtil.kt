@@ -32,11 +32,10 @@ object FirebaseUtil {
 
     fun trackSettingsChanged(context: Context, tag: String, newValue: String, oldValue: String? = null) {
         val params = Bundle()
-        params.putString("tag", tag)
         params.putString("newValue", newValue)
         oldValue?.let { params.putString("oldValue", oldValue) }
 
-        getInstance(context).logEvent("preference_change", params)
+        getInstance(context).logEvent("preference_change_$tag", params)
     }
 
     private fun getInstance(context: Context): FirebaseAnalytics {

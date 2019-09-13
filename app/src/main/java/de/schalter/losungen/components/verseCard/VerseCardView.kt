@@ -12,6 +12,7 @@ import android.widget.Toast
 import de.schalter.losungen.R
 import de.schalter.losungen.components.dialogs.openVerseExternal.OpenExternalDialog
 import de.schalter.losungen.dataAccess.VersesDatabase
+import de.schalter.losungen.firebase.FirebaseUtil
 import de.schalter.losungen.utils.openExternal.BibleVerse
 import de.schalter.losungen.utils.openExternal.BibleVerseParseException
 import kotlinx.android.synthetic.main.verse_card.view.*
@@ -133,6 +134,15 @@ class VerseCardView : FrameLayout {
 
         setVisibilityFavouriteIcon(verseCardData.showFavouriteIcon)
         imageFavourite.setOnClickListener {
+
+            verseCardViewModel.getData()?.let { data ->
+                FirebaseUtil.trackFavouriteVerse(
+                        context,
+                        weekly = data.type == VerseCardData.Type.WEEKLY,
+                        monthly = data.type == VerseCardData.Type.MONTHLY,
+                        value = !data.isFavourite)
+            }
+
             verseCardViewModel.toggleIsFavourite()
         }
 

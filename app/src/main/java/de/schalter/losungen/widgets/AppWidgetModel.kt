@@ -18,8 +18,8 @@ class AppWidgetModel(private var database: VersesDatabase, private var date: Dat
     init {
         widgetDataLiveData = MediatorLiveData<WidgetData>().apply {
             addSource(database.dailyVerseDao().findDailyVerseByDate(date)) {
-                oldTestamentText = it.oldTestamentVerseText + "\n" + it.oldTestamentVerseBible
-                newTestamentText = it.newTestamentVerseText + "\n" + it.newTestamentVerseBible
+                oldTestamentText = it?.oldTestamentVerseText + "\n" + it?.oldTestamentVerseBible
+                newTestamentText = it?.newTestamentVerseText + "\n" + it?.newTestamentVerseBible
 
                 updateWidgetData(content = widgetData?.content)
             }

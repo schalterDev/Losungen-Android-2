@@ -9,8 +9,8 @@ android {
         applicationId "de.schalter.losungen"
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 103
-        versionName "2.0"
+        versionCode 108
+        versionName "2.0.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -56,8 +56,8 @@ dependencies {
     implementation project(':customize')
 
     // settings screen
-    implementation "androidx.preference:preference:1.1.0-rc01"
-    implementation "androidx.preference:preference-ktx:1.1.0-rc01"
+    implementation "androidx.preference:preference:1.1.0"
+    implementation "androidx.preference:preference-ktx:1.1.0"
 
     // Color picker
     implementation "com.github.QuadFlask:colorpicker:0.0.13"
@@ -79,9 +79,9 @@ dependencies {
     implementation "com.github.kittinunf.fuel:fuel-gson:$fuel_version"
     implementation "com.github.kittinunf.fuel:fuel-rxjava:$fuel_version"
 
-    implementation "androidx.appcompat:appcompat:1.0.2"
+    implementation "androidx.appcompat:appcompat:1.1.0"
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
-    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.1.0"
 
     // room
     implementation "androidx.room:room-runtime:$room_version"
@@ -91,7 +91,7 @@ dependencies {
 
     // material drawer
     implementation "com.mikepenz:materialdrawer:6.1.1"
-    implementation "androidx.appcompat:appcompat:1.0.2"
+    implementation "androidx.appcompat:appcompat:1.1.0"
     implementation "androidx.recyclerview:recyclerview:1.0.0"
     implementation "androidx.annotation:annotation:1.1.0"
     implementation "com.google.android.material:material:1.0.0"
@@ -104,8 +104,8 @@ dependencies {
     implementation 'com.github.paolorotolo:AppIntro:v5.1.0'
 
     // ads, analytics
-    implementation 'com.google.firebase:firebase-core:17.0.1'
-    implementation "com.google.firebase:firebase-ads:18.1.1"
+    implementation 'com.google.firebase:firebase-core:17.2.0'
+    implementation "com.google.firebase:firebase-ads:18.2.0"
 
     // changelog
     implementation 'com.github.MFlisar:changelog:1.1.6'
@@ -116,16 +116,16 @@ dependencies {
     testImplementation "androidx.test:runner:1.2.0"
     testImplementation "androidx.test:rules:1.2.0"
     testImplementation "androidx.test:monitor:1.2.0"
-    testImplementation "androidx.arch.core:core-testing:2.0.1"
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
     testImplementation "androidx.test.espresso:espresso-core:3.2.0"
     testImplementation "androidx.test.espresso:espresso-contrib:3.2.0"
     testImplementation "org.robolectric:robolectric:4.3"
     testImplementation "io.mockk:mockk:1.8.13"
 
-    debugImplementation "androidx.fragment:fragment-testing:1.1.0-rc03"
+    debugImplementation "androidx.fragment:fragment-testing:1.1.0"
 
     androidTestImplementation "io.mockk:mockk-android:1.8.13"
-    androidTestImplementation "androidx.arch.core:core-testing:2.0.1"
+    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
     androidTestImplementation "androidx.test:rules:1.2.0"
     androidTestImplementation "androidx.test.ext:junit:1.1.1"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.2.0"

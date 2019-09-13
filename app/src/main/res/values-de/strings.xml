@@ -36,7 +36,7 @@
     <string name="open_verse_external">Mit externem Programm öffnen</string>
     <string name="could_not_parse_verse">Konnte den Vers nicht verstehen</string>
     <string name="remember_my_decision">Merke meine Wahl</string>
-    <string name="delete_open_external_default_value">Klicke um den Standartwert für das Öffnen von Versen in externen APPs zu löschen</string>
+    <string name="delete_open_external_default_value">Klicke um den Standardwert für das Öffnen von Versen in externen APPs zu löschen</string>
     <string name="successful">Erfolgreich</string>
     <string name="weekly_verse">Wochenspruch</string>
     <string name="title_activity_app_widget">Widget einstellen</string>
@@ -115,5 +115,6 @@
     <string name="toggle_notes">Zeige / verstecke Notizen</string>
     <string name="choose_widget_style">Design auswählen</string>
     <string name="contributors">Mitwirkende: %1$s</string>
+    <string name="daily_word_from">Losung vom %1$s</string>
 
 </resources>

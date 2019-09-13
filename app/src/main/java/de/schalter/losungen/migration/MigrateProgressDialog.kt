@@ -1,5 +1,6 @@
 package de.schalter.losungen.migration
 
+import android.app.Activity
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,6 +22,8 @@ class MigrateProgressDialog : DialogFragment(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = CoroutineDispatchers.Background + job
 
+    private lateinit var mActivity: Activity
+
     private lateinit var dialog: AlertDialog
     private lateinit var textViewProgress: TextView
     private lateinit var progressBarContainer: View
@@ -28,6 +31,8 @@ class MigrateProgressDialog : DialogFragment(), CoroutineScope {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let { activity ->
+            mActivity = activity
+
             val dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_migrate, null)
 
             dialog = AlertDialog.Builder(activity)
@@ -55,7 +60,7 @@ class MigrateProgressDialog : DialogFragment(), CoroutineScope {
 
     private fun start() {
         launch {
-            val migration = Migration(activity!!)
+            val migration = Migration(mActivity)
             migration.progressChangeListener = object : Migration.OnProgressChanged {
                 override fun finished() {
                     launch(CoroutineDispatchers.Ui) {
@@ -80,7 +85,7 @@ class MigrateProgressDialog : DialogFragment(), CoroutineScope {
     private fun onFinish() {
         launch(CoroutineDispatchers.Ui) {
             dismiss()
-            activity?.recreate()
+            mActivity.recreate()
         }
     }
 }

@@ -35,8 +35,8 @@ class ShareTest {
     @Test
     fun shouldShowTextListDialog() {
         val textList: List<TextList> = listOf(
-                TextList("titleDialog1", "text1"),
-                TextList("titleDialog2", "text2")
+                TextList("titleDialog1", "text1", "subject"),
+                TextList("titleDialog2", "text2", "subject")
         )
 
         Share.textListDialog(activity, textList)
@@ -52,7 +52,7 @@ class ShareTest {
 
         shadowOf(listView).performItemClick(0)
 
-        verify { Share.text(any(), textList[0].text) }
+        verify { Share.text(any(), textList[0].text, textList[0].subject) }
     }
 
     @Test

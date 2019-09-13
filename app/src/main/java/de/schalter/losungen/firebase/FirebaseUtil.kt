@@ -39,6 +39,14 @@ object FirebaseUtil {
         getInstance(context).logEvent("preference_change", params)
     }
 
+    fun trackWidgetCreated(context: Context) {
+        getInstance(context).logEvent("widget_created", Bundle())
+    }
+
+    fun trackWidgetDeleted(context: Context) {
+        getInstance(context).logEvent("widget_deleted", Bundle())
+    }
+
     private fun getInstance(context: Context): FirebaseAnalytics {
         return FirebaseAnalytics.getInstance(context)
     }

@@ -5,8 +5,8 @@ import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import de.schalter.losungen.dataAccess.monthly.MonthlyVerse
 import de.schalter.losungen.dataAccess.monthly.MonthlyVersesDao
 import de.schalter.losungen.utils.DatabaseUtils
-import de.schalter.losungen.utils.DateUtils
 import de.schalter.losungen.utils.blockingObserve
+import de.schalter.losungen.utils.extensions.addMonths
 import org.hamcrest.Matchers.equalTo
 import org.junit.After
 import org.junit.Assert.assertFalse
@@ -62,7 +62,7 @@ class MonthlyVersesUnitTest {
 
         val monthlyVerseNextMonth = monthlyVerse.copy()
         monthlyVerseNextMonth.verseText = "2"
-        monthlyVerseNextMonth.date = DateUtils.addMonthsToDate(monthlyVerse.date, 1)
+        monthlyVerseNextMonth.date = monthlyVerse.date.addMonths(1)
         monthlyVersesDao.insertMonthlyVerse(monthlyVerseNextMonth)
 
         var verseFromDatabase: MonthlyVerse = monthlyVersesDao.findMonthlyVerseByDate(monthlyVerse.date).blockingObserve()!!

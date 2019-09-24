@@ -5,8 +5,8 @@ import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import de.schalter.losungen.dataAccess.weekly.WeeklyVerse
 import de.schalter.losungen.dataAccess.weekly.WeeklyVersesDao
 import de.schalter.losungen.utils.DatabaseUtils
-import de.schalter.losungen.utils.DateUtils
 import de.schalter.losungen.utils.blockingObserve
+import de.schalter.losungen.utils.extensions.addDays
 import org.hamcrest.Matchers.equalTo
 import org.junit.After
 import org.junit.Assert.assertFalse
@@ -62,7 +62,7 @@ class WeeklyVersesUnitTest {
 
         val weeklyVerseNextWeek = weeklyVerse.copy()
         weeklyVerseNextWeek.verseText = "2"
-        weeklyVerseNextWeek.date = DateUtils.addDaysToDate(weeklyVerse.date, 7)
+        weeklyVerseNextWeek.date = weeklyVerse.date.addDays(7)
         weeklyVerseDao.insertWeeklyVerse(weeklyVerseNextWeek)
 
         var verseFromDatabase: WeeklyVerse = weeklyVerseDao.findWeeklyVerseByDate(weeklyVerse.date).blockingObserve()!!
@@ -84,11 +84,11 @@ class WeeklyVersesUnitTest {
 
         val weeklyVerseNextWeek = weeklyVerse.copy()
         weeklyVerseNextWeek.verseText = "2"
-        weeklyVerseNextWeek.date = DateUtils.addDaysToDate(weeklyVerse.date, 7)
+        weeklyVerseNextWeek.date = weeklyVerse.date.addDays(7)
         weeklyVerseDao.insertWeeklyVerse(weeklyVerseNextWeek)
         // should not show
         val weeklyVerseInTwoWeeks = weeklyVerse.copy()
-        weeklyVerseInTwoWeeks.date = DateUtils.addDaysToDate(weeklyVerse.date, 14)
+        weeklyVerseInTwoWeeks.date = weeklyVerse.date.addDays(14)
         weeklyVerseDao.insertWeeklyVerse(weeklyVerseInTwoWeeks)
 
         // date should be automatic convert to right date

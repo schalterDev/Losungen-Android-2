@@ -4,8 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import de.schalter.losungen.dataAccess.daily.DailyVerse
 import de.schalter.losungen.dataAccess.daily.DailyVersesDao
 import de.schalter.losungen.utils.DatabaseUtils
-import de.schalter.losungen.utils.DateUtils
 import de.schalter.losungen.utils.blockingObserve
+import de.schalter.losungen.utils.extensions.addDays
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.isEmptyOrNullString
 import org.junit.After
@@ -65,7 +65,7 @@ class DailyVersesUnitTest {
         dailyVersesDao.insertDailyVerse(dailyVerse)
 
         val dailyVerseNextDay = dailyVerse.copy()
-        dailyVerseNextDay.date = DateUtils.addDaysToDate(dailyVerse.date, 1)
+        dailyVerseNextDay.date = dailyVerse.date.addDays(1)
         dailyVerseNextDay.newTestamentVerseBible = "2"
         dailyVersesDao.insertDailyVerse(dailyVerseNextDay)
 

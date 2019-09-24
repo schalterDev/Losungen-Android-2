@@ -11,6 +11,7 @@ import de.schalter.losungen.MainActivity
 import de.schalter.losungen.R
 import de.schalter.losungen.dataAccess.VersesDatabase
 import de.schalter.losungen.dataAccess.daily.DailyVerse
+import de.schalter.losungen.firebase.FirebaseUtil
 import java.util.*
 
 class WidgetBroadcast : AppWidgetProvider() {
@@ -19,6 +20,8 @@ class WidgetBroadcast : AppWidgetProvider() {
         for (appWidgetId in appWidgetIds) {
             WidgetData.remove(context, appWidgetId)
         }
+        
+        FirebaseUtil.trackWidgetDeleted(context)
 
         super.onDeleted(context, appWidgetIds)
     }

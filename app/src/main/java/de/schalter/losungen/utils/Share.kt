@@ -8,7 +8,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
 import de.schalter.losungen.R
+import de.schalter.losungen.components.exceptions.TranslatableException
 import de.schalter.losungen.dataAccess.daily.DailyVerse
+import de.schalter.losungen.firebase.FirebaseUtil
 import de.schalter.losungen.sermon.sermonProvider.SermonProvider
 import java.io.File
 import java.text.SimpleDateFormat
@@ -41,6 +43,8 @@ object Share {
     }
 
     fun dailyVerse(context: Context, dailyVerse: DailyVerse) {
+        FirebaseUtil.trackVerseShared(context)
+
         val textLists = mutableListOf<TextList>()
 
         val dateString = SimpleDateFormat("E, dd.MM", LanguageUtils.getDisplayLanguageLocale()).format(dailyVerse.date)
@@ -80,10 +84,22 @@ object Share {
                         { sermon ->
                             mp3File(context, sermon.pathSaved)
                         },
-                        { error -> Toast.makeText(context, error.message, Toast.LENGTH_LONG).show() })
+                        { error ->
+                            AsyncUtils.runOnMainThread {
+                                val errorMessage = if (error is TranslatableException) {
+                                    error.getStringForUser(context)
+                                } else {
+                                    error.message ?: ""
+                                }
+
+                                Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+                            }
+                        })
     }
 
     fun mp3File(context: Context, path: String) {
+        FirebaseUtil.trackSermonShared(context, true)
+
         val shareUri = FileProvider.getUriForFile(context, "de.schalter.losungen.file.provider", File(path))
 
         val intentAudios = Intent()

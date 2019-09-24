@@ -5,6 +5,7 @@ import android.preference.PreferenceManager
 import android.view.View
 import android.widget.CheckBox
 import de.schalter.losungen.R
+import de.schalter.losungen.firebase.FirebaseUtil
 import de.schalter.losungen.utils.PreferenceTags
 import de.schalter.losungen.utils.openExternal.BibleVerse
 import de.schalter.losungen.utils.openExternal.OpenBibleserver
@@ -32,6 +33,7 @@ class OpenExternalDialog(val context: Context) {
 
     fun open(bibleVerse: BibleVerse) {
         if (availableExternalTools.size == 1) {
+            FirebaseUtil.trackOpenExternal(context, availableExternalTools[0].getTitle(), true)
             availableExternalTools[0].open(bibleVerse)
         } else {
             var openedWithDefault = false
@@ -41,6 +43,7 @@ class OpenExternalDialog(val context: Context) {
                 for (tool in availableExternalTools) {
                     if (tool.getTitle() == defaultOption) {
                         openedWithDefault = true
+                        FirebaseUtil.trackOpenExternal(context, tool.getTitle(), true)
                         tool.open(bibleVerse)
                         break
                     }
@@ -66,6 +69,7 @@ class OpenExternalDialog(val context: Context) {
                         editor.apply()
                     }
 
+                    FirebaseUtil.trackOpenExternal(context, availableExternalTools[which].getTitle(), false)
                     availableExternalTools[which].open(bibleVerse)
                 }
 

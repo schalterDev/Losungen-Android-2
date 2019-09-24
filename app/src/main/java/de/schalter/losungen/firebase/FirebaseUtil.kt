@@ -32,11 +32,66 @@ object FirebaseUtil {
 
     fun trackSettingsChanged(context: Context, tag: String, newValue: String, oldValue: String? = null) {
         val params = Bundle()
-        params.putString("tag", tag)
         params.putString("newValue", newValue)
         oldValue?.let { params.putString("oldValue", oldValue) }
 
-        getInstance(context).logEvent("preference_change", params)
+        getInstance(context).logEvent("preference_change_$tag", params)
+    }
+
+    fun trackSermonPlayed(context: Context) {
+        getInstance(context).logEvent("sermon_played", Bundle())
+    }
+
+    fun trackFavouriteVerse(context: Context, weekly: Boolean = false, monthly: Boolean = false, value: Boolean) {
+        val params = Bundle()
+        val whichType =
+                when {
+                    weekly -> "week"
+                    monthly -> "month"
+                    else -> "day"
+                }
+        params.putString("type", whichType)
+        params.putBoolean("value", value)
+
+        getInstance(context).logEvent("marked_favourite", params)
+    }
+
+    fun trackOpenExternal(context: Context, openedWith: String, defaultValue: Boolean) {
+        val params = Bundle()
+        params.putString("open_with", openedWith)
+        params.putBoolean("default", defaultValue)
+
+        getInstance(context).logEvent("open_external", params)
+    }
+
+    fun trackVerseShared(context: Context) {
+        getInstance(context).logEvent("verse_shared", Bundle())
+    }
+
+    fun trackSermonShared(context: Context, mp3File: Boolean) {
+        val params = Bundle()
+        params.putBoolean("mp3_file", mp3File)
+
+        getInstance(context).logEvent("sermon_shared", params)
+    }
+
+    fun trackShowedNotification(context: Context) {
+        getInstance(context).logEvent("showed_notification", Bundle())
+    }
+
+    fun trackNotificationClick(context: Context, markFavourite: Boolean = false) {
+        val params = Bundle()
+        params.putString("action", if (markFavourite) "favourite" else "share")
+
+        getInstance(context).logEvent("notification_action", params)
+    }
+
+    fun trackWidgetCreated(context: Context) {
+        getInstance(context).logEvent("widget_created", Bundle())
+    }
+
+    fun trackWidgetDeleted(context: Context) {
+        getInstance(context).logEvent("widget_deleted", Bundle())
     }
 
     private fun getInstance(context: Context): FirebaseAnalytics {

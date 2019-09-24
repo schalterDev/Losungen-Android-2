@@ -20,6 +20,7 @@ import de.schalter.customize.CustomizeActivity
 import de.schalter.losungen.MainActivity
 import de.schalter.losungen.R
 import de.schalter.losungen.components.dialogs.widgetStyleChooser.WidgetStyleChooserDialog
+import de.schalter.losungen.firebase.FirebaseUtil
 import de.schalter.losungen.utils.PreferenceTags
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.*
@@ -181,6 +182,8 @@ class AppWidgetActivity : CustomizeActivity() {
         val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE, null, this, WidgetBroadcast::class.java)
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(mViewModel.getWidgetData().value!!.widgetId))
         sendBroadcast(intent)
+
+        FirebaseUtil.trackWidgetCreated(this)
 
         finish()
     }

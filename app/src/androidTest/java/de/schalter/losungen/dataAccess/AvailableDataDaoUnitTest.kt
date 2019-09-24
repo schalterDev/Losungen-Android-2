@@ -5,7 +5,7 @@ import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import de.schalter.losungen.dataAccess.availableData.AvailableData
 import de.schalter.losungen.dataAccess.availableData.AvailableDataDao
 import de.schalter.losungen.utils.DatabaseUtils
-import de.schalter.losungen.utils.blockingObserve
+import de.schalter.losungen.utils.extensions.blockingObserve
 import org.hamcrest.Matchers.equalTo
 import org.junit.After
 import org.junit.Before

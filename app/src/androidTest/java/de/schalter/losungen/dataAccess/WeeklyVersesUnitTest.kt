@@ -5,8 +5,8 @@ import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import de.schalter.losungen.dataAccess.weekly.WeeklyVerse
 import de.schalter.losungen.dataAccess.weekly.WeeklyVersesDao
 import de.schalter.losungen.utils.DatabaseUtils
-import de.schalter.losungen.utils.blockingObserve
 import de.schalter.losungen.utils.extensions.addDays
+import de.schalter.losungen.utils.extensions.blockingObserve
 import org.hamcrest.Matchers.equalTo
 import org.junit.After
 import org.junit.Assert.assertFalse

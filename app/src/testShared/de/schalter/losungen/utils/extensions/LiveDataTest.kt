@@ -1,4 +1,4 @@
-package de.schalter.losungen.utils
+package de.schalter.losungen.utils.extensions
 
 import androidx.lifecycle.LiveData
 import java.util.concurrent.CountDownLatch

@@ -47,6 +47,8 @@ class DeleteSermonsDialogTest {
 
     @Before
     fun setUp() {
+        DatabaseUtils.clearMocks()
+
         context = ApplicationProvider.getApplicationContext()
         context.setTheme(R.style.Theme_Blue)
 
@@ -110,6 +112,7 @@ class DeleteSermonsDialogTest {
 
     @Test
     fun shouldShowDialog() {
+        mockData(arrayOf())
         showFragment()
         assertNotNull(dialog)
     }
@@ -162,7 +165,8 @@ class DeleteSermonsDialogTest {
             liveData.postValue(listOf(Sermon(dailyVerseId = data[index].dailyVerseId!!, downloadUrl = "", pathSaved = "")))
         }
 
-        Thread.sleep(10)
+        // TODO how to remove this sleep
+        Thread.sleep(100)
         Shadows.shadowOf(Looper.getMainLooper()).runToEndOfTasks()
 
         data.forEach { dailyVerse ->

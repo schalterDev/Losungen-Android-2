@@ -26,6 +26,13 @@ object DatabaseUtils {
         }
     }
 
+    fun clearMocks() {
+        clearAllMocks()
+        database = null
+        dailyVersesDao = null
+        sermonDao = null
+    }
+
     fun getInMemoryDatabase(): VersesDatabase {
         return Room.inMemoryDatabaseBuilder(
                 getApplicationContext(), VersesDatabase::class.java).build()

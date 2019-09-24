@@ -8,7 +8,7 @@ import com.github.kittinunf.fuel.core.Method
 import de.schalter.losungen.components.dialogs.importDialog.DataManagement
 import de.schalter.losungen.dataAccess.DatabaseHelper
 import de.schalter.losungen.dataAccess.Language
-import de.schalter.losungen.utils.AsyncUtils
+import de.schalter.losungen.utils.AsyncTestUtils
 import de.schalter.losungen.utils.DatabaseUtils.mockDatabaseHelper
 import de.schalter.losungen.utils.FuelUtils.mockFuel
 import de.schalter.losungen.xmlProcessing.LosungenXmlParser
@@ -106,7 +106,7 @@ class ImportVersesTaskTest {
 
     @Test
     fun shouldDownloadFile() {
-        AsyncUtils.runSingleThread()
+        AsyncTestUtils.runSingleThread()
         mockWithRealData()
 
         val asyncTask = ImportVersesTask(context)

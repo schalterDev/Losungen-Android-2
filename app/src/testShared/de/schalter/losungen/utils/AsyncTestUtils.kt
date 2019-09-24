@@ -6,7 +6,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-object AsyncUtils {
+object AsyncTestUtils {
 
     @UseExperimental(ExperimentalCoroutinesApi::class)
     fun runSingleThread() {

@@ -2,7 +2,10 @@ package de.schalter.losungen.components.dialogs.importDialog
 
 import android.app.Application
 import android.view.View
-import android.widget.*
+import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
@@ -11,8 +14,10 @@ import de.schalter.losungen.R
 import de.schalter.losungen.backgroundTasks.ImportVersesTask
 import de.schalter.losungen.components.emptyState.EmptyStateView
 import de.schalter.losungen.dataAccess.Language
-import de.schalter.losungen.utils.AsyncUtils
+import de.schalter.losungen.utils.AsyncTestUtils
 import de.schalter.losungen.utils.TestApplication
+import de.schalter.losungen.utils.extensions.clickPositiveButton
+import de.schalter.losungen.utils.extensions.getPositiveButton
 import io.mockk.*
 import org.junit.Assert.*
 import org.junit.Before
@@ -45,7 +50,7 @@ class ImportVersesDialogTest {
     fun loadDialog() {
         context = ApplicationProvider.getApplicationContext()
         context.setTheme(R.style.Theme_Blue)
-        AsyncUtils.runSingleThread()
+        AsyncTestUtils.runSingleThread()
         mockDataManagement()
 
         val fragment = ImportVersesDialog()
@@ -87,10 +92,6 @@ class ImportVersesDialogTest {
         return alertDialog.findViewById(R.id.linear_layout_import)
     }
 
-    private fun getPositiveButton(): Button {
-        return alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
-    }
-
     @Test
     fun shouldShowDialog() {
         assertNotNull(alertDialog)
@@ -100,7 +101,7 @@ class ImportVersesDialogTest {
     fun shouldShowLoadingIndicator() {
         assertEquals(getLoadingIndicator()!!.visibility, View.VISIBLE)
         assertEquals(getSpinnerContainer()!!.visibility, View.GONE)
-        assertFalse(getPositiveButton().isEnabled)
+        assertFalse(alertDialog.getPositiveButton().isEnabled)
     }
 
     @Test
@@ -110,7 +111,7 @@ class ImportVersesDialogTest {
         assertEquals(getEmptyState()!!.visibility, View.VISIBLE)
         assertEquals(getLoadingIndicator()!!.visibility, View.GONE)
         assertEquals(getSpinnerContainer()!!.visibility, View.GONE)
-        assertFalse(getPositiveButton().isEnabled)
+        assertFalse(alertDialog.getPositiveButton().isEnabled)
     }
 
     @Test
@@ -134,7 +135,7 @@ class ImportVersesDialogTest {
     fun shouldShowTermsAndConditions() {
         liveDataDataManagement.postValue(testData)
 
-        assertFalse(getPositiveButton().isEnabled)
+        assertFalse(alertDialog.getPositiveButton().isEnabled)
 
         // select english language
         getSpinner()!!.setSelection(0)
@@ -143,12 +144,12 @@ class ImportVersesDialogTest {
         assertEquals(3, innerWrapper.childCount)
         innerWrapper.getChildAt(0).performClick()
 
-        assertTrue(getPositiveButton().isEnabled)
+        assertTrue(alertDialog.getPositiveButton().isEnabled)
 
         innerWrapper.getChildAt(1).performClick()
         innerWrapper.getChildAt(2).performClick()
 
-        getPositiveButton().performClick()
+        alertDialog.clickPositiveButton()
 
         // Show terms and conditions only once
         val termsAndConditionDialog: AlertDialog = ShadowDialog.getLatestDialog() as AlertDialog
@@ -172,7 +173,7 @@ class ImportVersesDialogTest {
 
         val innerWrapper = getInnerWrapper()!!
         innerWrapper.getChildAt(0).performClick()
-        getPositiveButton().performClick()
+        alertDialog.clickPositiveButton()
 
         // Show terms and conditions only once
         val termsAndConditionDialog: AlertDialog = ShadowDialog.getLatestDialog() as AlertDialog

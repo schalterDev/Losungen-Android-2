@@ -7,13 +7,24 @@ import de.schalter.losungen.dataAccess.DatabaseHelper
 import de.schalter.losungen.dataAccess.VersesDatabase
 import de.schalter.losungen.dataAccess.daily.DailyVerse
 import de.schalter.losungen.dataAccess.daily.DailyVersesDao
+import de.schalter.losungen.dataAccess.sermon.SermonDao
 import io.mockk.*
 
 object DatabaseUtils {
 
     private var database: VersesDatabase? = null
     private var dailyVersesDao: DailyVersesDao? = null
+    private var sermonDao: SermonDao? = null
     private var dailyVerseLiveData = MutableLiveData<DailyVerse>()
+
+    private fun mockDatabaseIfNotAlready() {
+        if (database == null) {
+            database = mockkClass(VersesDatabase::class)
+
+            mockkObject(VersesDatabase)
+            every { VersesDatabase.provideVerseDatabase(any()) } returns database!!
+        }
+    }
 
     fun getInMemoryDatabase(): VersesDatabase {
         return Room.inMemoryDatabaseBuilder(
@@ -21,18 +32,23 @@ object DatabaseUtils {
     }
 
     fun mockDailyVersesDao(): DailyVersesDao {
-        if (database == null) {
-            database = mockkClass(VersesDatabase::class)
-        }
+        mockDatabaseIfNotAlready()
         if (dailyVersesDao == null) {
             dailyVersesDao = mockkClass(DailyVersesDao::class)
         }
         every { database!!.dailyVerseDao() } returns dailyVersesDao!!
 
-        mockkObject(VersesDatabase)
-        every { VersesDatabase.provideVerseDatabase(any()) } returns database!!
-
         return dailyVersesDao!!
+    }
+
+    fun mockSermonDao(): SermonDao {
+        mockDatabaseIfNotAlready()
+        if (sermonDao == null) {
+            sermonDao = mockkClass(SermonDao::class)
+        }
+        every { database!!.sermonDao() } returns sermonDao!!
+
+        return sermonDao!!
     }
 
     fun mockDailyVerseDaoFindDailyVerseByDate(): MutableLiveData<DailyVerse> {

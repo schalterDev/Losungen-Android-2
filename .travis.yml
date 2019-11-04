@@ -52,7 +52,7 @@ cache:
 script:
   # - ./gradlew clean testDebug connectedCheck --stacktrace
   - ./gradlew clean testDebug --stacktrace
-  - ./gradlew clean assemble --stacktrace
+  - ./gradlew assemble --stacktrace
   - if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then
     ./gradlew publish;
     fi

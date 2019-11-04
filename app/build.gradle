@@ -6,7 +6,7 @@ plugins {
     id("com.github.triplet.play") version "2.5.0"
 }
 
-def isRunningOnTravis = System.getenv("CI") == "true" && file('../keystore/losungen.keystore').exists()
+def isRunningOnTravis = System.getenv("CI") == "true" && file('../keystore/secrets.tar.enc').exists()
 
 task printVersionName {
     doLast {

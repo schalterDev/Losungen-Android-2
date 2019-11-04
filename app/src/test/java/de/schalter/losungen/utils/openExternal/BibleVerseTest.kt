@@ -16,6 +16,16 @@ class BibleVerseTest {
     }
 
     @Test
+    fun convertWithTwoDigits() {
+        val verse = "Jesaja 31,1"
+        val result = BibleVerse(verse)
+
+        assertEquals(result.bookInBible, BookInBible.fromInt(23))
+        assertEquals(result.chapter, 31)
+        assertEquals(result.verses, listOf(1))
+    }
+
+    @Test
     fun convertBookWithNumbersAndVerseRange() {
         val verse = "2 Mose 3,4-6"
         val result = BibleVerse(verse)

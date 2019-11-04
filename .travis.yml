@@ -1,5 +1,5 @@
 language: android
-sudo: false
+sudo: true
 
 # emulator is currently not working on travis...
 
@@ -12,6 +12,9 @@ env:
     - ANDROID_TAG=google_apis
     - ANDROID_BUILD_TOOLS_VERSION=28.0.3
     - QEMU_AUDIO_DRV=none
+
+jdk:
+  - oraclejdk8
 
 android:
   components:
@@ -51,8 +54,8 @@ cache:
 
 script:
   # - ./gradlew clean testDebug connectedCheck --stacktrace
-  - ./gradlew clean testDebug --stacktrace
-  - ./gradlew assemble --stacktrace
+  - ./gradlew clean testDebug -PdisablePreDex --stacktrace
+  - ./gradlew assemble -PdisablePreDex --stacktrace
   - if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then
     ./gradlew publish;
     fi

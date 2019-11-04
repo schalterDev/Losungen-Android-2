@@ -1,0 +1,2 @@
+Fixed typos
+Fixed error when open verses with bibleserver

@@ -1,5 +1,12 @@
 <changelog>
     <release
+        versionCode="109"
+        versionName="v2.0.4"
+        date="04-11-2019">
+        <bugfix type="summary">Typos</bugfix>
+        <bugfix type="summary">Opening verses with bibleserver</bugfix>
+    </release>
+    <release
         versionCode="108"
         versionName="v2.0.3"
         date="13-09-2019">

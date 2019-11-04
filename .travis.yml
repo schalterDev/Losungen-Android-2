@@ -55,7 +55,7 @@ cache:
 script:
   # - ./gradlew clean testDebug connectedCheck --stacktrace
   - ./gradlew clean testDebug -PdisablePreDex --stacktrace
-  - ./gradlew assemble -PdisablePreDex --stacktrace
+  - ./gradlew clean assemble -PdisablePreDex --stacktrace
   - if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then
     ./gradlew publish;
     fi

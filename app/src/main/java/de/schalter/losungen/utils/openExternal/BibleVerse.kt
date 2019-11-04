@@ -33,7 +33,11 @@ class BibleVerse(verseAsString: String) {
 
         // parse chapter: versesAndChapter contains everything except the book
         val verses = versesAndChapter.replace(REGEX_CHAPTER, "")
-        var chapter = versesAndChapter.replace(verses, "")
+        val indexVerses = versesAndChapter.lastIndexOf(verses)
+        var chapter = if (indexVerses == -1)
+            ""
+        else
+            versesAndChapter.substring(0, indexVerses)
         chapter = chapter.replace(",", "")
 
         if (chapter != "")

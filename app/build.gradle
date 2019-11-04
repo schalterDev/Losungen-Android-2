@@ -1,7 +1,18 @@
-apply plugin: "com.android.application"
-apply plugin: "kotlin-android"
-apply plugin: "kotlin-android-extensions"
-apply plugin: "kotlin-kapt"
+plugins {
+    id("com.android.application")
+    id("kotlin-android")
+    id("kotlin-android-extensions")
+    id("kotlin-kapt")
+    id("com.github.triplet.play") version "2.5.0"
+}
+
+def isRunningOnTravis = System.getenv("CI") == "true" && file('../keystore/secrets.tar.enc').exists()
+
+task printVersionName {
+    doLast {
+        println android.defaultConfig.versionName
+    }
+}
 
 android {
     compileSdkVersion 28
@@ -9,10 +20,13 @@ android {
         applicationId "de.schalter.losungen"
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 108
-        versionName "2.0.3"
+        versionCode 109
+        versionName "2.0.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+    }
+    signingConfigs {
+        release
     }
     buildTypes {
         debug {
@@ -25,12 +39,22 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
         }
     }
     testOptions {
         unitTests {
             includeAndroidResources = true
         }
+    }
+
+
+    if (isRunningOnTravis) {
+        // configure keystore
+        signingConfigs.release.storeFile = file("../keystore/losungen.keystore")
+        signingConfigs.release.storePassword = System.getenv("keystore_password")
+        signingConfigs.release.keyAlias = System.getenv("keystore_alias")
+        signingConfigs.release.keyPassword = System.getenv("keystore_alias_password")
     }
 }
 
@@ -49,6 +73,13 @@ android {
             java.srcDirs += "$projectDir/src/testShared"
         }
     }
+}
+
+play {
+    serviceAccountCredentials = file("../keystore/service-google-api.json")
+    track = "beta"
+    releaseStatus = "completed"
+    defaultToAppBundles = true
 }
 
 dependencies {

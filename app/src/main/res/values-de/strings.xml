@@ -95,8 +95,8 @@
     <string name="show_ads">Werbung anzeigen</string>
     <string name="show_ads_description">Wenn du diese APP unterstützden möchtest kannst du ein kleines Banner aktivieren</string>
     <string name="migrating_database">Migriere Datenbank</string>
-    <string name="migrating_info">Diese Aktualisierung benötigt eine Migration aller Daten. Dies kann ein paar Minuten dauert. Schließe die APP währenddessen nicht!</string>
-    <string name="migrating_info_features">Aus technischen Gründen müssen alle Widgets auf dem Startbildschirm neu erstellt werden. Es wurden sehr viele Bugs wie zum Beispiel die Benachrichtigungen behoben.</string>
+    <string name="legacy_migrating_info">Diese Aktualisierung benötigt eine Migration aller Daten. Dies kann ein paar Minuten dauert. Schließe die APP währenddessen nicht!</string>
+    <string name="legacy_migrating_info_features">Aus technischen Gründen müssen alle Widgets auf dem Startbildschirm neu erstellt werden. Es wurden sehr viele Bugs wie zum Beispiel die Benachrichtigungen behoben.</string>
     <string name="migrating_preferences">Migriere Einstellungen</string>
     <string name="finish">Fertigstellen</string>
     <string name="download_and_play_sermon">Andacht herunterladen und abspielen</string>
@@ -116,5 +116,9 @@
     <string name="choose_widget_style">Design auswählen</string>
     <string name="contributors">Mitwirkende: %1$s</string>
     <string name="daily_word_from">Losung vom %1$s</string>
+    <string name="migrating_daily_verses">Migriere tägliche Losung</string>
+    <string name="migrating_monthly_verses">Migriere Monatsverse</string>
+    <string name="migrating_time_zone">Migriere Verse, damit sie auch in verschiedenen Zeitzonen funktionieren</string>
+    <string name="migrating_weekly_verses">Migriere Wochensprüche</string>
 
 </resources>

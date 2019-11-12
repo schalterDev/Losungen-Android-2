@@ -115,13 +115,20 @@ class MainActivity : CustomizeActivity() {
         val migrate = Migration(this)
 
         if (migrate.needMigrationFromLegacyApp()) {
-            MigrateProgressDialog().show(
-                    this.supportFragmentManager,
-                    null
-            )
+            val dialog = MigrateProgressDialog(R.string.legacy_migrating_info, R.string.legacy_migrating_info_features)
+            dialog.show(this.supportFragmentManager, null)
+
+            migrate.progressChangeListener = dialog
+            migrate.migrateFromLegacyIfNecessary()
             return true
         } else {
-            migrate.migrateIfNecessary()
+            if (migrate.needMigration()) {
+                val dialog = MigrateProgressDialog(R.string.migrating_time_zone, null, showFinishButton = false)
+                dialog.show(this.supportFragmentManager, null)
+                migrate.progressChangeListener = dialog
+            }
+            // to show changelog even when no migration is needed
+            migrate.migrateIfNecessaryAndShowChangelog()
         }
 
         return false

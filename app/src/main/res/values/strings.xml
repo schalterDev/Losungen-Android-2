@@ -96,8 +96,8 @@
     <string name="send_statistics">Send anonymous statistics</string>
     <string name="migrating_database">Migrating database</string>
     <string name="migrating_preferences">Migrating preferences</string>
-    <string name="migrating_info">This update requires a migration of all data. This can take a few minutes. Please do not close the App.</string>
-    <string name="migrating_info_features">For technical reasons you have to recreate all widgets on your start screen. A lot of bugs like notifications are fixed now.</string>
+    <string name="legacy_migrating_info">This update requires a migration of all data. This can take a few minutes. Please do not close the App.</string>
+    <string name="legacy_migrating_info_features">For technical reasons you have to recreate all widgets on your start screen. A lot of bugs like notifications are fixed now.</string>
     <string name="finish">finish</string>
     <string name="download_and_play_sermon">Download and play sermon</string>
     <string name="app_intro">App intro</string>
@@ -116,4 +116,8 @@
     <string name="choose_widget_style">Choose widget style</string>
     <string name="contributors">Contributors: %1$s</string>
     <string name="daily_word_from">Daily verse from %1$s</string>
+    <string name="migrating_time_zone">Migrating verses to work with different time zones</string>
+    <string name="migrating_daily_verses">Migrating daily verses</string>
+    <string name="migrating_weekly_verses">Migrating weekly verses</string>
+    <string name="migrating_monthly_verses">Migrating monthly verses</string>
 </resources>

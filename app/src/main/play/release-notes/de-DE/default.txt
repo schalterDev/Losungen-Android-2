@@ -1,2 +1,3 @@
+Verse werden auch bei einem Zeitzonenwechsel angezeigt
 Rechtschreibfehler behoben
 Fehlerbehebung beim Öffnen der Verse auf Bibleserver

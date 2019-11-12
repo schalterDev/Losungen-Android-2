@@ -1,12 +1,12 @@
 package de.schalter.losungen.xmlProcessing
 
 import android.util.Xml
-import org.xmlpull.v1.XmlPullParser
-import org.xmlpull.v1.XmlPullParserException
 import de.schalter.losungen.dataAccess.Language
 import de.schalter.losungen.dataAccess.daily.DailyVerse
 import de.schalter.losungen.dataAccess.monthly.MonthlyVerse
 import de.schalter.losungen.dataAccess.weekly.WeeklyVerse
+import org.xmlpull.v1.XmlPullParser
+import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
 import java.io.InputStream
 import java.text.ParseException

@@ -38,9 +38,15 @@ class MonthlyVerse(
 
     companion object {
         fun getDateForMonth(date: Date): Date {
-            val calendar = Calendar.getInstance()
-            calendar.time = date
-            calendar.set(Calendar.DAY_OF_MONTH, 1)
+            val calendarOwnTimeZone = Calendar.getInstance()
+            calendarOwnTimeZone.time = date
+
+            val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+            calendar.set(
+                    calendarOwnTimeZone.get(Calendar.YEAR),
+                    calendarOwnTimeZone.get(Calendar.MONTH),
+                    1
+            )
             calendar.set(Calendar.HOUR_OF_DAY, 12)
             calendar.set(Calendar.MINUTE, 0)
             calendar.set(Calendar.SECOND, 0)

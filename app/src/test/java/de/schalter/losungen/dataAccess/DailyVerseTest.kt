@@ -1,16 +1,16 @@
 package de.schalter.losungen.dataAccess
 
+import de.schalter.losungen.dataAccess.daily.DailyVerse
 import org.hamcrest.Matchers.equalTo
 import org.junit.Assert.assertThat
 import org.junit.Test
-import de.schalter.losungen.dataAccess.daily.DailyVerse
 import java.util.*
 
 class DailyVerseTest {
     @Test
     fun timeConverting() {
         val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, 2)
+        calendar.set(2019, Calendar.JANUARY, 1, Calendar.HOUR_OF_DAY, 0)
 
         val dateAt2 = calendar.time
         val verse = DailyVerse(
@@ -22,14 +22,13 @@ class DailyVerseTest {
                 oldTestamentVerseText = ""
         )
 
-        calendar.set(Calendar.HOUR_OF_DAY, 12)
-        calendar.set(Calendar.MINUTE, 0)
-        calendar.set(Calendar.SECOND, 0)
-        calendar.set(Calendar.MILLISECOND, 0)
+        val utcCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        utcCalendar.set(2019, Calendar.JANUARY, 1, 12, 0, 0)
+        utcCalendar.set(Calendar.MILLISECOND, 0)
 
-        assertThat(verse.date, equalTo(calendar.time))
+        assertThat(verse.date, equalTo(utcCalendar.time))
 
         verse.date = dateAt2
-        assertThat(verse.date, equalTo(calendar.time))
+        assertThat(verse.date, equalTo(utcCalendar.time))
     }
 }

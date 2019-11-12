@@ -38,9 +38,13 @@ class WeeklyVerse(
 
     companion object {
         fun getDateForWeek(date: Date): Date {
-            val calendar = Calendar.getInstance()
+            val calendarOwnTimeZone = Calendar.getInstance()
+            calendarOwnTimeZone.time = date
+
+            val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
             calendar.firstDayOfWeek = Calendar.SUNDAY
-            calendar.time = date
+            calendar.set(Calendar.YEAR, calendarOwnTimeZone.get(Calendar.YEAR))
+            calendar.set(Calendar.DAY_OF_YEAR, calendarOwnTimeZone.get(Calendar.DAY_OF_YEAR))
             calendar.set(Calendar.HOUR_OF_DAY, 12)
             calendar.set(Calendar.MINUTE, 0)
             calendar.set(Calendar.SECOND, 0)

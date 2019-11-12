@@ -77,6 +77,8 @@ class Migration(private val activity: Activity) : CoroutineScope {
                             this.migrationUpdateTime(date, MonthlyVerse.getDateForMonth(date))
                         }
                     }
+
+                    progressChangeListener?.finished()
                 }
 
                 // show changelog

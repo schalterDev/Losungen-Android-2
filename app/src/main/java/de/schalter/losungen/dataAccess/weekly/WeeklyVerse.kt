@@ -43,12 +43,15 @@ class WeeklyVerse(
 
             val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
             calendar.firstDayOfWeek = Calendar.SUNDAY
-            calendar.set(Calendar.YEAR, calendarOwnTimeZone.get(Calendar.YEAR))
-            calendar.set(Calendar.DAY_OF_YEAR, calendarOwnTimeZone.get(Calendar.DAY_OF_YEAR))
-            calendar.set(Calendar.HOUR_OF_DAY, 12)
-            calendar.set(Calendar.MINUTE, 0)
-            calendar.set(Calendar.SECOND, 0)
+            calendar.set(
+                    calendarOwnTimeZone.get(Calendar.YEAR),
+                    calendarOwnTimeZone.get(Calendar.MONTH),
+                    calendarOwnTimeZone.get(Calendar.DATE),
+                    12,
+                    0,
+                    0)
             calendar.set(Calendar.MILLISECOND, 0)
+            calendar.get(Calendar.DAY_OF_YEAR)
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
 
             return calendar.time

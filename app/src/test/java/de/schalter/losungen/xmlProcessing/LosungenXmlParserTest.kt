@@ -3,7 +3,6 @@ package de.schalter.losungen.xmlProcessing
 import de.schalter.losungen.dataAccess.Language
 import de.schalter.losungen.dataAccess.daily.DailyVerse
 import de.schalter.losungen.dataAccess.monthly.MonthlyVerse
-import de.schalter.losungen.dataAccess.weekly.WeeklyVerse
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.isEmptyOrNullString
 import org.junit.Assert.assertThat
@@ -68,10 +67,9 @@ class LosungenXmlParserTest {
 
             assertThat(weeklyVerses.size, equalTo(3))
 
-            val calendar = Calendar.getInstance()
-            calendar.set(Calendar.YEAR, 2019)
-            calendar.set(Calendar.DAY_OF_YEAR, 1)
-            calendar.time = WeeklyVerse.getDateForWeek(calendar.time)
+            val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+            calendar.set(2019, Calendar.JANUARY, 6, 12, 0, 0)
+            calendar.set(Calendar.MILLISECOND, 0)
 
             for (i in 1..3) {
                 val weeklyVerse = weeklyVerses[i - 1].toWeeklyVerse()
@@ -99,7 +97,7 @@ class LosungenXmlParserTest {
 
             assertThat(monthlyVerses.size, equalTo(3))
 
-            val calendar = Calendar.getInstance()
+            val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
             calendar.set(Calendar.YEAR, 2019)
             calendar.set(Calendar.DAY_OF_YEAR, 1)
             calendar.time = MonthlyVerse.getDateForMonth(calendar.time)

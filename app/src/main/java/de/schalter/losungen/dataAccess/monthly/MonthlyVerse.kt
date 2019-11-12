@@ -42,9 +42,11 @@ class MonthlyVerse(
             calendarOwnTimeZone.time = date
 
             val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-            calendar.set(Calendar.YEAR, calendarOwnTimeZone.get(Calendar.YEAR))
-            calendar.set(Calendar.DAY_OF_YEAR, calendarOwnTimeZone.get(Calendar.DAY_OF_YEAR))
-            calendar.set(Calendar.DAY_OF_MONTH, 1)
+            calendar.set(
+                    calendarOwnTimeZone.get(Calendar.YEAR),
+                    calendarOwnTimeZone.get(Calendar.MONTH),
+                    1
+            )
             calendar.set(Calendar.HOUR_OF_DAY, 12)
             calendar.set(Calendar.MINUTE, 0)
             calendar.set(Calendar.SECOND, 0)

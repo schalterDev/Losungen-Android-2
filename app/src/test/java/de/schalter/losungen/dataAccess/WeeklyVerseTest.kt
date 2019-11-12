@@ -8,9 +8,9 @@ import java.util.*
 
 class WeeklyVerseTest {
     @Test
-    fun timeConverting() {
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY)
+    fun timeConvertingFromMonday() {
+        val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        calendar.set(2019, Calendar.JANUARY, 7) // is monday
 
         val dateNotConverted = calendar.time
         val verse = WeeklyVerse(
@@ -20,19 +20,40 @@ class WeeklyVerseTest {
                 verseBible = ""
         )
 
-        val calendarUTC = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-        calendarUTC.set(Calendar.YEAR, calendar.get(Calendar.YEAR))
-        calendarUTC.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR))
-        calendarUTC.firstDayOfWeek = Calendar.SUNDAY
-        calendarUTC.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
-        calendarUTC.set(Calendar.HOUR_OF_DAY, 12)
-        calendarUTC.set(Calendar.MINUTE, 0)
-        calendarUTC.set(Calendar.SECOND, 0)
-        calendarUTC.set(Calendar.MILLISECOND, 0)
+        calendar.firstDayOfWeek = Calendar.SUNDAY
+        calendar.set(Calendar.DAY_OF_YEAR, 6)
+        calendar.set(Calendar.HOUR_OF_DAY, 12)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
 
-        assertThat(verse.date, Matchers.equalTo(calendarUTC.time))
+        assertThat(verse.date, Matchers.equalTo(calendar.time))
 
         verse.date = dateNotConverted
-        assertThat(verse.date, Matchers.equalTo(calendarUTC.time))
+        assertThat(verse.date, Matchers.equalTo(calendar.time))
+    }
+
+    @Test
+    fun timeConvertingFromSunday() {
+        val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        calendar.set(2019, Calendar.JANUARY, 6) // is sunday
+
+        val dateNotConverted = calendar.time
+        val verse = WeeklyVerse(
+                date = dateNotConverted,
+                language = Language.DE,
+                verseText = "",
+                verseBible = ""
+        )
+
+        calendar.set(Calendar.HOUR_OF_DAY, 12)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+
+        assertThat(calendar.time, Matchers.equalTo(verse.date))
+
+        verse.date = dateNotConverted
+        assertThat(calendar.time, Matchers.equalTo(verse.date))
     }
 }

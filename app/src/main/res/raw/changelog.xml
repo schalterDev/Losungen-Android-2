@@ -1,5 +1,11 @@
 <changelog>
     <release
+        versionCode="110"
+        versionName="v2.0.5"
+        date="12-11-2019">
+        <bugfix type="summary">Works with different time zones</bugfix>
+    </release>
+    <release
         versionCode="109"
         versionName="v2.0.4"
         date="04-11-2019">

@@ -10,9 +10,17 @@ import de.schalter.customize.Customize
 import de.schalter.losungen.R
 import de.schalter.losungen.backgroundTasks.dailyNotifications.ScheduleNotification
 import de.schalter.losungen.dataAccess.VersesDatabase
+import de.schalter.losungen.dataAccess.daily.DailyVerse
+import de.schalter.losungen.dataAccess.monthly.MonthlyVerse
+import de.schalter.losungen.dataAccess.weekly.WeeklyVerse
 import de.schalter.losungen.sermon.sermonProvider.SermonProvider
+import de.schalter.losungen.utils.CoroutineDispatchers
 import de.schalter.losungen.utils.PreferenceTags
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import java.io.File
+import kotlin.coroutines.CoroutineContext
 
 
 /**
@@ -20,7 +28,11 @@ import java.io.File
  *
  * And also migrates data between versions of the new app
  */
-class Migration(private val activity: Activity) {
+class Migration(private val activity: Activity) : CoroutineScope {
+
+    private var job: Job = Job()
+    override val coroutineContext: CoroutineContext
+        get() = CoroutineDispatchers.Background + job
 
     var progressChangeListener: OnProgressChanged? = null
 
@@ -32,33 +44,70 @@ class Migration(private val activity: Activity) {
         versionCodeLastStart = preference.getInt(PreferenceTags.APP_VERSIONSCODE, actualVersionCode)
     }
 
-    fun migrateIfNecessary() {
-        if (actualVersionCode != versionCodeLastStart) {
+    fun needMigration(): Boolean {
+        return versionCodeLastStart < LAST_VERSION_THAT_NEEDS_MIGRATION
+    }
 
-            // show changelog
-            if (activity is AppCompatActivity) {
-                ChangelogBuilder()
-                        .withSummary(true, true)
-                        .apply {
-                            // do not show changelog for sermon when language does not support sermon
-                            if (!SermonProvider.implementationForLanguageAvailable(activity)) {
-                                this.withFilter(ChangelogFilter(ChangelogFilter.Mode.NotContains, "sermon", true))
-                            }
+    fun migrateIfNecessaryAndShowChangelog() {
+        launch {
+            if (actualVersionCode != versionCodeLastStart) {
+
+                // time zone migration
+                if (versionCodeLastStart < VERSION_TIME_ZONE) {
+                    val database = VersesDatabase.provideVerseDatabase(activity)
+
+                    // daily
+                    progressChangeListener?.progressChanged(activity.getString(R.string.migrating_daily_verses))
+                    database.dailyVerseDao().apply {
+                        this.migrationGetAllVersesDates().forEach { date ->
+                            this.migrationUpdateTime(date, DailyVerse.getDateForDay(date))
                         }
-                        .buildAndShowDialog(activity, false)
-            }
-        }
+                    }
+                    // weekly
+                    progressChangeListener?.progressChanged(activity.getString(R.string.migrating_weekly_verses))
+                    database.weeklyVerseDao().apply {
+                        this.migrationGetAllVersesDates().forEach { date ->
+                            this.migrationUpdateTime(date, WeeklyVerse.getDateForWeek(date))
+                        }
+                    }
+                    // monthly
+                    progressChangeListener?.progressChanged(activity.getString(R.string.migrating_monthly_verses))
+                    database.monthlyVerseDao().apply {
+                        this.migrationGetAllVersesDates().forEach { date ->
+                            this.migrationUpdateTime(date, MonthlyVerse.getDateForMonth(date))
+                        }
+                    }
 
-        preference.edit().putInt(PreferenceTags.APP_VERSIONSCODE, actualVersionCode).apply()
+                    progressChangeListener?.finished()
+                }
+
+                // show changelog
+                if (activity is AppCompatActivity) {
+                    ChangelogBuilder()
+                            .withSummary(true, true)
+                            .apply {
+                                // do not show changelog for sermon when language does not support sermon
+                                if (!SermonProvider.implementationForLanguageAvailable(activity)) {
+                                    this.withFilter(ChangelogFilter(ChangelogFilter.Mode.NotContains, "sermon", true))
+                                }
+                            }
+                            .buildAndShowDialog(activity, false)
+                }
+            }
+
+            preference.edit().putInt(PreferenceTags.APP_VERSIONSCODE, actualVersionCode).apply()
+        }
     }
 
     fun migrateFromLegacyIfNecessary() {
-        if (needMigrationFromLegacyApp()) {
-            migrateFromLegacyApp()
-        }
+        launch {
+            if (needMigrationFromLegacyApp()) {
+                migrateFromLegacyApp()
+            }
 
-        preference.edit().putInt(PreferenceTags.APP_VERSIONSCODE, actualVersionCode).apply()
-        progressChangeListener?.finished()
+            preference.edit().putInt(PreferenceTags.APP_VERSIONSCODE, actualVersionCode).apply()
+            progressChangeListener?.finished()
+        }
     }
 
     // --------- LEGACY MIGRATION -------
@@ -148,6 +197,9 @@ class Migration(private val activity: Activity) {
     }
 
     companion object {
+        private const val VERSION_TIME_ZONE = 110
+        private const val LAST_VERSION_THAT_NEEDS_MIGRATION = VERSION_TIME_ZONE
+
         private const val HIGHEST_LEGACY_APP_VERSION_CODE = 99
 
         // LEGACY PREF TAGS

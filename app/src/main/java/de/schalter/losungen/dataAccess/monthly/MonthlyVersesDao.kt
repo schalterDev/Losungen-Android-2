@@ -46,4 +46,11 @@ abstract class MonthlyVersesDao {
 
     @Query("UPDATE MonthlyVerse SET notes = :notes WHERE date = :date")
     protected abstract fun updateNotesExactDate(date: Date, notes: String)
+
+    // Migration
+    @Query("UPDATE MonthlyVerse SET date = :newTime WHERE date = :oldTime")
+    abstract fun migrationUpdateTime(oldTime: Date, newTime: Date)
+
+    @Query("SELECT date FROM MonthlyVerse")
+    abstract fun migrationGetAllVersesDates(): Array<Date>
 }

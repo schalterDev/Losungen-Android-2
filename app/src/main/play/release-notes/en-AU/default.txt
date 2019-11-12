@@ -1,2 +1,3 @@
+Fix error when changing the time zone
 Fixed typos
 Fixed error when open verses with bibleserver

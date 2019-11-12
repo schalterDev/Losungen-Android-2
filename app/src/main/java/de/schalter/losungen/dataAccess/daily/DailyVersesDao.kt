@@ -59,4 +59,11 @@ abstract class DailyVersesDao {
             "OR old_testament_verse_bible LIKE '%' || :search || '%'" +
             "OR notes LIKE '%' || :search || '%'")
     abstract fun searchVerses(search: String): LiveData<List<DailyVerse>>
+
+    // Migration
+    @Query("UPDATE DailyVerse SET date = :newTime WHERE date = :oldTime")
+    abstract fun migrationUpdateTime(oldTime: Date, newTime: Date)
+
+    @Query("SELECT date FROM DailyVerse")
+    abstract fun migrationGetAllVersesDates(): Array<Date>
 }

@@ -1,15 +1,15 @@
 package de.schalter.losungen.xmlProcessing
 
+import de.schalter.losungen.dataAccess.Language
+import de.schalter.losungen.dataAccess.daily.DailyVerse
+import de.schalter.losungen.dataAccess.monthly.MonthlyVerse
+import de.schalter.losungen.dataAccess.weekly.WeeklyVerse
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.isEmptyOrNullString
 import org.junit.Assert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import de.schalter.losungen.dataAccess.Language
-import de.schalter.losungen.dataAccess.daily.DailyVerse
-import de.schalter.losungen.dataAccess.monthly.MonthlyVerse
-import de.schalter.losungen.dataAccess.weekly.WeeklyVerse
 import java.io.InputStream
 import java.text.ParseException
 import java.util.*
@@ -74,13 +74,13 @@ class LosungenXmlParserTest {
             calendar.time = WeeklyVerse.getDateForWeek(calendar.time)
 
             for (i in 1..3) {
-                val dailyVerse = weeklyVerses[i - 1].toWeeklyVerse()
-                assertThat(dailyVerse.date, equalTo(calendar.time))
-                assertThat(dailyVerse.notes, isEmptyOrNullString())
-                assertThat(dailyVerse.language, equalTo(Language.DE))
-                assertThat(dailyVerse.verseBible, equalTo("bible$i"))
-                assertThat(dailyVerse.verseText, equalTo("text$i"))
-                assertThat(dailyVerse.isFavourite, equalTo(false))
+                val weeklyVerse = weeklyVerses[i - 1].toWeeklyVerse()
+                assertThat(weeklyVerse.date, equalTo(calendar.time))
+                assertThat(weeklyVerse.notes, isEmptyOrNullString())
+                assertThat(weeklyVerse.language, equalTo(Language.DE))
+                assertThat(weeklyVerse.verseBible, equalTo("bible$i"))
+                assertThat(weeklyVerse.verseText, equalTo("text$i"))
+                assertThat(weeklyVerse.isFavourite, equalTo(false))
 
                 calendar.add(Calendar.WEEK_OF_YEAR, 1)
             }

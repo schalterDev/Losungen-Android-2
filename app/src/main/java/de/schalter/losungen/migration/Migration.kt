@@ -2,6 +2,7 @@ package de.schalter.losungen.migration
 
 import android.app.Activity
 import android.content.SharedPreferences
+import android.database.sqlite.SQLiteConstraintException
 import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
 import com.michaelflisar.changelog.ChangelogBuilder
@@ -60,21 +61,30 @@ class Migration(private val activity: Activity) : CoroutineScope {
                     progressChangeListener?.progressChanged(activity.getString(R.string.migrating_daily_verses))
                     database.dailyVerseDao().apply {
                         this.migrationGetAllVersesDates().forEach { date ->
-                            this.migrationUpdateTime(date, DailyVerse.getDateForDay(date))
+                            try {
+                                this.migrationUpdateTime(date, DailyVerse.getDateForDay(date))
+                            } catch (ignore: SQLiteConstraintException) {
+                            }
                         }
                     }
                     // weekly
                     progressChangeListener?.progressChanged(activity.getString(R.string.migrating_weekly_verses))
                     database.weeklyVerseDao().apply {
                         this.migrationGetAllVersesDates().forEach { date ->
-                            this.migrationUpdateTime(date, WeeklyVerse.getDateForWeek(date))
+                            try {
+                                this.migrationUpdateTime(date, WeeklyVerse.getDateForWeek(date))
+                            } catch (ignore: SQLiteConstraintException) {
+                            }
                         }
                     }
                     // monthly
                     progressChangeListener?.progressChanged(activity.getString(R.string.migrating_monthly_verses))
                     database.monthlyVerseDao().apply {
                         this.migrationGetAllVersesDates().forEach { date ->
-                            this.migrationUpdateTime(date, MonthlyVerse.getDateForMonth(date))
+                            try {
+                                this.migrationUpdateTime(date, MonthlyVerse.getDateForMonth(date))
+                            } catch (ignore: SQLiteConstraintException) {
+                            }
                         }
                     }
 

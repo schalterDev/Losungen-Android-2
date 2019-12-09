@@ -64,6 +64,6 @@ abstract class DailyVersesDao {
     @Query("UPDATE DailyVerse SET date = :newTime WHERE date = :oldTime")
     abstract fun migrationUpdateTime(oldTime: Date, newTime: Date)
 
-    @Query("SELECT date FROM DailyVerse")
+    @Query("SELECT date FROM DailyVerse ORDER BY date DESC")
     abstract fun migrationGetAllVersesDates(): Array<Date>
 }

@@ -1,3 +1,4 @@
+Daten für 2020 sind nun verfügbar
 Verse werden auch bei einem Zeitzonenwechsel angezeigt
 Rechtschreibfehler behoben
 Fehlerbehebung beim Öffnen der Verse auf Bibleserver

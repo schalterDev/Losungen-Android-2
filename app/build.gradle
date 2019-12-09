@@ -20,8 +20,8 @@ android {
         applicationId "de.schalter.losungen"
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 110
-        versionName "2.0.5"
+        versionCode 111
+        versionName "2.0.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }

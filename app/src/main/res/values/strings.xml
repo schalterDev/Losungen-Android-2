@@ -120,4 +120,5 @@
     <string name="migrating_daily_verses">Migrating daily verses</string>
     <string name="migrating_weekly_verses">Migrating weekly verses</string>
     <string name="migrating_monthly_verses">Migrating monthly verses</string>
+    <string name="no_widgets_created_create_one_on_your_homescreen">You have not created any widgets. When you create a widget on your homescreen it will appear here.</string>
 </resources>

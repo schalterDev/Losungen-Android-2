@@ -43,6 +43,8 @@ data class WidgetData(
     }
 
     companion object {
+        const val EXTRA_EDIT_WIDGET = "EDIT_WIDGET"
+
         fun remove(context: Context, widgetId: Int) {
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 

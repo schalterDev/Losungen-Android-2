@@ -32,7 +32,7 @@ class AppWidgetActivity : CustomizeActivity() {
     private lateinit var textViewPreview: TextView
     private lateinit var btnSave: Button
 
-    private var firstData = true
+    private var showStyleChooserDialog = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,9 +41,8 @@ class AppWidgetActivity : CustomizeActivity() {
         setContentView(R.layout.activity_app_widget)
         setSupportActionBar(toolbar as Toolbar)
 
-        val extras = intent.extras
-        val widgetId = extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, WidgetData.generateWidgetId())
-                ?: WidgetData.generateWidgetId()
+        val widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, WidgetData.generateWidgetId())
+        showStyleChooserDialog = !intent.getBooleanExtra(WidgetData.EXTRA_EDIT_WIDGET, false)
 
         loadWidgets()
         initViewModel(widgetId)
@@ -131,11 +130,11 @@ class AppWidgetActivity : CustomizeActivity() {
     }
 
     private fun updateTextView(widgetData: WidgetData) {
-        if (firstData) {
+        if (showStyleChooserDialog) {
             widgetData.contentToShow?.let { content ->
                 if (content != "" && content.trim() != "null") {
 
-                    firstData = false
+                    showStyleChooserDialog = false
                     WidgetStyleChooserDialog(content).apply {
                         this.onStyleSelected = {
                             widgetData.background = it.backgroundColor

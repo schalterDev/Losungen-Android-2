@@ -17,6 +17,7 @@ import de.schalter.losungen.screens.info.InfoFragment
 import de.schalter.losungen.screens.monthly.MonthlyVersesOverviewFragment
 import de.schalter.losungen.screens.search.SearchFragment
 import de.schalter.losungen.screens.settings.SettingsActivity
+import de.schalter.losungen.screens.widgetsOverview.WidgetsOverviewFragment
 import de.schalter.losungen.utils.Open
 
 class NavigationDrawer(private val activity: Activity, private val fragmentChangeListener: (Fragment, String) -> Unit) {
@@ -26,6 +27,7 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
     private var dailyVersesOverviewFragment: DailyVersesOverviewFragment? = null
     private var monthlyVersesOverviewFragment: MonthlyVersesOverviewFragment? = null
     private var favouriteVersesOverviewFragment: FavouriteVersesOverviewFragment? = null
+    private var widgetsOverviewFragment: WidgetsOverviewFragment? = null
     private var searchFragment: SearchFragment? = null
     private var infoFragment: InfoFragment? = null
 
@@ -34,6 +36,7 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
     private lateinit var itemMonthlyVerses: PrimaryDrawerItem
     private lateinit var itemFavourite: PrimaryDrawerItem
     private lateinit var itemSearch: PrimaryDrawerItem
+    private lateinit var itemWidgets: PrimaryDrawerItem
     private lateinit var itemSettings: PrimaryDrawerItem
     private lateinit var itemRate: PrimaryDrawerItem
     private lateinit var itemInfo: PrimaryDrawerItem
@@ -52,6 +55,9 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
         itemSearch = PrimaryDrawerItem().withName(R.string.search_verses)
                 .withIconTintingEnabled(true)
                 .withIcon(R.drawable.ic_search)
+        itemWidgets = PrimaryDrawerItem().withName(R.string.widgets)
+                .withIconTintingEnabled(true)
+                .withIcon(R.drawable.ic_widget)
         itemSettings = PrimaryDrawerItem().withName(R.string.settings)
                 .withIconTintingEnabled(true)
                 .withIcon(R.drawable.ic_action_settings)
@@ -76,6 +82,7 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
                         itemDailyVerses,
                         itemMonthlyVerses,
                         itemFavourite,
+                        itemWidgets,
                         itemSearch,
                         itemSettings,
                         DividerDrawerItem(),
@@ -95,6 +102,7 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
             DrawerItem.MONTHLY_OVERVIEW -> itemMonthlyVerses
             DrawerItem.FAVOURITE_OVERVIEW -> itemFavourite
             DrawerItem.SEARCH -> itemSearch
+            DrawerItem.WIDGETS -> itemWidgets
             DrawerItem.SETTINGS -> itemSettings
             DrawerItem.RATE -> itemRate
             DrawerItem.INFO -> itemInfo
@@ -125,6 +133,8 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
                     ?: MonthlyVersesOverviewFragment.newInstance()
             itemFavourite -> fragmentToShowNext = favouriteVersesOverviewFragment
                     ?: FavouriteVersesOverviewFragment.newInstance()
+            itemWidgets -> fragmentToShowNext = widgetsOverviewFragment
+                    ?: WidgetsOverviewFragment.newInstance()
             itemSearch -> fragmentToShowNext = searchFragment
                     ?: SearchFragment.newInstance()
             itemSettings -> activity.startActivity(Intent(activity, SettingsActivity::class.java))
@@ -147,6 +157,7 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
             is DailyVersesOverviewFragment -> return DrawerItem.DAILY_OVERVIEW.toString()
             is MonthlyVersesOverviewFragment -> return DrawerItem.MONTHLY_OVERVIEW.toString()
             is FavouriteVersesOverviewFragment -> return DrawerItem.FAVOURITE_OVERVIEW.toString()
+            is WidgetsOverviewFragment -> return DrawerItem.WIDGETS.toString()
             is SearchFragment -> return DrawerItem.SEARCH.toString()
             is InfoFragment -> return DrawerItem.INFO.toString()
         }
@@ -159,6 +170,7 @@ class NavigationDrawer(private val activity: Activity, private val fragmentChang
         MONTHLY_OVERVIEW,
         FAVOURITE_OVERVIEW,
         SEARCH,
+        WIDGETS,
         SETTINGS,
         RATE,
         INFO,

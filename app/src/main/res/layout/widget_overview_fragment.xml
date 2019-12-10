@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    tools:context=".screens.widgetsOverview.WidgetsOverviewFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_widgets"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <de.schalter.losungen.components.emptyState.EmptyStateView
+        android:id="@+id/emptyState"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        custom:emptyStateIcon="@drawable/ic_widget"
+        custom:emptyStateTitle="@string/no_widgets_created_create_one_on_your_homescreen" />
+
+</FrameLayout>

@@ -120,5 +120,6 @@
     <string name="migrating_monthly_verses">Migriere Monatsverse</string>
     <string name="migrating_time_zone">Migriere Verse, damit sie auch in verschiedenen Zeitzonen funktionieren</string>
     <string name="migrating_weekly_verses">Migriere Wochensprüche</string>
+    <string name="no_widgets_created_create_one_on_your_homescreen">"Es wurden noch keine Widgets erstellt. Wenn du ein Widget auf dem Starbildschirm deines Handys erstellst, wird es hier angezeigt. "</string>
 
 </resources>

@@ -44,7 +44,10 @@ class EmptyStateView : FrameLayout {
             val iconRes = typedArray.getResourceId(R.styleable.EmptyStateView_emptyStateIcon, -1)
 
             if (titleRes != -1) setTitle(titleRes)
-            if (buttonRes != -1) setButtonText(buttonRes)
+            if (buttonRes != -1)
+                setButtonText(buttonRes)
+            else
+                hideButton()
             if (iconRes != -1) setIcon(iconRes)
         } finally {
             typedArray.recycle()

@@ -53,10 +53,10 @@ class AppWidgetRemoteViewsFactory(
 
     override fun getViewAt(position: Int): RemoteViews? {
         // when false show verse from new testament
-        val showVerseFromOldTestament = if (position > 0) {
+        val showVerseFromOldTestament = if (position == 1) {
             false
         } else {
-            widgetData.contentType.contains(WidgetContentType.NEW_TESTAMENT)
+            widgetData.contentType.contains(WidgetContentType.OLD_TESTAMENT)
         }
 
         var text = context.getString(R.string.no_verses_found)

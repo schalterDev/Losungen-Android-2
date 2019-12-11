@@ -2,14 +2,14 @@ package de.schalter.losungen.components.widgetVerse
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
-import android.widget.FrameLayout
+import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import de.schalter.losungen.R
 import de.schalter.losungen.widgets.WidgetData
 
 
-class WidgetVerseView : FrameLayout {
+class WidgetVerseView : LinearLayout {
 
     var textViewText: TextView
     var textViewVerse: TextView
@@ -24,12 +24,13 @@ class WidgetVerseView : FrameLayout {
     }
 
     init {
-        val view = View.inflate(context, R.layout.app_widget_row, null)
+        val params = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
-        textViewText = view.findViewById(R.id.textView_widget)
-        textViewVerse = view.findViewById(R.id.textViewVerse_widget)
+        inflate(context, R.layout.app_widget_row, this)
 
-        addView(view)
+        layoutParams = params
+        textViewText = findViewById(R.id.textView_widget)
+        textViewVerse = findViewById(R.id.textViewVerse_widget)
     }
 
     private fun initAttributes(attributeSet: AttributeSet) {}
@@ -42,15 +43,10 @@ class WidgetVerseView : FrameLayout {
         textViewVerse.text = verse
     }
 
-    fun setStyle(widgetData: WidgetData, setBackground: Boolean = true) {
+    fun setStyle(widgetData: WidgetData) {
         textViewText.textSize = widgetData.fontSize.toFloat()
         textViewVerse.textSize = widgetData.fontSize.toFloat() - 2
         textViewText.setTextColor(widgetData.color)
         textViewVerse.setTextColor(widgetData.color)
-
-        if (setBackground) {
-            textViewText.setBackgroundColor(widgetData.background)
-            textViewVerse.setBackgroundColor(widgetData.background)
-        }
     }
 }

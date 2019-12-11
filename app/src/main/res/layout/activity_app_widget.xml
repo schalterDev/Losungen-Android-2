@@ -120,23 +120,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <de.schalter.losungen.components.widgetVerse.WidgetVerseView
-                    android:id="@+id/widget_verse_1"
+                <de.schalter.losungen.components.widgetVerse.WidgetPreview
+                    android:id="@+id/widget_preview"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="4dp" />
+                    android:layout_height="wrap_content" />
 
-                <de.schalter.losungen.components.widgetVerse.WidgetVerseView
-                    android:id="@+id/widget_verse_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="4dp" />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

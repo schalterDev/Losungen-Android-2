@@ -3,15 +3,11 @@ package de.schalter.losungen.screens.widgetsOverview
 import android.app.Activity
 import android.appwidget.AppWidgetManager
 import android.content.Intent
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import de.schalter.losungen.R
-import de.schalter.losungen.utils.Wallpaper
+import de.schalter.losungen.components.widgetVerse.WidgetPreview
 import de.schalter.losungen.widgets.AppWidgetActivity
 import de.schalter.losungen.widgets.WidgetData
 
@@ -19,10 +15,10 @@ import de.schalter.losungen.widgets.WidgetData
 class WidgetsRecyclerViewAdapter(private val activity: Activity, private val widgets: List<WidgetData>) : RecyclerView.Adapter<WidgetsRecyclerViewAdapter.ViewHolder>() {
 
     var clickListener: AdapterView.OnItemClickListener? = null
-    private var mInflater: LayoutInflater = LayoutInflater.from(activity)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view: View = mInflater.inflate(R.layout.app_widget_row, parent, false)
+        val view = WidgetPreview(activity)
+        view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         return ViewHolder(view)
     }
 
@@ -31,34 +27,17 @@ class WidgetsRecyclerViewAdapter(private val activity: Activity, private val wid
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
             holder.updateData(widgets[position])
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class ViewHolder(private val widgetPreview: WidgetPreview) : RecyclerView.ViewHolder(widgetPreview), View.OnClickListener {
 
-        private var container: LinearLayout
-        private var textViewText: TextView
-        private var textViewVerse: TextView
         private var widgetData: WidgetData? = null
 
         init {
-            itemView.setOnClickListener(this)
-            container = itemView.findViewById(R.id.linearLayout_widgetRow)
-            textViewText = itemView.findViewById(R.id.textView_widget)
-            textViewVerse = itemView.findViewById(R.id.textViewVerse_widget)
+            widgetPreview.setOnClickListener(this)
         }
 
         fun updateData(widgetData: WidgetData) {
             this.widgetData = widgetData
-
-            textViewText.text = widgetData.content.getOrNull(0)?.verseText
-            textViewVerse.text = widgetData.content.getOrNull(0)?.verseVerse
-            textViewText.textSize = widgetData.fontSize.toFloat()
-            textViewVerse.textSize = widgetData.fontSize.toFloat() - 2
-            textViewText.setTextColor(widgetData.color)
-            textViewVerse.setTextColor(widgetData.color)
-
-            textViewText.setBackgroundColor(widgetData.background)
-            textViewVerse.setBackgroundColor(widgetData.background)
-
-            container.background = Wallpaper.getWallpaperDrawable(activity)
+            widgetPreview.setWidgetData(widgetData)
         }
 
         override fun onClick(v: View?) {

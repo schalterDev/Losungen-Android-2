@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_preview_background"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:id="@+id/widget_preview_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#B7FFFFFF"
+        android:orientation="vertical">
+
+        <de.schalter.losungen.components.widgetVerse.WidgetVerseView
+            android:id="@+id/widget_preview_verse1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <de.schalter.losungen.components.widgetVerse.WidgetVerseView
+            android:id="@+id/widget_preview_verse2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -17,7 +17,7 @@ import de.schalter.customize.CustomizeActivity
 import de.schalter.losungen.MainActivity
 import de.schalter.losungen.R
 import de.schalter.losungen.components.dialogs.widgetStyleChooser.WidgetStyleChooserDialog
-import de.schalter.losungen.components.widgetVerse.WidgetVerseView
+import de.schalter.losungen.components.widgetVerse.WidgetPreview
 import de.schalter.losungen.firebase.FirebaseUtil
 import de.schalter.losungen.utils.Wallpaper
 import kotlinx.android.synthetic.main.toolbar.*
@@ -33,8 +33,7 @@ class AppWidgetActivity : CustomizeActivity() {
     private lateinit var btnBackgroundColor: Button
     private lateinit var btnSave: Button
 
-    private lateinit var widgetVerseView1: WidgetVerseView
-    private lateinit var widgetVerseView2: WidgetVerseView
+    private lateinit var preview: WidgetPreview
 
     private var showStyleChooserDialog = true
 
@@ -59,8 +58,7 @@ class AppWidgetActivity : CustomizeActivity() {
         btnBackgroundColor = findViewById(R.id.btn_background_color)
         btnSave = findViewById(R.id.btn_widget_save)
 
-        widgetVerseView1 = findViewById(R.id.widget_verse_1)
-        widgetVerseView2 = findViewById(R.id.widget_verse_2)
+        preview = findViewById(R.id.widget_preview)
 
         findViewById<LinearLayout>(R.id.linearLayoutWrapperPreview).apply {
             background = Wallpaper.getWallpaperDrawable(this@AppWidgetActivity)
@@ -155,26 +153,7 @@ class AppWidgetActivity : CustomizeActivity() {
             }
         }
 
-        if (widgetData.content.size == 0) {
-            this.widgetVerseView1.visibility = View.INVISIBLE
-            this.widgetVerseView2.visibility = View.INVISIBLE
-        } else if (widgetData.content.size > 0) {
-            val widgetContent = widgetData.content[0]
-            this.widgetVerseView1.visibility = View.VISIBLE
-            this.widgetVerseView1.setText(widgetContent.verseText)
-            this.widgetVerseView1.setVerse(widgetContent.verseVerse)
-            this.widgetVerseView1.setStyle(widgetData)
-        }
-
-        if (widgetData.content.size > 1) {
-            val widgetContent = widgetData.content[1]
-            this.widgetVerseView2.visibility = View.VISIBLE
-            this.widgetVerseView2.setText(widgetContent.verseText)
-            this.widgetVerseView2.setVerse(widgetContent.verseVerse)
-            this.widgetVerseView2.setStyle(widgetData)
-        } else {
-            this.widgetVerseView2.visibility = View.GONE
-        }
+        preview.setWidgetData(widgetData)
     }
 
     private fun saveAndFinish() {

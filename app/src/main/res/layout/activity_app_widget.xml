@@ -39,6 +39,24 @@
             tools:layout_editor_absoluteX="8dp"
             tools:showIn="@layout/activity_app_widget">
 
+            <LinearLayout
+                android:id="@+id/linearLayoutWrapperPreview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/widget_preview_background"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <de.schalter.losungen.components.widgetVerse.WidgetPreview
+                    android:id="@+id/widget_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
@@ -108,24 +126,6 @@
                 android:text="@string/background_color"
                 app:layout_constraintStart_toEndOf="@+id/btn_text_color"
                 app:layout_constraintTop_toTopOf="@+id/btn_text_color" />
-
-            <LinearLayout
-                android:id="@+id/linearLayoutWrapperPreview"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/widget_preview_background"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <de.schalter.losungen.components.widgetVerse.WidgetPreview
-                    android:id="@+id/widget_preview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

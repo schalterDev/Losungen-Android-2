@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_preview_background"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -24,4 +24,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

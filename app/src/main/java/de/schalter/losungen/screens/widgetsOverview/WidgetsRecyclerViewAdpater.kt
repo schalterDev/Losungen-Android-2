@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
+import de.schalter.losungen.R
 import de.schalter.losungen.components.widgetVerse.WidgetPreview
 import de.schalter.losungen.widgets.AppWidgetActivity
 import de.schalter.losungen.widgets.WidgetData
@@ -32,7 +33,9 @@ class WidgetsRecyclerViewAdapter(private val activity: Activity, private val wid
         private var widgetData: WidgetData? = null
 
         init {
-            widgetPreview.setOnClickListener(this)
+            widgetPreview.findViewById<View>(R.id.widget_preview_container).apply {
+                this.setOnClickListener(this@ViewHolder)
+            }
         }
 
         fun updateData(widgetData: WidgetData) {

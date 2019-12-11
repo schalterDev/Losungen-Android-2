@@ -4,12 +4,15 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import de.schalter.losungen.R
 import de.schalter.losungen.utils.Wallpaper
 import de.schalter.losungen.widgets.WidgetData
 
 
 class WidgetPreview : LinearLayout {
+
+    private val MAX_HEIGHT = 500
 
     private var container: LinearLayout
     private var verse1: WidgetVerseView
@@ -27,7 +30,7 @@ class WidgetPreview : LinearLayout {
     init {
         val view = inflate(context, R.layout.app_widget_preview, null)
 
-        view.findViewById<LinearLayout>(R.id.widget_preview_background).apply {
+        view.findViewById<ScrollView>(R.id.widget_preview_background).apply {
             this.background = Wallpaper.getWallpaperDrawable(context)
         }
         container = view.findViewById(R.id.widget_preview_container)
@@ -38,6 +41,22 @@ class WidgetPreview : LinearLayout {
     }
 
     private fun initAttributes(attributeSet: AttributeSet) {}
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        var newHeightMeasureSpec = heightMeasureSpec
+
+        try {
+            var heightSize = MeasureSpec.getSize(newHeightMeasureSpec)
+            if (heightSize > MAX_HEIGHT) {
+                heightSize = MAX_HEIGHT
+                newHeightMeasureSpec = MeasureSpec.makeMeasureSpec(heightSize, MeasureSpec.AT_MOST)
+                layoutParams.height = heightSize
+            }
+        } catch (e: Exception) {
+        } finally {
+            super.onMeasure(widthMeasureSpec, newHeightMeasureSpec)
+        }
+    }
 
     fun setWidgetData(widgetData: WidgetData) {
         container.setBackgroundColor(widgetData.background)

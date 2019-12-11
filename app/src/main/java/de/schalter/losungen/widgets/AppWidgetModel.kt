@@ -43,6 +43,7 @@ class AppWidgetModel(private var database: VersesDatabase, private var date: Dat
             contentType?.let { contentType ->
                 if (newTestamentText != null && oldTestamentText != null) {
                     widgetData.contentType = contentType
+                    widgetData.content = mutableListOf()
 
                     if (contentType.contains(WidgetContentType.OLD_TESTAMENT)) {
                         widgetData.content.add(WidgetContent(oldTestamentText!!, oldTestamentVerse!!))

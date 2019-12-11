@@ -3,6 +3,7 @@ package de.schalter.losungen.widgets
 import android.app.Activity
 import android.appwidget.AppWidgetManager
 import android.content.Intent
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -19,7 +20,6 @@ import de.schalter.losungen.R
 import de.schalter.losungen.components.dialogs.widgetStyleChooser.WidgetStyleChooserDialog
 import de.schalter.losungen.components.widgetVerse.WidgetPreview
 import de.schalter.losungen.firebase.FirebaseUtil
-import de.schalter.losungen.utils.Wallpaper
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.*
 
@@ -29,8 +29,8 @@ class AppWidgetActivity : CustomizeActivity() {
     private lateinit var mViewModel: AppWidgetModel
     private lateinit var spinner: Spinner
     private lateinit var seekBar: SeekBar
-    private lateinit var btnTextColor: Button
-    private lateinit var btnBackgroundColor: Button
+    private lateinit var textColor: ImageView
+    private lateinit var backgroundColor: ImageView
     private lateinit var btnSave: Button
 
     private lateinit var preview: WidgetPreview
@@ -54,15 +54,11 @@ class AppWidgetActivity : CustomizeActivity() {
     private fun loadWidgets() {
         spinner = findViewById(R.id.spinner_widget_content)
         seekBar = findViewById(R.id.seekBar_font_size)
-        btnTextColor = findViewById(R.id.btn_text_color)
-        btnBackgroundColor = findViewById(R.id.btn_background_color)
+        textColor = findViewById(R.id.imageViewTextColor)
+        backgroundColor = findViewById(R.id.imageViewBackgroundColor)
         btnSave = findViewById(R.id.btn_widget_save)
 
         preview = findViewById(R.id.widget_preview)
-
-        findViewById<LinearLayout>(R.id.linearLayoutWrapperPreview).apply {
-            background = Wallpaper.getWallpaperDrawable(this@AppWidgetActivity)
-        }
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -79,15 +75,15 @@ class AppWidgetActivity : CustomizeActivity() {
 
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                fontSizeChanged(progress + 8) // progress starts with 0
+                fontSizeChanged(progress + FONT_SIZE_OFFSET) // progress starts with 0
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
-        btnTextColor.setOnClickListener { chooseTextColor() }
-        btnBackgroundColor.setOnClickListener { chooseBackgroundColor() }
+        textColor.setOnClickListener { chooseTextColor() }
+        backgroundColor.setOnClickListener { chooseBackgroundColor() }
 
         btnSave.setOnClickListener { saveAndFinish() }
     }
@@ -141,6 +137,7 @@ class AppWidgetActivity : CustomizeActivity() {
         if (showStyleChooserDialog) {
             if (widgetData.content.size > 0) {
                 showStyleChooserDialog = false
+
                 WidgetStyleChooserDialog(widgetData.content).apply {
                     this.onStyleSelected = {
                         widgetData.background = it.backgroundColor
@@ -153,7 +150,25 @@ class AppWidgetActivity : CustomizeActivity() {
             }
         }
 
+        seekBar.progress = widgetData.fontSize - FONT_SIZE_OFFSET
         preview.setWidgetData(widgetData)
+
+        if (widgetData.contentType.size == 2) {
+            spinner.setSelection(2)
+        } else if (widgetData.contentType.contains(WidgetContentType.OLD_TESTAMENT)) {
+            spinner.setSelection(0)
+        } else if (widgetData.contentType.contains(WidgetContentType.NEW_TESTAMENT)) {
+            spinner.setSelection(1)
+        }
+
+        (textColor.background as GradientDrawable).apply {
+            this.mutate()
+            this.setColor(widgetData.color)
+        }
+        (backgroundColor.background as GradientDrawable).apply {
+            this.mutate()
+            this.setColor(widgetData.background)
+        }
     }
 
     private fun saveAndFinish() {
@@ -172,5 +187,9 @@ class AppWidgetActivity : CustomizeActivity() {
         FirebaseUtil.trackWidgetCreated(this)
 
         finish()
+    }
+
+    companion object {
+        const val FONT_SIZE_OFFSET = 8
     }
 }

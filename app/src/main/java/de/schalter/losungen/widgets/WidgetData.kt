@@ -37,7 +37,7 @@ data class WidgetData(
         editor.putInt(PreferenceTags.WIDGET_COLOR + widgetId, color)
         editor.putInt(PreferenceTags.WIDGET_BACKGROUND + widgetId, background)
         editor.putInt(PreferenceTags.WIDGET_FONT_SIZE + widgetId, fontSize)
-        editor.putString(PreferenceTags.WIDGET_CONTENT_TYPE + widgetId, contentType.toString())
+        editor.putStringSet(PreferenceTags.WIDGET_CONTENT_TYPE + widgetId, contentType.map { it.toString() }.toMutableSet())
         editor.putStringSet(PreferenceTags.WIDGET_IDS, ids)
         editor.apply()
     }
@@ -70,7 +70,7 @@ data class WidgetData(
                     preferences.getInt(PreferenceTags.WIDGET_BACKGROUND + widgetId, Color.WHITE),
                     preferences.getInt(PreferenceTags.WIDGET_FONT_SIZE + widgetId, 12),
                     preferences.getStringSet(
-                            PreferenceTags.WIDGET_CONTENT_TYPE,
+                            PreferenceTags.WIDGET_CONTENT_TYPE + widgetId,
                             defaultWidgetContentSet)!!
                             .map { WidgetContentType.valueOf(it) }.toSet()
             )

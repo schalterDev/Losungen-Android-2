@@ -22,8 +22,8 @@
         android:id="@+id/textViewVerse_widget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
         android:gravity="end"
+        android:paddingTop="2dp"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
         android:textColor="#000000" />
 

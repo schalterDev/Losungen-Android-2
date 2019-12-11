@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.database.sqlite.SQLiteConstraintException
 import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import com.michaelflisar.changelog.ChangelogBuilder
 import com.michaelflisar.changelog.classes.ChangelogFilter
 import de.schalter.customize.Customize
@@ -17,6 +18,7 @@ import de.schalter.losungen.dataAccess.weekly.WeeklyVerse
 import de.schalter.losungen.sermon.sermonProvider.SermonProvider
 import de.schalter.losungen.utils.CoroutineDispatchers
 import de.schalter.losungen.utils.PreferenceTags
+import de.schalter.losungen.widgets.WidgetContentType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -49,12 +51,36 @@ class Migration(private val activity: Activity) : CoroutineScope {
         return versionCodeLastStart < LAST_VERSION_THAT_NEEDS_MIGRATION
     }
 
-    fun migrateIfNecessaryAndShowChangelog() {
+    fun migrateIfNecessaryAndShowChangelog(supportFragmentManager: FragmentManager) {
         launch {
             if (actualVersionCode != versionCodeLastStart) {
 
+                if (versionCodeLastStart < VERSION_WIDGET_UPDATE) {
+                    val ids = preference.getStringSet(PreferenceTags.WIDGET_IDS, mutableSetOf())!!
+                    val editor = preference.edit()
+                    ids.forEach { widgetId ->
+                        val preferenceKey = PreferenceTags.WIDGET_CONTENT_TYPE + widgetId
+
+                        val contentType = preference.getString(preferenceKey, "OLD_AND_NEW_TESTAMENT")!!
+                        editor.remove(preferenceKey)
+
+                        val newContentTypes = when (contentType) {
+                            WidgetContentType.NEW_TESTAMENT.toString() -> setOf(WidgetContentType.NEW_TESTAMENT.toString())
+                            WidgetContentType.OLD_TESTAMENT.toString() -> setOf(WidgetContentType.OLD_TESTAMENT.toString())
+                            else -> setOf(WidgetContentType.NEW_TESTAMENT.toString(), WidgetContentType.OLD_TESTAMENT.toString())
+                        }
+
+                        editor.putStringSet(preferenceKey, newContentTypes)
+                    }
+                    editor.apply()
+                }
+
                 // time zone migration
                 if (versionCodeLastStart < VERSION_TIME_ZONE) {
+                    val dialog = MigrateProgressDialog(R.string.migrating_time_zone, null, showFinishButton = false)
+                    dialog.show(supportFragmentManager, null)
+                    this@Migration.progressChangeListener = dialog
+
                     val database = VersesDatabase.provideVerseDatabase(activity)
 
                     // daily
@@ -207,8 +233,9 @@ class Migration(private val activity: Activity) : CoroutineScope {
     }
 
     companion object {
+        private const val VERSION_WIDGET_UPDATE = 112
         private const val VERSION_TIME_ZONE = 110
-        private const val LAST_VERSION_THAT_NEEDS_MIGRATION = VERSION_TIME_ZONE
+        private const val LAST_VERSION_THAT_NEEDS_MIGRATION = VERSION_WIDGET_UPDATE
 
         private const val HIGHEST_LEGACY_APP_VERSION_CODE = 99
 

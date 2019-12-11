@@ -36,6 +36,9 @@ class WidgetBroadcast : AppWidgetProvider() {
             }
 
             val views = RemoteViews(context.packageName, R.layout.app_widget).apply {
+                val widgetData = WidgetData.load(context, widgetId)
+
+                this.setInt(R.id.relLayout_widget, "setBackgroundColor", widgetData.background)
                 setRemoteAdapter(R.id.listView_widget, startServiceIntent)
 
                 // Create an Intent to launch MainActivity

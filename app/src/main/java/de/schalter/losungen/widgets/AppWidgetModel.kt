@@ -13,36 +13,42 @@ class AppWidgetModel(private var database: VersesDatabase, private var date: Dat
     private var widgetDataLiveData: MediatorLiveData<WidgetData>
 
     private var oldTestamentText: String? = null
+    private var oldTestamentVerse: String? = null
     private var newTestamentText: String? = null
+    private var newTestamentVerse: String? = null
 
     init {
         widgetDataLiveData = MediatorLiveData<WidgetData>().apply {
             addSource(database.dailyVerseDao().findDailyVerseByDate(date)) {
-                oldTestamentText = it?.oldTestamentVerseText + "\n" + it?.oldTestamentVerseBible
-                newTestamentText = it?.newTestamentVerseText + "\n" + it?.newTestamentVerseBible
+                oldTestamentText = it?.oldTestamentVerseText
+                oldTestamentVerse = it?.oldTestamentVerseBible
+                newTestamentText = it?.newTestamentVerseText
+                newTestamentVerse = it?.newTestamentVerseBible
 
-                updateWidgetData(content = widgetData?.content)
+                updateWidgetData(contentType = widgetData?.contentType)
             }
         }
     }
 
     fun setWidgetData(widgetData: WidgetData) {
         this.widgetData = widgetData
-        updateWidgetData(content = widgetData.content)
+        updateWidgetData(contentType = widgetData.contentType)
     }
 
-    fun updateWidgetData(color: Int? = null, background: Int? = null, fontSize: Int? = null, content: WidgetContent? = null) {
+    fun updateWidgetData(color: Int? = null, background: Int? = null, fontSize: Int? = null, contentType: Set<WidgetContentType>? = null) {
         widgetData?.let { widgetData ->
             color?.let { widgetData.color = it }
             background?.let { widgetData.background = it }
             fontSize?.let { widgetData.fontSize = it }
-            content?.let {
+            contentType?.let { contentType ->
                 if (newTestamentText != null && oldTestamentText != null) {
-                    widgetData.content = it
-                    widgetData.contentToShow = when (it) {
-                        WidgetContent.OLD_TESTAMENT -> oldTestamentText
-                        WidgetContent.NEW_TESTAMENT -> newTestamentText
-                        WidgetContent.OLD_AND_NEW_TESTAMENT -> oldTestamentText + "\n\n" + newTestamentText
+                    widgetData.contentType = contentType
+
+                    if (contentType.contains(WidgetContentType.OLD_TESTAMENT)) {
+                        widgetData.content.add(WidgetContent(oldTestamentText!!, oldTestamentVerse!!))
+                    }
+                    if (contentType.contains(WidgetContentType.NEW_TESTAMENT)) {
+                        widgetData.content.add(WidgetContent(newTestamentText!!, newTestamentVerse!!))
                     }
                 }
             }

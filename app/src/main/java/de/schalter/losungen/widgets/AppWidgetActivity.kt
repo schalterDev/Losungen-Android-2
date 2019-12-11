@@ -17,7 +17,9 @@ import de.schalter.customize.CustomizeActivity
 import de.schalter.losungen.MainActivity
 import de.schalter.losungen.R
 import de.schalter.losungen.components.dialogs.widgetStyleChooser.WidgetStyleChooserDialog
+import de.schalter.losungen.components.widgetVerse.WidgetVerseView
 import de.schalter.losungen.firebase.FirebaseUtil
+import de.schalter.losungen.utils.Wallpaper
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.*
 
@@ -29,8 +31,10 @@ class AppWidgetActivity : CustomizeActivity() {
     private lateinit var seekBar: SeekBar
     private lateinit var btnTextColor: Button
     private lateinit var btnBackgroundColor: Button
-    private lateinit var textViewPreview: TextView
     private lateinit var btnSave: Button
+
+    private lateinit var widgetVerseView1: WidgetVerseView
+    private lateinit var widgetVerseView2: WidgetVerseView
 
     private var showStyleChooserDialog = true
 
@@ -53,17 +57,23 @@ class AppWidgetActivity : CustomizeActivity() {
         seekBar = findViewById(R.id.seekBar_font_size)
         btnTextColor = findViewById(R.id.btn_text_color)
         btnBackgroundColor = findViewById(R.id.btn_background_color)
-        textViewPreview = findViewById(R.id.textView_preview)
         btnSave = findViewById(R.id.btn_widget_save)
+
+        widgetVerseView1 = findViewById(R.id.widget_verse_1)
+        widgetVerseView2 = findViewById(R.id.widget_verse_2)
+
+        findViewById<LinearLayout>(R.id.linearLayoutWrapperPreview).apply {
+            background = Wallpaper.getWallpaperDrawable(this@AppWidgetActivity)
+        }
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 when (position) {
-                    0 -> contentSelected(WidgetContent.OLD_TESTAMENT)
-                    1 -> contentSelected(WidgetContent.NEW_TESTAMENT)
-                    2 -> contentSelected(WidgetContent.OLD_AND_NEW_TESTAMENT)
+                    0 -> contentSelected(setOf(WidgetContentType.OLD_TESTAMENT))
+                    1 -> contentSelected(setOf(WidgetContentType.NEW_TESTAMENT))
+                    2 -> contentSelected(setOf(WidgetContentType.OLD_TESTAMENT, WidgetContentType.NEW_TESTAMENT))
                 }
             }
         }
@@ -95,8 +105,8 @@ class AppWidgetActivity : CustomizeActivity() {
         }
     }
 
-    private fun contentSelected(content: WidgetContent) {
-        mViewModel.updateWidgetData(content = content)
+    private fun contentSelected(contentType: Set<WidgetContentType>) {
+        mViewModel.updateWidgetData(contentType = contentType)
     }
 
     private fun fontSizeChanged(fontSize: Int) {
@@ -131,27 +141,40 @@ class AppWidgetActivity : CustomizeActivity() {
 
     private fun updateTextView(widgetData: WidgetData) {
         if (showStyleChooserDialog) {
-            widgetData.contentToShow?.let { content ->
-                if (content != "" && content.trim() != "null") {
+            if (widgetData.content.size > 0) {
+                showStyleChooserDialog = false
+                WidgetStyleChooserDialog(widgetData.content).apply {
+                    this.onStyleSelected = {
+                        widgetData.background = it.backgroundColor
+                        widgetData.color = it.fontColor
+                        widgetData.fontSize = it.fontSize.toInt()
 
-                    showStyleChooserDialog = false
-                    WidgetStyleChooserDialog(content).apply {
-                        this.onStyleSelected = {
-                            widgetData.background = it.backgroundColor
-                            widgetData.color = it.fontColor
-                            widgetData.fontSize = it.fontSize.toInt()
-
-                            mViewModel.setWidgetData(widgetData)
-                        }
-                    }.show(supportFragmentManager, null)
-                }
+                        mViewModel.setWidgetData(widgetData)
+                    }
+                }.show(supportFragmentManager, null)
             }
         }
 
-        textViewPreview.textSize = widgetData.fontSize.toFloat()
-        textViewPreview.text = widgetData.contentToShow
-        textViewPreview.setTextColor(widgetData.color)
-        textViewPreview.setBackgroundColor(widgetData.background)
+        if (widgetData.content.size == 0) {
+            this.widgetVerseView1.visibility = View.INVISIBLE
+            this.widgetVerseView2.visibility = View.INVISIBLE
+        } else if (widgetData.content.size > 0) {
+            val widgetContent = widgetData.content[0]
+            this.widgetVerseView1.visibility = View.VISIBLE
+            this.widgetVerseView1.setText(widgetContent.verseText)
+            this.widgetVerseView1.setVerse(widgetContent.verseVerse)
+            this.widgetVerseView1.setStyle(widgetData)
+        }
+
+        if (widgetData.content.size > 1) {
+            val widgetContent = widgetData.content[1]
+            this.widgetVerseView2.visibility = View.VISIBLE
+            this.widgetVerseView2.setText(widgetContent.verseText)
+            this.widgetVerseView2.setVerse(widgetContent.verseVerse)
+            this.widgetVerseView2.setStyle(widgetData)
+        } else {
+            this.widgetVerseView2.visibility = View.GONE
+        }
     }
 
     private fun saveAndFinish() {

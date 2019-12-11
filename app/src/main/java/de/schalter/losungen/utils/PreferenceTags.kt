@@ -19,7 +19,7 @@ object PreferenceTags {
     // widgets
     const val WIDGET_BACKGROUND = "widgetBackground"
     const val WIDGET_COLOR = "widgetColor"
-    const val WIDGET_CONTENT = "widgetContent"
+    const val WIDGET_CONTENT_TYPE = "widgetContent"
     const val WIDGET_FONT_SIZE = "widgetFontSize"
     const val WIDGET_IDS = "widgetIds"
 

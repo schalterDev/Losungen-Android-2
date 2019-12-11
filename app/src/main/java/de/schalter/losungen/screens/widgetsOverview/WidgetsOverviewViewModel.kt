@@ -6,6 +6,7 @@ import androidx.lifecycle.*
 import de.schalter.losungen.dataAccess.VersesDatabase
 import de.schalter.losungen.dataAccess.daily.DailyVerse
 import de.schalter.losungen.widgets.WidgetContent
+import de.schalter.losungen.widgets.WidgetContentType
 import de.schalter.losungen.widgets.WidgetData
 import java.util.*
 
@@ -17,7 +18,7 @@ class WidgetsOverviewViewModel(private val mApplication: Application, private va
 
     fun loadWidgetData() {
         widgetData = WidgetData.loadAll(mApplication).toMutableList()
-        widgetData.forEach { it.contentToShow = getWidgetContentToShow(it.content) }
+        widgetData.forEach { it.content = getWidgetContentToShow(it.contentType) }
 
         mediatorLiveDataWidgetData?.postValue(widgetData)
     }
@@ -33,18 +34,19 @@ class WidgetsOverviewViewModel(private val mApplication: Application, private va
         return mediatorLiveDataWidgetData!!
     }
 
-    private fun getWidgetContentToShow(widgetContent: WidgetContent): String? {
-        dailyVerse?.let { dailyVerse ->
-            val oldTestamentText = dailyVerse.oldTestamentVerseText + "\n" + dailyVerse.oldTestamentVerseBible
-            val newTestamentText = dailyVerse.newTestamentVerseText + "\n" + dailyVerse.newTestamentVerseBible
+    private fun getWidgetContentToShow(widgetContentType: Set<WidgetContentType>): MutableList<WidgetContent> {
+        val widgetContent = mutableListOf<WidgetContent>()
 
-            return when (widgetContent) {
-                WidgetContent.OLD_TESTAMENT -> oldTestamentText
-                WidgetContent.NEW_TESTAMENT -> newTestamentText
-                WidgetContent.OLD_AND_NEW_TESTAMENT -> oldTestamentText + "\n\n" + newTestamentText
+        dailyVerse?.let { dailyVerse ->
+            if (widgetContentType.contains(WidgetContentType.OLD_TESTAMENT)) {
+                widgetContent.add(WidgetContent(dailyVerse.oldTestamentVerseText, dailyVerse.oldTestamentVerseBible))
+            }
+            if (widgetContentType.contains(WidgetContentType.NEW_TESTAMENT)) {
+                widgetContent.add(WidgetContent(dailyVerse.newTestamentVerseText, dailyVerse.newTestamentVerseBible))
             }
         }
-        return null
+
+        return widgetContent
     }
 }
 

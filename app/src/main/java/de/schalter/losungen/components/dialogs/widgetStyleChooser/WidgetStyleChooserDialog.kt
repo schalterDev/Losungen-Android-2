@@ -6,19 +6,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
-import android.widget.GridView
 import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import de.schalter.losungen.R
+import de.schalter.losungen.screens.widgetsOverview.WidgetsRecyclerViewAdapter
+import de.schalter.losungen.widgets.WidgetContent
+import de.schalter.losungen.widgets.WidgetContentType
+import de.schalter.losungen.widgets.WidgetData
 
-class WidgetStyleChooserDialog(private val textToShow: String) : DialogFragment(), AdapterView.OnItemClickListener {
+class WidgetStyleChooserDialog(private val contentToShow: MutableList<WidgetContent>) : DialogFragment(), AdapterView.OnItemClickListener {
 
     var onStyleSelected: ((style: WidgetStyle) -> Unit)? = null
 
-    private lateinit var themes: List<WidgetStyle>
+    private val themes = WidgetStyle.presets
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
-            val dialogView = LayoutInflater.from(it).inflate(R.layout.dialog_widget_picker_grid, null)
+            val dialogView = LayoutInflater.from(it).inflate(R.layout.recycler_view, null)
 
             val dialog = AlertDialog.Builder(it)
                     .setView(dialogView)
@@ -26,11 +31,21 @@ class WidgetStyleChooserDialog(private val textToShow: String) : DialogFragment(
                     .setCancelable(false)
                     .create()
 
-            val gridView = dialogView.findViewById<GridView>(R.id.gridView)
-            gridView.onItemClickListener = this
+            val recyclerView = dialogView.findViewById<RecyclerView>(R.id.recyclerView)
 
-            themes = WidgetStyle.presets
-            gridView.adapter = WidgetStyleChooserDialogGridAdapter(themes, textToShow)
+            val widgetData = themes.map {
+                WidgetData(
+                        0,
+                        it.fontColor,
+                        it.backgroundColor,
+                        it.fontSize.toInt(),
+                        mutableSetOf(WidgetContentType.OLD_TESTAMENT, WidgetContentType.NEW_TESTAMENT),
+                        contentToShow)
+            }
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            val adapter = WidgetsRecyclerViewAdapter(requireActivity(), widgetData)
+            adapter.clickListener = this
+            recyclerView.adapter = adapter
 
             return dialog
         } ?: throw IllegalStateException("Activity cannot be null")

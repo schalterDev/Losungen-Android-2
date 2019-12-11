@@ -27,7 +27,7 @@ class WidgetsOverviewFragment : AnalyticsFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.widget_overview_fragment, container, false).apply {
+        return inflater.inflate(R.layout.fragment_widget_overview, container, false).apply {
             recyclerView = this.findViewById(R.id.recycler_widgets)
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
 

@@ -12,7 +12,7 @@ import de.schalter.losungen.utils.PreferenceTags
  * color: font color
  * background: background color
  * fontSize: font size in pixel
- * content: OT, NT or both
+ * contentType: set of NT, OT
  *
  * The configuration is saved in sharedPreferences
  * TAG{widgetId} = data
@@ -22,8 +22,8 @@ data class WidgetData(
         var color: Int,
         var background: Int,
         var fontSize: Int,
-        var content: WidgetContent,
-        var contentToShow: String? = null) {
+        var contentType: Set<WidgetContentType>,
+        var content: MutableList<WidgetContent> = mutableListOf()) {
 
     fun save(context: Context) {
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -37,7 +37,7 @@ data class WidgetData(
         editor.putInt(PreferenceTags.WIDGET_COLOR + widgetId, color)
         editor.putInt(PreferenceTags.WIDGET_BACKGROUND + widgetId, background)
         editor.putInt(PreferenceTags.WIDGET_FONT_SIZE + widgetId, fontSize)
-        editor.putString(PreferenceTags.WIDGET_CONTENT + widgetId, content.toString())
+        editor.putString(PreferenceTags.WIDGET_CONTENT_TYPE + widgetId, contentType.toString())
         editor.putStringSet(PreferenceTags.WIDGET_IDS, ids)
         editor.apply()
     }
@@ -54,20 +54,26 @@ data class WidgetData(
             val editor = preferences.edit()
             editor.remove(PreferenceTags.WIDGET_COLOR + widgetId)
             editor.remove(PreferenceTags.WIDGET_BACKGROUND + widgetId)
-            editor.remove(PreferenceTags.WIDGET_CONTENT + widgetId)
+            editor.remove(PreferenceTags.WIDGET_CONTENT_TYPE + widgetId)
             editor.remove(PreferenceTags.WIDGET_FONT_SIZE + widgetId)
             editor.putStringSet(PreferenceTags.WIDGET_IDS, ids)
             editor.apply()
         }
 
         fun load(context: Context, widgetId: Int): WidgetData {
+            val defaultWidgetContentSet = setOf(WidgetContentType.NEW_TESTAMENT.toString(), WidgetContentType.OLD_TESTAMENT.toString())
+
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
             return WidgetData(
                     widgetId,
                     preferences.getInt(PreferenceTags.WIDGET_COLOR + widgetId, Color.BLACK),
                     preferences.getInt(PreferenceTags.WIDGET_BACKGROUND + widgetId, Color.WHITE),
                     preferences.getInt(PreferenceTags.WIDGET_FONT_SIZE + widgetId, 12),
-                    WidgetContent.valueOf(preferences.getString(PreferenceTags.WIDGET_CONTENT + widgetId, WidgetContent.OLD_AND_NEW_TESTAMENT.toString())!!))
+                    preferences.getStringSet(
+                            PreferenceTags.WIDGET_CONTENT_TYPE,
+                            defaultWidgetContentSet)!!
+                            .map { WidgetContentType.valueOf(it) }.toSet()
+            )
         }
 
         fun loadAll(context: Context): List<WidgetData> {
@@ -83,8 +89,11 @@ data class WidgetData(
     }
 }
 
-enum class WidgetContent {
+enum class WidgetContentType {
     NEW_TESTAMENT,
-    OLD_TESTAMENT,
-    OLD_AND_NEW_TESTAMENT
+    OLD_TESTAMENT
 }
+
+data class WidgetContent(
+        val verseText: String,
+        val verseVerse: String)

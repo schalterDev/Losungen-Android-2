@@ -56,11 +56,7 @@ class AppWidgetRemoteViewsFactory(
         val showVerseFromOldTestament = if (position > 0) {
             false
         } else {
-            when (widgetData.content) {
-                WidgetContent.OLD_TESTAMENT -> true
-                WidgetContent.NEW_TESTAMENT -> false
-                WidgetContent.OLD_AND_NEW_TESTAMENT -> true
-            }
+            widgetData.contentType.contains(WidgetContentType.NEW_TESTAMENT)
         }
 
         var text = context.getString(R.string.no_verses_found)
@@ -93,14 +89,7 @@ class AppWidgetRemoteViewsFactory(
         return views
     }
 
-    override fun getCount(): Int {
-        return when (widgetData.content) {
-            WidgetContent.NEW_TESTAMENT -> 1
-            WidgetContent.OLD_TESTAMENT -> 1
-            WidgetContent.OLD_AND_NEW_TESTAMENT -> 2
-        }
-    }
-
+    override fun getCount(): Int = widgetData.contentType.size
     override fun getViewTypeCount(): Int = 1
     override fun onDestroy() {
         job.cancel()

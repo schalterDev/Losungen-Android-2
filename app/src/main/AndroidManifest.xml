@@ -64,6 +64,9 @@
         <service
             android:name="de.schalter.losungen.sermon.sermonProvider.SermonProviderService"
             android:enabled="true" />
+        <service
+            android:name="de.schalter.losungen.widgets.AppWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <receiver android:name="de.schalter.losungen.widgets.WidgetBroadcast">
             <intent-filter>

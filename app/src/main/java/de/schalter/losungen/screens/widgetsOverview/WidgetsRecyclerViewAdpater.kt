@@ -6,7 +6,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import de.schalter.losungen.R
@@ -19,7 +18,7 @@ class WidgetsRecyclerViewAdapter(private val activity: Activity, private val wid
     private var mInflater: LayoutInflater = LayoutInflater.from(activity)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view: View = mInflater.inflate(R.layout.app_widget, parent, false)
+        val view: View = mInflater.inflate(R.layout.app_widget_row, parent, false)
         return ViewHolder(view)
     }
 
@@ -36,11 +35,6 @@ class WidgetsRecyclerViewAdapter(private val activity: Activity, private val wid
         init {
             itemView.setOnClickListener(this)
             textView = itemView.findViewById(R.id.textView_widget)
-            itemView.findViewById<RelativeLayout>(R.id.relLayout_widget).apply {
-                val params: ViewGroup.LayoutParams = this.layoutParams
-                params.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                this.layoutParams = params
-            }
         }
 
         fun updateData(widgetData: WidgetData) {
@@ -48,7 +42,6 @@ class WidgetsRecyclerViewAdapter(private val activity: Activity, private val wid
 
             textView.text = widgetData.contentToShow
             textView.textSize = widgetData.fontSize.toFloat()
-            textView.text = widgetData.contentToShow
             textView.setTextColor(widgetData.color)
             textView.setBackgroundColor(widgetData.background)
         }

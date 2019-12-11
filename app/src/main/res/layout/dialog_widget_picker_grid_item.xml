@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <include
-        layout="@layout/app_widget"
+        layout="@layout/app_widget_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </RelativeLayout>

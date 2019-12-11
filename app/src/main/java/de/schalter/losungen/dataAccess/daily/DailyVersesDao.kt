@@ -12,6 +12,7 @@ import java.util.*
 abstract class DailyVersesDao {
 
     fun findDailyVerseByDate(date: Date): LiveData<DailyVerse> = findDailyVerseByExactDate(DailyVerse.getDateForDay(date))
+    fun findDailyVerseByDateSynchronous(date: Date): DailyVerse = findDailyVerseByExactDateSynchronous(DailyVerse.getDateForDay(date))
 
     fun updateLanguage(dailyVerse: DailyVerse) =
             this.updateLanguage(
@@ -34,6 +35,9 @@ abstract class DailyVersesDao {
 
     @Query("SELECT * FROM DailyVerse WHERE date IS :date")
     protected abstract fun findDailyVerseByExactDate(date: Date): LiveData<DailyVerse>
+
+    @Query("SELECT * FROM DailyVerse WHERE date IS :date")
+    protected abstract fun findDailyVerseByExactDateSynchronous(date: Date): DailyVerse
 
     @Query("UPDATE DailyVerse SET " +
             "old_testament_verse_text = :oldTestamentVerseText, " +

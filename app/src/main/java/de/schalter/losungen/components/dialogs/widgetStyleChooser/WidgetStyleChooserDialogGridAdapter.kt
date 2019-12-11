@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.RelativeLayout
 import android.widget.TextView
 import de.schalter.losungen.R
 
@@ -23,7 +22,7 @@ class WidgetStyleChooserDialogGridAdapter(
 
         val theme = themes[position]
 
-        viewHolder.container.setBackgroundColor(theme.backgroundColor)
+        viewHolder.textView.setBackgroundColor(theme.backgroundColor)
         viewHolder.textView.text = textToShow
         viewHolder.textView.setTextColor(theme.fontColor)
         viewHolder.textView.textSize = theme.fontSize
@@ -38,13 +37,11 @@ class WidgetStyleChooserDialogGridAdapter(
     override fun getCount(): Int = themes.size
 
     private class ViewHolder(val itemView: View) {
-
-        val container: RelativeLayout
+        
         val textView: TextView
 
         init {
             itemView.tag = this
-            container = itemView.findViewById(R.id.relLayout_widget)
             textView = itemView.findViewById(R.id.textView_widget)
         }
     }

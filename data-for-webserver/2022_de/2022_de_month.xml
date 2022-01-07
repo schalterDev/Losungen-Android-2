@@ -1,0 +1,63 @@
+<?xml version="1.0" standalone="yes"?>
+<FreeXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.brueder-unitaet.de/losung/losungen.xsd">
+  <Losungen>
+    <Datum>2022-01-01T00:00:00</Datum>
+    <Losungstext>Jesus Christus spricht: Kommt und seht!</Losungstext>
+    <Losungsvers>Johannes 1,39</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2022-02-01T00:00:00</Datum>
+    <Losungstext>Zürnt ihr, so sündigt nicht; lasst die Sonne nicht über eurem Zorn untergehen.</Losungstext>
+    <Losungsvers>Epheser 4,26</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2022-03-01T00:00:00</Datum>
+    <Losungstext>Hört nicht auf, zu beten und zu flehen! Betet jederzeit im Geist; seid wachsam, harrt aus und bittet für alle Heiligen.</Losungstext>
+    <Losungsvers>Epheser 6,18</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2022-04-01T00:00:00</Datum>
+    <Losungstext>Maria von Magdala kam zu den Jüngern und verkündete ihnen: Ich habe den Herrn gesehen. Und sie berichtete, was er ihr gesagt hatte.</Losungstext>
+    <Losungsvers>Johannes 20,18</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2022-05-01T00:00:00</Datum>
+    <Losungstext>Ich wünsche dir in jeder Hinsicht Wohlergehen und Gesundheit, so wie es deiner Seele wohlergeht.</Losungstext>
+    <Losungsvers>3. Johannes 2</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2022-06-01T00:00:00</Datum>
+    <Losungstext>Lege mich wie ein Siegel auf dein Herz, wie ein Siegel auf deinen Arm. Denn Liebe ist stark wie der Tod.</Losungstext>
+    <Losungsvers>Hohelied 8,6</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2022-07-01T00:00:00</Datum>
+    <Losungstext>Meine Seele dürstet nach Gott, nach dem lebendigen Gott.</Losungstext>
+    <Losungsvers>Psalm 42,3</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2022-08-01T00:00:00</Datum>
+    <Losungstext>Jubeln sollen die Bäume des Waldes vor dem HERRN, denn er kommt, um die Erde zu richten.</Losungstext>
+    <Losungsvers>1. Chronik 16,33</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2022-09-01T00:00:00</Datum>
+    <Losungstext>Gott lieben, das ist die allerschönste Weisheit.</Losungstext>
+    <Losungsvers>Sirach 1,10</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2022-10-01T00:00:00</Datum>
+    <Losungstext>Groß und wunderbar sind deine Taten, Herr und Gott, du Herrscher über die ganze Schöpfung. Gerecht und zuverlässig sind deine Wege, du König der Völker.</Losungstext>
+    <Losungsvers>Offenbarung 15,3</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2022-11-01T00:00:00</Datum>
+    <Losungstext>Weh denen, die Böses gut und Gutes böse nennen, die aus Finsternis Licht und aus Licht Finsternis machen, die aus sauer süß und aus süß sauer machen!</Losungstext>
+    <Losungsvers>Jesaja 5,20</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2022-12-01T00:00:00</Datum>
+    <Losungstext>Der Wolf findet Schutz beim Lamm, der Panther liegt beim Böcklein. Kalb und Löwe weiden zusammen, ein kleiner Junge leitet sie.</Losungstext>
+    <Losungsvers>Jesaja 11,6</Losungsvers>
+  </Losungen>
+</FreeXml>

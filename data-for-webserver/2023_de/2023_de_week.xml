@@ -1,11 +1,11 @@
 <?xml version="1.0" standalone="yes"?>
-<FreeXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  ><Losungen>
+<FreeXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Losungen>
     <Datum>2023-01-01T00:00:00</Datum>
     <Losungstext>Und das Wort ward Fleisch und wohnte unter uns, und wir sahen seine Herrlichkeit, eine Herrlichkeit als des eingeborenen Sohnes vom Vater, voller Gnade und Wahrheit.</Losungstext>
     <Losungsvers>Johannes 1,14</Losungsvers>
   </Losungen>
-	<Losungen>
+  <Losungen>
     <Datum>2023-01-08T00:00:00</Datum>
     <Losungstext>Welche der Geist Gottes treibt, die sind Gottes Kinder.</Losungstext>
     <Losungsvers>Römer 8,14</Losungsvers>

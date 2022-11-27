@@ -96,6 +96,13 @@
   {
     "year": 2023,
     "language": "DE",
+    "url": "https://www.losungen.de/fileadmin/media-losungen/download/Losung_2023_XML.zip",
+    "copyrightUrl": "https://www.losungen.de/fileadmin/media-losungen/download/NUTZUNGSBEDINGUNGEN_November_2022.pdf",
+    "fileNameDailyVerses": "Losungen Free 2023.xml"
+  },
+  {
+    "year": 2023,
+    "language": "DE",
     "url": "https://raw.githubusercontent.com/schalterDev/Losungen-Android-2/master/data-for-webserver/2023_de.zip",
     "fileNameMonthlyVerses": "2023_de_month.xml",
     "fileNameWeeklyVerses": "2023_de_week.xml"

@@ -92,5 +92,12 @@
     "url": "https://raw.githubusercontent.com/schalterDev/Losungen-Android-2/master/data-for-webserver/2022_de.zip",
     "fileNameMonthlyVerses": "2022_de_month.xml",
     "fileNameWeeklyVerses": "2022_de_week.xml"
+  },
+  {
+    "year": 2023,
+    "language": "DE",
+    "url": "https://raw.githubusercontent.com/schalterDev/Losungen-Android-2/master/data-for-webserver/2023_de.zip",
+    "fileNameMonthlyVerses": "2023_de_month.xml",
+    "fileNameWeeklyVerses": "2023_de_week.xml"
   }
 ]

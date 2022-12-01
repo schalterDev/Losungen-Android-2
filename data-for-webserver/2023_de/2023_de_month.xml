@@ -1,0 +1,63 @@
+<?xml version="1.0" standalone="yes"?>
+<FreeXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.brueder-unitaet.de/losung/losungen.xsd">
+  <Losungen>
+    <Datum>2023-01-01T00:00:00</Datum>
+    <Losungstext>Gott sah alles an, was er gemacht hatte: Und siehe, es war sehr gut.</Losungstext>
+    <Losungsvers>1. Mose 3,31</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2023-02-01T00:00:00</Datum>
+    <Losungstext>Sara aber sagte: Gott ließ mich lachen.</Losungstext>
+    <Losungsvers>1. Mose 21,6</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2023-03-01T00:00:00</Datum>
+    <Losungstext>Was kann uns scheiden von der Liebe Christi?</Losungstext>
+    <Losungsvers>Römer 8,35</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2023-04-01T00:00:00</Datum>
+    <Losungstext>Christus ist gestorben und lebendig geworden, um Herr zu sein über Tote und Lebende.</Losungstext>
+    <Losungsvers>Römer 14,9</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2023-05-01T00:00:00</Datum>
+    <Losungstext>Weigere dich nicht, dem Bedürftigen Gutes zu tun, wenn deine Hand es vermag.</Losungstext>
+    <Losungsvers>Sprüche 3,27</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2023-06-01T00:00:00</Datum>
+    <Losungstext>Gott gebe dir vom Tau des Himmels und vom Fett der Erde und Korn und Wein die Fülle.</Losungstext>
+    <Losungsvers>1. Mose 27,28</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2023-07-01T00:00:00</Datum>
+    <Losungstext>Jesus Christus spricht: Liebt eure Feinde und betet für die, die euch verfolgen, damit ihr Kinder eures Vaters im Himmel werdet.</Losungstext>
+    <Losungsvers>Matthäus 5,44-45</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2023-08-01T00:00:00</Datum>
+    <Losungstext>Du bist mein Helfer, und unter dem Schatten deiner Flügel frohlocke ic</Losungstext>
+    <Losungsvers>Psalm 63,8</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2023-09-01T00:00:00</Datum>
+    <Losungstext>Jesus Christus spricht: Wer sagt denn ihr, dass ich sei?</Losungstext>
+    <Losungsvers>Matthäus 16,15</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2023-10-01T00:00:00</Datum>
+    <Losungstext>Seid Täter des Worts und nicht Hörer allein; sonst betrügt ihr euch selbst.</Losungstext>
+    <Losungsvers>Jakobus 1,22</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2023-11-01T00:00:00</Datum>
+    <Losungstext>Er allein breitet den Himmel aus und geht auf den Wogen des Meers. Er macht den Großen Wagen am Himmel und den Orion und das Siebengestirn und die Sterne des Südens.</Losungstext>
+    <Losungsvers>Hiob 9,8-9</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2023-12-01T00:00:00</Datum>
+    <Losungstext>Meine Augen haben deinen Heiland gesehen, das Heil, das du bereitet hast vor allen Völkern</Losungstext>
+    <Losungsvers>Lukas 2,30-31</Losungsvers>
+  </Losungen>
+</FreeXml>

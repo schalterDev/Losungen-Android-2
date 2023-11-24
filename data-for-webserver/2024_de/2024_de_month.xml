@@ -1,0 +1,63 @@
+<?xml version="1.0" standalone="yes"?>
+<FreeXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.brueder-unitaet.de/losung/losungen.xsd">
+  <Losungen>
+    <Datum>2024-01-01T00:00:00</Datum>
+    <Losungstext>Junger Wein gehört in neue Schläuche.</Losungstext>
+    <Losungsvers>Markus 2,22</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2024-02-01T00:00:00</Datum>
+    <Losungstext>Alle Schrift, von Gott eingegeben, ist nütze zur Lehre, zur Zurechtweisung, zur Besserung, zur Erziehung in der Gerechtigkeit.</Losungstext>
+    <Losungsvers>2. Timotheus 3,16</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2024-03-01T00:00:00</Datum>
+    <Losungstext>Entsetzt euch nicht! Ihr sucht Jesus von Nazareth, den Gekreuzigten. Er ist auferstanden, er ist nicht hier.</Losungstext>
+    <Losungsvers>Markus 16,6</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2024-04-01T00:00:00</Datum>
+    <Losungstext>Seid stets bereit, jedem Rede und Antwort zu stehen, der von euch Rechenschaft fordert über die Hoffnung, die euch erfüllt.</Losungstext>
+    <Losungsvers>1. Petrus 3,15</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2024-05-01T00:00:00</Datum>
+    <Losungstext>Alles ist mir erlaubt, aber nicht alles dient zum Guten. Alles ist mir erlaubt, aber nichts soll Macht haben über mich.</Losungstext>
+    <Losungsvers>1. Korinther 6,12</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2024-06-01T00:00:00</Datum>
+    <Losungstext>Mose sagte: Fürchtet euch nicht! Bleibt stehen und schaut zu, wie der HERR euch heute rettet!</Losungstext>
+    <Losungsvers>2. Mose 14,13</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2024-07-01T00:00:00</Datum>
+    <Losungstext>Du sollst dich nicht der Mehrheit anschließen, wenn sie im Unrecht ist.</Losungstext>
+    <Losungsvers>2. Mose 23,2</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2024-08-01T00:00:00</Datum>
+    <Losungstext>Der HERR heilt, die zerbrochenen Herzens sind, und verbindet ihre Wunden.</Losungstext>
+    <Losungsvers>Psalm 147,3</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2024-09-01T00:00:00</Datum>
+    <Losungstext>Bin ich nur ein Gott, der nahe ist, spricht der HERR, und nicht auch ein Gott, der ferne ist?</Losungstext>
+    <Losungsvers>Jeremia 23,23</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2024-10-01T00:00:00</Datum>
+    <Losungstext>Die Güte des HERRN ist's, dass wir nicht gar aus sind, seine Barmherzigkeit hat noch kein Ende, sondern sie ist alle Morgen neu, und deine Treue ist groß.</Losungstext>
+    <Losungsvers>Klagelieder 3,22-23</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2024-11-01T00:00:00</Datum>
+    <Losungstext>Wir warten aber auf einen neuen Himmel und eine neue Erde nach seiner Verheißung, in denen Gerechtigkeit wohnt.</Losungstext>
+    <Losungsvers>2. Petrus 3,13</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2024-12-01T00:00:00</Datum>
+    <Losungstext>Mache dich auf, werde licht; denn dein Licht kommt, und die Herrlichkeit des HERRN geht auf über dir!</Losungstext>
+    <Losungsvers>Jesaja 60,1</Losungsvers>
+  </Losungen>
+</FreeXml>

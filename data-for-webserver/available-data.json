@@ -148,5 +148,19 @@
     "url": "https://raw.githubusercontent.com/schalterDev/Losungen-Android-2/master/data-for-webserver/2026_de.zip",
     "fileNameMonthlyVerses": "2026_de_month.xml",
     "fileNameWeeklyVerses": "2026_de_week.xml"
+  },
+  {
+    "year": 2027,
+    "language": "DE",
+    "url": "https://www.losungen.de/fileadmin/media-losungen/download/Losung_2027_XML.zip",
+    "copyrightUrl": "https://www.losungen.de/fileadmin/media-losungen/download/NUTZUNGSBEDINGUNGEN_November_2023.pdf",
+    "fileNameDailyVerses": "Losungen Free 2027.xml"
+  },
+  {
+    "year": 2027,
+    "language": "DE",
+    "url": "https://raw.githubusercontent.com/schalterDev/Losungen-Android-2/master/data-for-webserver/2027_de.zip",
+    "fileNameMonthlyVerses": "2027_de_month.xml",
+    "fileNameWeeklyVerses": "2027_de_week.xml"
   }
 ]

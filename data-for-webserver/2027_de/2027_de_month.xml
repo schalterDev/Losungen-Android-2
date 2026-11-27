@@ -1,0 +1,63 @@
+<?xml version="1.0" standalone="yes"?>
+<FreeXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.brueder-unitaet.de/losung/losungen.xsd">
+  <Losungen>
+    <Datum>2027-01-01T00:00:00</Datum>
+    <Losungstext>Gott sprach: Es werde Licht!</Losungstext>
+    <Losungsvers>1. Mose 1,3</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2027-02-01T00:00:00</Datum>
+    <Losungstext>Die Liebe Gottes ist ausgegossen in unsere Herzen durch den Heiligen Geist, der uns gegeben ist.</Losungstext>
+    <Losungsvers>Römer 5,5b</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2027-03-01T00:00:00</Datum>
+    <Losungstext>Sogleich verließen die Frauen das Grab voll Furcht und großer Freude und sie eilten zu seinen Jüngern, um ihnen die Botschaft zu verkünden.</Losungstext>
+    <Losungsvers>Matthäus 28,8</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2027-04-01T00:00:00</Datum>
+    <Losungstext>Ein Mensch sieht, was vor Augen ist; der HERR aber sieht das Herz an.</Losungstext>
+    <Losungsvers>1. Samuel 16,7</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2027-05-01T00:00:00</Datum>
+    <Losungstext>Ich vergesse, was hinter mir liegt, und strecke mich nach dem aus, was vor mir ist.</Losungstext>
+    <Losungsvers>Philipper 3,13b</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2027-06-01T00:00:00</Datum>
+    <Losungstext>Hiob antwortete dem HERRN und sprach: Ich hatte von dir nur vom Hörensagen vernommen; aber nun hat mein Auge dich gesehen.</Losungstext>
+    <Losungsvers>Hiob 42,5</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2027-07-01T00:00:00</Datum>
+    <Losungstext>Als Jesus die vielen Menschen sah, hatte er Mitleid mit ihnen; denn sie waren müde und erschöpft wie Schafe, die keinen Hirten haben.</Losungstext>
+    <Losungsvers>Matthäus 9,36</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2027-08-01T00:00:00</Datum>
+    <Losungstext>Jesus sagte: Lasst die Kinder und hindert sie nicht, zu mir zu kommen! Denn Menschen wie ihnen gehört das Himmelreich.</Losungstext>
+    <Losungsvers>Matthäus 19,14</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2027-09-01T00:00:00</Datum>
+    <Losungstext>Ich liege und schlafe ganz mit Frieden; denn allein du, HERR, hilfst mir, dass ich sicher wohne.</Losungstext>
+    <Losungsvers>Psalm 4,9</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2027-10-01T00:00:00</Datum>
+    <Losungstext>Besser ein trockenes Stück Brot und Ruhe dabei als ein Haus voll Braten und dabei Streit.</Losungstext>
+    <Losungsvers>Sprüche 17,1</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2027-11-01T00:00:00</Datum>
+    <Losungstext>Gott gibt dem Müden Kraft, dem Kraftlosen verleiht er große Stärke.</Losungstext>
+    <Losungsvers>Jesaja 40,29</Losungsvers>
+  </Losungen>
+  <Losungen>
+    <Datum>2027-12-01T00:00:00</Datum>
+    <Losungstext>Gott spricht: Ich vergesse dich nicht. Sieh her: Ich habe dich eingezeichnet in meine Hände.</Losungstext>
+    <Losungsvers>Jesaja 49,15b-16a</Losungsvers>
+  </Losungen>
+</FreeXml>
